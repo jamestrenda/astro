@@ -1,0 +1,23 @@
+---
+import { getPosts, getPost } from "../../utils/sanity";
+import type { InferGetStaticParamsType } from "astro";
+import { PortableText } from "astro-portabletext";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug.current },
+  }));
+}
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { slug } = Astro.params as Params;
+
+const post = await getPost(slug);
+const { title, body } = post;
+---
+
+<article>
+  <h1>{title}</h1>
+  {body ? <PortableText value={post.body} /> : null}
+</article>

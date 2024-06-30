@@ -1,0 +1,31 @@
+import { defineField, defineType } from "sanity";
+
+export default defineType({
+  name: "siteSettings",
+  title: "Site Settings",
+  type: "document",
+  fields: [
+    defineField({
+      name: "siteTitle",
+      title: "Site Title",
+      type: "string",
+      initialValue: "Just another Sanity.io site",
+    }),
+    defineField({
+      name: "siteUrl",
+      title: "Site URL",
+      type: "url",
+      description:
+        "Used for sitemap and canonical URLs (e.g. https://www.sanity.io).",
+      validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }).required(),
+      // readOnly: true,
+    }),
+    defineField({
+      name: "favicon",
+      title: "File",
+      type: "image",
+      fieldset: "favicon",
+      description: "Upload a favicon for your site.",
+    }),
+  ],
+});

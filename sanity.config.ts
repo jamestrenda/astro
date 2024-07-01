@@ -1,5 +1,8 @@
 // sanity.config.ts
 // Different environments use different variables
+
+import { debugSecrets } from "@sanity/preview-url-secret/sanity-plugin-debug-secrets";
+
 const projectId =
   import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID! ||
   import.meta.env.PUBLIC_SANITY_PROJECT_ID!;
@@ -21,6 +24,7 @@ if (!projectId || !dataset) {
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { presentationTool } from "sanity/presentation";
 import { schemaTypes } from "./src/schema";
 
 export default defineConfig({
@@ -28,7 +32,21 @@ export default defineConfig({
   title: "Production",
   projectId,
   dataset,
-  plugins: [structureTool(), visionTool()],
+  plugins: [
+    structureTool(),
+    presentationTool({
+      title: "Visual Editor",
+      previewUrl: {
+        // @TODO change to the URL of the application, or `location.origin` if it's an embedded Studio
+        origin: location.origin,
+        previewMode: {
+          enable: "/api/preview",
+        },
+      },
+    }),
+    visionTool(),
+    debugSecrets(),
+  ],
   schema: {
     types: schemaTypes,
   },

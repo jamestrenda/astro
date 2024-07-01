@@ -2,9 +2,12 @@
 import { getPosts, getPost } from "../../utils/sanity";
 import type { InferGetStaticParamsType } from "astro";
 import { PortableText } from "astro-portabletext";
+import Layout from "../_layout.astro";
 
 export async function getStaticPaths() {
-  const posts = await getPosts();
+  const posts = await getPosts({
+    preview: false,
+  });
   return posts.map((post) => ({
     params: { slug: post.slug.current },
   }));
@@ -13,11 +16,26 @@ export async function getStaticPaths() {
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 const { slug } = Astro.params as Params;
 
-const post = await getPost(slug);
+const post = await getPost({
+  preview: Astro.locals.preview,
+  options: Astro.locals.loadQueryOptions,
+  slug,
+});
+
+// No product found
+if (!post) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Post Not found",
+  });
+}
+
 const { title, body } = post;
 ---
 
-<article>
-  <h1>{title}</h1>
-  {body ? <PortableText value={post.body} /> : null}
-</article>
+<Layout>
+  <article>
+    <h1>{title}</h1>
+    {body ? <PortableText value={post.body} /> : null}
+  </article>
+</Layout>

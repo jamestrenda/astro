@@ -23,6 +23,12 @@ importers:
       '@sanity/client':
         specifier: ^6.20.1
         version: 6.20.1
+      '@sanity/preview-url-secret':
+        specifier: ^1.6.17
+        version: 1.6.17(@sanity/client@6.20.1)
+      '@sanity/react-loader':
+        specifier: ^1.10.3
+        version: 1.10.3(@sanity/client@6.20.1)(react@18.3.1)
       '@sanity/vision':
         specifier: ^3.48.1
         version: 3.48.1(@babel/runtime@7.24.7)(@codemirror/lint@6.8.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(codemirror@6.0.1(@lezer/common@1.2.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -1535,6 +1541,12 @@ packages:
     resolution: {integrity: sha512-2TjYEvOftD0v7ukx3Csdh9QIu44P2z7NDJtlC3qITJRYV36J7R6Vfd3trVhFnN77/7CZrGjqngrtohv8VqO5nw==}
     engines: {node: '>=18.0.0'}
 
+  '@sanity/core-loader@1.6.19':
+    resolution: {integrity: sha512-dLV2Flw0L521KYm2EdWOqtS53D+geGpLqMIvpWdLD/7NhM3p3y12Eps8UY3VYHZfsUtqpXmOBx0X9vYsfZlvxA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.19.1
+
   '@sanity/diff-match-patch@3.1.1':
     resolution: {integrity: sha512-dSZqGeYjHKGIkqAzGqLcG92LZyJGX+nYbs/FWawhBbTBDWi21kvQ0hsL3DJThuFVWtZMWTQijN3z6Cnd44Pf2g==}
     engines: {node: '>=14.18'}
@@ -1613,6 +1625,13 @@ packages:
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.19.1
+
+  '@sanity/react-loader@1.10.3':
+    resolution: {integrity: sha512-SR0qcxgICFeiFA5WTKm57sr7UspQ8tpy9TbbS33ILcWUkTBo9TCbiYiG7ooD/ood4Df6MKZCnWq6cxskbCxY2A==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.19.1
+      react: ^18.3 || >=19.0.0-rc
 
   '@sanity/schema@3.48.1':
     resolution: {integrity: sha512-d5psPHa0PD36jLiU7gjftYNRxqyyNQE3aj55u3yu8a6Bdp9uw2XVQjz2r0dnmOEIGOYIcUK7CSnpbEsuv+mhQA==}
@@ -6902,6 +6921,10 @@ snapshots:
 
   '@sanity/color@3.0.6': {}
 
+  '@sanity/core-loader@1.6.19(@sanity/client@6.20.1)':
+    dependencies:
+      '@sanity/client': 6.20.1
+
   '@sanity/diff-match-patch@3.1.1': {}
 
   '@sanity/diff@3.48.1':
@@ -7065,6 +7088,12 @@ snapshots:
     dependencies:
       '@sanity/client': 6.20.1
       '@sanity/uuid': 3.0.2
+
+  '@sanity/react-loader@1.10.3(@sanity/client@6.20.1)(react@18.3.1)':
+    dependencies:
+      '@sanity/client': 6.20.1
+      '@sanity/core-loader': 1.6.19(@sanity/client@6.20.1)
+      react: 18.3.1
 
   '@sanity/schema@3.48.1(debug@3.2.7)':
     dependencies:

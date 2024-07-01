@@ -36,7 +36,7 @@ const { title, body } = post;
 
 <Layout>
   <article>
-    <Heading as="h1">{title}</Heading>
+    {title ? <Heading as="h1">{title}</Heading> : null}
     {body ? <PortableText value={body} /> : null}
   </article>
 </Layout>

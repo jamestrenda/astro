@@ -16,9 +16,10 @@ if (!projectId || !dataset) {
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
-import { presentationTool } from "sanity/presentation";
+import { defineDocuments, presentationTool } from "sanity/presentation";
 import { SINGLETON_TYPES, schemaTypes } from "./src/schema";
 import { structure } from "./src/structure";
+import { locations } from "~/presentation/locate";
 
 export default defineConfig({
   name: "production",
@@ -36,6 +37,19 @@ export default defineConfig({
         previewMode: {
           enable: "/api/preview",
         },
+      },
+      resolve: {
+        locations,
+        mainDocuments: defineDocuments([
+          {
+            route: "/",
+            type: "siteSettings",
+          },
+          {
+            route: "/blog/:slug",
+            filter: `_type == "post" && slug.current == $slug`,
+          },
+        ]),
       },
     }),
     visionTool(),

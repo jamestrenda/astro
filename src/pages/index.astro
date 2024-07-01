@@ -14,7 +14,9 @@ const posts = await getPosts({
       posts ? (
         posts.map((post) => (
           <li>
-            <a href={`/blog/${post.slug.current}`}>{post.title}</a>
+            {post.title ? (
+              <a href={`/blog/${post.slug.current}`}>{post.title}</a>
+            ) : null}
           </li>
         ))
       ) : (

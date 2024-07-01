@@ -5,11 +5,11 @@ const {
   PUBLIC_SANITY_STUDIO_BASE_PATH,
 } = loadEnv(import.meta.env.MODE, process.cwd(), "");
 import { defineConfig } from "astro/config";
-
 import sanity from "@sanity/astro";
 import react from "@astrojs/react";
-
 import vercel from "@astrojs/vercel/serverless";
+
+import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
@@ -27,5 +27,9 @@ export default defineConfig({
       useCdn: false,
     }),
     react(),
+    tailwind({
+      applyBaseStyles: false,
+      nesting: true,
+    }),
   ],
 });

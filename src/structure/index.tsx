@@ -2,11 +2,15 @@ import type { StructureResolver } from "sanity/structure";
 import {
   ArrowLeftRightIcon,
   MenuIcon,
+  NotebookPenIcon,
+  NotebookTextIcon,
   RssIcon,
   SettingsIcon,
   SlidersHorizontal,
+  TagIcon,
   UnlinkIcon,
 } from "lucide-react";
+import taxonomyList from "./taxonomyList";
 
 export const structure: StructureResolver = async (S, context) => {
   const blog = S.listItem()
@@ -26,7 +30,7 @@ export const structure: StructureResolver = async (S, context) => {
             .title("Published")
             .id("published")
             .schemaType("post")
-            .icon(RssIcon)
+            .icon(NotebookTextIcon)
             .child(
               S.documentList()
                 .filter(`_type == "post" && !(_id in path("drafts.**"))`)
@@ -41,7 +45,7 @@ export const structure: StructureResolver = async (S, context) => {
             .title("Drafts")
             .id("drafts")
             .schemaType("post")
-            .icon(RssIcon)
+            .icon(NotebookPenIcon)
             .child(
               S.documentList()
                 .filter(`_type == "post" && _id in path("drafts.**")`)
@@ -52,6 +56,22 @@ export const structure: StructureResolver = async (S, context) => {
                     intentName === "create" && params.template === `post`
                 )
             ),
+          taxonomyList({
+            parent: {
+              schemaType: "tag",
+              title: "Tags",
+              icon: TagIcon,
+              titleFieldName: "title",
+            },
+            child: {
+              schemaType: "post",
+              title: "Posts",
+              // icon: HeartHandshakeIcon,
+            },
+            title: "By Tag",
+            S,
+            documentStore: context.documentStore,
+          }),
         ])
     );
 

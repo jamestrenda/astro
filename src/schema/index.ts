@@ -1,5 +1,6 @@
 import menu from "./documents/menu";
 import post from "./documents/post";
+import tag from "./documents/tag";
 import externalLink from "./objects/externalLink";
 import link from "./objects/link";
 import menuItem from "./objects/menuItem";
@@ -35,4 +36,5 @@ export const schemaTypes = [
   redirectSettings,
   ref,
   siteSettings,
+  tag,
 ];

@@ -1,14 +1,6 @@
-// sanity.config.ts
-// Different environments use different variables
-
-import { debugSecrets } from "@sanity/preview-url-secret/sanity-plugin-debug-secrets";
-
-const projectId =
-  import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID! ||
-  import.meta.env.PUBLIC_SANITY_PROJECT_ID!;
-const dataset =
-  import.meta.env.PUBLIC_SANITY_STUDIO_DATASET! ||
-  import.meta.env.PUBLIC_SANITY_DATASET!;
+const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID!;
+const dataset = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET!;
+export const apiVersion = import.meta.env.PUBLIC_SANITY_STUDIO_API_VERSION!;
 
 // Feel free to remove this check if you don't need it
 if (!projectId || !dataset) {
@@ -53,6 +45,16 @@ export default defineConfig({
     templates: (prev, context) => {
       const excludedTypes = [...SINGLETON_TYPES];
 
+      const post = {
+        id: "post-taxonomy",
+        title: "Post by Tag",
+        schemaType: "post",
+        parameters: [{ name: "id", type: "string" }],
+        value: (params: any) => ({
+          tags: [{ _type: "reference", _ref: params.id }],
+        }),
+      };
+
       return [
         ...prev.filter(
           ({ schemaType }) =>
@@ -60,6 +62,7 @@ export default defineConfig({
               schemaType as (typeof excludedTypes)[number]
             )
         ),
+        post,
       ];
     },
   },

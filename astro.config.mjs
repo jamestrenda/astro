@@ -14,11 +14,7 @@ import vercel from "@astrojs/vercel/serverless";
 // https://astro.build/config
 export default defineConfig({
   output: "server",
-  adapter: vercel({
-    webAnalytics: {
-      enabled: true,
-    },
-  }),
+  adapter: vercel(),
   integrations: [
     sanity({
       projectId: PUBLIC_SANITY_STUDIO_PROJECT_ID,

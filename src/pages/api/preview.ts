@@ -8,7 +8,9 @@ export const previewCookieName = "__preview";
 
 // A `POST` request to this route will exit preview mode
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
-  cookies.delete(previewCookieName);
+  cookies.delete(previewCookieName, {
+    path: "/",
+  });
   return redirect("/");
 };
 

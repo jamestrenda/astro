@@ -25,7 +25,8 @@ import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { presentationTool } from "sanity/presentation";
-import { schemaTypes } from "./src/schema";
+import { SINGLETON_TYPES, schemaTypes } from "./src/schema";
+import { structure } from "./src/structure";
 
 export default defineConfig({
   name: "production",
@@ -33,7 +34,9 @@ export default defineConfig({
   projectId,
   dataset,
   plugins: [
-    structureTool(),
+    structureTool({
+      structure,
+    }),
     presentationTool({
       title: "Visual Editor",
       previewUrl: {
@@ -47,5 +50,17 @@ export default defineConfig({
   ],
   schema: {
     types: schemaTypes,
+    templates: (prev, context) => {
+      const excludedTypes = [...SINGLETON_TYPES];
+
+      return [
+        ...prev.filter(
+          ({ schemaType }) =>
+            !excludedTypes.includes(
+              schemaType as (typeof excludedTypes)[number]
+            )
+        ),
+      ];
+    },
   },
 });

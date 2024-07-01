@@ -22,9 +22,7 @@ export default defineType({
     }),
     defineField({
       name: "favicon",
-      title: "File",
       type: "image",
-      fieldset: "favicon",
       description: "Upload a favicon for your site.",
     }),
   ],

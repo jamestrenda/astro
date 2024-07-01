@@ -23,6 +23,7 @@ export async function loadQuery<QueryResponse>({
 
   const perspective = preview ? "previewDrafts" : "published";
 
+  // @ts-ignore
   const { result, resultSourceMap } = await sanityClient.fetch<QueryResponse>(
     query,
     params ?? {},

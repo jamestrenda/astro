@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "~/utils/misc";
 import type { Block, Props as $ } from "astro-portabletext/types";
 
-interface Props extends $<Block> {
+interface Props extends Partial<$<Block>> {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
   styles?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
   className?: string;
@@ -28,7 +28,7 @@ const variants = cva(" font-bold [text-wrap:balance]", {
 
 const { as, styles, className, node } = Astro.props;
 
-const el = as ?? node.style ?? "p";
+const el = as ?? node?.style ?? "p";
 
 let Component: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" = "p";
 

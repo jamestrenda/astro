@@ -1,0 +1,65 @@
+---
+import { cva } from "class-variance-authority";
+import { cn } from "~/utils/misc";
+import type { Block, Props as $ } from "astro-portabletext/types";
+
+interface Props extends $<Block> {
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+  styles?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+  className?: string;
+}
+
+const variants = cva(" font-bold [text-wrap:balance]", {
+  variants: {
+    variant: {
+      h1: "text-7xl",
+      h2: "text-5xl",
+      h3: "text-3xl",
+      h4: "text-xl",
+      h5: "text-base",
+      h6: "",
+      p: "font-medium text-2xl",
+    },
+  },
+  defaultVariants: {
+    variant: "h2",
+  },
+});
+
+const { as, styles, className, node } = Astro.props;
+
+const el = as ?? node.style ?? "p";
+
+let Component: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" = "p";
+
+const classes = cn(
+  variants({ variant: styles ?? (el as Props["as"]) }),
+  className
+);
+
+switch (el) {
+  case "h1":
+    Component = "h1";
+    break;
+  case "h2":
+    Component = "h2";
+    break;
+  case "h3":
+    Component = "h3";
+    break;
+  case "h4":
+    Component = "h4";
+    break;
+  case "h5":
+    Component = "h5";
+    break;
+  case "h6":
+    Component = "h6";
+    break;
+  default:
+    Component = "p";
+    break;
+}
+---
+
+<Component class={classes}><slot /></Component>

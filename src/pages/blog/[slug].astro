@@ -3,6 +3,7 @@ import { getPosts, getPost } from "../../utils/sanity";
 import type { InferGetStaticParamsType } from "astro";
 import PortableText from "~/components/PortableText/PortableText.astro";
 import Layout from "../_layout.astro";
+import Heading from "~/components/Heading.astro";
 
 export async function getStaticPaths() {
   const posts = await getPosts({
@@ -35,7 +36,7 @@ const { title, body } = post;
 
 <Layout>
   <article>
-    <h1>{title}</h1>
-    {body ? <PortableText value={post.body} /> : null}
+    <Heading as="h1">{title}</Heading>
+    {body ? <PortableText value={body} /> : null}
   </article>
 </Layout>

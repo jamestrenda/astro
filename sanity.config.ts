@@ -37,7 +37,6 @@ export default defineConfig({
     presentationTool({
       title: "Visual Editor",
       previewUrl: {
-        // @TODO change to the URL of the application, or `location.origin` if it's an embedded Studio
         origin: location.origin,
         previewMode: {
           enable: "/api/preview",
@@ -45,7 +44,6 @@ export default defineConfig({
       },
     }),
     visionTool(),
-    debugSecrets(),
   ],
   schema: {
     types: schemaTypes,

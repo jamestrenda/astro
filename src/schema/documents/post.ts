@@ -29,9 +29,7 @@ export default defineType({
     {
       name: "body",
       title: "Body",
-      type: "array",
-      of: [{ type: "block" }],
-      validation: (Rule) => Rule.required(),
+      type: "portableText",
     },
   ],
 });

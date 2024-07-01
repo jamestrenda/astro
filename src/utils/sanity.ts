@@ -1,5 +1,6 @@
 import { loadQuery } from "../utils/load-query";
 import groq from "groq";
+import { POST_QUERY } from "./queries";
 
 export async function getPosts({
   preview,
@@ -27,7 +28,7 @@ export async function getPost({
   options: App.Locals["loadQueryOptions"];
 }): Promise<any> {
   const { data: post } = await loadQuery<Array<{ title: string }>>({
-    query: groq`*[_type == "post" && slug.current == $slug][0]`,
+    query: POST_QUERY,
     params: { slug },
     preview,
     options,

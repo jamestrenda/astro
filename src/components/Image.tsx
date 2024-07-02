@@ -2,11 +2,14 @@ import { type SanityImageObjectExtended } from "~/types/image";
 import type { ImageUrlFitMode, ImageUrlFormat } from "@sanity/types";
 import type { DirectQueryParams } from "node_modules/sanity-image/dist/types";
 
-import { cva } from "class-variance-authority";
+// import { cva } from "class-variance-authority";
 import { SanityImage as InternalSanityImage } from "sanity-image";
-import { dataset, projectId } from "sanity.config";
+import { getEnv } from "~/utils/env";
 
-const baseUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/`;
+const { PUBLIC_SANITY_STUDIO_PROJECT_ID, PUBLIC_SANITY_STUDIO_DATASET } =
+  getEnv();
+
+const baseUrl = `https://cdn.sanity.io/images/${PUBLIC_SANITY_STUDIO_PROJECT_ID}/${PUBLIC_SANITY_STUDIO_DATASET}/`;
 
 export type ImageProps = {
   src: SanityImageObjectExtended;

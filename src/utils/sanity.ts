@@ -1,4 +1,3 @@
-import type { z } from "zod";
 import { loadQuery } from "../utils/load-query";
 import {
   INDEX_QUERY,

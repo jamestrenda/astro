@@ -1,6 +1,6 @@
 import { defineMiddleware, sequence } from "astro:middleware";
 import { loadQueryOptions } from "./utils/load-query-options";
-import { getTheme } from "./utils/theme";
+// import { getTheme } from "./utils/theme";
 
 export const preview = defineMiddleware(async ({ cookies, locals }, next) => {
   // value for preview below is true...which is not what I expected

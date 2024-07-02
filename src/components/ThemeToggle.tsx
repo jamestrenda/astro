@@ -1,4 +1,3 @@
-import "htmx.org";
 import {
   MonitorSmartphoneIcon,
   MoonStarIcon,

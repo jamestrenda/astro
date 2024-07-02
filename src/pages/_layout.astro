@@ -1,6 +1,5 @@
 ---
 import { VisualEditing } from "@sanity/astro/visual-editing";
-import { z } from "astro/zod";
 import Container from "~/components/Container.astro";
 import Footer from "~/components/Footer.astro";
 import Header from "~/components/Header.astro";
@@ -9,8 +8,6 @@ import SanityLiveMode from "~/components/Preview/SanityLiveMode";
 import "~/styles/tailwind.css";
 import { getSettings } from "~/utils/sanity";
 import { getTheme } from "~/utils/theme";
-import { parseWithZod } from "@conform-to/zod";
-import { invariantResponse } from "@epic-web/invariant";
 
 const { preview } = Astro.locals;
 

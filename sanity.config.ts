@@ -1,6 +1,5 @@
-export const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID!;
-export const dataset = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET!;
-export const apiVersion = import.meta.env.PUBLIC_SANITY_STUDIO_API_VERSION!;
+const projectId = getEnv().PUBLIC_SANITY_STUDIO_PROJECT_ID;
+const dataset = getEnv().PUBLIC_SANITY_STUDIO_DATASET;
 
 // Feel free to remove this check if you don't need it
 if (!projectId || !dataset) {
@@ -22,6 +21,7 @@ import { defineDocuments, presentationTool } from "sanity/presentation";
 import { SINGLETON_TYPES, schemaTypes } from "./src/schema";
 import { structure } from "./src/structure";
 import { locations } from "~/presentation/locate";
+import { getEnv } from "~/utils/env";
 
 export default defineConfig({
   name: "production",

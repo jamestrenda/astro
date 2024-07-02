@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { ThemeFormSchema, getTheme, setTheme, type Theme } from "~/utils/theme";
+import { ThemeFormSchema, getTheme } from "~/utils/theme";
 import { parseWithZod } from "@conform-to/zod";
 import { invariantResponse } from "@epic-web/invariant";
 

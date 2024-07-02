@@ -3,14 +3,16 @@ import type { StructureBuilder } from "sanity/structure";
 import { map } from "rxjs/operators";
 
 import type { ReactNode } from "react";
-import { apiVersion } from "sanity.config";
 import type { IconProps } from "~/types/icon";
+import { getEnv } from "~/utils/env";
 
 type TaxonomyProps = {
   schemaType: string;
   title: string;
   icon?: (props: IconProps) => JSX.Element | ReactNode;
 };
+
+const apiVersion = getEnv().PUBLIC_SANITY_STUDIO_API_VERSION;
 
 export default function taxonomyList({
   parent,

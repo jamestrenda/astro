@@ -37,7 +37,7 @@ const theme = getTheme(Astro.cookies);
   </head>
   <body class="flex flex-col min-h-screen bg-background">
     <Container className="flex flex-col min-h-screen">
-      <Header theme={theme} />
+      <Header theme={theme === "dark" ? "dark" : null} />
       <slot />
       <Footer />
     </Container>

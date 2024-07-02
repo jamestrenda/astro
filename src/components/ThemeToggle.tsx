@@ -7,7 +7,7 @@ import { cn } from "~/utils/misc";
 import { ThemeFormSchema, type Theme } from "~/utils/theme";
 import { useForm, getFormProps, getInputProps } from "@conform-to/react";
 import { getZodConstraint } from "@conform-to/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ThemeToggle({
   userPreference,
@@ -33,6 +33,14 @@ export function ThemeToggle({
       setNextTheme(data.result.value.theme);
     },
   });
+
+  useEffect(() => {
+    if (currentTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [currentTheme]);
 
   return (
     <form {...getFormProps(form)}>

@@ -23,12 +23,9 @@ export type ImageProps = {
   queryParams?: DirectQueryParams | undefined;
   sizes?: string | undefined;
   preview?: boolean | undefined;
-};
+} & Omit<React.ImgHTMLAttributes<HTMLImageElement>, "width" | "height" | "src">;
 
-export const SanityImage = (
-  props: ImageProps &
-    Omit<React.ImgHTMLAttributes<HTMLImageElement>, "width" | "height" | "src">
-) => {
+export const SanityImage = (props: ImageProps) => {
   const {
     src,
     className,

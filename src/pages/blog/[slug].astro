@@ -40,9 +40,17 @@ const { title, body, tags, image } = post;
 <Layout title={title}>
   <article>
     <Hero>
-      <div class="">
-        {image?.image ? <SanityImage src={image.image} /> : null}
-      </div>
+      {
+        image?.image ? (
+          <SanityImage
+            src={image.image}
+            width={1440}
+            height={600}
+            loading="eager"
+            className="object-cover h-[600px] w-full"
+          />
+        ) : null
+      }
 
       <Container className="py-14 flex flex-col items-center max-w-3xl">
         <p

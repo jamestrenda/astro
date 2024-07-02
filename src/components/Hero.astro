@@ -1,9 +1,12 @@
 ---
-import Container from "./Container.astro";
+import { cn } from "~/utils/misc";
+
+interface Props {
+  className?: string;
+}
+const { className } = Astro.props;
 ---
 
-<div
-  class="md:min-h-[600px] grid place-items-center bg-background dark:bg-black"
->
+<div class={cn("md:min-h-[600px] bg-background dark:bg-black", className)}>
   <slot />
 </div>

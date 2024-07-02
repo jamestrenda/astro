@@ -1,12 +1,9 @@
 ---
-import { SanityImage } from "~/components/Image";
-const { src } = Astro.props;
+import { SanityImage, type ImageProps } from "~/components/Image";
+interface Props extends ImageProps {
+  className?: string;
+}
+const props = Astro.props;
 ---
 
-<SanityImage
-  client:only="react"
-  src={src}
-  width={1920}
-  height={1080}
-  className="w-full h-full object-cover"
-/>
+<SanityImage client:only="react" {...props} />

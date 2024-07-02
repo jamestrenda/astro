@@ -29,6 +29,22 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "body",
+      title: "Body",
+      type: "portableText",
+    }),
+    defineField({
+      name: "excerpt",
+      title: "Excerpt",
+      type: "text",
+      rows: 5,
+    }),
+    defineField({
+      name: "image",
+      title: "Featured image",
+      type: "imageObject",
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -42,11 +58,6 @@ export default defineType({
       title: "Published at",
       type: "datetime",
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "body",
-      title: "Body",
-      type: "portableText",
     }),
     defineField({
       name: "tags",

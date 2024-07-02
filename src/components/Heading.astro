@@ -9,16 +9,16 @@ interface Props extends Partial<$<Block>> {
   className?: string;
 }
 
-const variants = cva(" font-bold [text-wrap:balance]", {
+const variants = cva("text-foreground font-bold [text-wrap:balance]", {
   variants: {
     variant: {
-      h1: "text-7xl",
+      h1: "text-4xl md:text-6xl text-background",
       h2: "text-5xl",
       h3: "text-3xl",
       h4: "text-xl",
       h5: "text-base",
       h6: "",
-      p: "font-medium text-2xl",
+      p: "font-medium text-2xl text-accent",
     },
   },
   defaultVariants: {

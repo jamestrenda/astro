@@ -32,4 +32,7 @@ export default defineConfig({
       nesting: true,
     }),
   ],
+  image: {
+    domains: ["cdn.sanity.io"],
+  },
 });

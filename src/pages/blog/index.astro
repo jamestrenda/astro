@@ -1,0 +1,34 @@
+---
+import { getPosts } from "~/utils/sanity";
+import Layout from "../_layout.astro";
+import Heading from "~/components/Heading.astro";
+import Hero from "~/components/Hero.astro";
+
+const posts = await getPosts({
+  preview: Astro.locals.preview,
+  options: Astro.locals.loadQueryOptions,
+});
+---
+
+<Layout>
+  <main class="grow">
+    <Hero>
+      <Heading as="h1" className="text-center">Blog</Heading>
+    </Hero>
+    <div class="py-16 px-8">
+      {
+        posts ? (
+          posts.map((post) => (
+            <article>
+              <Heading as="h2">
+                <a href={`/${post.slug}`}>{post.title}</a>
+              </Heading>
+            </article>
+          ))
+        ) : (
+          <p>No posts found</p>
+        )
+      }
+    </div>
+  </main>
+</Layout>

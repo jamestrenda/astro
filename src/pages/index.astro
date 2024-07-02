@@ -1,27 +1,32 @@
 ---
 import Layout from "./_layout.astro";
-import { getPosts } from "../utils/sanity";
+import { getIndex } from "../utils/sanity";
+import Heading from "~/components/Heading.astro";
+import PortableText from "~/components/PortableText/PortableText.astro";
 
-const posts = await getPosts({
+const data = await getIndex({
   preview: Astro.locals.preview,
   options: Astro.locals.loadQueryOptions,
 });
+
+if (!data) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
 ---
 
 <Layout>
-  <ul>
-    {
-      posts ? (
-        posts.map((post) => (
-          <li>
-            {post.title ? (
-              <a href={`/blog/${post.slug.current}`}>{post.title}</a>
-            ) : null}
-          </li>
-        ))
-      ) : (
-        <p>No posts yet.</p>
-      )
-    }
-  </ul>
+  <main class="grow grid place-items-center bg-foreground dark:bg-black">
+    <div class="max-w-3xl text-center">
+      <Heading as="h1" className="text-center"
+        >Lorem, ipsum dolor sit amet consectetur adipisicing elit.</Heading
+      >
+      <Heading className="mt-6"
+        >Temporibus voluptate, rerum laborum nulla nemo saepe nisi tempora ad
+        explicabo at dignissimos optio velit dolor natus quas.</Heading
+      >
+    </div>
+  </main>
 </Layout>

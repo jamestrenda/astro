@@ -1,3 +1,45 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 46 62% 96%;
+    --foreground: 210 11% 10%;
+    --muted: 210 11% 50%;
+    --primary: 0 92% 62%;
+    --accent: 46 62% 50%;
+  }
+  .dark {
+    --background: 210 11% 10%;
+    --foreground: 46 62% 96%;
+    --primary: 0 92% 62%;
+    /* --accent: 46 62% 50%; */
+  }
+  body {
+    color: hsl(var(--foreground));
+  }
+  img {
+    @apply block max-w-full w-full h-auto;
+  }
+  .prose {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      &:not(:first-child) {
+        @apply mt-16;
+      }
+      & + * {
+        @apply mt-8;
+      }
+    }
+    p {
+      & + * {
+        @apply mt-6;
+      }
+    }
+  }
+}

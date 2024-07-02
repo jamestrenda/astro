@@ -1,0 +1,20 @@
+---
+import type { Theme } from "~/utils/theme";
+// import { ThemeSwitch } from "./ThemeSwitch";
+import { ThemeToggle } from "./ThemeToggle";
+
+interface Props {
+  theme: Theme | null;
+}
+
+const { theme } = Astro.props;
+---
+
+<header class="flex items-center justify-between">
+  <nav class="flex items-center justify-center py-4 space-x-6">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/blog">Blog</a>
+  </nav>
+  <ThemeToggle client:only="react" userPreference={theme} />
+</header>

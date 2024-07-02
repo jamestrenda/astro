@@ -1,5 +1,5 @@
-const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID!;
-const dataset = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET!;
+export const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID!;
+export const dataset = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET!;
 export const apiVersion = import.meta.env.PUBLIC_SANITY_STUDIO_API_VERSION!;
 
 // Feel free to remove this check if you don't need it
@@ -16,6 +16,8 @@ if (!projectId || !dataset) {
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { media } from "sanity-plugin-media";
+import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
 import { defineDocuments, presentationTool } from "sanity/presentation";
 import { SINGLETON_TYPES, schemaTypes } from "./src/schema";
 import { structure } from "./src/structure";
@@ -53,6 +55,8 @@ export default defineConfig({
       },
     }),
     visionTool(),
+    media(),
+    unsplashImageAsset(),
   ],
   schema: {
     types: schemaTypes,

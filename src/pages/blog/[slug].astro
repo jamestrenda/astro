@@ -4,13 +4,16 @@ import type { InferGetStaticParamsType } from "astro";
 import PortableText from "~/components/PortableText/PortableText.astro";
 import Layout from "../_layout.astro";
 import Heading from "~/components/Heading.astro";
+import Hero from "~/components/Hero.astro";
+import Container from "~/components/Container.astro";
+import SanityImage from "~/components/Image.astro";
 
 export async function getStaticPaths() {
   const posts = await getPosts({
     preview: false,
   });
   return posts.map((post) => ({
-    params: { slug: post.slug.current },
+    params: { slug: post.slug },
   }));
 }
 
@@ -31,12 +34,39 @@ if (!post) {
   });
 }
 
-const { title, body } = post;
+const { title, body, tags, image } = post;
 ---
 
-<Layout>
+<Layout title={title}>
   <article>
-    {title ? <Heading as="h1">{title}</Heading> : null}
-    {body ? <PortableText value={body} /> : null}
+    <Hero>
+      <SanityImage src={image} />
+      <p
+        class="w-fit px-4 py-1 text-sm uppercase tracking-wider bg-primary text-white rounded-full mb-4"
+      >
+        Blog
+      </p>
+      {
+        title ? (
+          <Heading as="h1" className="text-center">
+            {title}
+          </Heading>
+        ) : null
+      }
+      {
+        tags && tags.length > 0 ? (
+          <ul class="flex items-center space-x-4 mt-6">
+            {tags.map((tag) => (
+              <li>
+                <a href={`/${tag.slug}`}>{tag.title}</a>
+              </li>
+            ))}
+          </ul>
+        ) : null
+      }</Hero
+    >
+    <Container className="max-w-3xl py-24 prose">
+      {body ? <PortableText value={body} /> : null}
+    </Container>
   </article>
 </Layout>

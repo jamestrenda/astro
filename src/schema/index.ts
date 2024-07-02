@@ -2,6 +2,7 @@ import menu from "./documents/menu";
 import post from "./documents/post";
 import tag from "./documents/tag";
 import externalLink from "./objects/externalLink";
+import image from "./objects/image";
 import link from "./objects/link";
 import menuItem from "./objects/menuItem";
 import portableText from "./objects/portableText";
@@ -26,6 +27,7 @@ export const schemaTypes = [
   externalLink,
   footerSettings,
   headerSettings,
+  image,
   link,
   menu,
   menuItem,

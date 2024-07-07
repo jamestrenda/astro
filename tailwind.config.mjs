@@ -10,6 +10,7 @@ export default {
         muted: "hsl(var(--muted))",
         primary: "hsl(var(--primary))",
         accent: "hsl(var(--accent))",
+        border: "hsl(var(--border))",
       },
       fontSize: {
         "7xl": [

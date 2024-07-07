@@ -1,10 +1,9 @@
 ---
 import type { Theme } from "~/utils/theme";
-// import { ThemeSwitch } from "./ThemeSwitch";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface Props {
-  theme: Theme | null;
+  theme: Theme;
 }
 
 const { theme } = Astro.props;
@@ -16,5 +15,5 @@ const { theme } = Astro.props;
     <a href="/about">About</a>
     <a href="/blog">Blog</a>
   </nav>
-  <ThemeToggle client:only="react" userPreference={theme} />
+  <ThemeToggle client:only="react" theme={theme} />
 </header>

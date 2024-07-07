@@ -2,16 +2,15 @@ import type { AstroCookies } from "astro";
 import { z } from "zod";
 
 export const themeCookieName = "__theme";
-export type Theme = "light" | "dark";
+export type Theme = "light" | "dark" | "system";
 
 export const ThemeFormSchema = z.object({
   theme: z.enum(["system", "light", "dark"]),
 });
 
-export function getTheme(cookies: AstroCookies): Theme | null {
-  const parsed = cookies.get(themeCookieName)?.value ?? "";
-  if (parsed === "light" || parsed === "dark") return parsed;
-  return null;
+export function getTheme(cookies: AstroCookies): Theme {
+  const parsed = cookies.get(themeCookieName)?.value ?? "system";
+  return parsed as Theme;
 }
 
 export function setTheme(theme: Theme | "system", cookies: AstroCookies) {

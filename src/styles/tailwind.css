@@ -9,6 +9,16 @@
     --muted: 210 11% 50%;
     --primary: 0 92% 62%;
     --accent: 46 62% 50%;
+    --border: var(--muted);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+      --background: 210 11% 10%;
+      --foreground: 0 0% 0%;
+      --primary: 0 92% 62%;
+      /* --accent: 46 62% 50%; */
+    }
   }
   .dark {
     --background: 210 11% 10%;

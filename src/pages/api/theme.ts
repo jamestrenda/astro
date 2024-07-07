@@ -15,18 +15,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   invariantResponse(submission.status === "success", "Invalid theme received");
   const { theme } = submission.value;
 
-  console.log("theme", theme);
-
   if (theme === "system") {
     cookies.set(themeCookieName, "", { path: "/", maxAge: -1 });
   } else {
     cookies.set(themeCookieName, theme, { path: "/", maxAge: 31536000 });
   }
 
-  submission.value.theme =
-    theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
-
-  return new Response(JSON.stringify({ result: submission }), {
+  return new Response(JSON.stringify({ theme: submission.value.theme }), {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },

@@ -1,11 +1,4 @@
-import {
-  LaptopMinimal,
-  Monitor,
-  MonitorSmartphoneIcon,
-  MoonStarIcon,
-  SunMediumIcon,
-  SunMoon,
-} from "lucide-react";
+import { LaptopMinimal, MoonStarIcon, SunMediumIcon } from "lucide-react";
 import { cn } from "~/utils/misc";
 import { ThemeFormSchema, type Theme } from "~/utils/theme";
 import { useForm, getFormProps, getInputProps } from "@conform-to/react";

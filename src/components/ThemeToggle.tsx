@@ -7,7 +7,7 @@ import type { z } from "zod";
 import { useTheme } from "~/utils/hooks/useTheme";
 
 export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
-  const { theme, setTheme } = useTheme({ initial });
+  const { isDark, setTheme } = useTheme({ initial });
 
   const [form] = useForm({
     constraint: getZodConstraint(ThemeFormSchema),
@@ -29,7 +29,7 @@ export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
         <button
           type="submit"
           name="theme"
-          value={theme === "light" ? "dark" : "light"}
+          value={isDark ? "light" : "dark"}
           className={cn(
             `border-4 border-solid border-black rounded-full bg-foreground dark:bg-black ring-brand text-primary h-9 w-16 grid place-items-center text-white dark:text-background`
           )}
@@ -37,21 +37,21 @@ export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
           <div
             className={cn(
               "flex w-full",
-              theme === "dark" ? "justify-start" : "justify-end"
+              isDark ? "justify-start" : "justify-end"
             )}
           >
-            {theme === "light" ? (
+            {isDark ? (
+              <LightbulbOffIcon
+                className={cn("h-7 w-7 p-1 rounded-full bg-primary")}
+              />
+            ) : (
               <LightbulbIcon
                 className={cn("h-7 w-7 p-1 rounded-full bg-primary")}
                 strokeWidth={2}
                 key="light"
               />
-            ) : (
-              <LightbulbOffIcon
-                className={cn("h-7 w-7 p-1 rounded-full bg-primary")}
-              />
             )}
-            <span className="sr-only">{`Toggle ${theme === "light" ? "dark" : "light"} mode`}</span>
+            <span className="sr-only">{`Toggle ${isDark ? "light" : "dark"} mode`}</span>
           </div>
         </button>
       </form>

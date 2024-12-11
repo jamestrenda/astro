@@ -4,15 +4,15 @@ import { ThemeToggle } from "./ThemeToggle";
 import Logo from "./Logo.astro";
 
 interface Props {
-  theme: Theme;
+  theme: Theme | undefined;
 }
 
 const { theme } = Astro.props;
 ---
 
-<header class="">
+<header class="px-4">
   <div class="container mx-auto flex items-center justify-between">
-    <nav class="">
+    <nav>
       <a
         href="/"
         class="flex py-2 starting:opacity-0 starting:-translate-y-2 transition duration-500"

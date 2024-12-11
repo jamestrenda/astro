@@ -13,14 +13,14 @@ const posts = await getPosts({
 <Layout>
   <main class="grow">
     <Hero className="grid place-items-center">
-      <Heading as="h1" className="text-center">Blog</Heading>
+      <Heading level={1} className="text-center">Blog</Heading>
     </Hero>
     <div class="py-16 px-8">
       {
         posts ? (
           posts.map((post) => (
             <article>
-              <Heading as="h2">
+              <Heading level={2}>
                 <a href={`/${post.slug}`}>{post.title}</a>
               </Heading>
             </article>

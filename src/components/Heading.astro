@@ -4,36 +4,34 @@ import { cn } from "~/utils/misc";
 import type { Block, Props as $ } from "astro-portabletext/types";
 
 interface Props extends Partial<$<Block>> {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
-  styles?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+  level?: 1 | 2 | 3 | 4 | 5 | "p";
   className?: string;
 }
 
 const variants = cva("text-foreground font-bold [text-wrap:balance]", {
   variants: {
     variant: {
-      h1: "text-4xl md:text-6xl text-background",
-      h2: "text-5xl",
-      h3: "text-3xl",
-      h4: "text-xl",
-      h5: "text-base",
-      h6: "",
+      1: "text-4xl md:text-6xl text-background",
+      2: "text-5xl",
+      3: "text-3xl",
+      4: "text-xl",
+      5: "text-base",
       p: "font-medium text-2xl text-accent",
     },
   },
   defaultVariants: {
-    variant: "h2",
+    variant: 2,
   },
 });
 
-const { as, styles, className, node } = Astro.props;
+const { level, className, node } = Astro.props;
 
-const el = as ?? node?.style ?? "p";
+const el = level ?? node?.style ?? "p";
 
 let Component: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" = "p";
 
 const classes = cn(
-  variants({ variant: styles ?? (el as Props["as"]) }),
+  variants({ variant: level ?? (el as Props["level"]) }),
   className
 );
 

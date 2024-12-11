@@ -8,15 +8,18 @@ export function useTheme({ initial }: { initial: Theme | undefined }) {
   const hasMounted = useRef(false);
   const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
 
-  const isDark = useMemo(() => theme === "dark", [theme]);
+  const isDark = useMemo(
+    () => theme === "dark" || (!theme && prefersDark),
+    [theme, prefersDark]
+  );
 
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
+      // document.documentElement.classList.remove("light");
     } else {
       document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
+      // document.documentElement.classList.add("light");
     }
   }, [isDark]);
 

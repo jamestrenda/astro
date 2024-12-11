@@ -6,7 +6,7 @@ import { getZodConstraint } from "@conform-to/zod";
 import type { z } from "zod";
 import { useTheme } from "~/utils/hooks/useTheme";
 
-export function ThemeToggle({ initial }: { initial: Theme }) {
+export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
   const { theme, setTheme } = useTheme({ initial });
   const isDark = theme === "dark";
 
@@ -42,8 +42,7 @@ export function ThemeToggle({ initial }: { initial: Theme }) {
       <form {...getFormProps(formLight)} className="grid place-items-center">
         <button
           className={cn(
-            `ring-brand text-primary h-7 w-7 grid place-items-center rounded-full disabled:cursor-not-allowed`,
-            !isDark ? "bg-primary text-white" : ""
+            `ring-brand text-primary h-7 w-7 grid place-items-center rounded-full disabled:cursor-not-allowed bg-primary text-white dark:bg-transparent`
           )}
           disabled={!isDark}
         >
@@ -61,8 +60,7 @@ export function ThemeToggle({ initial }: { initial: Theme }) {
       <form {...getFormProps(formDark)} className="grid place-items-center">
         <button
           className={cn(
-            `ring-brand text-background dark:text-background h-7 w-7 grid place-items-center rounded-full disabled:cursor-not-allowed`,
-            isDark ? "bg-primary" : ""
+            `ring-brand text-background dark:text-background h-7 w-7 grid place-items-center rounded-full disabled:cursor-not-allowed dark:bg-primary`
           )}
           disabled={isDark}
         >

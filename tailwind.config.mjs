@@ -30,5 +30,9 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant("starting", "@starting-style");
+    },
+  ],
 };

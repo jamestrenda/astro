@@ -15,11 +15,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   invariantResponse(submission.status === "success", "Invalid theme received");
   const { theme } = submission.value;
 
-  if (theme === "system") {
-    cookies.set(themeCookieName, "", { path: "/", maxAge: -1 });
-  } else {
-    cookies.set(themeCookieName, theme, { path: "/", maxAge: 31536000 });
-  }
+  cookies.set(themeCookieName, theme, { path: "/", maxAge: 31536000 });
 
   return new Response(JSON.stringify({ theme: submission.value.theme }), {
     headers: {
@@ -28,6 +24,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   });
 };
 
+// TODO: where is this being used?
 export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   const theme = getTheme(cookies);
   return new Response(JSON.stringify({ theme }), {

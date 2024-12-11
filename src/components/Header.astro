@@ -1,6 +1,7 @@
 ---
 import type { Theme } from "~/utils/theme";
 import { ThemeToggle } from "./ThemeToggle";
+import Logo from "./Logo.astro";
 
 interface Props {
   theme: Theme;
@@ -9,11 +10,16 @@ interface Props {
 const { theme } = Astro.props;
 ---
 
-<header class="flex items-center justify-between">
-  <nav class="flex items-center justify-center py-4 space-x-6">
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/blog">Blog</a>
-  </nav>
-  <ThemeToggle client:only="react" theme={theme} />
+<header class="">
+  <div class="container mx-auto flex items-center justify-between">
+    <nav class="">
+      <a
+        href="/"
+        class="flex py-2 starting:opacity-0 starting:-translate-y-2 transition duration-500"
+      >
+        <Logo />
+      </a>
+    </nav>
+    <ThemeToggle client:only="react" initial={theme} />
+  </div>
 </header>

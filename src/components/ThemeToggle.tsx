@@ -1,32 +1,16 @@
-import { LaptopMinimal, MoonStarIcon, SunMediumIcon } from "lucide-react";
+import { MoonStarIcon, SunMediumIcon } from "lucide-react";
 import { cn } from "~/utils/misc";
 import { ThemeFormSchema, type Theme } from "~/utils/theme";
 import { useForm, getFormProps, getInputProps } from "@conform-to/react";
 import { getZodConstraint } from "@conform-to/zod";
-import { useEffect, useState } from "react";
 import type { z } from "zod";
-import { useMediaQuery } from "@uidotdev/usehooks";
+import { useTheme } from "~/utils/hooks/useTheme";
 
-export function ThemeToggle({ theme }: { theme: Theme }) {
-  const [currentTheme, setCurrentTheme] = useState(theme);
-
-  const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
-
-  useEffect(() => {
-    if (currentTheme === "dark" || (currentTheme === "system" && prefersDark)) {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    } else if (currentTheme === "light") {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.remove("light");
-    }
-  }, [currentTheme, prefersDark]);
+export function ThemeToggle({ initial }: { initial: Theme }) {
+  const { theme, setTheme } = useTheme({ initial });
+  const isDark = theme === "dark";
 
   const [formLight, fieldsLight] = useForm({
-    id: "light",
     constraint: getZodConstraint(ThemeFormSchema),
     onSubmit: async (e) => {
       e.preventDefault();
@@ -36,11 +20,10 @@ export function ThemeToggle({ theme }: { theme: Theme }) {
         body: formData,
       });
       const data: z.infer<typeof ThemeFormSchema> = await response.json();
-      setCurrentTheme(data.theme);
+      setTheme(data.theme);
     },
   });
   const [formDark, fieldsDark] = useForm({
-    id: "dark",
     constraint: getZodConstraint(ThemeFormSchema),
     onSubmit: async (e) => {
       e.preventDefault();
@@ -50,33 +33,19 @@ export function ThemeToggle({ theme }: { theme: Theme }) {
         body: formData,
       });
       const data: z.infer<typeof ThemeFormSchema> = await response.json();
-      setCurrentTheme(data.theme);
-    },
-  });
-  const [formSystem, fieldsSystem] = useForm({
-    id: "system",
-    constraint: getZodConstraint(ThemeFormSchema),
-    onSubmit: async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target as HTMLFormElement);
-      const response = await fetch("/api/theme", {
-        method: "POST",
-        body: formData,
-      });
-      const data: z.infer<typeof ThemeFormSchema> = await response.json();
-      setCurrentTheme(data.theme);
+      setTheme(data.theme);
     },
   });
 
   return (
-    <div className="flex items-center border border-solid border-black rounded-full">
+    <div className="flex items-center border-4 border-solid border-black rounded-full bg-foreground dark:bg-background starting:opacity-0 starting:-translate-y-2 transition duration-500">
       <form {...getFormProps(formLight)} className="grid place-items-center">
         <button
           className={cn(
-            `ring-brand text-primary h-7 w-7 grid place-items-center rounded-full`,
-            currentTheme === "light" ? "bg-primary text-white" : ""
+            `ring-brand text-primary h-7 w-7 grid place-items-center rounded-full disabled:cursor-not-allowed`,
+            !isDark ? "bg-primary text-white" : ""
           )}
-          disabled={currentTheme === "light"}
+          disabled={!isDark}
         >
           <input
             value="light"
@@ -92,10 +61,10 @@ export function ThemeToggle({ theme }: { theme: Theme }) {
       <form {...getFormProps(formDark)} className="grid place-items-center">
         <button
           className={cn(
-            `ring-brand text-primary h-7 w-7 grid place-items-center rounded-full`,
-            currentTheme === "dark" ? "bg-foreground dark:bg-black" : ""
+            `ring-brand text-background dark:text-background h-7 w-7 grid place-items-center rounded-full disabled:cursor-not-allowed`,
+            isDark ? "bg-primary" : ""
           )}
-          disabled={currentTheme === "dark"}
+          disabled={isDark}
         >
           <input
             value="dark"
@@ -106,27 +75,6 @@ export function ThemeToggle({ theme }: { theme: Theme }) {
           />
           <MoonStarIcon className="h-4 w-4" />
           <span className="sr-only">Dark Theme</span>
-        </button>
-      </form>
-      <form {...getFormProps(formSystem)} className="grid place-items-center">
-        <button
-          className={cn(
-            `ring-brand text-primary h-7 w-7 grid place-items-center rounded-full`,
-            currentTheme === "system"
-              ? "bg-primary text-white dark:bg-black dark:text-primary"
-              : ""
-          )}
-          disabled={currentTheme === "system"}
-        >
-          <input
-            value="system"
-            {...getInputProps(fieldsSystem.theme, {
-              type: "hidden",
-              value: false,
-            })}
-          />
-          <LaptopMinimal className="h-4 w-4" />
-          <span className="sr-only">System Theme</span>
         </button>
       </form>
     </div>

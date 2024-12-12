@@ -4,6 +4,10 @@ export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
+      animation: {
+        marquee:
+          "marquee var(--speed, 10s) linear infinite var(--direction, forwards)",
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -27,6 +31,11 @@ export default {
             letterSpacing: "-0.01em",
           },
         ],
+      },
+      keyframes: {
+        marquee: {
+          to: { transform: "translateX(calc(-100cqw - 100%))" },
+        },
       },
     },
   },

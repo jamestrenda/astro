@@ -7,6 +7,7 @@ export default {
       animation: {
         marquee:
           "marquee var(--speed, 10s) linear infinite var(--direction, forwards)",
+        "fade-in-out": "fade-in-out var(--speed, 10s) linear infinite forwards",
       },
       colors: {
         background: "hsl(var(--background))",
@@ -35,6 +36,12 @@ export default {
       keyframes: {
         marquee: {
           to: { transform: "translateX(calc(-100cqw - 100%))" },
+        },
+        "fade-in-out": {
+          "0%": { opacity: "0" },
+          "10%": { opacity: "1" },
+          "90%": { opacity: "1" },
+          "100%": { opacity: "0" },
         },
       },
     },

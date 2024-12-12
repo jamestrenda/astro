@@ -22,9 +22,9 @@ const numItems = 8;
 <Layout>
   <!-- Hero -->
   <div
-    class="w-full md:pt-4 bg-black/10 pb-24 md:h-[768px] relative max-sm:overflow-hidden"
+    class="w-full md:pt-4 bg-black/10 dark:bg-black pb-24 md:h-[768px] relative max-sm:overflow-hidden"
   >
-    <!-- Wrapper -->
+    <!-- Window -->
     <div
       class="flex flex-col w-full md:h-full relative md:w-[calc(100%-2rem)] lg:max-w-7xl mx-auto"
     >
@@ -46,9 +46,19 @@ const numItems = 8;
           <div class="bg-black/50 backdrop-blur-lg h-24 rounded-lg mx-4"></div>
         </div>
       </div>
-      <!-- Content Wrapper -->
+      <!-- Chrome -->
+      <div class="bg-black h-14 md:rounded-t-lg grid items-center">
+        <div class="flex items-center justify-between h-full px-4">
+          <div class="flex items-center space-x-2">
+            <div class="h-3 w-3 bg-white/25 rounded-full"></div>
+            <div class="h-3 w-3 bg-white/25 rounded-full"></div>
+            <div class="h-3 w-3 bg-white/25 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Viewport -->
       <div
-        class="z-20 bg-black rounded-b-lg md:rounded-t-lg w-full h-full min-h-[540px] sm:min-h-96 p-6 pt-[10vw] sm:p-16 grid items-center"
+        class="z-20 bg-foreground dark:bg-black bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),hsl(var(--foreground))_75%)] dark:bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),hsl(var(--background))_75%)] rounded-b-lg w-full h-full min-h-[540px] sm:min-h-96 p-6 pt-[10vw] sm:p-16 grid items-center"
       >
         <!-- Text Content -->
         <div class="w-full min-[480px]:w-4/5 min-[580px]:w-1/2">
@@ -62,14 +72,16 @@ const numItems = 8;
             className="md:max-w-full mb-6 text-5xl lg:text-6xl fade-in"
             >Bring your ideas to life.</Heading
           >
-          <p class="text-background text-xl md:text-2xl fade-in">
+          <p
+            class="text-background dark:text-foreground text-xl md:text-2xl fade-in"
+          >
             Helping today's visionaries <em>(psst—that's you)</em> build a better
             tomorrow by turning ideas into online interactive experiences.
           </p>
         </div>
         <!-- Logo Marquee -->
         <div
-          class="grid gap-4 my-6 sm:mb-0 self-start fade-in [--item-width:100px] md:[--item-width:160px]"
+          class="grid gap-2 my-6 sm:mb-0 self-start fade-in [--item-width:100px] md:[--item-width:160px]"
         >
           <div
             class="marquee fadeout-horizontal -mx-8 sm:-mx-16"
@@ -87,7 +99,7 @@ const numItems = 8;
                       "--item-position": i + 1,
                     }}
                   >
-                    <div class="track-item-content px-4 animate-fade-in-out text-white bg-white/10 rounded-lg grid place-items-center">
+                    <div class="track-item-content backdrop-blur-md px-4 animate-fade-in-out text-white bg-white/5 rounded-lg grid place-items-center">
                       <svg
                         viewBox="0 0 460 160"
                         fill="none"
@@ -145,7 +157,7 @@ const numItems = 8;
                       "--item-position": i + 1,
                     }}
                   >
-                    <div class="track-item-content px-4 animate-fade-in-out text-white bg-white/10 h-20 w-20 rounded-lg grid place-items-center">
+                    <div class="track-item-content backdrop-blur-md px-4 animate-fade-in-out text-white bg-white/5 h-20 w-20 rounded-lg grid place-items-center">
                       <svg
                         viewBox="0 0 105 22"
                         xmlns="http://www.w3.org/2000/svg"

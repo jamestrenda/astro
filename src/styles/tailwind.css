@@ -10,12 +10,12 @@
     --primary: 0 92% 62%;
     --accent: 46 62% 50%;
     --border: var(--muted);
+    --primary-dark: 0 92% 15%;
   }
 
   .dark {
     --background: 0 0% 7%;
     --foreground: 0 0% 98%;
-    --primary: 0 92% 62%;
     /* --accent: 46 62% 50%; */
   }
   body {
@@ -56,7 +56,7 @@
   .marquee {
     --speed: 20s;
     /* --item-width: 160px; */
-    --item-gap: 1rem;
+    --item-gap: 0.5rem;
     --single-slide-speed: calc(var(--speed) / var(--num-items));
     --item-width-plus-gap: calc(var(--item-width) + var(--item-gap));
     --track-width: calc(

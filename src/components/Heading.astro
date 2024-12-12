@@ -11,7 +11,7 @@ interface Props extends Partial<$<Block>> {
 const variants = cva("text-foreground font-bold [text-wrap:balance]", {
   variants: {
     variant: {
-      1: "text-3xl md:text-5xl lg:text-6xl text-background",
+      1: "text-4xl md:text-5xl lg:text-6xl text-background",
       2: "text-5xl",
       3: "text-3xl",
       4: "text-xl",
@@ -28,7 +28,7 @@ const { level, className, node } = Astro.props;
 
 const el = level ?? node?.style ?? "p";
 
-let Component: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" = "p";
+let Component: "h1" | "h2" | "h3" | "h4" | "h5" | "p" = "p";
 
 const classes = cn(
   variants({ variant: level ?? (el as Props["level"]) }),
@@ -36,23 +36,20 @@ const classes = cn(
 );
 
 switch (el) {
-  case "h1":
+  case 1:
     Component = "h1";
     break;
-  case "h2":
+  case 2:
     Component = "h2";
     break;
-  case "h3":
+  case 3:
     Component = "h3";
     break;
-  case "h4":
+  case 4:
     Component = "h4";
     break;
-  case "h5":
+  case 5:
     Component = "h5";
-    break;
-  case "h6":
-    Component = "h6";
     break;
   default:
     Component = "p";

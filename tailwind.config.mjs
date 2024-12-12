@@ -44,6 +44,9 @@ export default {
           "100%": { opacity: "0" },
         },
       },
+      screens: {
+        xs: "580px",
+      },
     },
   },
   plugins: [

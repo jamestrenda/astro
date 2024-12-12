@@ -18,6 +18,7 @@ if (!data) {
 ---
 
 <Layout>
+  <!-- Hero -->
   <div class="w-full md:pt-4 bg-black/10 pb-24 md:h-[768px] relative">
     <div
       class="flex flex-col w-full md:h-full relative md:w-[calc(100%-2rem)] lg:max-w-7xl mx-auto"
@@ -48,7 +49,7 @@ if (!data) {
         <div
           class="w-full min-[480px]:w-4/5 min-[580px]:w-1/2 self-start sm:self-auto"
         >
-          <div class="uppercase text-primary text-sm mb-2">
+          <div class="uppercase text-primary text-sm mb-2 font-semibold">
             Full-Stack Web Development
           </div>
           <Heading level={1} className="md:max-w-full mb-6 text-5xl lg:text-6xl"
@@ -93,6 +94,26 @@ if (!data) {
         class="absolute z-30 -bottom-24 md:bottom-0 -right-4 md:right-0 md:rounded-br-lg object-cover max-w-80 max-h-[400px] min-[580px]:max-w-full min-[580px]:h-[600px] min-[580px]:max-h-[700px] w-auto max-md:sm:h-[660px] md:h-[700px] lg:w-[700px] min-[480px]:w-2/3 aspect-square pointer-events-none dark:brightness-75 contrast-[1.1]"
       />
       <!-- <PortableText blocks={data.body} /> -->
+    </div>
+  </div>
+  <!-- About -->
+  <div>
+    <div
+      class="max-w-5xl mx-auto px-4 p-16 min-[580px]:px-16 min-[580px]:py-32"
+    >
+      <div class="uppercase text-primary text-sm mb-2 font-semibold">
+        About Me
+      </div>
+      <Heading level={2} className="mb-6 "
+        >I’m driven by a commitment to solving problems through thoughtful,
+        user-centered web development.</Heading
+      >
+      <p class="text-xl md:text-2xl">
+        Web development—much like life—is about tackling challenges and crafting
+        solutions that make a difference. I’m passionate about creating
+        thoughtful, user-centered interfaces that simplify complexities, connect
+        people, and improve everyday experiences.
+      </p>
     </div>
   </div>
 </Layout>

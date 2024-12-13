@@ -16,7 +16,7 @@ interface Props {
 export function Accordion({ data }: Props) {
   return (
     <BaseAccordion type="single" collapsible className="w-full">
-      {data.map((item, i) => {
+      {data?.map((item, i) => {
         return (
           <AccordionItem value={`item-${i.toFixed()}`}>
             <AccordionTrigger>

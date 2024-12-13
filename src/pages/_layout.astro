@@ -8,6 +8,17 @@ import "~/styles/tailwind.css";
 import { getSettings } from "~/utils/sanity";
 import { getTheme } from "~/utils/theme";
 
+import "@fontsource/inter";
+import "@fontsource/inter/300.css";
+import "@fontsource/inter/300-italic.css";
+import "@fontsource/inter/400-italic.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/inter/700-italic.css";
+// import "@fontsource-variable/inter/900-italic.css"; // Italic variant.
+// Supports weights 100-900
+// import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+
 const { preview } = Astro.locals;
 
 const { title } = Astro.props;
@@ -24,7 +35,10 @@ const url = Astro.request.url;
 const theme = getTheme(Astro.cookies);
 ---
 
-<html lang="en" class={theme === "dark" ? "dark" : undefined}>
+<html
+  lang="en"
+  class:list={["font-sans", theme === "dark" ? "dark" : undefined]}
+>
   <head>
     <meta charset="utf-8" />
     <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->

@@ -29,6 +29,12 @@ importers:
       '@epic-web/invariant':
         specifier: ^1.0.0
         version: 1.0.0
+      '@fontsource-variable/inter':
+        specifier: ^5.1.0
+        version: 5.1.0
+      '@fontsource/inter':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.52.1(react@18.3.1))
@@ -1337,6 +1343,12 @@ packages:
 
   '@floating-ui/utils@0.2.3':
     resolution: {integrity: sha512-XGndio0l5/Gvd6CLIABvsav9HHezgDFFhDfHk1bvLfr9ni8dojqLSvBbotJEjmIwNHL7vK4QzBJTdBRoB+c1ww==}
+
+  '@fontsource-variable/inter@5.1.0':
+    resolution: {integrity: sha512-Wj2dUGP0vUpxRGQTXQTCNJO+aLcFcQm+gUPXfj/aS877bQkEPBPv9JvZJpwdm2vzelt8NTZ+ausKlBCJjh2XIg==}
+
+  '@fontsource/inter@5.1.0':
+    resolution: {integrity: sha512-zKZR3kf1G0noIes1frLfOHP5EXVVm0M7sV/l9f/AaYf+M/DId35FO4LkigWjqWYjTJZGgplhdv4cB+ssvCqr5A==}
 
   '@hookform/resolvers@3.9.0':
     resolution: {integrity: sha512-bU0Gr4EepJ/EQsH/IwEzYLsT/PEj5C0ynLQ4m+GSHS+xKH4TfSelhluTgOaoc4kA5s7eCsQbM4wvZLzELmWzUg==}
@@ -7789,6 +7801,10 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
 
   '@floating-ui/utils@0.2.3': {}
+
+  '@fontsource-variable/inter@5.1.0': {}
+
+  '@fontsource/inter@5.1.0': {}
 
   '@hookform/resolvers@3.9.0(react-hook-form@7.52.1(react@18.3.1))':
     dependencies:

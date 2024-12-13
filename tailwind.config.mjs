@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import defaultTheme from "tailwindcss/defaultTheme";
+
 export default {
   darkMode: "class",
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
@@ -17,6 +19,9 @@ export default {
         accent: "hsl(var(--accent))",
         border: "hsl(var(--border))",
       },
+      fontFamily: {
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+      },
       fontSize: {
         "7xl": [
           "6.5rem",
@@ -26,7 +31,7 @@ export default {
           },
         ],
         "6xl": [
-          "5rem",
+          "4rem",
           {
             lineHeight: "1",
             letterSpacing: "-0.01em",

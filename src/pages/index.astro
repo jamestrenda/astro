@@ -1,8 +1,9 @@
 ---
 import Layout from "./_layout.astro";
 import { getIndex } from "../utils/sanity";
-import Heading from "~/components/Heading.astro";
+import { Heading } from "~/components/Heading";
 import Container from "~/components/Container.astro";
+import { Accordion } from "~/components/Accordion";
 // import PortableText from "~/components/PortableText/PortableText.astro";
 
 const data = await getIndex({
@@ -113,7 +114,7 @@ const principles = [
         class="z-20 pt-14 bg-foreground dark:bg-black bg-[size:150%] bg-[position:90%] bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),black_75%)] lg:bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7)_10%,black_50%)] dark:bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),hsl(0 0% 10%)_75%)] rounded-b-lg md:rounded-t-lg w-full h-full min-h-[540px] sm:min-h-96 p-6 sm:p-16 grid items-center"
       >
         <!-- Text Content -->
-        <div class="w-full min-[480px]:w-4/5 xs:w-1/2">
+        <div class="w-full min-[480px]:w-4/5 xs:w-1/2 mt-16">
           <div
             class="uppercase text-primary text-sm mb-2 font-semibold fade-in"
           >
@@ -397,23 +398,19 @@ const principles = [
         mark. I believe in the value of learning from mistakes, holding myself
         accountable, and focusing on progress rather than perfection.
       </p>
-      <div class="grid gap-8 mt-16 lg:grid-cols-3">
+      <Accordion data={principles} client:idle />
+      <!-- <div class="grid gap-8 mt-16 lg:grid-cols-3">
         {
           principles.map((principle, i) => (
-            <div>
-              <Heading level={3} className="mb-2">
-                {principle.title}
-              </Heading>
-              <p
-                class="text-lg md
-              :text-xl"
-              >
-                {principle.description}
-              </p>
-            </div>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger>{principle.title}</AccordionTrigger>
+                <AccordionContent>{principle.description}</AccordionContent>
+              </AccordionItem>
+            </Accordion>
           ))
         }
-      </div>
+      </div> -->
     </Container>
   </div>
 </Layout>

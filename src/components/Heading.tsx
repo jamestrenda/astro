@@ -5,7 +5,7 @@ import type { Block, Props as $ } from "astro-portabletext/types";
 interface Props extends Partial<$<Block>> {
   level?: 1 | 2 | 3 | 4 | 5 | "p";
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const variants = cva(

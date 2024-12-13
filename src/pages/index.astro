@@ -398,7 +398,7 @@ const principles = [
         mark. I believe in the value of learning from mistakes, holding myself
         accountable, and focusing on progress rather than perfection.
       </p>
-      <Accordion data={principles} client:idle />
+      {principles ? <Accordion data={principles} client:idle /> : null}
       <!-- <div class="grid gap-8 mt-16 lg:grid-cols-3">
         {
           principles.map((principle, i) => (

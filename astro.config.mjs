@@ -7,7 +7,7 @@ const {
 import { defineConfig } from "astro/config";
 import sanity from "@sanity/astro";
 import react from "@astrojs/react";
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel";
 
 import tailwind from "@astrojs/tailwind";
 

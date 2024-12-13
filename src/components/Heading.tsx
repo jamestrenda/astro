@@ -1,11 +1,11 @@
 import { cva } from "class-variance-authority";
 import { cn } from "~/utils/misc";
 import type { Block, Props as $ } from "astro-portabletext/types";
+import { forwardRef } from "react";
 
 interface Props extends Partial<$<Block>> {
-  level?: 1 | 2 | 3 | 4 | 5 | "p";
+  level?: 1 | 2 | 3 | 4 | 5;
   className?: string;
-  children?: React.ReactNode;
 }
 
 const variants = cva(
@@ -15,7 +15,7 @@ const variants = cva(
       variant: {
         1: "text-4xl md:text-5xl lg:text-6xl text-background dark:text-foreground",
         2: "text-3xl md:text-5xl dark:text-foreground",
-        3: "text-2xl md:text-3xl text-primary",
+        3: "text-xl md:text-3xl text-primary",
         4: "text-xl",
         5: "text-base",
         p: "font-medium text-2xl text-accent",
@@ -27,10 +27,16 @@ const variants = cva(
   }
 );
 
-export function Heading({ level, node, className, children }: Props) {
-  const el = level ?? node?.style ?? "p";
+export const Heading = forwardRef<
+  HTMLHeadingElement,
+  React.HTMLProps<HTMLHeadingElement> & Props
+>(function Heading(
+  { level, node, className, children, ...props },
+  forwardedRef
+) {
+  const el = level ?? node?.style ?? "h2";
 
-  let Component: "h1" | "h2" | "h3" | "h4" | "h5" | "p" = "p";
+  let Component: "h1" | "h2" | "h3" | "h4" | "h5" = "h2";
 
   const classes = cn(
     variants({ variant: level ?? (el as Props["level"]) }),
@@ -54,8 +60,11 @@ export function Heading({ level, node, className, children }: Props) {
       Component = "h5";
       break;
     default:
-      Component = "p";
       break;
   }
-  return <Component className={classes}>{children}</Component>;
-}
+  return (
+    <Component ref={forwardedRef} className={classes} {...props}>
+      {children}
+    </Component>
+  );
+});

@@ -398,19 +398,13 @@ const principles = [
         mark. I believe in the value of learning from mistakes, holding myself
         accountable, and focusing on progress rather than perfection.
       </p>
-      {principles ? <Accordion data={principles} client:visible /> : null}
-      <!-- <div class="grid gap-8 mt-16 lg:grid-cols-3">
+      <div class="my-14">
         {
-          principles.map((principle, i) => (
-            <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
-                <AccordionTrigger>{principle.title}</AccordionTrigger>
-                <AccordionContent>{principle.description}</AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          ))
+          principles ? (
+            <Accordion data={principles} client:media="(max-width: 1023px)" />
+          ) : null
         }
-      </div> -->
+      </div>
     </Container>
   </div>
 </Layout>

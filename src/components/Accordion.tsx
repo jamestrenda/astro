@@ -4,7 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import { Heading } from "~/components/Heading";
 
 interface Props {
   data: {
@@ -15,20 +14,22 @@ interface Props {
 
 export function Accordion({ data }: Props) {
   return (
-    <BaseAccordion type="single" collapsible className="w-full">
+    <BaseAccordion
+      type="single"
+      className="w-full lg:grid lg:grid-cols-3 lg:gap-8"
+    >
       {data?.map((item, i) => {
         return (
-          <AccordionItem key={i} value={`item-${i.toFixed()}`}>
-            <AccordionTrigger>
-              <Heading level={3}>{item.title}</Heading>
+          <AccordionItem
+            key={i}
+            value={`item-${i.toFixed()}`}
+            className="[&[data-state=closed]>div]:h-0 lg:[&[data-state=closed]>div]:h-auto"
+          >
+            <AccordionTrigger className="text-left [&>svg]:h-6 [&>svg]:w-6 md:[&>svg]:h-8 md:[&>svg]:w-8 lg:[&>svg]:hidden lg:cursor-text select-text lg:pointer-events-none">
+              {item.title}
             </AccordionTrigger>
-            <AccordionContent>
-              <p
-                className="text-lg md
-              :text-xl"
-              >
-                {item.description}
-              </p>
+            <AccordionContent forceMount>
+              <p className="md:text-lg">{item.description}</p>
             </AccordionContent>
           </AccordionItem>
         );

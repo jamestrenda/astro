@@ -126,7 +126,7 @@ const principles = [
             >Bring your ideas to life.</Heading
           >
           <p
-            class="text-background dark:text-foreground text-xl md:text-2xl fade-in"
+            class="text-background dark:text-foreground text-xl md:text-2xl fade-in font-light"
           >
             Helping today's visionaries <em>(psst—that's you)</em> build a better
             tomorrow by turning ideas into online interactive experiences.
@@ -379,7 +379,7 @@ const principles = [
         >I’m driven by a commitment to solving problems through thoughtful,
         user-centered web development.</Heading
       >
-      <p class="text-xl md:text-2xl">
+      <p class="text-xl md:text-2xl font-light">
         Web development—much like life—is about tackling challenges and crafting
         solutions that make a difference. I’m passionate about creating
         thoughtful, user-centered interfaces that simplify complexities, connect
@@ -391,14 +391,14 @@ const principles = [
   <div>
     <Container>
       <Heading level={2} className="mb-6">Guiding Principles</Heading>
-      <p class="text-xl md:text-2xl max-w-5xl">
+      <p class="text-xl md:text-2xl max-w-5xl font-light">
         These principles guide how I approach both my work and life. While I
         strive for constant growth, clear communication, and excellence, I
         recognize that, as an imperfect human being, I don't always hit the
         mark. I believe in the value of learning from mistakes, holding myself
         accountable, and focusing on progress rather than perfection.
       </p>
-      {principles ? <Accordion data={principles} client:idle /> : null}
+      {principles ? <Accordion data={principles} client:visible /> : null}
       <!-- <div class="grid gap-8 mt-16 lg:grid-cols-3">
         {
           principles.map((principle, i) => (

@@ -6,8 +6,10 @@ import type { z } from "zod";
 import { useTheme } from "~/utils/hooks/useTheme";
 
 export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
+  // TODO: check for isClient
   const { isDark, setTheme } = useTheme({ initial });
 
+  // TODO: Astro actions
   const [form] = useForm({
     constraint: getZodConstraint(ThemeFormSchema),
     onSubmit: async (e, { formData }) => {

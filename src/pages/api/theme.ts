@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import { ThemeFormSchema, getTheme } from "~/utils/theme";
 import { parseWithZod } from "@conform-to/zod";
-import { invariantResponse } from "@epic-web/invariant";
 
 export const themeCookieName = "__theme";
 
@@ -12,7 +11,11 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     schema: ThemeFormSchema,
   });
 
-  invariantResponse(submission.status === "success", "Invalid theme received");
+  if (submission.status !== "success") {
+    return new Response("Invalid theme received", {
+      status: 400,
+    });
+  }
   const { theme } = submission.value;
 
   cookies.set(themeCookieName, theme, { path: "/", maxAge: 31536000 });

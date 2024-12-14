@@ -86,6 +86,7 @@
     grid-area: resting;
     width: var(--item-width);
 
+    /* TODO: check user motion preferences */
     @apply animate-marquee;
     animation-delay: calc(
       var(--single-slide-speed) * var(--item-position) * -1

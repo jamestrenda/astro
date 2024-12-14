@@ -29,7 +29,9 @@ export function Accordion({ data }: Props) {
               {item.title}
             </AccordionTrigger>
             <AccordionContent forceMount>
-              <p className="md:text-lg">{item.description}</p>
+              <p className="md:text-lg dark:text-white/50">
+                {item.description}
+              </p>
             </AccordionContent>
           </AccordionItem>
         );

@@ -91,7 +91,7 @@ const principles = [
             >Bring your ideas to life.</Heading
           >
           <p
-            class="text-background dark:text-foreground text-xl md:text-2xl fade-in font-light"
+            class="text-background dark:text-foreground text-lg md:text-xl fade-in font-light"
           >
             Helping today's visionaries <em>(psst—that's you)</em> build a better
             tomorrow by turning ideas into online interactive experiences.
@@ -99,7 +99,7 @@ const principles = [
         </div>
         <!-- Logo Marquee -->
         <div
-          class="grid gap-2 my-6 sm:mb-0 self-start fade-in [--item-width:100px] md:[--item-width:160px]"
+          class="grid gap-2 my-6 md:mt-12 sm:mb-0 self-start fade-in [--item-width:100px] md:[--item-width:160px]"
         >
           <div
             class="marquee fadeout-horizontal -mx-8 sm:-mx-16"
@@ -342,7 +342,7 @@ const principles = [
       <div class="uppercase text-primary text-sm mb-2 font-semibold">
         About Me
       </div>
-      <Heading level={2} className="mb-6 "
+      <Heading level={2} className="mb-6"
         >I’m driven by a commitment to solving problems through thoughtful,
         user-centered web development.</Heading
       >
@@ -372,10 +372,51 @@ const principles = [
       }
     </div>
   </Container>
-  <div>
-    <Container padding={true} className="!pt-0">
+  <div class="border-t dark:border-white/5">
+    <Container padding={true} variant="tight" className="">
       <BrowserWindow>
-        <p>Hello</p>
+        <div class="py-16 grid md:grid-cols-2 gap-8">
+          <div>
+            <div class="uppercase text-primary text-sm mb-2 font-semibold">
+              Get in touch
+            </div>
+            <Heading level={2} className="mb-6 text-background">
+              Ready to turn your vision into reality?</Heading
+            >
+            <p class="text-lg text-background dark:text-foreground">
+              Whether you're exploring new opportunities, need a development
+              partner, or just have a quick question, my inbox is always open.
+            </p>
+          </div>
+          <!-- Contact Form -->
+          <div class="grid gap-4 items-start">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="First name"
+                class="w-full placeholder:text-background/50 p-4 bg-glass text-background rounded-lg border-white/5 border"
+              />
+              <input
+                type="text"
+                placeholder="Last name"
+                class="w-full placeholder:text-background/50 p-4 bg-glass text-white rounded-lg border border-white/5"
+              />
+            </div>
+            <input
+              type="text"
+              placeholder="Email"
+              class="w-full placeholder:text-background/50 p-4 bg-glass text-white rounded-lg border border-white/5"
+            />
+            <textarea
+              placeholder="Message"
+              class="w-full placeholder:text-background/50 p-4 bg-glass text-white rounded-lg border border-white/5"
+              rows="5"></textarea>
+            <button
+              class="py-3 px-6 bg-primary text-background rounded-lg justify-self-start min-w-40"
+              >Send</button
+            >
+          </div>
+        </div>
       </BrowserWindow>
     </Container>
   </div>

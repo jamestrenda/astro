@@ -23,7 +23,7 @@ export function Accordion({ data }: Props) {
           <AccordionItem
             key={i}
             value={`item-${i.toFixed()}`}
-            className="[&[data-state=closed]>div]:h-0 lg:[&[data-state=closed]>div]:h-auto"
+            className="[&[data-state=closed]>div]:h-0 lg:[&[data-state=closed]>div]:h-auto lg:border-b-0 dark:border-white/5"
           >
             <AccordionTrigger className="text-left [&>svg]:h-6 [&>svg]:w-6 md:[&>svg]:h-8 md:[&>svg]:w-8 lg:[&>svg]:hidden lg:cursor-text select-text lg:pointer-events-none">
               {item.title}

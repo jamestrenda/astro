@@ -2,6 +2,7 @@
 import type { Theme } from "~/utils/theme";
 import { ThemeToggle } from "./ThemeToggle";
 import Logo from "./Logo.astro";
+import Container from "./Container.astro";
 
 interface Props {
   theme: Theme | undefined;
@@ -10,8 +11,8 @@ interface Props {
 const { theme } = Astro.props;
 ---
 
-<header class="px-4 dark:bg-black">
-  <div class="flex items-center justify-between lg:max-w-7xl lg:mx-auto">
+<header class="dark:bg-black">
+  <Container className="flex items-center justify-between">
     <nav>
       <a
         href="/"
@@ -22,5 +23,5 @@ const { theme } = Astro.props;
       </a>
     </nav>
     <ThemeToggle client:only="react" initial={theme} />
-  </div>
+  </Container>
 </header>

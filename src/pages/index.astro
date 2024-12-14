@@ -4,6 +4,7 @@ import { getIndex } from "../utils/sanity";
 import { Heading } from "~/components/Heading";
 import Container from "~/components/Container.astro";
 import { Accordion } from "~/components/Accordion";
+import BrowserWindow from "~/components/BrowserWindow.astro";
 // import PortableText from "~/components/PortableText/PortableText.astro";
 
 const data = await getIndex({
@@ -73,46 +74,10 @@ const principles = [
 <Layout>
   <!-- Hero -->
   <div
-    class="w-full md:pt-4 bg-black/10 dark:bg-black/20 pb-24 md:h-[768px] relative max-sm:overflow-hidden"
+    class="max-md:[&>div]:!px-0 md:pt-4 bg-black/10 dark:bg-black/20 pb-24 md:h-[768px] relative max-sm:overflow-hidden"
   >
-    <!-- Window -->
-    <div
-      class="flex flex-col w-full md:h-full relative md:w-[calc(100%-2rem)] lg:max-w-7xl mx-auto"
-    >
-      <!-- Shadow stack -->
-      <div class="absolute top-full w-full">
-        <div class="z-10 absolute top-auto -bottom-[60px] w-full">
-          <div class="bg-black/5 backdrop-blur-lg h-24 rounded-lg mx-20"></div>
-        </div>
-        <div class="z-10 absolute inset-0 top-auto -bottom-[48px] w-full">
-          <div class="bg-black/20 backdrop-blur-lg h-24 rounded-lg mx-16"></div>
-        </div>
-        <div class="z-10 absolute inset-0 top-auto -bottom-[36px] w-full">
-          <div class="bg-black/40 backdrop-blur-lg h-24 rounded-lg mx-12"></div>
-        </div>
-        <div class="z-10 absolute inset-0 top-auto -bottom-[24px] w-full">
-          <div class="bg-black/50 backdrop-blur-lg h-24 rounded-lg mx-8"></div>
-        </div>
-        <div class="z-10 absolute inset-0 top-auto -bottom-[12px] w-full">
-          <div class="bg-black/50 backdrop-blur-lg h-24 rounded-lg mx-4"></div>
-        </div>
-      </div>
-      <!-- Chrome -->
-      <div
-        class="bg-glass absolute inset-x-0 z-30 h-14 md:rounded-t-lg grid items-center"
-      >
-        <div class="flex items-center justify-between h-full px-4">
-          <div class="flex items-center space-x-2">
-            <div class="h-3 w-3 bg-glass dark:bg-white/10 rounded-full"></div>
-            <div class="h-3 w-3 bg-glass dark:bg-white/10 rounded-full"></div>
-            <div class="h-3 w-3 bg-glass dark:bg-white/10 rounded-full"></div>
-          </div>
-        </div>
-      </div>
-      <!-- Viewport -->
-      <div
-        class="z-20 pt-14 bg-foreground dark:bg-black bg-[size:150%] bg-[position:90%] bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),black_75%)] lg:bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7)_10%,black_50%)] dark:bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),hsl(0 0% 10%)_75%)] rounded-b-lg md:rounded-t-lg w-full h-full min-h-[540px] sm:min-h-96 p-6 sm:p-16 grid items-center"
-      >
+    <Container>
+      <BrowserWindow className="max-md:rounded-t-none">
         <!-- Text Content -->
         <div class="w-full min-[480px]:w-4/5 xs:w-1/2 mt-16">
           <div
@@ -360,18 +325,20 @@ const principles = [
             </div>
           </div>
         </div>
-      </div>
-      <img
-        src="/me.png"
-        alt="Me"
-        class="absolute z-30 -bottom-24 md:bottom-0 -right-4 md:right-0 md:rounded-br-lg object-cover max-h-[400px] max-[579px]:max-w-72 xs:h-[600px] xs:max-h-[700px] md:h-[700px] lg:w-[700px] min-[480px]:w-2/3 aspect-square pointer-events-none dark:brightness-75 contrast-[1.1]"
-      />
-      <!-- <PortableText blocks={data.body} /> -->
-    </div>
+        <img
+          src="/me.png"
+          alt="Me"
+          class="absolute z-30 -bottom-24 md:bottom-0 -right-4 md:right-0 md:rounded-br-lg object-cover max-h-[400px] max-[579px]:max-w-72 xs:h-[600px] xs:max-h-[700px] md:h-[700px] lg:w-[700px] min-[480px]:w-2/3 aspect-square pointer-events-none dark:brightness-75 contrast-[1.1]"
+        />
+      </BrowserWindow>
+    </Container>
+
+    <!-- <PortableText blocks={data.body} /> -->
   </div>
+
   <!-- About -->
   <div>
-    <Container variant="small">
+    <Container variant="tight" padding={true}>
       <div class="uppercase text-primary text-sm mb-2 font-semibold">
         About Me
       </div>
@@ -388,23 +355,28 @@ const principles = [
     </Container>
   </div>
   <!-- Guiding Principles -->
+  <Container padding={true}>
+    <Heading level={2} className="mb-6">Guiding Principles</Heading>
+    <p class="text-xl md:text-2xl max-w-5xl font-light">
+      These principles guide how I approach both my work and life. While I
+      strive for constant growth, clear communication, and excellence, I
+      recognize that, as an imperfect human being, I don't always hit the mark.
+      I believe in the value of learning from mistakes, holding myself
+      accountable, and focusing on progress rather than perfection.
+    </p>
+    <div class="my-14">
+      {
+        principles ? (
+          <Accordion data={principles} client:media="(max-width: 1023px)" />
+        ) : null
+      }
+    </div>
+  </Container>
   <div>
-    <Container>
-      <Heading level={2} className="mb-6">Guiding Principles</Heading>
-      <p class="text-xl md:text-2xl max-w-5xl font-light">
-        These principles guide how I approach both my work and life. While I
-        strive for constant growth, clear communication, and excellence, I
-        recognize that, as an imperfect human being, I don't always hit the
-        mark. I believe in the value of learning from mistakes, holding myself
-        accountable, and focusing on progress rather than perfection.
-      </p>
-      <div class="my-14">
-        {
-          principles ? (
-            <Accordion data={principles} client:media="(max-width: 1023px)" />
-          ) : null
-        }
-      </div>
+    <Container padding={true} className="!pt-0">
+      <BrowserWindow>
+        <p>Hello</p>
+      </BrowserWindow>
     </Container>
   </div>
 </Layout>

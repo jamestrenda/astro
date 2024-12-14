@@ -2,21 +2,28 @@
 import { cva } from "class-variance-authority";
 import { cn } from "~/utils/misc";
 
-const { className, variant } = Astro.props;
+const { className, variant, padding } = Astro.props;
 
-const variants = cva("mx-auto py-16  xs:py-32", {
+const variants = cva("mx-auto", {
   variants: {
     variant: {
-      default: "max-w-7xl px-4",
-      small: "max-w-5xl p-16 xs:px-16",
+      default: ["max-w-7xl"],
+      tight: ["max-w-xl md:max-w-2xl lg:max-w-4xl"],
+    },
+    padding: {
+      false: null,
+      true: ["py-16 xs:py-32"],
     },
   },
   defaultVariants: {
     variant: "default",
+    padding: false,
   },
 });
 ---
 
-<div class={cn(variants({ variant }), className)}>
-  <slot />
+<div class:list={["group/container px-4"]}>
+  <div class={cn([variants({ variant, padding }), className])}>
+    <slot />
+  </div>
 </div>

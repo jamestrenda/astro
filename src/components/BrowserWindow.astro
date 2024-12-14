@@ -1,0 +1,49 @@
+---
+const { className } = Astro.props;
+---
+
+<!-- Window -->
+<div class="browser-window flex flex-col md:h-full relative">
+  <!-- Shadow stack -->
+  <div class="absolute top-full w-full">
+    <div class="z-10 absolute top-auto -bottom-[60px] w-full">
+      <div class="bg-black/5 backdrop-blur-lg h-24 rounded-lg mx-20"></div>
+    </div>
+    <div class="z-10 absolute inset-0 top-auto -bottom-[48px] w-full">
+      <div class="bg-black/20 backdrop-blur-lg h-24 rounded-lg mx-16"></div>
+    </div>
+    <div class="z-10 absolute inset-0 top-auto -bottom-[36px] w-full">
+      <div class="bg-black/40 backdrop-blur-lg h-24 rounded-lg mx-12"></div>
+    </div>
+    <div class="z-10 absolute inset-0 top-auto -bottom-[24px] w-full">
+      <div class="bg-black/50 backdrop-blur-lg h-24 rounded-lg mx-8"></div>
+    </div>
+    <div class="z-10 absolute inset-0 top-auto -bottom-[12px] w-full">
+      <div class="bg-black/50 backdrop-blur-lg h-24 rounded-lg mx-4"></div>
+    </div>
+  </div>
+  <!-- Viewport -->
+  <div
+    class:list={[
+      "z-20 pt-14 bg-foreground dark:bg-black bg-[size:150%] bg-[position:90%] bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),black_75%)] lg:bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7)_10%,black_50%)] dark:bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),hsl(0 0% 10%)_75%)] rounded-lg w-full h-full  p-6 sm:p-16 grid items-center",
+      className,
+    ]}
+  >
+    <!-- Chrome -->
+    <div
+      class:list={[
+        "bg-glass absolute top-0 inset-x-0 z-30 h-14 rounded-t-lg grid items-center",
+        className,
+      ]}
+    >
+      <div class="flex items-center justify-between h-full px-4">
+        <div class="flex items-center space-x-2">
+          <div class="h-3 w-3 bg-glass dark:bg-white/10 rounded-full"></div>
+          <div class="h-3 w-3 bg-glass dark:bg-white/10 rounded-full"></div>
+          <div class="h-3 w-3 bg-glass dark:bg-white/10 rounded-full"></div>
+        </div>
+      </div>
+    </div>
+    <slot />
+  </div>
+</div>

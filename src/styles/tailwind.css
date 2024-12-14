@@ -53,8 +53,8 @@
     background-color: hsla(var(--background) / var(--tw-bg-opacity));
     @apply backdrop-blur-md;
     .dark & {
-      --background: 0 0% 0%;
-      --tw-bg-opacity: 0.2;
+      --background: 0 0% 50%;
+      /* --tw-bg-opacity: 0.2; */
     }
   }
 }

@@ -364,7 +364,7 @@ const principles = [
       I believe in the value of learning from mistakes, holding myself
       accountable, and focusing on progress rather than perfection.
     </p>
-    <div class="my-14">
+    <div class="mt-14">
       {
         principles ? (
           <Accordion data={principles} client:media="(max-width: 1023px)" />
@@ -372,10 +372,14 @@ const principles = [
       }
     </div>
   </Container>
-  <div class="border-t dark:border-white/5">
-    <Container padding={true} variant="tight" className="">
+  <!-- Contact Form -->
+  <div>
+    <Container padding={true} className="!pt-0">
       <BrowserWindow>
-        <div class="py-16 grid md:grid-cols-2 gap-8">
+        <Container
+          variant="tight"
+          className="py-16 sm:pb-0 grid lg:grid-cols-2 gap-8"
+        >
           <div>
             <div class="uppercase text-primary text-sm mb-2 font-semibold">
               Get in touch
@@ -416,7 +420,7 @@ const principles = [
               >Send</button
             >
           </div>
-        </div>
+        </Container>
       </BrowserWindow>
     </Container>
   </div>

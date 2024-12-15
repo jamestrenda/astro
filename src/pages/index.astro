@@ -1,6 +1,7 @@
 ---
 import Layout from "./_layout.astro";
 import { getIndex } from "../utils/sanity";
+import Overline from "~/components/Overline.astro";
 import { Heading } from "~/components/Heading";
 import Container from "~/components/Container.astro";
 import { Accordion } from "~/components/Accordion";
@@ -80,11 +81,7 @@ const principles = [
       <BrowserWindow className="max-md:rounded-t-none">
         <!-- Text Content -->
         <div class="w-full min-[480px]:w-4/5 xs:w-1/2 mt-16">
-          <div
-            class="uppercase text-primary text-sm mb-2 font-semibold fade-in"
-          >
-            Full-Stack Web Development
-          </div>
+          <Overline> Full-Stack Web Development </Overline>
           <Heading
             level={1}
             className="md:max-w-full mb-6 text-5xl lg:text-6xl fade-in"
@@ -335,13 +332,10 @@ const principles = [
 
     <!-- <PortableText blocks={data.body} /> -->
   </div>
-
   <!-- About -->
   <div>
     <Container variant="tight" padding={true}>
-      <div class="uppercase text-primary text-sm mb-2 font-semibold">
-        About Me
-      </div>
+      <Overline>About me</Overline>
       <Heading level={2} className="mb-6"
         >I’m driven by a commitment to solving problems through thoughtful,
         user-centered web development.</Heading
@@ -352,6 +346,12 @@ const principles = [
         thoughtful, user-centered interfaces that simplify complexities, connect
         people, and improve everyday experiences.
       </p>
+    </Container>
+  </div>
+  <!-- Projects -->
+  <div>
+    <Container padding={true}>
+      <Overline>Featured Projecs</Overline>
     </Container>
   </div>
   <!-- Guiding Principles -->
@@ -381,9 +381,7 @@ const principles = [
           className="py-16 sm:pb-0 grid lg:grid-cols-2 gap-8"
         >
           <div>
-            <div class="uppercase text-primary text-sm mb-2 font-semibold">
-              Get in touch
-            </div>
+            <Overline>Get in touch</Overline>
             <Heading level={2} className="mb-6 text-background">
               Ready to turn your vision into reality?</Heading
             >

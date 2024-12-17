@@ -28,7 +28,7 @@ export const ProjectCarousel = ({ data }: Props) => {
     <div id="featured-projects" className="w-full h-full">
       <Tabs
         defaultValue={clients[0]}
-        // className="w-full"
+        value={active}
         onValueChange={(value) => setActive(value)}
       >
         <TabsList>
@@ -50,16 +50,13 @@ export const ProjectCarousel = ({ data }: Props) => {
             const offset = index - activeIndex; // Distance from the active card
             const isActive = index === activeIndex;
 
-            console.log("offset", offset);
-            console.log("isActive", isActive);
-            console.log("index", index);
-            console.log("activeIndex", activeIndex);
             return (
               <TabsContent
                 asChild
                 key={client}
                 value={client}
                 forceMount
+                onClick={() => setActive(client)}
                 // style={
                 //   {
                 //     // opacity: `${client === active ? 1 : 0.5}`,
@@ -67,23 +64,35 @@ export const ProjectCarousel = ({ data }: Props) => {
                 // }
               >
                 <motion.div
-                  className={`w-full h-full absolute top-0 inset-x-0 ${isActive ? "" : "cursor-pointer"}`}
+                  className={`w-full group h-full absolute top-0 inset-x-0 ${isActive ? "" : index < activeIndex ? "pointer-events-none" : "cursor-pointer"}`}
                   initial={{
                     y: offset * -12, // Vertical offset for inactive cards
                     // scale: isActive ? 1 : 1 - Math.abs(offset) * 0.1, // Scale inactive cards
                     zIndex: -Math.abs(offset) + 10, // Stack order
                   }}
                   animate={{
-                    y: offset * -12,
+                    y:
+                      !isActive && index < activeIndex
+                        ? 50
+                        : !isActive && index > activeIndex
+                          ? undefined
+                          : offset * -12,
                     // scale: isActive ? 1 : 1 - Math.abs(offset) * 0.1,
                     opacity: isActive ? 1 : index < activeIndex ? 0 : 1,
                     zIndex: -Math.abs(offset) + 10,
                   }}
+                  // exit={{
+                  //   y: offset * 20,
+                  //   // scale: isActive ? 1 : 1 - Math.abs(offset) * 0.1,
+                  //   opacity: 0,
+                  //   zIndex: -Math.abs(offset) + 10,
+                  // }}
                   transition={{
                     type: "spring",
                     stiffness: 300,
                     damping: 30,
-                    duration: 0.5,
+                    duration: 1.5,
+                    // staggerChildren: 0.5,
                   }}
                 >
                   <motion.div
@@ -103,11 +112,27 @@ export const ProjectCarousel = ({ data }: Props) => {
                   >
                     <BrowserWindow
                       stacked={false}
-                      className={`min-h-[600px] ${!isActive ? "backdrop-blur-lg bg-black/30 !bg-none" : "bg-black !bg-[radial-gradient(circle,rgba(255,255,255,.05)_10%,black_75%)]"}`}
+                      className={`min-h-[600px] ${!isActive ? "backdrop-blur-lg transition bg-black/30 !bg-none group-hover:bg-primary" : "bg-black !bg-[radial-gradient(circle,rgba(255,255,255,.05)_10%,black_75%)]"}`}
                     >
                       <AnimatePresence>
                         {isActive && (
-                          <span className="text-white">{client}</span>
+                          <motion.span
+                            initial={{
+                              opacity: 0,
+                              y: 10,
+                            }}
+                            animate={{
+                              opacity: 1,
+                              y: 0,
+                            }}
+                            exit={{
+                              opacity: 0,
+                              y: 10,
+                            }}
+                            className="text-white"
+                          >
+                            {client}
+                          </motion.span>
                         )}
                       </AnimatePresence>
                     </BrowserWindow>

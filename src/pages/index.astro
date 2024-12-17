@@ -5,7 +5,9 @@ import Overline from "~/components/Overline.astro";
 import { Heading } from "~/components/Heading";
 import Container from "~/components/Container.astro";
 import { Accordion } from "~/components/Accordion";
-import BrowserWindow from "~/components/BrowserWindow.astro";
+import BrowserWindow from "~/components/BrowserWindow";
+import { ProjectCarousel } from "~/components/ProjectCarousel";
+
 // import PortableText from "~/components/PortableText/PortableText.astro";
 
 const data = await getIndex({
@@ -68,6 +70,81 @@ const principles = [
     title: "Creativity",
     description:
       "I embrace creativity and innovation. I believe in thinking outside the box, exploring new ideas, and pushing the boundaries of what's possible.",
+  },
+];
+
+const featuredProjects = [
+  {
+    client: "APC",
+    url: "?project=apc",
+    title:
+      "Bringing Farm-to-Table Full Circle: A Modern Marketing Platform for a Regional Meat Co-op",
+    description:
+      "A custom web application that connects local farmers with consumers, streamlining the process of buying and selling sustainably raised meat products.",
+    image: {
+      src: "/images/placeholder.jpg",
+      alt: "Project 1",
+    },
+    keyFeatures: [
+      "Custom Web Application",
+      "E-Commerce Integration",
+      "User Authentication",
+      "Payment Processing",
+    ],
+  },
+  {
+    client: "mundet",
+    url: "?project=mundet",
+    title:
+      "Revolutionizing the Printing Industry: A Modern Marketing Platform for a Leading Packaging Manufacturer",
+    description:
+      "A comprehensive redesign of the Mundet website to enhance brand visibility, engage customers, and drive sales.",
+    image: {
+      src: "/images/placeholder.jpg",
+      alt: "Project 2",
+    },
+    keyFeatures: [
+      "User-Centered Design",
+      "E-Commerce Integration",
+      "Custom CMS",
+      "SEO Optimization",
+    ],
+  },
+  {
+    client: "SCHD",
+    url: "?project=schd",
+    title:
+      "Redefining Public Health: A User-Centered Redesign for Sullivan County",
+    description:
+      "A comprehensive redesign of the Sullivan County Public Health Services website to improve user experience, accessibility, and performance.",
+    image: {
+      src: "/images/placeholder.jpg",
+      alt: "Project 1",
+    },
+    keyFeatures: [
+      "User-Centered Design",
+      "Accessibility",
+      "Performance Optimization",
+      "Custom Search Functionality",
+    ],
+  },
+  {
+    client: "Trident",
+    url: "?project=trident",
+    title:
+      "Empowering Marketers: A Custom Marketing Platform for a Leading Digital Agency",
+    description:
+      "A custom web application that streamlines the marketing workflow, automates repetitive tasks, and provides actionable insights for data-driven decision-making.",
+    image: {
+      src: "/images/placeholder.jpg",
+      alt: "Project 2",
+    },
+    keyFeatures: [
+      "Custom Web Application",
+      "Marketing Automation",
+      "Data Analytics",
+      "Reporting",
+    ],
   },
 ];
 ---
@@ -348,10 +425,14 @@ const principles = [
       </p>
     </Container>
   </div>
-  <!-- Projects -->
+  <!-- Featured Projects -->
   <div>
-    <Container padding={true}>
+    <Container
+      padding={true}
+      className="flex flex-col items-center min-h-screen"
+    >
       <Overline>Featured Projecs</Overline>
+      <ProjectCarousel client:visible data={featuredProjects} />
     </Container>
   </div>
   <!-- Guiding Principles -->

@@ -8,6 +8,7 @@ import { Accordion } from "~/components/Accordion";
 import BrowserWindow from "~/components/BrowserWindow";
 import { FadeIn } from "~/components/FadeIn";
 import { HomeHero } from "~/components/HomeHero";
+import { TextBlock } from "~/components/TextBlock";
 // import PortableText from "~/components/PortableText/PortableText.astro";
 
 const data = await getIndex({
@@ -76,21 +77,15 @@ const principles = [
   <!-- Hero -->
   <HomeHero client:visible />
   <!-- About -->
-  <div>
-    <Container variant="tight" padding={true}>
-      <Overline>About me</Overline>
-      <Heading level={2} className="mb-6"
-        >I'm driven by a commitment to solving problems through thoughtful,
-        user-centered web development.</Heading
-      >
-      <p class="text-xl md:text-2xl font-light">
-        Web development—much like life—is about tackling challenges and crafting
-        solutions that make a difference. I'm passionate about creating
-        thoughtful, user-centered interfaces that simplify complexities, connect
-        people, and improve everyday experiences.
-      </p>
-    </Container>
-  </div>
+  <TextBlock
+    client:idle
+    {...{
+      overline: "About me",
+      heading:
+        "I'm driven by a commitment to solving problems through thoughtful, user-centered web development.",
+      text: "Web development—much like life—is about tackling challenges and crafting solutions that make a difference. I'm passionate about creating thoughtful, user-centered interfaces that simplify complexities, connect people, and improve everyday experiences.",
+    }}
+  />
   <!-- Projects -->
   <div>
     <Container padding={true}>

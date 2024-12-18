@@ -21,7 +21,7 @@ export const Header = ({ theme }: Props) => {
   }, [height]);
 
   return (
-    <header ref={ref} className="dark:bg-black sticky top-0">
+    <header ref={ref} className="bg-background dark:bg-black sticky top-0">
       <Container className="flex items-center justify-between">
         <nav>
           <a

@@ -6,9 +6,10 @@ export const FadeIn = ({
   delay = 0,
 }: { delay?: number } & PropsWithChildren) => {
   const variants = {
-    initial: { opacity: 0 },
+    initial: { y: 20, opacity: 0 },
     animate: {
       opacity: 1,
+      y: 0,
       transition: { duration: 0.5, delay: 0.05 * delay },
     },
     exit: { opacity: 0 },

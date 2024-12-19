@@ -7,7 +7,7 @@ interface Props extends VariantProps<typeof variants> {
   children: React.ReactNode;
 }
 
-const variants = cva("mx-auto", {
+const variants = cva("h-full mx-auto", {
   variants: {
     variant: {
       default: ["max-w-7xl"],
@@ -26,7 +26,7 @@ const variants = cva("mx-auto", {
 
 export const Container = ({ variant, padding, className, children }: Props) => {
   return (
-    <div className={cn("group/container px-4")}>
+    <div className={cn("group/container px-4 h-full")}>
       <div className={cn([variants({ variant, padding }), className])}>
         {children}
       </div>

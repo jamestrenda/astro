@@ -3,20 +3,18 @@ import BrowserWindow from "./BrowserWindow";
 import { FadeIn } from "./FadeIn";
 import { Overline } from "./Overline";
 import { Heading } from "./Heading";
-import {
-  motion,
-  useInView,
-  useScroll,
-  useTransform,
-  type MotionProps,
-} from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { useStore } from "@nanostores/react";
 import { headerHeight } from "~/store";
 import { useRef } from "react";
 import { cn } from "~/utils/misc";
+import { useMeasure } from "@uidotdev/usehooks";
+import { TextBlock } from "./TextBlock";
 
 export const HomeHero = () => {
   const $headerHeight = useStore(headerHeight);
+  const [ref, { width }] = useMeasure();
+  const [heroRef, { height: heroHeight }] = useMeasure();
   const target = useRef<HTMLDivElement>(null);
   const { scrollY, scrollYProgress } = useScroll({
     target,
@@ -61,20 +59,24 @@ export const HomeHero = () => {
   );
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.25, 0.5, 0.6, 0.65],
+    [0, 0.6, 0.61, 1],
     [
       "rgb(0 0 0 / 0.05)",
       "rgb(0 0 0 / 0.05)",
-      "rgb(0 0 0 / 0.05)",
-      "rgb(0 0 0 / 0.05)",
+      "rgb(0 0 0 / 1)",
       "rgb(0 0 0 / 1)",
     ]
   );
-  const windowScale = useTransform(
-    scrollYProgress,
-    [0, 0.25, 0.5, 0.6, 1],
-    [1, 1, 1, 1.3125, 1.3125]
-  );
+  //   const windowScale = useTransform(
+  //     scrollYProgress,
+  //     [0, 0.5, 0.6, 1],
+  //     [1, 1, 1.3125, 1.3125]
+  //   );
+  //   const windowHeight = useTransform(
+  //     scrollYProgress,
+  //     [0, 0.25, 0.5, 0.8, 1],
+  //     [768, 768, 768, 768, 800]
+  //   );
   const paddingTop = useTransform(
     scrollYProgress,
     [0, 0.25, 0.5, 0.6, 1],
@@ -84,14 +86,16 @@ export const HomeHero = () => {
   const numItems = 8;
   return (
     <motion.div
-      className="md:h-[175vh] "
+      ref={ref}
+      className=""
       style={{
         zIndex,
         position,
-        backgroundColor,
+        // backgroundColor,
+        // height: `calc(200vh - ${$headerHeight}px)`,
       }}
     >
-      <div ref={target} className="h-full relative z-50">
+      <div ref={target} className="relative z-50 h-[150vh]">
         <div
           className="sticky"
           style={{
@@ -99,17 +103,19 @@ export const HomeHero = () => {
           }}
         >
           <motion.div
-            className="max-md:[&>div]:!px-0 md:pt-4 pb-24 md:min-h-[768px] max-md:overflow-hidden origin-top mx-auto"
+            ref={heroRef}
+            className="max-md:[&>div]:!px-0 md:pt-4 max-md:overflow-hidden origin-top mx-auto"
             style={{
-              opacity,
+              //   opacity,
               //   y,
               paddingTop,
-              scale: windowScale,
+              //   scale: windowScale,
+              //   height: windowHeight,
             }}
           >
             <Container>
               <BrowserWindow
-                stacked={false}
+                // stacked={false}
                 className="max-md:rounded-t-none"
                 {...{ scrollY, scrollYProgress }}
               >
@@ -405,6 +411,21 @@ export const HomeHero = () => {
 
             {/* <PortableText blocks={data.body} /> */}
           </motion.div>
+        </div>
+        <div
+          className="sticky"
+          style={{
+            top: (heroHeight || 0) + $headerHeight,
+          }}
+        >
+          <TextBlock
+            {...{
+              overline: "About me",
+              heading:
+                "I'm driven by a commitment to solving problems through thoughtful, user-centered web development.",
+              text: "Web development—much like life—is about tackling challenges and crafting solutions that make a difference. I'm passionate about creating thoughtful, user-centered interfaces that simplify complexities, connect people, and improve everyday experiences.",
+            }}
+          />
         </div>
       </div>
     </motion.div>

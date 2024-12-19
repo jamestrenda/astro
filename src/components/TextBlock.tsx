@@ -26,23 +26,21 @@ export const TextBlock = ({ overline, heading, text }: Props) => {
   return (
     <div
       ref={target}
-      className="bg-black"
-      style={{ height: `calc(100vh - ${$headerHeight}px)` }}
+      //   className="bg-black"
+      //   style={{ height: `calc(100vh - ${$headerHeight}px)` }}
     >
       <Container variant="tight" padding={true}>
-        <FadeInScrollLinked opacity={overlineOpacity}>
-          <Overline>{overline}</Overline>
-        </FadeInScrollLinked>
-        <FadeInScrollLinked opacity={headingOpacity}>
-          <Heading level={2} className="mb-6 text-background">
-            {heading}
-          </Heading>
-        </FadeInScrollLinked>
-        <FadeInScrollLinked opacity={textOpacity}>
-          <p className="text-xl md:text-2xl font-light text-background">
-            {text}
-          </p>
-        </FadeInScrollLinked>
+        {/* <FadeInScrollLinked opacity={overlineOpacity}> */}
+        <Overline>{overline}</Overline>
+        {/* </FadeInScrollLinked> */}
+        {/* <FadeInScrollLinked opacity={headingOpacity}> */}
+        <Heading level={2} className="mb-6">
+          {heading}
+        </Heading>
+        {/* </FadeInScrollLinked> */}
+        {/* <FadeInScrollLinked opacity={textOpacity}> */}
+        <p className="text-xl md:text-2xl font-light">{text}</p>
+        {/* </FadeInScrollLinked> */}
       </Container>
     </div>
   );

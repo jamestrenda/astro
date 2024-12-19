@@ -1,6 +1,6 @@
 import { cn } from "~/utils/misc";
 import { MotionValue, motion, useTransform } from "motion/react";
-import { memo, useMemo } from "react";
+import { memo } from "react";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -26,7 +26,7 @@ const BrowserWindow = memo(
       <div className="browser-window md:h-full relative rounded-b-lg">
         <motion.div
           className={cn(
-            "relative z-20 pt-14 bg-black/90 bg-[size:150%] bg-[position:90%] bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),black_75%)] lg:bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7)_10%,black_50%)] dark:bg-[radial-gradient(circle,hsla(var(--primary-dark)/.7),hsl(0 0% 10%)_75%)] rounded-lg max-md:rounded-bl-none w-full h-full p-6 sm:p-16 grid items-center",
+            "relative z-20 pt-14 bg-black/90 bg-[size:150%] bg-[position:90%] bg-[radial-gradient(circle,hsl(var(--primary-dark)),black_75%)] lg:bg-[radial-gradient(circle,hsl(var(--primary-dark))_10%,black_50%)] dark:bg-[radial-gradient(circle,hsl(var(--primary-dark)),hsl(0 0% 10%)_75%)] rounded-lg max-md:rounded-bl-none w-full h-full p-6 sm:p-16 grid items-center",
             className
           )}
           style={{
@@ -104,7 +104,15 @@ const Shadow = memo(
           // bottom: bottomProgress,
         }}
       >
-        <div className={cn("bg-black/40 h-24 rounded-lg backdrop-blur-lg")} />
+        <div
+          className={cn("bg-black h-24 rounded-lg")}
+          style={
+            {
+              "--lightness": Math.abs(bottom * 1.5) + "%",
+              backgroundColor: `hsl(0 0% var(--lightness))`,
+            } as React.CSSProperties
+          }
+        />
       </motion.div>
     );
   }

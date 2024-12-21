@@ -7,7 +7,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 const BrowserWindow = ({ className, stacked = true, children }: Props) => {
   return (
-    <div className="browser-window flex flex-col md:h-full relative">
+    <div className="browser-window relative">
       {stacked && (
         <div className="absolute top-full w-full">
           <div className="z-10 absolute top-auto -bottom-[60px] w-full">

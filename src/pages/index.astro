@@ -7,6 +7,7 @@ import Container from "~/components/Container.astro";
 import { Accordion } from "~/components/Accordion";
 import BrowserWindow from "~/components/BrowserWindow";
 import { ProjectCarousel } from "~/components/ProjectCarousel";
+import { Basic } from "~/components/Basic";
 
 // import PortableText from "~/components/PortableText/PortableText.astro";
 
@@ -75,6 +76,7 @@ const principles = [
 
 const featuredProjects = [
   {
+    id: 1,
     client: "APC",
     url: "?project=apc",
     title:
@@ -93,6 +95,7 @@ const featuredProjects = [
     ],
   },
   {
+    id: 2,
     client: "mundet",
     url: "?project=mundet",
     title:
@@ -111,6 +114,7 @@ const featuredProjects = [
     ],
   },
   {
+    id: 3,
     client: "SCHD",
     url: "?project=schd",
     title:
@@ -129,6 +133,7 @@ const featuredProjects = [
     ],
   },
   {
+    id: 4,
     client: "Trident",
     url: "?project=trident",
     title:
@@ -432,7 +437,8 @@ const featuredProjects = [
       className="flex flex-col items-center min-h-screen"
     >
       <Overline>Featured Projecs</Overline>
-      <ProjectCarousel client:visible data={featuredProjects} />
+      <!-- <ProjectCarousel client:visible data={featuredProjects} /> -->
+      <Basic data={featuredProjects} client:visible />
     </Container>
   </div>
   <!-- Guiding Principles -->

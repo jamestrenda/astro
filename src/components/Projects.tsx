@@ -130,7 +130,7 @@ const Project = ({
             opacity: !visible
               ? [1, 1, 0]
               : active && direction === "backwards"
-                ? [0, 1, 1]
+                ? [0, 0, 1]
                 : [1, 1, 1],
             y: !visible
               ? [0, 60, 60]
@@ -143,21 +143,21 @@ const Project = ({
               y: {
                 type: "tween",
                 ease: "easeOut",
-                duration: 0.3,
+                duration: 0.5,
                 times: [0, 0.5, 1],
                 // delay: active && direction === "backwards" ? 0.3 : 0,
               },
               opacity: {
                 type: "tween",
                 ease: "easeOut",
-                duration: 0.2,
-                times: [0, 0.75, 1],
+                duration: 0.3,
+                times: [0, 0.333, 1],
                 // delay: active && direction === "backwards" ? 0.3 : 0,
               },
               scale: {
                 type: "tween",
                 ease: "easeOut",
-                duration: 0.3,
+                duration: 0.5,
                 times: [0, 0.5, 1],
                 // delay: active && direction === "backwards" ? 0.3 : 0,
               },

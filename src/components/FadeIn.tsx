@@ -8,7 +8,6 @@ const defaultVariants = (delay: number) => ({
     y: 0,
     transition: { duration: 0.5, delay: 0.05 * delay },
   },
-  exit: { opacity: 0 },
 });
 
 export const FadeIn = ({

@@ -19,31 +19,20 @@ const BrowserWindow = memo(
     scrollY = new MotionValue(),
     scrollYProgress = new MotionValue(),
   }: Props) => {
-    const borderRadius = useTransform(
-      scrollYProgress,
-      [0, 0.25, 0.5, 0.63],
-      [8, 8, 8, 0]
-    );
     return (
       <div className="browser-window md:h-full relative rounded-b-lg">
-        <motion.div
+        <div
           className={cn(
-            "relative z-20 pt-14 bg-black/90 bg-[size:150%] bg-[position:90%] bg-[radial-gradient(circle,hsl(var(--primary-dark)),black_75%)] lg:bg-[radial-gradient(circle,hsl(var(--primary-dark))_10%,black_50%)] dark:bg-[radial-gradient(circle,hsl(var(--primary-dark)),hsl(0 0% 10%)_75%)] rounded-lg max-md:rounded-bl-none w-full h-full p-6 sm:p-16 grid items-center",
+            "relative z-20 pt-14 bg-black bg-[size:150%] bg-[position:90%] bg-[radial-gradient(circle,hsl(var(--primary-dark)),black_75%)] lg:bg-[radial-gradient(circle,hsl(var(--primary-dark))_10%,black_50%)] dark:bg-[radial-gradient(circle,hsl(var(--primary-dark)),hsl(0 0% 10%)_75%)] rounded-lg max-md:rounded-bl-none w-full h-full p-6 sm:p-16 grid items-center",
             className
           )}
-          style={{
-            borderRadius,
-          }}
         >
           {withChrome && (
-            <motion.div
+            <div
               className={cn(
                 "bg-glass absolute top-0 inset-x-0 z-30 h-14 rounded-t-lg grid items-center"
                 // className
               )}
-              // style={{
-              //   borderRadius,
-              // }}
             >
               <div className="flex items-center justify-between h-full px-4">
                 <div className="flex items-center space-x-2">
@@ -52,10 +41,10 @@ const BrowserWindow = memo(
                   <div className="h-3 w-3 bg-glass dark:bg-white/10 rounded-full"></div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
           {children}
-        </motion.div>
+        </div>
         {withStack && (
           <motion.div className="absolute inset-0">
             {Array.from({ length: 5 }).map((_, index) => (

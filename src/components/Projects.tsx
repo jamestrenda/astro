@@ -7,6 +7,9 @@ import { Container } from "./Container";
 import { Overline } from "./Overline";
 import BrowserWindow from "./BrowserWindow";
 import { useMeasure } from "@uidotdev/usehooks";
+import { Heading } from "./Heading";
+import { delay } from "rxjs";
+import { CheckCircle2Icon } from "lucide-react";
 
 interface Props {
   data: {
@@ -43,9 +46,8 @@ export const Projects = ({ data }: Props) => {
           defaultValue={data[0].id}
           value={activeTab}
           onValueChange={(value) => handleActiveTab(value)}
-          className="flex flex-col gap-8 w-full"
+          className="flex flex-col gap-8 w-full mt-6"
         >
-          {/* Tab buttons */}
           <TabsList>
             {data.map((project, index) => {
               const active = activeTab === project.id;
@@ -56,22 +58,7 @@ export const Projects = ({ data }: Props) => {
               );
             })}
           </TabsList>
-          <div className="relative w-full max-w-7xl mx-auto">
-            {/* {data.map(({ id }, index) => (
-              <Box
-                key={id}
-                id={id}
-                active={index === activeIndex}
-                visible={index >= activeIndex}
-                offset={activeIndex - index}
-                zIndex={data.length - index}
-                onClick={handleActiveTab}
-                activeIndex={activeIndex}
-                prevIndex={prevIndex}
-              />
-            ))} */}
-            {/* These will represent tab content */}
-
+          <div className="relative w-full max-w-7xl mx-auto mt-6">
             {data.map((project, index) => (
               <Project
                 key={project.id}
@@ -94,7 +81,7 @@ export const Projects = ({ data }: Props) => {
 
 const Project = ({
   id,
-  client,
+
   active,
   visible,
   zIndex,
@@ -102,6 +89,7 @@ const Project = ({
   onClick,
   activeIndex,
   prevIndex,
+  ...props
 }: Props["data"][number] & {
   active: boolean;
   visible: boolean;
@@ -115,12 +103,14 @@ const Project = ({
   const inactiveTabScale = 1 - ((width && 32 / width) || 0) * Math.abs(offset);
   const direction = activeIndex >= prevIndex ? "forwards" : "backwards";
 
+  const { client, title, description, image, keyFeatures, url } = props;
+
   return (
     <TabsContent asChild value={id} forceMount onClick={() => onClick(id)}>
       <motion.div
         ref={ref}
         className={cn(
-          "group absolute top-16 inset-x-0",
+          "group absolute top-16 inset-x-0 rounded-lg",
           "w-full mx-auto origin-top",
           !visible
             ? "pointer-events-none"
@@ -131,69 +121,91 @@ const Project = ({
         initial={{
           marginTop: 0,
           opacity: 1,
-          // boxShadow: `0 0 10px -15px rgba(0,0,0,.3)`,
         }}
         whileInView="animate"
-        viewport={{ once: true }}
-        animate={{
-          scale: !visible ? 1 : inactiveTabScale,
-          opacity: !visible
-            ? [1, 1, 0]
-            : active && direction === "backwards"
-              ? [0, 1, 1]
-              : [1, 1, 1],
-          y: !visible
-            ? [0, 60, 60]
-            : active && direction === "backwards"
-              ? [60, 0, 0]
-              : [0, 0, 0],
-          marginTop: -id * 16,
-          // boxShadow: `0 -10px 10px -15px rgba(0,0,0,.3)`,
-          // "--lightness": visible ? `${100 - Math.abs(offset) * 10}%` : 100,
-        }}
-        transition={{
-          opacity: {
-            type: "tween",
-            ease: "easeOut",
-            duration: 0.3,
-            times: [0, 0.5, 1],
-          },
-          scale: {
-            type: "tween",
-            ease: "easeOut",
-            duration: 0.3,
-            times: [0, 0.5, 1],
-          },
-          boxShadow: {
-            type: "tween",
-            ease: "easeOut",
-            duration: 0.3,
-            delay: active ? 0 : Math.abs(offset) * 0.05,
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{
+          animate: {
+            scale: !visible ? 1 : inactiveTabScale,
+            opacity: !visible
+              ? [1, 1, 0]
+              : active && direction === "backwards"
+                ? [0, 1, 1]
+                : [1, 1, 1],
+            y: !visible
+              ? [0, 60, 60]
+              : active && direction === "backwards"
+                ? [60, 0, 0]
+                : [0, 0, 0],
+            marginTop: -id * 16,
+            "--lightness": visible ? `${Math.abs(offset) * 15}%` : 0,
+            transition: {
+              y: {
+                type: "tween",
+                ease: "easeOut",
+                duration: 0.3,
+                times: [0, 0.5, 1],
+                // delay: active && direction === "backwards" ? 0.3 : 0,
+              },
+              opacity: {
+                type: "tween",
+                ease: "easeOut",
+                duration: 0.2,
+                times: [0, 0.75, 1],
+                // delay: active && direction === "backwards" ? 0.3 : 0,
+              },
+              scale: {
+                type: "tween",
+                ease: "easeOut",
+                duration: 0.3,
+                times: [0, 0.5, 1],
+                // delay: active && direction === "backwards" ? 0.3 : 0,
+              },
+              // delayChildren: 0.3,
+              // staggerChildren: 0.3,
+              // // staggerDirection: !visible ? -1 : 1,
+            },
           },
         }}
         style={{
           zIndex,
-          // backgroundColor: `hsla(0 0% var(--lightness) / 1)`,
+          backgroundColor: `hsl(0 0% var(--lightness))`,
         }}
       >
         <BrowserWindow
           withStack={false}
-          className={`min-h-[600px] ${!active ? "backdrop-blur-lg transition bg-black/30 !bg-none group-hover:bg-black/40 group-hover:border-zinc-300 group-hover:-translate-y-1" : "bg-black !bg-[radial-gradient(circle,rgba(255,255,255,.05)_10%,black_75%)]"}`}
+          className={`min-h-[600px] ${!active ? "backdrop-blur-lg transition duration-500 bg-black/30 !bg-none group-hover:bg-black/40 group-hover:border-zinc-300 group-hover:-translate-y-1" : "bg-black !bg-[radial-gradient(circle,rgba(255,255,255,.05)_10%,black_75%)]"}`}
         >
-          <FadeIn
-            variants={{
-              initial: { y: 20, opacity: 0 },
-              animate: {
-                opacity: active ? 1 : 0,
-                y: active ? 0 : undefined,
-                transition: { duration: 0.5, delay: 0.5 },
-              },
-            }}
-          >
-            <span className="text-white">{client}</span>
-          </FadeIn>
+          <div className="grid grid-cols-2">
+            <div className="space-y-6">
+              <Heading className="text-background">{title}</Heading>
+              <p className="text-muted">{description}</p>
+              <ul className="text-green-400 space-y-4">
+                {keyFeatures.map((feature, index) => (
+                  <li key={index} className="flex">
+                    <CheckCircle2Icon className="mr-2" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <img
+            className="absolute bottom-0 right-0 max-w-[50%] h-auto"
+            src={image.src}
+            alt={image.alt}
+          />
         </BrowserWindow>
       </motion.div>
     </TabsContent>
   );
 };
+
+const fadeInVariants = (active: boolean, delay: number = 0) => ({
+  initial: { y: 20, opacity: 0 },
+  animate: {
+    opacity: active ? 1 : 0,
+    y: active ? 0 : undefined,
+    transition: { duration: 0.3, delay },
+  },
+});

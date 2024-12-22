@@ -28,7 +28,7 @@ export const Basic = ({
     setActiveTab(id);
   };
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 w-full">
       {/* These will represent tabs */}
       <div className="flex gap-4 justify-center">
         {data.map(({ id }, i) => (
@@ -41,15 +41,15 @@ export const Basic = ({
         ))}
       </div>
       {/* These will represent tab content */}
-      <div className="relative w-[600px] mx-auto">
-        {data.map(({ id }, i) => (
+      <div className="relative w-full max-w-4xl mx-auto">
+        {data.map(({ id }, index) => (
           <Box
             key={id}
             id={id}
-            active={activeTab === id}
-            visible={id >= activeTab}
-            offset={activeIndex - i}
-            zIndex={data.length - i}
+            active={index === activeIndex}
+            visible={index >= activeIndex}
+            offset={activeIndex - index}
+            zIndex={data.length - index}
             onClick={handleActiveTab}
             activeIndex={activeIndex}
             prevIndex={prevIndex}
@@ -80,14 +80,14 @@ const Box = ({
   onClick: (id: number) => void;
 }) => {
   const inactiveTabScale = 1 - Math.abs(offset) * 0.1;
-  const direction = activeIndex > prevIndex ? "forwards" : "backwards";
+  const direction = activeIndex >= prevIndex ? "forwards" : "backwards";
 
   return (
     <motion.div
       onClick={() => onClick(id)}
       className={cn(
         "absolute top-16 inset-x-0",
-        "p-6 w-[400px] bg-white h-64 mx-auto border border-solid shadow-[0_-5px_10px_-10px_rgba(0,0,0,.3)] grid place-items-center rounded-lg origin-top",
+        "p-6 w-full min-h-[600px] bg-white h-64 mx-auto grid place-items-center rounded-lg origin-top",
         !visible
           ? "pointer-events-none"
           : active
@@ -96,21 +96,22 @@ const Box = ({
       )}
       initial={{
         marginTop: 0,
+        opacity: 1,
+        boxShadow: `0 0 10px -15px rgba(0,0,0,.3)`,
       }}
       whileInView="animate"
       viewport={{ once: true }}
       animate={{
         scale: !visible ? 1 : inactiveTabScale,
-        opacity:
-          direction === "backwards" && active
-            ? [0, 0, 1]
-            : visible
-              ? [1, 1, 1]
-              : [1, 1, 0],
+        opacity: !visible
+          ? [1, 0, 0]
+          : active && direction === "backwards"
+            ? [0, 1, 1]
+            : [1, 1, 1],
         y: !visible ? 30 : 0,
         marginTop: -id * 16,
+        boxShadow: `0 -10px 10px -15px rgba(0,0,0,.3)`,
         // "--lightness": visible ? `${100 - Math.abs(offset) * 10}%` : 100,
-        // "--opacity": active ? 1 : 0.8,
       }}
       transition={{
         opacity: {
@@ -125,10 +126,15 @@ const Box = ({
           duration: 0.3,
           times: [0, 0.5, 1],
         },
+        boxShadow: {
+          type: "tween",
+          ease: "easeOut",
+          duration: 0.3,
+          delay: active ? 0 : Math.abs(offset) * 0.05,
+        },
       }}
       style={{
         zIndex,
-        // marginTop: -id * 16,
         // backgroundColor: `hsla(0 0% var(--lightness) / 1)`,
       }}
     >

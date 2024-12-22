@@ -156,10 +156,10 @@ const featuredProjects = [
 <Layout>
   <!-- Hero -->
   <div
-    class="max-md:[&>div]:!px-0 md:pt-4 bg-black/10 dark:bg-black/20 pb-24 md:h-[768px] relative max-sm:overflow-hidden"
+    class="max-md:[&>div]:!px-0 md:pt-4 pb-24 md:h-[768px] relative max-sm:overflow-hidden"
   >
     <Container>
-      <BrowserWindow className="max-md:rounded-t-none">
+      <BrowserWindow client:visible className="max-md:rounded-t-none">
         <!-- Text Content -->
         <div class="w-full min-[480px]:w-4/5 xs:w-1/2 mt-16">
           <Overline> Full-Stack Web Development </Overline>
@@ -454,7 +454,7 @@ const featuredProjects = [
   <!-- Contact Form -->
   <div>
     <Container padding={true} className="!pt-0">
-      <BrowserWindow>
+      <BrowserWindow client:visible>
         <Container
           variant="tight"
           className="py-16 sm:pb-0 grid lg:grid-cols-2 gap-8"

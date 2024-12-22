@@ -27,26 +27,52 @@ const TabsTrigger = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
     active?: boolean;
   }
->(({ active, className, ...props }, ref) => (
-  <span className="relative">
-    <AnimatePresence>
-      {active && (
-        <motion.span
-          layoutId="current-indicator"
-          className="absolute inset-0 rounded-full bg-zinc-950 dark:bg-white z-0"
-        />
-      )}
-    </AnimatePresence>
-    <TabsPrimitive.Trigger
-      ref={ref}
-      className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-full cursor-pointer py-2 px-4 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-background relative z-10",
-        className
-      )}
-      {...props}
-    />
-  </span>
-));
+>(({ active, className, ...props }, ref) => {
+  const [hovered, setHovered] = React.useState(false);
+
+  return (
+    <motion.span
+      className="relative"
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+    >
+      <AnimatePresence>
+        {hovered && (
+          <motion.span
+            layoutId="hover-indicator"
+            className="absolute inset-x-1.5 inset-y-0 rounded-full bg-zinc-950/5 dark:bg-white/5 z-0"
+            // style={{
+            //   x: hovered ? 0 : hoveredX.get(),
+            //   // x: active ? 0 : hovered ? 0 : activeX.get(),
+            //   // opacity: hovered ? 1 : 0,
+            // }}
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {active && (
+          <motion.span
+            layoutId="current-indicator"
+            className="absolute inset-y-0 inset-x-1.5 rounded-full bg-zinc-950 dark:bg-white z-0"
+            transition={{
+              layout: { duration: 0.2 },
+            }}
+          />
+        )}
+      </AnimatePresence>
+      <TabsPrimitive.Trigger
+        ref={ref}
+        disabled={active}
+        className={cn(
+          "inline-flex items-center justify-center whitespace-nowrap rounded-full cursor-pointer py-2 px-6  text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-foreground data-[state=active]:text-background relative z-10",
+          active ? "cursor-default disabled:!opacity-100" : "cursor-pointer",
+          className
+        )}
+        {...props}
+      />
+    </motion.span>
+  );
+});
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
 const TabsContent = React.forwardRef<

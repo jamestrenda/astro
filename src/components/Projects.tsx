@@ -8,7 +8,6 @@ import { Overline } from "./Overline";
 import BrowserWindow from "./BrowserWindow";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Heading } from "./Heading";
-import { delay } from "rxjs";
 import { CheckCircle2Icon } from "lucide-react";
 
 interface Props {
@@ -62,14 +61,12 @@ export const Projects = ({ data }: Props) => {
             {data.map((project, index) => (
               <Project
                 key={project.id}
-                {...project}
-                active={index === activeIndex}
-                visible={index >= activeIndex}
-                offset={activeIndex - index}
+                index={index}
                 zIndex={data.length - index}
                 onClick={handleActiveTab}
                 activeIndex={activeIndex}
                 prevIndex={prevIndex}
+                {...project}
               />
             ))}
           </div>
@@ -81,27 +78,34 @@ export const Projects = ({ data }: Props) => {
 
 const Project = ({
   id,
-
-  active,
-  visible,
+  index,
   zIndex,
-  offset,
   onClick,
   activeIndex,
   prevIndex,
   ...props
 }: Props["data"][number] & {
-  active: boolean;
-  visible: boolean;
+  index: number;
   zIndex: number;
-  offset: number;
   activeIndex: number;
   prevIndex: number;
   onClick: (id: string) => void;
 }) => {
   const [ref, { width }] = useMeasure();
-  const inactiveTabScale = 1 - ((width && 32 / width) || 0) * Math.abs(offset);
+  const active = index === activeIndex;
+  const offset = activeIndex - index;
   const direction = activeIndex >= prevIndex ? "forwards" : "backwards";
+  const visible = index >= activeIndex;
+  const jumping = Math.abs(activeIndex - prevIndex) > 1;
+
+  // TODO: needs work, jumping from 1 to 3 doesn't have the intended effect because it's offset has chanaged
+  // and we need to account for it
+  const scale =
+    !visible && !jumping
+      ? 1
+      : 1 -
+        ((width && 32 / width) || 0) *
+          Math.abs(jumping && !active && !visible ? index : offset);
 
   const { client, title, description, image, keyFeatures, url } = props;
 
@@ -110,7 +114,7 @@ const Project = ({
       <motion.div
         ref={ref}
         className={cn(
-          "group absolute top-16 inset-x-0 rounded-lg",
+          "group absolute top-16 inset-x-0 rounded-lg shadow-xl ",
           "w-full mx-auto origin-top",
           !visible
             ? "pointer-events-none"
@@ -119,14 +123,17 @@ const Project = ({
               : "cursor-pointer"
         )}
         initial={{
+          y: 0,
           marginTop: 0,
           opacity: 1,
+          scale,
         }}
         whileInView="animate"
+        animate="animate"
         viewport={{ once: true, amount: 0.5 }}
         variants={{
           animate: {
-            scale: !visible ? 1 : inactiveTabScale,
+            scale,
             opacity: !visible
               ? [1, 1, 0]
               : active && direction === "backwards"
@@ -136,7 +143,9 @@ const Project = ({
               ? [0, 60, 60]
               : active && direction === "backwards"
                 ? [60, 0, 0]
-                : [0, 0, 0],
+                : !active && jumping && index < prevIndex
+                  ? [60, 0, 0]
+                  : [0, 0, 0],
             marginTop: -id * 16,
             "--lightness": visible ? `${Math.abs(offset) * 15}%` : 0,
             transition: {
@@ -145,23 +154,19 @@ const Project = ({
                 ease: "easeOut",
                 duration: 0.5,
                 times: [0, 0.5, 1],
-                // delay: active && direction === "backwards" ? 0.3 : 0,
               },
               opacity: {
                 type: "tween",
                 ease: "easeOut",
                 duration: 0.3,
                 times: [0, 0.333, 1],
-                // delay: active && direction === "backwards" ? 0.3 : 0,
               },
               scale: {
                 type: "tween",
                 ease: "easeOut",
                 duration: 0.5,
-                times: [0, 0.5, 1],
-                // delay: active && direction === "backwards" ? 0.3 : 0,
               },
-              // delayChildren: 0.3,
+              delayChildren: 0.3,
               // staggerChildren: 0.3,
               // // staggerDirection: !visible ? -1 : 1,
             },
@@ -174,7 +179,12 @@ const Project = ({
       >
         <BrowserWindow
           withStack={false}
-          className={`min-h-[600px] ${!active ? "backdrop-blur-lg transition duration-500 bg-black/30 !bg-none group-hover:bg-black/40 group-hover:border-zinc-300 group-hover:-translate-y-1" : "bg-black !bg-[radial-gradient(circle,rgba(255,255,255,.05)_10%,black_75%)]"}`}
+          className={cn(
+            "min-h-[600px] overflow-hidden !py-32",
+            !active
+              ? "backdrop-blur-lg transition duration-500 bg-black/30 !bg-none group-hover:bg-black/40 group-hover:border-zinc-300 group-hover:-translate-y-1"
+              : "bg-black !bg-[radial-gradient(circle,rgba(255,255,255,.05)_10%,black_75%)]"
+          )}
         >
           <div className="grid grid-cols-2">
             <div className="space-y-6">
@@ -190,11 +200,24 @@ const Project = ({
               </ul>
             </div>
           </div>
-          <img
-            className="absolute bottom-0 right-0 max-w-[50%] h-auto"
-            src={image.src}
-            alt={image.alt}
-          />
+          <motion.div
+            className="absolute bottom-0 right-0 max-w-[60%] h-auto"
+            initial={false}
+            animate="animate"
+            variants={{
+              animate: {
+                opacity: active ? 1 : 0,
+                y: active ? 0 : 20,
+                transition: {
+                  duration: 0.5,
+                  delay: 0.5,
+                },
+              },
+            }}
+            style={{ zIndex: 1 }}
+          >
+            <img className="" src={image.src} alt={image.alt} />
+          </motion.div>
         </BrowserWindow>
       </motion.div>
     </TabsContent>

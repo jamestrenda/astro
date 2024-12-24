@@ -56,77 +56,69 @@ export const Projects = ({ data }: Props) => {
   };
 
   return (
-    <div className="bg-black bg-[radial-gradient(circle,rgba(255,255,255,.2),black_75%)] lg:aspect-[3/2] xl:aspect-video min-h-[600px] lg:min-h-[768px] w-full xl:max-h-[800px]">
-      {/* <div
-        className=" h-[50vh] w-full"
-        style={
-          {
-            maskImage:
-              "linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 50%, transparent 100%);",
-          } as React.CSSProperties
-        }
-      ></div> */}
-      <Container
-        // padding={false}
-        className="flex flex-col items-center max-w-none pt-40"
-      >
-        <Overline className="">Featured Projecs</Overline>
-        <Tabs
-          defaultValue={data[0].id}
-          value={activeTab}
-          onValueChange={(value) => handleActiveTab(value)}
-          // className="flex flex-col w-full sticky top-0 "
-          className="flex flex-col w-full"
-        >
-          <TabsList
-            // className="sticky top-0 z-50 bg-background py-4"
-            className="py-4"
+    <div className="relative">
+      <div className="bg-black bg-[radial-gradient(circle,rgba(255,255,255,.2),black_75%)] h-[480px] lg:h-[680px]"></div>
+      <div className="absolute inset-x-0 top-24 lg:top-40">
+        <Container className="max-w-none  flex flex-col  items-center">
+          <Overline className="">Featured Projecs</Overline>
+          <Tabs
+            defaultValue={data[0].id}
+            value={activeTab}
+            onValueChange={(value) => handleActiveTab(value)}
+            // className="flex flex-col w-full sticky top-0 "
+            className="flex flex-col w-full"
           >
-            {data.map((project, index) => {
-              const active = activeTab === project.id;
-              return (
-                <TabsTrigger
-                  key={index}
-                  value={project.id}
-                  active={active}
-                  className="text-background"
+            <TabsList
+              // className="sticky top-0 z-50 bg-background py-4"
+              className="py-4"
+            >
+              {data.map((project, index) => {
+                const active = activeTab === project.id;
+                return (
+                  <TabsTrigger
+                    key={index}
+                    value={project.id}
+                    active={active}
+                    className="text-background"
+                  >
+                    {project.client}
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+            <div
+              // ref={target}
+              className="w-full max-w-7xl mx-auto mt-10 relative"
+              // style={{
+              //   height: `calc(400vh)`,
+              // }}
+            >
+              {data.map((project, index) => (
+                <div
+                  key={project.id}
+                  // className="sticky"
+                  // style={{
+                  //   top: index * 16 + 20,
+                  //   zIndex: data.length - index,
+                  // }}
                 >
-                  {project.client}
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
-          <div
-            // ref={target}
-            className="w-full max-w-7xl mx-auto mt-10 relative"
-            // style={{
-            //   height: `calc(400vh)`,
-            // }}
-          >
-            {data.map((project, index) => (
-              <div
-                key={project.id}
-                // className="sticky"
-                // style={{
-                //   top: index * 16 + 20,
-                //   zIndex: data.length - index,
-                // }}
-              >
-                <Project
-                  // ref={target}
-                  // scrollProgress={scrollYProgress}
-                  index={index}
-                  totalItems={data.length}
-                  onClick={handleActiveTab}
-                  activeIndex={activeIndex}
-                  prevIndex={prevIndex}
-                  {...project}
-                />
-              </div>
-            ))}
-          </div>
-        </Tabs>
-      </Container>
+                  <Project
+                    // ref={target}
+                    // scrollProgress={scrollYProgress}
+                    index={index}
+                    totalItems={data.length}
+                    onClick={handleActiveTab}
+                    activeIndex={activeIndex}
+                    prevIndex={prevIndex}
+                    {...project}
+                  />
+                </div>
+              ))}
+            </div>
+          </Tabs>
+        </Container>
+      </div>
+      <div className="h-80 bg-background"></div>
     </div>
   );
 };
@@ -288,7 +280,7 @@ const Project = forwardRef<
                 background: var(--background);
               } */}
             <motion.div
-              className="max-lg:grid max-lg:grid-cols-1 max-lg:max-h-[480px] max-lg:pt-32 overflow-y-auto overflow-x-hidden"
+              className="max-lg:grid max-lg:grid-cols-1 max-lg:max-h-[480px] lg:h-[680px] max-lg:pt-32 overflow-y-auto overflow-x-hidden"
               variants={{
                 hidden: { opacity: 0 },
                 visible: {

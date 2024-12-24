@@ -1,28 +1,33 @@
-import { motion, type Variants } from "motion/react";
-import type { PropsWithChildren } from "react";
+import { motion } from "motion/react";
+import { forwardRef, type ComponentProps, type PropsWithChildren } from "react";
 
-const defaultVariants = (delay: number) => ({
-  initial: { y: 20, opacity: 0 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: 0.05 * delay },
-  },
-});
-
-export const FadeIn = ({
-  children,
-  delay = 0,
-  variants = defaultVariants(delay),
-}: { delay?: number; variants?: Variants } & PropsWithChildren) => {
+const Component = forwardRef<
+  HTMLDivElement,
+  ComponentProps<"div"> & PropsWithChildren
+>(({ className, children }, ref) => {
   return (
-    <motion.div
-      whileInView="animate"
-      viewport={{ once: true }}
-      initial="initial"
-      variants={variants}
+    <div
+      className={className}
+      ref={ref}
+      // whileInView="visible"
+      // viewport={{ once: true }}
+      // initial="initial"
+      // variants={variants}
     >
       {children}
-    </motion.div>
+    </div>
   );
+});
+
+export const FadeIn = motion.create(Component);
+
+FadeIn.defaultProps = {
+  variants: {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  },
 };

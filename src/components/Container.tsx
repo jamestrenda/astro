@@ -1,13 +1,15 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "~/utils/misc";
 
-interface Props extends VariantProps<typeof variants> {
+interface Props
+  extends React.HtmlHTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof variants> {
   className?: string;
   padding?: boolean;
   children: React.ReactNode;
 }
 
-const variants = cva("h-full mx-auto", {
+const variants = cva("mx-auto", {
   variants: {
     variant: {
       default: ["max-w-7xl"],
@@ -26,7 +28,7 @@ const variants = cva("h-full mx-auto", {
 
 export const Container = ({ variant, padding, className, children }: Props) => {
   return (
-    <div className={cn("group/container px-4 h-full")}>
+    <div className={cn("group/container px-4")}>
       <div className={cn([variants({ variant, padding }), className])}>
         {children}
       </div>

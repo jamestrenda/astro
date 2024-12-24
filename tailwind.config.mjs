@@ -86,5 +86,6 @@ export default {
     function ({ addVariant }) {
       addVariant("starting", "@starting-style");
     },
+    require("tailwind-gradient-mask-image"),
   ],
 };

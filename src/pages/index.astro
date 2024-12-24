@@ -8,6 +8,8 @@ import { Accordion } from "~/components/Accordion";
 import BrowserWindow from "~/components/BrowserWindow";
 import { Projects } from "~/components/Projects";
 
+import { TextBlock } from "~/components/TextBlock";
+
 // import PortableText from "~/components/PortableText/PortableText.astro";
 
 const data = await getIndex({
@@ -83,7 +85,7 @@ const featuredProjects = [
     description:
       "A custom web application that connects local farmers with consumers, streamlining the process of buying and selling sustainably raised meat products.",
     image: {
-      src: "/schd-mockup.png",
+      src: "/mockup.png",
       alt: "Project 1",
     },
     keyFeatures: [
@@ -102,7 +104,7 @@ const featuredProjects = [
     description:
       "A comprehensive redesign of the Mundet website to enhance brand visibility, engage customers, and drive sales.",
     image: {
-      src: "/schd-mockup.png",
+      src: "/mockup.png",
       alt: "Project 2",
     },
     keyFeatures: [
@@ -121,7 +123,7 @@ const featuredProjects = [
     description:
       "A comprehensive redesign of the Sullivan County Public Health Services website to improve user experience, accessibility, and performance.",
     image: {
-      src: "/schd-mockup.png",
+      src: "/mockup.png",
       alt: "Project 1",
     },
     keyFeatures: [
@@ -140,7 +142,7 @@ const featuredProjects = [
     description:
       "A custom web application that streamlines the marketing workflow, automates repetitive tasks, and provides actionable insights for data-driven decision-making.",
     image: {
-      src: "/schd-mockup.png",
+      src: "/mockup.png",
       alt: "Project 2",
     },
     keyFeatures: [
@@ -414,27 +416,15 @@ const featuredProjects = [
     <!-- <PortableText blocks={data.body} /> -->
   </div>
   <!-- About -->
-  <div>
-    <Container variant="tight" padding={true}>
-      <Overline>About me</Overline>
-      <Heading className="mb-6"
-        >I’m driven by a commitment to solving problems through thoughtful,
-        user-centered web development.</Heading
-      >
-      <p class="text-xl md:text-2xl font-light">
-        Web development—much like life—is about tackling challenges and crafting
-        solutions that make a difference. I’m passionate about creating
-        thoughtful, user-centered interfaces that simplify complexities, connect
-        people, and improve everyday experiences.
-      </p>
-    </Container>
-  </div>
+
+  <TextBlock client:visible />
+
   <!-- Featured Projects -->
 
   <Projects data={featuredProjects} client:visible />
 
   <!-- Guiding Principles -->
-  <Container padding={true}>
+  <Container padding={true} className="pt-80 xs:pt-80 md:pt-96">
     <Heading className="mb-6">Guiding Principles</Heading>
     <p class="text-xl md:text-2xl max-w-5xl font-light">
       These principles guide how I approach both my work and life. While I

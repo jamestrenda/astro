@@ -1,12 +1,5 @@
-import { forwardRef, useRef, useState, type ComponentProps } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-  useMotionTemplate,
-  MotionValue,
-} from "motion/react";
+import { forwardRef, useCallback, useState, type ComponentProps } from "react";
+import { motion } from "motion/react";
 import { cn } from "~/utils/misc";
 import { FadeIn } from "./FadeIn";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
@@ -16,7 +9,6 @@ import BrowserWindow from "./BrowserWindow";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Heading } from "./Heading";
 import { CheckCircle2Icon } from "lucide-react";
-import { FadeInStaggerChildren } from "./FadeInStaggerChildren";
 
 interface Props {
   data: {
@@ -25,35 +17,30 @@ interface Props {
     url: string;
     title: string;
     description: string;
-    image: {
+    image?: {
       src: string;
       alt: string;
     };
-    keyFeatures: string[];
+    keyFeatures?: string[];
   }[];
 }
 
 export const Projects = ({ data }: Props) => {
+  const totalItems = data.length;
   const [activeTab, setActiveTab] = useState(data[0].id);
   const activeIndex = data.findIndex(({ id }) => id === activeTab);
   const [prevIndex, setPrevIndex] = useState<number>(activeIndex);
+  const jumpCount = Math.abs(activeIndex - prevIndex);
 
-  // const target = useRef(null);
-  // const { scrollYProgress } = useScroll({ target });
+  const direction = activeIndex >= prevIndex ? "forwards" : "backwards";
 
-  // useMotionValueEvent(scrollYProgress, "change", (l) => {
-  //   const totalItems = data.length;
-
-  //   const index = Math.min(Math.floor(l * totalItems), totalItems - 1);
-  //   if (index !== activeIndex) {
-  //     handleActiveTab(data[index].id);
-  //   }
-  // });
-
-  const handleActiveTab = (tab?: Props["data"][number]["id"]) => {
-    setPrevIndex(activeIndex);
-    setActiveTab(tab || data[activeIndex + 1]?.id || data[0].id);
-  };
+  const handleChange = useCallback(
+    (tab?: Props["data"][number]["id"]) => {
+      setPrevIndex(activeIndex);
+      setActiveTab(tab || data[activeIndex + 1]?.id || data[0].id);
+    },
+    [activeIndex, data]
+  );
 
   return (
     <div className="relative">
@@ -64,56 +51,49 @@ export const Projects = ({ data }: Props) => {
           <Tabs
             defaultValue={data[0].id}
             value={activeTab}
-            onValueChange={(value) => handleActiveTab(value)}
-            // className="flex flex-col w-full sticky top-0 "
+            onValueChange={handleChange}
             className="flex flex-col w-full"
           >
-            <TabsList
-              // className="sticky top-0 z-50 bg-background py-4"
-              className="py-4"
-            >
+            <TabsList className="py-4">
               {data.map((project, index) => {
-                const active = activeTab === project.id;
                 return (
                   <TabsTrigger
                     key={index}
                     value={project.id}
-                    active={active}
-                    className="text-background"
+                    active={activeTab === project.id}
+                    className="text-background dark:text-foreground dark:data-[state=active]:text-background"
                   >
                     {project.client}
                   </TabsTrigger>
                 );
               })}
             </TabsList>
-            <div
-              // ref={target}
-              className="w-full max-w-7xl mx-auto mt-10 relative"
-              // style={{
-              //   height: `calc(400vh)`,
-              // }}
-            >
-              {data.map((project, index) => (
-                <div
-                  key={project.id}
-                  // className="sticky"
-                  // style={{
-                  //   top: index * 16 + 20,
-                  //   zIndex: data.length - index,
-                  // }}
-                >
-                  <Project
-                    // ref={target}
-                    // scrollProgress={scrollYProgress}
-                    index={index}
-                    totalItems={data.length}
-                    onClick={handleActiveTab}
-                    activeIndex={activeIndex}
-                    prevIndex={prevIndex}
-                    {...project}
-                  />
-                </div>
-              ))}
+            <div className="w-full max-w-7xl mx-auto mt-10 relative">
+              {data.map((project, index) => {
+                const active = activeTab === project.id;
+                const inMiddle = 0 < index && index < totalItems - 1;
+
+                return (
+                  <div key={project.id}>
+                    <Project
+                      index={index}
+                      totalItems={totalItems}
+                      onClick={handleChange}
+                      active={active}
+                      jumping={
+                        inMiddle &&
+                        !active &&
+                        jumpCount > 1 &&
+                        index !== prevIndex
+                      }
+                      visible={index >= activeIndex}
+                      offset={index - activeIndex}
+                      direction={direction}
+                      {...project}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </Tabs>
         </Container>
@@ -127,10 +107,12 @@ const Project = forwardRef<
   HTMLDivElement,
   Omit<ComponentProps<"div">, "onClick"> &
     Props["data"][number] & {
-      // scrollProgress: MotionValue<number>;
       index: number;
-      activeIndex: number;
-      prevIndex: number;
+      active: boolean;
+      jumping: boolean;
+      visible: boolean;
+      offset: number;
+      direction: "forwards" | "backwards";
       totalItems: number;
       onClick: (id?: string) => void;
     }
@@ -140,42 +122,26 @@ const Project = forwardRef<
       id,
       index,
       onClick,
-      activeIndex,
-      prevIndex,
-      // scrollProgress,
+      direction,
       totalItems,
+      active,
+      jumping,
+      visible,
+      offset,
       ...props
     },
     forwardedRef
   ) => {
     const [ref, { width }] = useMeasure();
 
-    // const itemProgress = useTransform(
-    //   scrollProgress,
-    //   [index / totalItems, (index + 1) / totalItems],
-    //   ["0%", "100%"]
-    // );
+    // Scale down each container by 32px (16px on each side). e.g. at 1280px it would be 0.025 or 1 - 0.025 = 0.975.
+    // I prefer to specify the scale based on pixels than to simply hardcode .975. This way it's easier to adjust
+    // and it's more explicit.
+    const widthScale = (width && 32 / width) || 0;
 
-    const active = index === activeIndex;
-    const offset = activeIndex - index;
-    const direction = activeIndex >= prevIndex ? "forwards" : "backwards";
-    const visible = index >= activeIndex;
-    const jumping = Math.abs(activeIndex - prevIndex) > 1;
+    const scale = !visible ? 1 : 1 - widthScale * offset;
 
-    // TODO: needs work, jumping from 1 to 3 doesn't have the intended effect because it's offset has chanaged
-    // and we need to account for it
-    const scale =
-      !visible && !jumping
-        ? 1
-        : 1 -
-          ((width && 32 / width) || 0) *
-            Math.abs(jumping && !active && !visible ? index : offset);
-
-    const handleClick = () => {
-      onClick(id);
-    };
-
-    const { client, title, description, image, keyFeatures, url } = props;
+    const { client, title, description, url, image, keyFeatures } = props;
 
     return (
       <TabsContent
@@ -183,7 +149,7 @@ const Project = forwardRef<
         asChild
         value={id}
         forceMount
-        onClick={handleClick}
+        onClick={() => onClick(id)}
       >
         <motion.div
           ref={ref}
@@ -208,8 +174,7 @@ const Project = forwardRef<
           whileHover="hover"
           variants={{
             hover: {
-              "--lightness":
-                visible && !active ? `50%` : `${Math.abs(offset) * 7}%`,
+              "--lightness": visible && !active ? `50%` : `${index * 7}%`,
               transition: { duration: 0.3, ease: "easeOut" },
             },
             animate: {
@@ -217,17 +182,19 @@ const Project = forwardRef<
               opacity: !visible
                 ? [1, 1, 0]
                 : active && direction === "backwards"
-                  ? [0, 0, 1]
+                  ? [0, 1, 1]
                   : [1, 1, 1],
               y: !visible
                 ? [0, 60, 60]
-                : active && direction === "backwards"
-                  ? [60, 0, 0]
-                  : !active && jumping && index < prevIndex
+                : active
+                  ? direction === "backwards"
+                    ? [60, 0, 0]
+                    : [0, 0, 0]
+                  : jumping && direction === "backwards"
                     ? [60, 0, 0]
                     : [0, 0, 0],
-              marginTop: -id * 16,
-              "--lightness": visible ? `${Math.abs(offset) * 7}%` : 0,
+              marginTop: -index * 16,
+              "--lightness": visible ? `${index * 7}%` : 0,
               transition: {
                 y: {
                   type: "tween",
@@ -238,7 +205,7 @@ const Project = forwardRef<
                 opacity: {
                   type: "tween",
                   ease: "easeOut",
-                  duration: 0.3,
+                  duration: 0.7,
                   times: [0, 0.333, 1],
                 },
                 scale: {
@@ -295,12 +262,6 @@ const Project = forwardRef<
               initial="hidden"
               animate={active ? "visible" : undefined}
             >
-              {/* <motion.div
-                className="absolute top-14 inset-x-0 h-1 z-50 bg-green-400 origin-left "
-                style={{
-                  transform: useMotionTemplate`scaleX(${itemProgress})`,
-                }}
-              /> */}
               <div className="grid lg:grid-cols-2 max-lg:order-2 px-6 pt-6 pb-12 lg:px-16 lg:py-32">
                 <div className="space-y-6">
                   <FadeIn>
@@ -309,26 +270,30 @@ const Project = forwardRef<
                   <FadeIn>
                     <p className="text-muted">{description}</p>
                   </FadeIn>
-                  <ul className="text-green-400 space-y-4">
-                    {keyFeatures.map((feature, index) => (
-                      <li key={index}>
-                        <FadeIn>
-                          <span className="flex">
-                            <CheckCircle2Icon className="mr-2" />
-                            {feature}
-                          </span>
-                        </FadeIn>
-                      </li>
-                    ))}
-                  </ul>
+                  {keyFeatures && (
+                    <ul className="text-green-400 space-y-4">
+                      {keyFeatures.map((feature, index) => (
+                        <li key={index}>
+                          <FadeIn>
+                            <span className="flex">
+                              <CheckCircle2Icon className="mr-2" />
+                              {feature}
+                            </span>
+                          </FadeIn>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
               <FadeIn className="lg:absolute lg:bottom-0 lg:top-14 w-full lg:-right-[50%] h-auto max-lg:order-1 max-lg:-mr-16">
-                <img
-                  className="h-full w-auto object-contain"
-                  src={image.src}
-                  alt={image.alt}
-                />
+                {image && (
+                  <img
+                    className="h-full w-auto object-contain"
+                    src={image.src}
+                    alt={image.alt}
+                  />
+                )}
               </FadeIn>
             </motion.div>
           </BrowserWindow>

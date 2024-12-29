@@ -10,7 +10,7 @@ type Props = {
 export const TextBlock = ({ data }: Props) => {
   return (
     <Container variant="tight" padding={true}>
-      <div className="min-h-screen grid place-items-center">
+      <div className="grid place-items-center">
         <FadeInStaggerChildren>
           <Overline>About me</Overline>
           <Heading className="mb-6">

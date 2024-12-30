@@ -25,15 +25,5 @@ export default defineType({
       type: "image",
       description: "Upload a favicon for your site.",
     }),
-    defineField({
-      name: "homepage",
-      title: "Homepage",
-      type: "reference",
-      description: "Choose a page to display as the homepage",
-      to: { type: "page" },
-      // options: {
-      //   filter: "!defined(isPostsPage) || isPostsPage == false",
-      // },
-    }),
   ],
 });

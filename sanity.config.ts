@@ -8,8 +8,8 @@ import { SINGLETON_TYPES, schemaTypes } from "./src/studio/schema";
 import { structure } from "./src/studio/structure";
 import { locations } from "~/studio/presentation/locate";
 import { getEnv } from "~/utils/env";
-import { PublishSettingsAction } from "~/studio/schema/actions/publishSettingsAction";
 import { PublishDocumentWithSlugAction } from "~/studio/schema/actions/publishWithSlugAction";
+import { PublishHomeSettingsAction } from "~/studio/schema/actions/publishHomeSettingsAction";
 
 const projectId = getEnv().PUBLIC_SANITY_STUDIO_PROJECT_ID;
 const dataset = getEnv().PUBLIC_SANITY_STUDIO_DATASET;
@@ -91,19 +91,17 @@ export default defineConfig({
   },
   document: {
     actions: (prev, context) => {
-      const settingsActions = prev
-        .filter(
-          ({ action }) => action == "discardChanges" || action == "publish"
-        )
+      const homeSettingsActions = prev
+        .filter(({ action }) => action && singletonActions.has(action))
         .map((originalAction) =>
           originalAction.action === "publish"
-            ? PublishSettingsAction(originalAction, context)
+            ? PublishHomeSettingsAction(originalAction, context)
             : originalAction
         );
 
       switch (context.schemaType) {
-        case "siteSettings":
-          return settingsActions;
+        case "home":
+          return homeSettingsActions;
         case "page":
           return prev.map((originalAction) =>
             originalAction.action === "publish"

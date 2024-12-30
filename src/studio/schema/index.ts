@@ -12,6 +12,7 @@ import ref from "./objects/ref";
 import seo from "./objects/seo";
 import footerSettings from "./singletons/footerSettings";
 import headerSettings from "./singletons/headerSettings";
+import home from "./singletons/home";
 import notFoundSettings from "./singletons/notFoundSettings";
 import redirectSettings from "./singletons/redirectSettings";
 import siteSettings from "./singletons/siteSettings";
@@ -19,6 +20,7 @@ import siteSettings from "./singletons/siteSettings";
 export const SINGLETON_TYPES = new Set([
   footerSettings.name,
   headerSettings.name,
+  home.name,
   "media.tag",
   redirectSettings.name,
   siteSettings.name,
@@ -29,6 +31,7 @@ export const schemaTypes = [
   externalLink,
   footerSettings,
   headerSettings,
+  home,
   image,
   link,
   menu,

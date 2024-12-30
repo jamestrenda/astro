@@ -13,43 +13,19 @@ import {
   UnlinkIcon,
 } from "lucide-react";
 import taxonomyList from "./taxonomyList";
-import { from, map, switchMap } from "rxjs";
-import { sanityClient } from "sanity:client";
-import { apiVersion } from "~/../sanity.config";
-
-// Helper: Fetch the homepage ID synchronously
-// let homepageId = null;
-
-// async function fetchHomepageId() {
-//   homepageId = await getHomepageId();
-// }
-
-// // Ensure we fetch the ID once at runtime
-// fetchHomepageId();
-
-// function getHomepageIdSync() {
-//   return homepageId || 'undefined'; // Fallback if ID not yet fetched
-// }
-
-// GROQ query to find the document with `isHomepage` set to `true`
-// const homepageQuery = `*[_type == "page" && isHomepage == true][0]{_id}`;
+import { map } from "rxjs";
+import { HomeSettingsIcon } from "../icons/home-settings";
 
 export const structure: StructureResolver = async (S, context) => {
-  // Observable to dynamically fetch the homepage document ID
-  // const getHomepageId = async () => {
-  //   const result = await context
-  //     .getClient({
-  //       apiVersion,
-  //     })
-  //     .fetch(homepageQuery);
-  //   return result?._id || null; // Return the document ID or null if not found
-  // };
+  const chooseHomepage = S.defaultDocument({
+    schemaType: "home",
+    documentId: "home",
+  }).title("Home Settings");
 
-  // const home = S.listItem().title("Homepage").child(
-  //   S.document()
-  //     .schemaType("page") // Your document type
-  //     .documentId(getHomepageIdSync()) // Dynamically fetch the ID
-  // );
+  const homeSettings = S.listItem()
+    .title("Home Settings")
+    .icon(HomeSettingsIcon)
+    .child(chooseHomepage);
 
   const home = S.listItem()
     .title("Home")
@@ -63,6 +39,7 @@ export const structure: StructureResolver = async (S, context) => {
         )
         .pipe(
           map((ids) => {
+            if (!ids) return chooseHomepage;
             return S.document()
               .schemaType("page") // Your document type
               .documentId(ids); // Dynamically fetch the ID
@@ -198,6 +175,7 @@ export const structure: StructureResolver = async (S, context) => {
             .icon(MenuIcon)
             .child(S.documentTypeList("menu").title("Menus")),
           S.divider(),
+          homeSettings,
           redirects,
           S.listItem()
             .title("404 Settings")

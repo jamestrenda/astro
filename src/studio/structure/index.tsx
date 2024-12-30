@@ -15,6 +15,7 @@ import {
 import taxonomyList from "./taxonomyList";
 import { map } from "rxjs";
 import { HomeSettingsIcon } from "../icons/home-settings";
+import { apiVersion } from "sanity.config";
 
 export const structure: StructureResolver = async (S, context) => {
   const chooseHomepage = S.defaultDocument({
@@ -52,7 +53,10 @@ export const structure: StructureResolver = async (S, context) => {
     .title("Pages")
     .icon(FilesIcon)
     .child(
-      S.documentTypeList("page").filter(`isHomepage == false`).title("Pages")
+      S.documentTypeList("page")
+        .filter(`isHomepage == false`)
+        .apiVersion(apiVersion)
+        .title("Pages")
     );
 
   const blog = S.listItem()
@@ -76,6 +80,7 @@ export const structure: StructureResolver = async (S, context) => {
             .child(
               S.documentList()
                 .filter(`_type == "post" && !(_id in path("drafts.**"))`)
+                .apiVersion(apiVersion)
                 .title("Published Posts")
                 .menuItems(S.documentTypeList("post").getMenuItems())
                 .canHandleIntent(
@@ -91,6 +96,7 @@ export const structure: StructureResolver = async (S, context) => {
             .child(
               S.documentList()
                 .filter(`_type == "post" && _id in path("drafts.**")`)
+                .apiVersion(apiVersion)
                 .title("Drafts")
                 .menuItems(S.documentTypeList("post").getMenuItems())
                 .canHandleIntent(
@@ -132,7 +138,7 @@ export const structure: StructureResolver = async (S, context) => {
     .icon(SettingsIcon)
     .child(
       S.list()
-        .title("All Settings")
+        .title("Settings")
         .items([
           S.listItem()
             .title("Global")
@@ -185,7 +191,7 @@ export const structure: StructureResolver = async (S, context) => {
     );
   return S.list()
     .id("root")
-    .title("Everything")
+    .title("Content")
     .items([home, S.divider(), pages, blog, S.divider(), settings]);
 };
 

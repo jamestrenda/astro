@@ -1,16 +1,16 @@
 import type { StructureResolver } from "sanity/structure";
 import {
   ArrowLeftRightIcon,
+  FileXIcon,
   FilesIcon,
+  GlobeIcon,
   HomeIcon,
   MenuIcon,
   NotebookPenIcon,
   NotebookTextIcon,
   RssIcon,
   SettingsIcon,
-  SlidersHorizontal,
   TagIcon,
-  UnlinkIcon,
 } from "lucide-react";
 import taxonomyList from "./taxonomyList";
 import { map } from "rxjs";
@@ -23,7 +23,8 @@ export const structure: StructureResolver = async (S, context) => {
   }).title("Home Settings");
 
   const homeSettings = S.listItem()
-    .title("Home Settings")
+    .title("Home")
+    .id("home")
     .icon(HomeSettingsIcon)
     .child(chooseHomepage);
 
@@ -131,17 +132,19 @@ export const structure: StructureResolver = async (S, context) => {
     .icon(SettingsIcon)
     .child(
       S.list()
-        .title("Settings")
+        .title("All Settings")
         .items([
           S.listItem()
-            .title("General")
-            .icon(SlidersHorizontal)
+            .title("Global")
+            .id("global")
+            .icon(GlobeIcon)
             .child(
               S.defaultDocument({
                 schemaType: "siteSettings",
                 documentId: "siteSettings",
-              }).title("Site Settings")
+              }).title("Global Settings")
             ),
+          homeSettings,
           S.divider(),
           S.listItem()
             .title("Header")
@@ -167,12 +170,11 @@ export const structure: StructureResolver = async (S, context) => {
             .icon(MenuIcon)
             .child(S.documentTypeList("menu").title("Menus")),
           S.divider(),
-          homeSettings,
           redirects,
           S.listItem()
-            .title("404 Settings")
+            .title("404 - Not Found")
             .id("404")
-            .icon(UnlinkIcon)
+            .icon(FileXIcon)
             .child(
               S.defaultDocument({
                 schemaType: "notFoundSettings",

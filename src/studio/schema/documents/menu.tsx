@@ -1,13 +1,13 @@
 import { MenuIcon } from "lucide-react";
 import { defineField } from "sanity";
 
-export const menuUIOptions = ["mega", "flyout"] as const;
+// export const menuUIOptions = ["mega", "flyout"] as const;
 
 export default {
   name: "menu",
   title: "Menu",
   type: "document",
-  icon: <MenuIcon size={16} />,
+  icon: () => <MenuIcon size={16} />,
   fields: [
     defineField({
       name: "title",

@@ -1,24 +1,28 @@
 import { defineField, defineType } from "sanity";
 import { ImageIcon } from "lucide-react";
-import anchor from "./fields/anchor";
+import anchor from "../fields/anchor";
+
+export const Icon = () => <ImageIcon size="1em" />;
+
+export const title = "Image";
 
 export default defineType({
   name: "imageObject",
-  title: "Full-Width Image",
+  title,
   type: "object",
-  icon: ImageIcon,
+  icon: Icon,
   preview: {
     select: {
-      title: "image.asset.originalFilename",
-      subtitle: "altText",
+      filename: "image.asset.originalFilename",
+      altText: "altText",
       caption: "caption",
-      altText: "image.asset.altText",
+      globalAltText: "image.asset.altText",
       media: "image",
     },
-    prepare({ title, subtitle, altText, caption, media }) {
+    prepare({ filename, altText, globalAltText, caption, media }) {
       return {
-        title: title ?? "Untitled",
-        subtitle: caption ?? subtitle ?? altText ?? "",
+        title: caption ?? altText ?? globalAltText ?? filename,
+        subtitle: title,
         media,
       };
     },

@@ -86,3 +86,9 @@ export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {
   "siteUrl": coalesce(siteUrl, "https://www.UPDATE-SITEURL-IN-SANITY-STUDIO.com"),
   "favicon": coalesce(favicon.asset->url, "https://fav.farm/✅"),
 }`;
+
+export const REDIRECTS_QUERY = groq`*[_type == "redirectSettings"][0].redirects[]`;
+
+export const REDIRECT_SETTINGS_ID_QUERY = groq`
+  *[_type == "redirectSettings"][0]._id
+`;

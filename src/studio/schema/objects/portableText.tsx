@@ -1,9 +1,12 @@
 import { defineArrayMember, defineType } from "sanity";
-import { ExternalLinkIcon, Link2Icon } from "lucide-react";
+import { ExternalLinkIcon, Link2Icon, TypeIcon } from "lucide-react";
+
+export const Icon = () => <TypeIcon size="1em" />;
+
+export const title = "Portable Text";
 
 export const portableTextBlocks = defineArrayMember({
   type: "block",
-  title: "Block",
   // Styles let you set what your user can mark up blocks with. These
   // corrensponds with HTML tags, but you can set any title or value
   // you want and decide how you want to deal with it where you want to

@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import anchor from "./fields/anchor";
+import anchor from "../fields/anchor";
 import { Link2Icon } from "lucide-react";
 
 export default defineType({

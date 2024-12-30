@@ -1,5 +1,19 @@
+import { defineConfig } from "sanity";
+import { structureTool } from "sanity/structure";
+import { visionTool } from "@sanity/vision";
+import { media } from "sanity-plugin-media";
+import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
+import { defineDocuments, presentationTool } from "sanity/presentation";
+import { SINGLETON_TYPES, schemaTypes } from "./src/studio/schema";
+import { structure } from "./src/studio/structure";
+import { locations } from "~/studio/presentation/locate";
+import { getEnv } from "~/utils/env";
+import { PublishSettingsAction } from "~/studio/schema/actions/publishSettingsAction";
+import { PublishDocumentWithSlugAction } from "~/studio/schema/actions/publishWithSlugAction";
+
 const projectId = getEnv().PUBLIC_SANITY_STUDIO_PROJECT_ID;
 const dataset = getEnv().PUBLIC_SANITY_STUDIO_DATASET;
+export const apiVersion = getEnv().PUBLIC_SANITY_STUDIO_API_VERSION;
 
 // Feel free to remove this check if you don't need it
 if (!projectId || !dataset) {
@@ -12,16 +26,8 @@ if (!projectId || !dataset) {
   );
 }
 
-import { defineConfig } from "sanity";
-import { structureTool } from "sanity/structure";
-import { visionTool } from "@sanity/vision";
-import { media } from "sanity-plugin-media";
-import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
-import { defineDocuments, presentationTool } from "sanity/presentation";
-import { SINGLETON_TYPES, schemaTypes } from "./src/schema";
-import { structure } from "./src/structure";
-import { locations } from "~/presentation/locate";
-import { getEnv } from "~/utils/env";
+// Define the actions that should be available for singleton documents
+const singletonActions = new Set(["publish", "discardChanges", "restore"]);
 
 export default defineConfig({
   name: "production",
@@ -33,7 +39,6 @@ export default defineConfig({
       structure,
     }),
     presentationTool({
-      title: "Visual Editor",
       previewUrl: {
         origin: location.origin,
         previewMode: {
@@ -82,6 +87,36 @@ export default defineConfig({
         ),
         post,
       ];
+    },
+  },
+  document: {
+    actions: (prev, context) => {
+      const settingsActions = prev
+        .filter(
+          ({ action }) => action == "discardChanges" || action == "publish"
+        )
+        .map((originalAction) =>
+          originalAction.action === "publish"
+            ? PublishSettingsAction(originalAction, context)
+            : originalAction
+        );
+
+      switch (context.schemaType) {
+        case "siteSettings":
+          return settingsActions;
+        case "page":
+          return prev.map((originalAction) =>
+            originalAction.action === "publish"
+              ? PublishDocumentWithSlugAction(originalAction, context)
+              : originalAction
+          );
+        default:
+          return SINGLETON_TYPES.has(context.schemaType)
+            ? prev.filter(
+                ({ action }) => action && singletonActions.has(action)
+              )
+            : prev;
+      }
     },
   },
 });

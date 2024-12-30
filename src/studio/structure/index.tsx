@@ -1,6 +1,8 @@
 import type { StructureResolver } from "sanity/structure";
 import {
   ArrowLeftRightIcon,
+  FilesIcon,
+  HomeIcon,
   MenuIcon,
   NotebookPenIcon,
   NotebookTextIcon,
@@ -11,8 +13,78 @@ import {
   UnlinkIcon,
 } from "lucide-react";
 import taxonomyList from "./taxonomyList";
+import { from, map, switchMap } from "rxjs";
+import { sanityClient } from "sanity:client";
+import { apiVersion } from "~/../sanity.config";
+
+// Helper: Fetch the homepage ID synchronously
+// let homepageId = null;
+
+// async function fetchHomepageId() {
+//   homepageId = await getHomepageId();
+// }
+
+// // Ensure we fetch the ID once at runtime
+// fetchHomepageId();
+
+// function getHomepageIdSync() {
+//   return homepageId || 'undefined'; // Fallback if ID not yet fetched
+// }
+
+// GROQ query to find the document with `isHomepage` set to `true`
+// const homepageQuery = `*[_type == "page" && isHomepage == true][0]{_id}`;
 
 export const structure: StructureResolver = async (S, context) => {
+  // Observable to dynamically fetch the homepage document ID
+  // const getHomepageId = async () => {
+  //   const result = await context
+  //     .getClient({
+  //       apiVersion,
+  //     })
+  //     .fetch(homepageQuery);
+  //   return result?._id || null; // Return the document ID or null if not found
+  // };
+
+  // const home = S.listItem().title("Homepage").child(
+  //   S.document()
+  //     .schemaType("page") // Your document type
+  //     .documentId(getHomepageIdSync()) // Dynamically fetch the ID
+  // );
+
+  const home = S.listItem()
+    .title("Home")
+    .icon(HomeIcon)
+    .child(() =>
+      context.documentStore
+        .listenQuery(
+          `*[_type == "page" && defined(isHomepage) && isHomepage == true][0]._id`,
+          {},
+          {}
+        )
+        .pipe(
+          map((ids) => {
+            return S.document()
+              .schemaType("page") // Your document type
+              .documentId(ids); // Dynamically fetch the ID
+          })
+        )
+    );
+
+  const pages = S.listItem()
+    .title("Pages")
+    .icon(FilesIcon)
+    .child(
+      S.list()
+        .title("All Pages")
+        .items([
+          S.listItem()
+            .title("All Pages")
+            .id("all")
+            .icon(FilesIcon)
+            .child(S.documentTypeList("page").title("All Pages")),
+        ])
+    );
+
   const blog = S.listItem()
     .title("Blog")
     .icon(RssIcon)
@@ -142,7 +214,7 @@ export const structure: StructureResolver = async (S, context) => {
   return S.list()
     .id("root")
     .title("Everything")
-    .items([blog, S.divider(), settings]);
+    .items([home, S.divider(), pages, blog, S.divider(), settings]);
 };
 
 const HeaderIcon = () => {

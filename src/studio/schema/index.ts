@@ -1,4 +1,5 @@
 import menu from "./documents/menu";
+import page from "./documents/page";
 import post from "./documents/post";
 import tag from "./documents/tag";
 import externalLink from "./objects/externalLink";
@@ -8,6 +9,7 @@ import menuItem from "./objects/menuItem";
 import portableText from "./objects/portableText";
 import redirect from "./objects/redirect";
 import ref from "./objects/ref";
+import seo from "./objects/seo";
 import footerSettings from "./singletons/footerSettings";
 import headerSettings from "./singletons/headerSettings";
 import notFoundSettings from "./singletons/notFoundSettings";
@@ -32,11 +34,13 @@ export const schemaTypes = [
   menu,
   menuItem,
   notFoundSettings,
+  page,
   portableText,
   post,
   redirect,
   redirectSettings,
   ref,
+  seo,
   siteSettings,
   tag,
 ];

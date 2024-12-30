@@ -18,6 +18,23 @@ export const portableTextBlocks = defineArrayMember({
     { title: "H3", value: "h3" },
     { title: "H4", value: "h4" },
     { title: "H5", value: "h5" },
+    {
+      title: "Overline",
+      value: "overline",
+      component: (props) => (
+        <span
+          style={{
+            fontFamily: `Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Helvetica, Arial, system-ui, sans-serif`,
+            margin: 0,
+            fontSize: ".875em",
+            fontWeight: 600,
+            textTransform: "uppercase",
+          }}
+        >
+          {props.children}
+        </span>
+      ),
+    },
     { title: "Quote", value: "blockquote" },
   ],
   lists: [
@@ -65,6 +82,12 @@ export const portableTextBlocks = defineArrayMember({
     ],
   },
 });
+
+// export const customPortableTextBlocks = [
+//   {
+//     type: "overline",
+//   },
+// ];
 
 export default defineType({
   name: "portableText",

@@ -51,15 +51,7 @@ export const structure: StructureResolver = async (S, context) => {
     .title("Pages")
     .icon(FilesIcon)
     .child(
-      S.list()
-        .title("All Pages")
-        .items([
-          S.listItem()
-            .title("All Pages")
-            .id("all")
-            .icon(FilesIcon)
-            .child(S.documentTypeList("page").title("All Pages")),
-        ])
+      S.documentTypeList("page").filter(`isHomepage == false`).title("Pages")
     );
 
   const blog = S.listItem()

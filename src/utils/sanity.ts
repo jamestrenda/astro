@@ -7,6 +7,7 @@ import {
 } from "./queries";
 import type { Settings } from "~/types/settings";
 import type { Post } from "~/types/post";
+import { homeZ, type Home } from "~/types/home";
 
 export async function getPosts({
   preview,
@@ -48,13 +49,19 @@ export async function getIndex({
 }: {
   preview: boolean;
   options: App.Locals["loadQueryOptions"];
-}): Promise<any> {
-  const { data: post } = await loadQuery<Array<{ title: string }>>({
+}): Promise<Home> {
+  const { data } = await loadQuery<Array<{ title: string }>>({
     query: INDEX_QUERY,
     preview,
     options,
   });
-  return post;
+
+  const validationResult = homeZ.safeParse(data);
+  if (!validationResult.success) {
+    throw new Error(validationResult.error.message);
+  }
+
+  return validationResult.data;
 }
 
 export async function getSettings({

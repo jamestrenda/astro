@@ -1,10 +1,9 @@
 import type { ComponentProps, PropsWithChildren } from "react";
 import { cn } from "~/utils/misc";
 
-export const Overline = ({
-  children,
-  className,
-}: ComponentProps<"div"> & PropsWithChildren) => {
+export type Props = ComponentProps<"div"> & PropsWithChildren;
+
+export const Overline = ({ children, className, ...props }: Props) => {
   return (
     <div
       className={cn(

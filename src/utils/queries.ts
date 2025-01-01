@@ -35,10 +35,18 @@ export const imageObjectFragment = groq`
   anchor
 `;
 
+const seoFragment = groq`
+  seo {
+    title,
+    metaDescription
+  }
+`;
+
 const portableTextFragment = groq`
     ...,
     markDefs[]{
-        ...,
+        _type,
+        _key,
         _type == "internalRef" => {
             "slug": @.ref.document->slug.current,
             @.ref.document->._type == "post" => {
@@ -48,6 +56,9 @@ const portableTextFragment = groq`
         _type == "externalLink" => {
             "url": @.link.url,
             "newWindow": @.link.newWindow
+        },
+        !(_type in ["internalRef", "externalLink"]) => {
+          ...
         }
     }
 `;
@@ -74,11 +85,17 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
     },
 }`;
 
-export const INDEX_QUERY = groq`*[_type == "post" && defined(slug) && publishedAt <= now()] | order(publishedAt desc)[0] {
-    title,
-    body[] {
-        ${portableTextFragment}
-    }
+export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {
+    blocks[] {
+      _type,
+      _key,
+      _type == "portableTextBlock" => {
+        portableText[] {
+          ${portableTextFragment}
+        }
+      }
+    },
+    ${seoFragment},
 }`;
 
 export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {

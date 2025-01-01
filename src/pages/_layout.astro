@@ -7,6 +7,7 @@ import SanityLiveMode from "~/components/Preview/SanityLiveMode";
 import "~/styles/tailwind.css";
 import { getSettings } from "~/utils/sanity";
 import { getTheme } from "~/utils/theme";
+import { type Seo } from "~/types/seo";
 
 import "@fontsource/inter";
 import "@fontsource/inter/300.css";
@@ -19,9 +20,16 @@ import "@fontsource/inter/700-italic.css";
 // Supports weights 100-900
 // import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 
+interface Props {
+  seo?: Seo;
+}
+
 const { preview } = Astro.locals;
 
-const { title } = Astro.props;
+const { seo } = Astro.props;
+
+const title = seo?.title;
+const metaDescription = seo?.metaDescription;
 
 const settings = await getSettings({
   preview: Astro.locals.preview,
@@ -46,7 +54,8 @@ const theme = getTheme(Astro.cookies);
     <link rel="canonical" href={url} />
     <meta name="viewport" content="width=device-width" />
     <link rel="mask-icon" href="/safari-pinned-tab.svg" />
-    <title>{title} • {siteTitle}</title>
+    <title>{title ? `${title} • ` : ""}{siteTitle}</title>
+    {metaDescription && <meta name="description" content={metaDescription} />}
   </head>
   <body class="flex flex-col min-h-dvh bg-background">
     <Header theme={theme} />

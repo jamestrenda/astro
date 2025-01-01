@@ -1,0 +1,14 @@
+---
+import type { Block as BlockProps } from "~/types/block";
+import Block from "./Block.astro";
+
+interface Props {
+  blocks: BlockProps[];
+}
+
+const { blocks } = Astro.props;
+
+// TODO: remove null check on block?._type once more blocks are added
+---
+
+{blocks.map((block) => block && <Block {...block} />)}

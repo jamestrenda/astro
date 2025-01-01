@@ -1,0 +1,11 @@
+---
+import type { Block } from "~/types/block";
+import PortableText from "./PortableText/PortableText.astro";
+
+// TODO: remove Exclude once more block types are added
+export type Props = Exclude<Block, undefined>;
+
+const { _type, portableText } = Astro.props;
+---
+
+{_type === "portableTextBlock" && <PortableText value={portableText} />}

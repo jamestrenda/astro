@@ -1,29 +1,8 @@
 ---
 import { PortableText as PT } from "astro-portabletext";
-import InternalRef from "~/components/PortableText/InternalRef.astro";
-import ExternalLink from "~/components/PortableText/ExternalLink.astro";
-import { Heading } from "../Heading";
-
-type PortableTextProps = Parameters<typeof PT>[0];
-
-export type Props = Pick<PortableTextProps, "value" | "components">;
+import { components } from ".";
 
 const { value } = Astro.props;
-
-const components = {
-  block: {
-    h1: Heading,
-    h2: Heading,
-    h3: Heading,
-    h4: Heading,
-    h5: Heading,
-    h6: Heading,
-  },
-  mark: {
-    internalRef: InternalRef,
-    externalLink: ExternalLink,
-  },
-};
 ---
 
 <PT value={value} components={components} />

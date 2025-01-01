@@ -4,7 +4,7 @@ import type { Block, Props as $ } from "astro-portabletext/types";
 import { forwardRef } from "react";
 
 type HeadingLevel = `h${1 | 2 | 3 | 4 | 5}`;
-interface Props extends Partial<$<Block>> {
+export interface Props extends Partial<$<Block>> {
   level?: HeadingLevel;
   className?: string;
 }

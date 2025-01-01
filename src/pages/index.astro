@@ -9,6 +9,7 @@ import BrowserWindow from "~/components/BrowserWindow";
 import { Projects } from "~/components/Projects";
 
 import { TextBlock } from "~/components/TextBlock";
+import Blocks from "~/components/Blocks.astro";
 
 // import PortableText from "~/components/PortableText/PortableText.astro";
 
@@ -17,6 +18,8 @@ const data = await getIndex({
   options: Astro.locals.loadQueryOptions,
 });
 
+// TODO: Come up with a better solution of handling a missing homepage.
+//       Either show a blog index or show a default homepage.
 if (!data) {
   return new Response(null, {
     status: 404,
@@ -153,9 +156,11 @@ const featuredProjects = [
     ],
   },
 ];
+
+// console.log(data);
 ---
 
-<Layout>
+<Layout seo={data.seo}>
   <!-- Hero -->
   <div
     class="max-md:[&>div]:!px-0 md:pt-4 pb-24 md:h-[768px] relative max-sm:overflow-hidden"
@@ -415,6 +420,8 @@ const featuredProjects = [
 
     <!-- <PortableText blocks={data.body} /> -->
   </div>
+  <!-- Blocks -->
+  {data.blocks && <Blocks blocks={data.blocks} />}
   <!-- About -->
 
   <TextBlock client:visible />

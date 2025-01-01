@@ -4,6 +4,7 @@ import {
   CompassIcon,
   FileXIcon,
   FilesIcon,
+  GalleryVerticalEndIcon,
   GlobeIcon,
   HomeIcon,
   MenuIcon,
@@ -11,6 +12,7 @@ import {
   NotebookTextIcon,
   RssIcon,
   SettingsIcon,
+  SmileIcon,
   TagIcon,
 } from "lucide-react";
 import taxonomyList from "./taxonomyList";
@@ -128,6 +130,7 @@ export const structure: StructureResolver = async (S, context) => {
     .title("Guiding Principles")
     .icon(CompassIcon)
     .child(S.documentTypeList("principle").title("Guiding Principles"));
+
   const redirects = S.listItem()
     .title("Redirects")
     .icon(ArrowLeftRightIcon)
@@ -136,6 +139,25 @@ export const structure: StructureResolver = async (S, context) => {
         schemaType: "redirectSettings",
         documentId: "redirectSettings",
       }).title("Redirects")
+    );
+
+  const clients = S.listItem()
+    .title("Clients")
+    .icon(SmileIcon)
+    .child(S.documentTypeList("client").title("Clients"));
+
+  const projects = S.listItem()
+    .title("Projects")
+    .icon(GalleryVerticalEndIcon)
+    .child(
+      S.list()
+        .title("Projects")
+        .items([
+          S.listItem()
+            .title("Websites")
+            .icon(GlobeIcon)
+            .child(S.documentTypeList("website").title("Websites")),
+        ])
     );
 
   const settings = S.listItem()
@@ -197,7 +219,17 @@ export const structure: StructureResolver = async (S, context) => {
   return S.list()
     .id("root")
     .title("Content")
-    .items([home, S.divider(), pages, blog, principles, S.divider(), settings]);
+    .items([
+      home,
+      S.divider(),
+      pages,
+      blog,
+      principles,
+      projects,
+      clients,
+      S.divider(),
+      settings,
+    ]);
 };
 
 const HeaderIcon = () => {

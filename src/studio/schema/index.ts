@@ -1,10 +1,14 @@
+import client from "./documents/client";
 import menu from "./documents/menu";
 import page from "./documents/page";
+import portfolio from "./documents/portfolio";
 import post from "./documents/post";
 import principle from "./documents/principle";
 import tag from "./documents/tag";
+import website from "./documents/website";
 import descriptionGrid from "./objects/descriptionGrid";
 import externalLink from "./objects/externalLink";
+import feature from "./objects/feature";
 import image from "./objects/image";
 import link from "./objects/link";
 import menuItem from "./objects/menuItem";
@@ -30,8 +34,10 @@ export const SINGLETON_TYPES = new Set([
 ]);
 
 export const schemaTypes = [
+  client,
   descriptionGrid,
   externalLink,
+  feature,
   footerSettings,
   headerSettings,
   home,
@@ -42,6 +48,7 @@ export const schemaTypes = [
   notFoundSettings,
   page,
   portableText,
+  portfolio,
   post,
   principle,
   redirect,
@@ -50,4 +57,5 @@ export const schemaTypes = [
   seo,
   siteSettings,
   tag,
+  website,
 ];

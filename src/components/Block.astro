@@ -1,13 +1,16 @@
 ---
 import type { Block } from "~/types/block";
 import { TextBlock } from "./TextBlock";
+import { DescriptionGrid } from "./DescriptionGrid";
 
-// TODO: remove Exclude once more block types are added
-export type Props = Exclude<Block, undefined>;
+export type Props = Block;
 
-const { _type, portableText } = Astro.props;
-
-// console.log({ _type, portableText });
+const props = Astro.props;
 ---
 
-{_type === "textBlock" && <TextBlock value={portableText} client:visible />}
+{props._type === "textBlock" ? <TextBlock {...props} client:visible /> : null}
+{
+  props._type === "descriptionGrid" ? (
+    <DescriptionGrid {...props} client:visible />
+  ) : null
+}

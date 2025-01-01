@@ -4,7 +4,6 @@ import { getIndex } from "../utils/sanity";
 import { Overline } from "~/components/Overline";
 import { Heading } from "~/components/Heading";
 import { Container } from "~/components/Container";
-import { Accordion } from "~/components/Accordion";
 import BrowserWindow from "~/components/BrowserWindow";
 import { Projects } from "~/components/Projects";
 
@@ -429,24 +428,6 @@ const featuredProjects = [
 
   <Projects data={featuredProjects} client:visible />
 
-  <!-- Guiding Principles -->
-  <Container padding={true}>
-    <Heading className="mb-6">Guiding Principles</Heading>
-    <p class="text-xl md:text-2xl max-w-5xl font-light">
-      These principles guide how I approach both my work and life. While I
-      strive for constant growth, clear communication, and excellence, I
-      recognize that, as an imperfect human being, I don't always hit the mark.
-      I believe in the value of learning from mistakes, holding myself
-      accountable, and focusing on progress rather than perfection.
-    </p>
-    <div class="mt-14">
-      {
-        principles ? (
-          <Accordion data={principles} client:media="(max-width: 1023px)" />
-        ) : null
-      }
-    </div>
-  </Container>
   <!-- Contact Form -->
   <div>
     <Container padding={true} className="!pt-0">

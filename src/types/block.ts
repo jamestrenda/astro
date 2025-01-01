@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { textBlockZ } from "./textBlock";
+import { descriptionGridZ } from "./descriptionGrid";
 
-// TODO: remove undefined() once there are more block types
-export const blockZ = z.union([textBlockZ, z.undefined()]);
+export const blockZ = z.union([textBlockZ, descriptionGridZ]);
 
 export type Block = z.infer<typeof blockZ>;

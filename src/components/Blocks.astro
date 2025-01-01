@@ -7,8 +7,6 @@ interface Props {
 }
 
 const { blocks } = Astro.props;
-
-// TODO: remove null check on block?._type once more blocks are added
 ---
 
-{blocks.map((block) => block && <Block {...block} />)}
+{blocks.map((block) => <Block {...block} />)}

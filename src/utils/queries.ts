@@ -85,15 +85,46 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
     },
 }`;
 
+const descriptionFragment = groq`
+  description[] {
+    ${portableTextFragment}
+  }
+`;
+
+const descriptionItemFragment = groq`
+  title,
+  ${descriptionFragment}
+`;
+
+const descriptionItemReferenceFragment = groq`
+  "title": @->title,
+  "description": @->${descriptionFragment}
+`;
+
+const blocksFragment = groq`
+  _type,
+  _key,
+  _type == "textBlock" => {
+    portableText[] {
+      ${portableTextFragment}
+    }
+  },
+  _type == "descriptionGrid" => {
+    header[] {
+      ${portableTextFragment}
+    },
+    items[] {
+      ${descriptionItemFragment},
+      _type == "reference" => {
+        ${descriptionItemReferenceFragment}
+      }
+    }
+  }
+`;
+
 export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {
     blocks[] {
-      _type,
-      _key,
-      _type == "textBlock" => {
-        portableText[] {
-          ${portableTextFragment}
-        }
-      }
+      ${blocksFragment}
     },
     ${seoFragment},
 }`;

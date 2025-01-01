@@ -1,6 +1,7 @@
 import menu from "./documents/menu";
 import page from "./documents/page";
 import post from "./documents/post";
+import principle from "./documents/principle";
 import tag from "./documents/tag";
 import externalLink from "./objects/externalLink";
 import image from "./objects/image";
@@ -40,6 +41,7 @@ export const schemaTypes = [
   page,
   portableText,
   post,
+  principle,
   redirect,
   redirectSettings,
   ref,

@@ -1,6 +1,7 @@
 import type { StructureResolver } from "sanity/structure";
 import {
   ArrowLeftRightIcon,
+  CompassIcon,
   FileXIcon,
   FilesIcon,
   GlobeIcon,
@@ -123,6 +124,10 @@ export const structure: StructureResolver = async (S, context) => {
         ])
     );
 
+  const principles = S.listItem()
+    .title("Guiding Principles")
+    .icon(CompassIcon)
+    .child(S.documentTypeList("principle").title("Guiding Principles"));
   const redirects = S.listItem()
     .title("Redirects")
     .icon(ArrowLeftRightIcon)
@@ -192,7 +197,7 @@ export const structure: StructureResolver = async (S, context) => {
   return S.list()
     .id("root")
     .title("Content")
-    .items([home, S.divider(), pages, blog, S.divider(), settings]);
+    .items([home, S.divider(), pages, blog, principles, S.divider(), settings]);
 };
 
 const HeaderIcon = () => {

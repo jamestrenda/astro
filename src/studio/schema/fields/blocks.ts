@@ -1,12 +1,7 @@
-import {
-  defineField,
-  type PortableTextBlock,
-  type PortableTextTextBlock,
-} from "sanity";
+import { defineField } from "sanity";
 
 import { Icon as TextIcon } from "../objects/portableText";
-import type { ImageObject } from "~/types/image";
-import { title as imageTitle } from "../objects/image";
+import { getPortableTextPreview } from "~/studio/lib/utils";
 
 export const blocksField = defineField({
   name: "blocks",
@@ -29,6 +24,10 @@ export const blocksField = defineField({
   },
   of: [
     {
+      type: "descriptionGrid",
+      title: "Description Grid",
+    },
+    {
       type: "imageObject",
       title: "Image",
     },
@@ -50,42 +49,12 @@ export const blocksField = defineField({
           blocks: "portableText",
         },
         prepare(selection) {
-          const title = "Text Block";
+          const preview = getPortableTextPreview(
+            selection.blocks,
+            "Text Block"
+          );
 
-          const { blocks } = selection as { blocks: PortableTextBlock[] };
-          if (!blocks) {
-            return {
-              title,
-            };
-          }
-
-          let block;
-          switch (blocks[0]?._type) {
-            case "block":
-              block = blocks[0] as PortableTextTextBlock;
-
-              // Get the first block of text, which could be broken up into multiple children depending on "marks" (i.e. formatting)
-              const textSnippet = block?.children
-                .map((child) => child.text)
-                .join("");
-
-              return {
-                title: textSnippet?.length ? textSnippet : title,
-                subtitle: textSnippet && title, // if title is set, show the type as the subtitle
-              };
-            // TODO: This is not available in the portable text schema, but could be added
-            case "imageObject":
-              block = blocks[0] as ImageObject;
-              return {
-                title: block.altText ?? block.image.asset?.altText ?? "Image",
-                subtitle: block.caption ?? imageTitle,
-                media: block.image.asset?._id,
-              };
-            default:
-              return {
-                title,
-              };
-          }
+          return preview;
         },
       },
     },

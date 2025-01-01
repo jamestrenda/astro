@@ -49,3 +49,7 @@ export default defineType({
     anchor,
   ],
 });
+
+export function getImageObjectTitle() {
+  return title;
+}

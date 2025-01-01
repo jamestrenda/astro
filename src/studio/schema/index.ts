@@ -3,6 +3,7 @@ import page from "./documents/page";
 import post from "./documents/post";
 import principle from "./documents/principle";
 import tag from "./documents/tag";
+import descriptionGrid from "./objects/descriptionGrid";
 import externalLink from "./objects/externalLink";
 import image from "./objects/image";
 import link from "./objects/link";
@@ -29,6 +30,7 @@ export const SINGLETON_TYPES = new Set([
 ]);
 
 export const schemaTypes = [
+  descriptionGrid,
   externalLink,
   footerSettings,
   headerSettings,

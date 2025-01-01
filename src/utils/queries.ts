@@ -89,7 +89,7 @@ export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {
     blocks[] {
       _type,
       _key,
-      _type == "portableTextBlock" => {
+      _type == "textBlock" => {
         portableText[] {
           ${portableTextFragment}
         }

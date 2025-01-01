@@ -8,7 +8,6 @@ import { Accordion } from "~/components/Accordion";
 import BrowserWindow from "~/components/BrowserWindow";
 import { Projects } from "~/components/Projects";
 
-import { TextBlock } from "~/components/TextBlock";
 import Blocks from "~/components/Blocks.astro";
 
 // import PortableText from "~/components/PortableText/PortableText.astro";
@@ -424,7 +423,7 @@ const featuredProjects = [
   {data.blocks && <Blocks blocks={data.blocks} />}
   <!-- About -->
 
-  <TextBlock client:visible />
+  <!-- <TextBlock client:visible /> -->
 
   <!-- Featured Projects -->
 

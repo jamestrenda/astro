@@ -1,7 +1,7 @@
-import Block from "./Block.astro";
-import Mark from "./Mark.astro";
+import { Block } from "./Block";
+import { Marks } from "./Marks";
 
 export const components = {
   block: Block,
-  mark: Mark,
+  marks: Marks,
 };

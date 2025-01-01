@@ -3,17 +3,11 @@ import { ExternalLinkIcon, Link2Icon, TypeIcon } from "lucide-react";
 
 export const Icon = () => <TypeIcon size="1em" />;
 
-export const title = "Portable Text";
-
 export const portableTextBlocks = defineArrayMember({
   type: "block",
-  // Styles let you set what your user can mark up blocks with. These
-  // corrensponds with HTML tags, but you can set any title or value
-  // you want and decide how you want to deal with it where you want to
-  // use your content.
   styles: [
     { title: "Normal", value: "normal" },
-    // {title: 'H1', value: 'h1'},
+    // {title: 'H1', value: 'h1'}, // reserved for hero blocks
     { title: "H2", value: "h2" },
     { title: "H3", value: "h3" },
     { title: "H4", value: "h4" },
@@ -83,15 +77,8 @@ export const portableTextBlocks = defineArrayMember({
   },
 });
 
-// export const customPortableTextBlocks = [
-//   {
-//     type: "overline",
-//   },
-// ];
-
 export default defineType({
   name: "portableText",
   type: "array",
-  // icon: TextIcon,
   of: [portableTextBlocks],
 });

@@ -7,7 +7,6 @@ import {
 import { Icon as TextIcon } from "../objects/portableText";
 import type { ImageObject } from "~/types/image";
 import { title as imageTitle } from "../objects/image";
-import { title as portableTextTitle } from "../objects/portableText";
 
 export const blocksField = defineField({
   name: "blocks",
@@ -34,8 +33,8 @@ export const blocksField = defineField({
       title: "Image",
     },
     {
-      name: "portableTextBlock",
-      title: "Portable Text",
+      name: "textBlock",
+      title: "Text Block",
       type: "object",
       icon: TextIcon,
       fields: [
@@ -51,10 +50,12 @@ export const blocksField = defineField({
           blocks: "portableText",
         },
         prepare(selection) {
+          const title = "Text Block";
+
           const { blocks } = selection as { blocks: PortableTextBlock[] };
           if (!blocks) {
             return {
-              title: portableTextTitle,
+              title,
             };
           }
 
@@ -64,11 +65,13 @@ export const blocksField = defineField({
               block = blocks[0] as PortableTextTextBlock;
 
               // Get the first block of text, which could be broken up into multiple children depending on "marks" (i.e. formatting)
-              const title = block?.children.map((child) => child.text).join("");
+              const textSnippet = block?.children
+                .map((child) => child.text)
+                .join("");
 
               return {
-                title: title?.length ? title : portableTextTitle,
-                subtitle: title && portableTextTitle, // if title is set, show the type as the subtitle
+                title: textSnippet?.length ? textSnippet : title,
+                subtitle: textSnippet && title, // if title is set, show the type as the subtitle
               };
             // TODO: This is not available in the portable text schema, but could be added
             case "imageObject":
@@ -80,7 +83,7 @@ export const blocksField = defineField({
               };
             default:
               return {
-                title: portableTextTitle,
+                title,
               };
           }
         },

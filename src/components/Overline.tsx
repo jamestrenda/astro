@@ -7,7 +7,7 @@ export const Overline = ({ children, className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        "uppercase text-primary text-sm mb-2 font-semibold ",
+        "uppercase text-primary text-sm mb-3 font-semibold ",
         className
       )}
     >

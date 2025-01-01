@@ -1,11 +1,5 @@
 import { motion } from "motion/react";
-import {
-  Children,
-  forwardRef,
-  type ComponentProps,
-  type PropsWithChildren,
-} from "react";
-import { FadeIn } from "./FadeIn";
+import { forwardRef, type ComponentProps, type PropsWithChildren } from "react";
 
 const Component = forwardRef<
   HTMLDivElement,
@@ -25,11 +19,7 @@ const Component = forwardRef<
         },
       }}
     >
-      {Children.map(children, (child, index) => (
-        <FadeIn key={index} ref={ref}>
-          {child}
-        </FadeIn>
-      ))}
+      {children}
     </motion.div>
   );
 });

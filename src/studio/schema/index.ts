@@ -9,6 +9,7 @@ import website from "./documents/website";
 import descriptionGrid from "./objects/descriptionGrid";
 import externalLink from "./objects/externalLink";
 import feature from "./objects/feature";
+import hero from "./objects/hero";
 import image from "./objects/image";
 import link from "./objects/link";
 import menuItem from "./objects/menuItem";
@@ -40,6 +41,7 @@ export const schemaTypes = [
   feature,
   footerSettings,
   headerSettings,
+  hero,
   home,
   image,
   link,

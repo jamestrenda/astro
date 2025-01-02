@@ -40,7 +40,7 @@ const TabsTrigger = React.forwardRef<
         {hovered && (
           <motion.span
             layoutId="hover-indicator"
-            className="absolute inset-x-1.5 inset-y-0 rounded-full bg-zinc-950/30 z-0"
+            className="absolute inset-x-1.5 inset-y-0 rounded-full bg-white/10 backdrop-blur-lg z-0"
             // style={{
             //   x: hovered ? 0 : hoveredX.get(),
             //   // x: active ? 0 : hovered ? 0 : activeX.get(),
@@ -53,7 +53,7 @@ const TabsTrigger = React.forwardRef<
         {active && (
           <motion.span
             layoutId="current-indicator"
-            className="absolute inset-y-0 inset-x-1.5 rounded-full bg-zinc-950 dark:bg-white z-10"
+            className="absolute inset-y-0 inset-x-1.5 rounded-full bg-white/90 backdrop-blur-lg z-10"
             transition={{
               layout: { duration: 0.2 },
             }}
@@ -64,7 +64,7 @@ const TabsTrigger = React.forwardRef<
         ref={ref}
         disabled={active}
         className={cn(
-          "inline-flex items-center justify-center whitespace-nowrap rounded-full cursor-pointer py-2 px-6  text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-foreground data-[state=active]:text-background relative z-10",
+          "inline-flex items-center justify-center whitespace-nowrap rounded-full cursor-pointer py-2 px-6  text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-foreground data-[state=active]:text-foreground relative z-10",
           active ? "cursor-default disabled:!opacity-100" : "cursor-pointer",
           className
         )}

@@ -32,7 +32,7 @@ export const Portfolio = ({ title, items }: Props) => {
 
   return (
     <div className="relative">
-      <div className="bg-black bg-[radial-gradient(circle,rgba(255,255,255,.2),black_75%)] h-[480px] lg:h-[680px]"></div>
+      <div className="bg-black bg-[radial-gradient(circle,hsla(0_0%_50%_/_.2),black_75%)] h-[480px] lg:h-[680px]"></div>
       <div className="absolute inset-x-0 top-24 lg:top-40">
         <Container className="max-w-none  flex flex-col  items-center">
           {title && (
@@ -166,7 +166,7 @@ const Project = forwardRef<
           whileHover="hover"
           variants={{
             hover: {
-              "--lightness": visible && !active ? `50%` : `${index * 7}%`,
+              "--lightness": visible && !active ? `30%` : `${index * 7}%`,
               transition: { duration: 0.3, ease: "easeOut" },
             },
             animate: {
@@ -186,7 +186,7 @@ const Project = forwardRef<
                     ? [60, 0, 0]
                     : [0, 0, 0],
               marginTop: -index * 16,
-              "--lightness": visible ? `${index * 7}%` : 0,
+              "--lightness": visible ? `${index * 3}%` : 0,
               transition: {
                 y: {
                   type: "tween",
@@ -220,7 +220,7 @@ const Project = forwardRef<
               " overflow-hidden !p-0 !rounded-lg",
               !active
                 ? "backdrop-blur-lg transition duration-500 bg-transparent !bg-none "
-                : "bg-black !bg-[radial-gradient(circle,rgba(255,255,255,.05)_10%,black_75%)]"
+                : ""
             )}
           >
             {/* TODO: need to add these somewhere

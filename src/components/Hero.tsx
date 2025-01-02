@@ -8,16 +8,16 @@ import { PortableText } from "./PortableText/PortableText";
 export const Hero = ({ valueProposition, logos, image }: Props) => {
   const numItems = useMemo(() => logos?.length ?? 0, [logos?.length]);
   return (
-    <div className="max-md:[&>div]:!px-0 md:pt-4 pb-24 md:h-[768px] relative max-sm:overflow-hidden">
+    <div className="max-md:[&>div]:!px-0 md:pt-4 relative max-sm:overflow-hidden">
       <Container>
-        <BrowserWindow className="max-md:rounded-t-none">
+        <BrowserWindow className="max-md:rounded-t-none min-h-[660px]">
           <div className="w-full min-[480px]:w-4/5 xs:w-1/2 mt-16 space-y-3 [&_p]:text-background [&_p]:dark:text-foreground [&_p]:text-lg [&_p]:md:text-xl [&_p]:font-light">
             {valueProposition && (
               <PortableText portableText={valueProposition} />
             )}
           </div>
 
-          <div className="grid gap-2 my-6 md:mt-12 sm:mb-0 self-start fade-in [--item-width:100px] md:[--item-width:160px]">
+          <div className="grid gap-2 my-6 md:mt-12 sm:mb-0 self-start [--item-width:100px] md:[--item-width:160px]">
             <div
               className="marquee fadeout-horizontal -mx-8 sm:-mx-16"
               style={

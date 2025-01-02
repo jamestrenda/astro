@@ -120,6 +120,7 @@ const blocksFragment = groq`
       ${portableTextFragment}
     },
     logos[] {
+      _key,
       ${imageObjectFragment}
     },
     image {

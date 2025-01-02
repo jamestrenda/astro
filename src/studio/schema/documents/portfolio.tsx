@@ -22,7 +22,7 @@ export default defineType({
           to: [{ type: "website" }], // add other types here
         },
       ],
-      validation: (Rule) => Rule.required().min(1).max(4),
+      validation: (Rule) => Rule.required().unique().min(1).max(4),
     }),
   ],
 });

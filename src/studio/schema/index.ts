@@ -1,3 +1,4 @@
+import marquee from "~/studio/schema/objects/marquee";
 import client from "./documents/client";
 import menu from "./documents/menu";
 import page from "./documents/page";
@@ -9,6 +10,7 @@ import website from "./documents/website";
 import descriptionGrid from "./objects/descriptionGrid";
 import externalLink from "./objects/externalLink";
 import feature from "./objects/feature";
+import gallery from "./objects/gallery";
 import hero from "./objects/hero";
 import image from "./objects/image";
 import link from "./objects/link";
@@ -40,11 +42,13 @@ export const schemaTypes = [
   externalLink,
   feature,
   footerSettings,
+  gallery,
   headerSettings,
   hero,
   home,
   image,
   link,
+  marquee,
   menu,
   menuItem,
   notFoundSettings,

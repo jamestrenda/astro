@@ -21,11 +21,11 @@ export default defineType({
     }),
     defineField({
       name: "logos",
-      title: "Logo Marquee",
+      title: "Logo Marquees",
       type: "array",
       of: [
         {
-          type: "imageObject",
+          type: "marquee",
         },
       ],
     }),

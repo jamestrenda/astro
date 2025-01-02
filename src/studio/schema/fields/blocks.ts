@@ -32,6 +32,10 @@ export const blocksField = defineField({
       title: "Image",
     },
     {
+      type: "portfolio",
+      title: "Portfolio",
+    },
+    {
       name: "textBlock",
       title: "Text Block",
       type: "object",

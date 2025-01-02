@@ -8,38 +8,26 @@ import { Overline } from "./Overline";
 import BrowserWindow from "./BrowserWindow";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Heading } from "./Heading";
-import { CheckCircle2Icon } from "lucide-react";
+import { CircleCheckBigIcon } from "lucide-react";
+import type { Portfolio as Props } from "~/types/portfolio";
+import { SanityImage } from "./Image";
+import { PortableText } from "./PortableText/PortableText";
 
-interface Props {
-  data: {
-    id: string;
-    client: string;
-    url: string;
-    title: string;
-    description: string;
-    image?: {
-      src: string;
-      alt: string;
-    };
-    keyFeatures?: string[];
-  }[];
-}
-
-export const Projects = ({ data }: Props) => {
-  const totalItems = data.length;
-  const [activeTab, setActiveTab] = useState(data[0].id);
-  const activeIndex = data.findIndex(({ id }) => id === activeTab);
+export const Portfolio = ({ title, items }: Props) => {
+  const totalItems = items.length;
+  const [activeTab, setActiveTab] = useState(items[0].id);
+  const activeIndex = items.findIndex(({ id }) => id === activeTab);
   const [prevIndex, setPrevIndex] = useState<number>(activeIndex);
   const jumpCount = Math.abs(activeIndex - prevIndex);
 
   const direction = activeIndex >= prevIndex ? "forwards" : "backwards";
 
   const handleChange = useCallback(
-    (tab?: Props["data"][number]["id"]) => {
+    (tab?: Props["items"][number]["id"]) => {
       setPrevIndex(activeIndex);
-      setActiveTab(tab || data[activeIndex + 1]?.id || data[0].id);
+      setActiveTab(tab || items[activeIndex + 1]?.id || items[0].id);
     },
-    [activeIndex, data]
+    [activeIndex, items]
   );
 
   return (
@@ -47,34 +35,38 @@ export const Projects = ({ data }: Props) => {
       <div className="bg-black bg-[radial-gradient(circle,rgba(255,255,255,.2),black_75%)] h-[480px] lg:h-[680px]"></div>
       <div className="absolute inset-x-0 top-24 lg:top-40">
         <Container className="max-w-none  flex flex-col  items-center">
-          <Overline className="">Featured Projecs</Overline>
+          {title && (
+            <h2>
+              <Overline className="">{title}</Overline>
+            </h2>
+          )}
           <Tabs
-            defaultValue={data[0].id}
+            defaultValue={items[0].id}
             value={activeTab}
             onValueChange={handleChange}
             className="flex flex-col w-full"
           >
             <TabsList className="py-4">
-              {data.map((project, index) => {
+              {items.map((item) => {
                 return (
                   <TabsTrigger
-                    key={index}
-                    value={project.id}
-                    active={activeTab === project.id}
+                    key={item._key}
+                    value={item.id}
+                    active={activeTab === item.id}
                     className="text-background dark:text-foreground dark:data-[state=active]:text-background"
                   >
-                    {project.client}
+                    {item.client}
                   </TabsTrigger>
                 );
               })}
             </TabsList>
             <div className="w-full max-w-7xl mx-auto mt-10 relative">
-              {data.map((project, index) => {
-                const active = activeTab === project.id;
+              {items.map((item, index) => {
+                const active = activeTab === item.id;
                 const inMiddle = 0 < index && index < totalItems - 1;
 
                 return (
-                  <div key={project.id}>
+                  <div key={item.id}>
                     <Project
                       index={index}
                       totalItems={totalItems}
@@ -89,7 +81,7 @@ export const Projects = ({ data }: Props) => {
                       visible={index >= activeIndex}
                       offset={index - activeIndex}
                       direction={direction}
-                      {...project}
+                      {...item}
                     />
                   </div>
                 );
@@ -105,8 +97,8 @@ export const Projects = ({ data }: Props) => {
 
 const Project = forwardRef<
   HTMLDivElement,
-  Omit<ComponentProps<"div">, "onClick"> &
-    Props["data"][number] & {
+  Omit<ComponentProps<"div">, "onClick" | "title"> &
+    Omit<Props["items"][number], "client"> & {
       index: number;
       active: boolean;
       jumping: boolean;
@@ -141,7 +133,7 @@ const Project = forwardRef<
 
     const scale = !visible ? 1 : 1 - widthScale * offset;
 
-    const { client, title, description, url, image, keyFeatures } = props;
+    const { title, description, url, image, features } = props;
 
     return (
       <TabsContent
@@ -264,20 +256,33 @@ const Project = forwardRef<
             >
               <div className="grid lg:grid-cols-2 max-lg:order-2 px-6 pt-6 pb-12 lg:px-16 lg:py-32">
                 <div className="space-y-6">
-                  <FadeIn>
-                    <Heading className="text-background">{title}</Heading>
-                  </FadeIn>
-                  <FadeIn>
-                    <p className="text-muted">{description}</p>
-                  </FadeIn>
-                  {keyFeatures && (
-                    <ul className="text-green-400 space-y-4">
-                      {keyFeatures.map((feature, index) => (
-                        <li key={index}>
+                  {title && (
+                    <FadeIn>
+                      <Heading className="text-background">{title}</Heading>
+                    </FadeIn>
+                  )}
+                  {description && (
+                    <FadeIn>
+                      <div className="text-muted">
+                        <PortableText portableText={description} />
+                      </div>
+                    </FadeIn>
+                  )}
+                  {features && (
+                    <ul className=" space-y-4">
+                      {features.map((feature) => (
+                        <li key={feature._key}>
                           <FadeIn>
                             <span className="flex">
-                              <CheckCircle2Icon className="mr-2" />
-                              {feature}
+                              <CircleCheckBigIcon className="mr-2 text-green-400" />
+                              <span className="text-background dark:text-foreground">
+                                {feature.name && (
+                                  <strong className="text-green-400">
+                                    {feature.name}.{" "}
+                                  </strong>
+                                )}
+                                {feature.description}
+                              </span>
                             </span>
                           </FadeIn>
                         </li>
@@ -287,11 +292,13 @@ const Project = forwardRef<
                 </div>
               </div>
               <FadeIn className="lg:absolute lg:bottom-0 lg:top-14 w-full lg:-right-[50%] h-auto max-lg:order-1 max-lg:-mr-16">
-                {image && (
-                  <img
+                {image?.image && (
+                  <SanityImage
+                    src={image.image}
+                    width={1440}
+                    height={600}
+                    loading="eager"
                     className="h-full w-auto object-contain"
-                    src={image.src}
-                    alt={image.alt}
                   />
                 )}
               </FadeIn>

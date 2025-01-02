@@ -119,6 +119,33 @@ const blocksFragment = groq`
         ${descriptionItemReferenceFragment}
       }
     }
+  },
+  _type == "portfolio" => {
+    title,
+    items[] {
+      "id": _ref,
+      _key,
+      _type == "reference" => @-> {
+        _type,
+        _type == "website" => {
+          "client": select(defined(client->shortName) => client->shortName, defined(client->name) => client->name, ''),
+          title,
+          description[] {
+            ${portableTextFragment}
+          },
+          "url": select(defined(url) => url, defined(client->website) => client->website, '#'),
+          image {
+            ${imageObjectFragment}
+          },
+          features[] {
+            _key,
+            _type,
+            name,
+            description
+          }
+        }
+      }
+    }
   }
 `;
 

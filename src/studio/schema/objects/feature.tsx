@@ -1,6 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { portableTextBlocks } from "../objects/portableText";
-import { CheckCircle2Icon, CircleCheckBigIcon } from "lucide-react";
+import { CircleCheckBigIcon } from "lucide-react";
 
 export default defineType({
   name: "feature",
@@ -18,16 +17,7 @@ export default defineType({
     defineField({
       name: "description",
       title: "Description",
-      type: "array",
-      of: [
-        {
-          ...portableTextBlocks,
-          styles: portableTextBlocks.styles?.filter((style) =>
-            ["normal"].includes(style.value)
-          ),
-          lists: [],
-        },
-      ],
+      type: "string",
     }),
   ],
 });

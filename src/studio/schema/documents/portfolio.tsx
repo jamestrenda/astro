@@ -1,10 +1,12 @@
 import { GalleryVerticalEndIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
+const schemaTitle = "Portfolio";
+
 export default defineType({
   name: "portfolio",
   type: "document",
-  title: "Portfolio",
+  title: schemaTitle,
   icon: () => <GalleryVerticalEndIcon size="1em" />,
   fields: [
     defineField({
@@ -25,4 +27,15 @@ export default defineType({
       validation: (Rule) => Rule.required().unique().min(1).max(4),
     }),
   ],
+  preview: {
+    select: {
+      title: "title",
+    },
+    prepare({ title }) {
+      return {
+        title: title ?? schemaTitle,
+        subtitle: title ? schemaTitle : undefined,
+      };
+    },
+  },
 });

@@ -3,16 +3,18 @@ import type { Block } from "~/types/block";
 import { TextBlock } from "./TextBlock";
 import { DescriptionGrid } from "./DescriptionGrid";
 import { Portfolio } from "./Portfolio";
+import { Hero } from "./Hero";
 
 export type Props = Block;
 
 const props = Astro.props;
 ---
 
-{props._type === "textBlock" ? <TextBlock {...props} client:visible /> : null}
 {
   props._type === "descriptionGrid" ? (
     <DescriptionGrid {...props} client:visible />
   ) : null
 }
+{props._type === "hero" ? <Hero {...props} client:visible /> : null}
 {props._type === "portfolio" ? <Portfolio {...props} client:visible /> : null}
+{props._type === "textBlock" ? <TextBlock {...props} client:visible /> : null}

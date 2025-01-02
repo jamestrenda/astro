@@ -104,11 +104,6 @@ const descriptionItemReferenceFragment = groq`
 const blocksFragment = groq`
   _type,
   _key,
-  _type == "textBlock" => {
-    portableText[] {
-      ${portableTextFragment}
-    }
-  },
   _type == "descriptionGrid" => {
     header[] {
       ${portableTextFragment}
@@ -118,6 +113,17 @@ const blocksFragment = groq`
       _type == "reference" => {
         ${descriptionItemReferenceFragment}
       }
+    }
+  },
+  _type == "hero" => {
+    valueProposition[] {
+      ${portableTextFragment}
+    },
+    logos[] {
+      ${imageObjectFragment}
+    },
+    image {
+      ${imageObjectFragment}
     }
   },
   _type == "portfolio" => {
@@ -146,7 +152,12 @@ const blocksFragment = groq`
         }
       }
     }
-  }
+  },
+  _type == "textBlock" => {
+    portableText[] {
+      ${portableTextFragment}
+    }
+  },
 `;
 
 export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {

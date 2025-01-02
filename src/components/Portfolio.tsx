@@ -295,9 +295,9 @@ const Project = forwardRef<
                 {image?.image && (
                   <SanityImage
                     src={image.image}
-                    width={1440}
-                    height={600}
-                    loading="eager"
+                    width={1280}
+                    height={817}
+                    // loading="eager"
                     className="h-full w-auto object-contain"
                   />
                 )}

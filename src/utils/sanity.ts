@@ -58,7 +58,11 @@ export async function getIndex({
 
   const validationResult = homeZ.safeParse(data);
   if (!validationResult.success) {
+    // TODO: handle this better so that
+    // 1. The error is more readable
+    // 2. The studio doesn't crash
     throw new Error(validationResult.error.message);
+    // return validationResult.error;
   }
 
   return validationResult.data;

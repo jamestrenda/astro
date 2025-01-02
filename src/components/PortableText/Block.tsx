@@ -4,6 +4,13 @@ import type { PortableTextComponents } from "@portabletext/react";
 import { FadeIn } from "../FadeIn";
 
 export const Block: PortableTextComponents["block"] = {
+  h1: ({ children }) => {
+    return (
+      <FadeIn>
+        <Heading level="h1">{children}</Heading>
+      </FadeIn>
+    );
+  },
   h2: ({ children }) => {
     return (
       <FadeIn>

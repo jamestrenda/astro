@@ -40,6 +40,7 @@ export default defineType({
       name: "altText",
       title: "Alt Text",
       type: "string",
+      description: "Override the alt text for this asset",
     }),
     defineField({
       name: "caption",

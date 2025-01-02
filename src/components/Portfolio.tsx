@@ -12,6 +12,7 @@ import { CircleCheckBigIcon } from "lucide-react";
 import type { Portfolio as Props } from "~/types/portfolio";
 import { SanityImage } from "./Image";
 import { PortableText } from "./PortableText/PortableText";
+import { getRadialGradient } from "~/utils/getRadialGradient";
 
 export const Portfolio = ({ title, items }: Props) => {
   const totalItems = items.length;
@@ -31,8 +32,13 @@ export const Portfolio = ({ title, items }: Props) => {
   );
 
   return (
-    <div className="relative">
-      <div className="bg-black bg-[radial-gradient(circle,hsla(0_0%_50%_/_.2),black_75%)] h-[480px] lg:h-[680px]"></div>
+    <div
+      className="relative"
+      style={{
+        backgroundImage: `${getRadialGradient("#00fcff", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "70% 90%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#00fcff", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
+      }}
+    >
+      <div className="bg-black/50 backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
       <div className="absolute inset-x-0 top-24 lg:top-40">
         <Container className="max-w-none  flex flex-col  items-center">
           {title && (
@@ -166,7 +172,7 @@ const Project = forwardRef<
           whileHover="hover"
           variants={{
             hover: {
-              "--lightness": visible && !active ? `30%` : `${index * 7}%`,
+              "--lightness": visible && !active ? `20%` : `${index * 7}%`,
               transition: { duration: 0.3, ease: "easeOut" },
             },
             animate: {
@@ -186,7 +192,7 @@ const Project = forwardRef<
                     ? [60, 0, 0]
                     : [0, 0, 0],
               marginTop: -index * 16,
-              "--lightness": visible ? `${index * 3}%` : 0,
+              "--lightness": visible ? `${index * 5}%` : 0,
               transition: {
                 y: {
                   type: "tween",
@@ -220,7 +226,7 @@ const Project = forwardRef<
               " overflow-hidden !p-0 !rounded-lg",
               !active
                 ? "backdrop-blur-lg transition duration-500 bg-transparent !bg-none "
-                : ""
+                : "!bg-none"
             )}
           >
             {/* TODO: need to add these somewhere
@@ -298,6 +304,7 @@ const Project = forwardRef<
                     width={1280}
                     height={817}
                     // loading="eager"
+                    mode="contain"
                     className="h-full w-auto object-contain"
                   />
                 )}

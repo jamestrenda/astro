@@ -56,33 +56,23 @@ export function getPortableTextPreview(
     };
   }
 
-  let block;
-  switch (blocks[0]?._type) {
-    case "block":
-      block = blocks[0] as PortableTextTextBlock;
+  // find the first block that is a heading
+  let block = blocks.find(
+    (block) =>
+      block._type === "block" && ["h1", "h2"].includes(block.style as string)
+  ) as PortableTextTextBlock;
 
-      // Get the first block of text, which could be broken up into multiple children depending on "marks" (i.e. formatting)
-      const textSnippet = block?.children.map((child) => child.text).join("");
-
-      return {
-        title: textSnippet?.length ? textSnippet : title,
-        subtitle: textSnippet && title, // if title is set, show the type as the subtitle
-      };
-    // TODO: This is not available in the portable text schema, but could be added.
-    //       But might want to consider changing the "Text Block" title to "Portable Content" or "Rich Content"
-    //       to indicate that it can contain multiple block types (e.g. block, image, etc.) not just text
-    case "imageObject":
-      block = blocks[0] as ImageObject;
-      return {
-        title: block.altText ?? block.image.asset?.altText ?? "Image",
-        subtitle: block.caption ?? getImageObjectTitle(),
-        media: block.image.asset?._id,
-      };
-    default:
-      return {
-        title,
-      };
+  if (!block) {
+    block = blocks[0] as PortableTextTextBlock; // if no heading, use the first block
   }
+
+  // Get the first block of text, which could be broken up into multiple children depending on "marks" (i.e. formatting)
+  const textSnippet = block?.children.map((child) => child.text).join("");
+
+  return {
+    title: textSnippet?.length ? textSnippet : title,
+    subtitle: textSnippet && title, // if title is set, show the type as the subtitle
+  };
 }
 
 export const portableTextBlocks = defineArrayMember({

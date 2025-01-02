@@ -21,7 +21,7 @@ const BrowserWindow = memo(
       <div className="browser-window md:h-full relative rounded-b-lg">
         <div
           className={cn(
-            "relative z-20 pt-14 bg-black bg-[size:150%] bg-[position:90%] bg-[radial-gradient(circle,hsl(0_0%_10%),black_75%)] lg:bg-[radial-gradient(circle,hsl(0_0%_10%)_10%,black_50%)] dark:bg-[radial-gradient(circle,hsl(0_0%_10%),hsl(0 0% 10%)_75%)] rounded-lg max-md:rounded-bl-none w-full h-full p-6 sm:p-16 grid items-center",
+            "relative z-20 pt-14 bg-black bg-[size:150%] bg-[position:90%] rounded-lg max-md:rounded-bl-none w-full h-full p-6 sm:p-16 grid items-center",
             className
           )}
         >

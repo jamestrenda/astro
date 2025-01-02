@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
-import { portableTextBlocks } from "../objects/portableText";
 import { GlobeIcon } from "lucide-react";
+import { getPortableTextBlocks } from "~/studio/lib/utils";
 
 export default defineType({
   name: "website",
@@ -24,15 +24,10 @@ export default defineType({
       name: "description",
       title: "Description",
       type: "array",
-      of: [
-        {
-          ...portableTextBlocks,
-          styles: portableTextBlocks.styles?.filter((style) =>
-            ["normal"].includes(style.value)
-          ),
-          lists: [],
-        },
-      ],
+      of: getPortableTextBlocks({
+        styles: ["normal"],
+        lists: [],
+      }),
     }),
     defineField({
       name: "url",

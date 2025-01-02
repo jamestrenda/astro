@@ -1,7 +1,9 @@
 import { defineField, defineType } from "sanity";
-import { portableTextBlocks } from "../objects/portableText";
 import { Grid3X3Icon, TextIcon } from "lucide-react";
-import { getPortableTextPreview } from "~/studio/lib/utils";
+import {
+  getPortableTextBlocks,
+  getPortableTextPreview,
+} from "~/studio/lib/utils";
 
 export default defineType({
   name: "descriptionGrid",
@@ -14,15 +16,10 @@ export default defineType({
       title: "Grid Header",
       description: "Optional text to display above the grid",
       type: "array",
-      of: [
-        {
-          ...portableTextBlocks,
-          styles: portableTextBlocks.styles?.filter((style) =>
-            ["h2", "normal"].includes(style.value)
-          ),
-          lists: [],
-        },
-      ],
+      of: getPortableTextBlocks({
+        styles: ["h2", "normal"],
+        lists: [],
+      }),
     }),
     defineField({
       name: "items",
@@ -47,14 +44,10 @@ export default defineType({
               name: "description",
               title: "Description",
               type: "array",
-              of: [
-                {
-                  ...portableTextBlocks,
-                  styles: portableTextBlocks.styles?.filter((style) =>
-                    ["normal"].includes(style.value)
-                  ),
-                },
-              ],
+              of: getPortableTextBlocks({
+                styles: ["normal"],
+                lists: [],
+              }),
             },
           ],
         },

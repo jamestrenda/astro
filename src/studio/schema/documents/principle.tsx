@@ -1,6 +1,6 @@
 import { CompassIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
-import { portableTextBlocks } from "../objects/portableText";
+import { getPortableTextBlocks } from "~/studio/lib/utils";
 
 export default defineType({
   name: "principle",
@@ -17,14 +17,10 @@ export default defineType({
     defineField({
       name: "description",
       type: "array",
-      of: [
-        {
-          ...portableTextBlocks,
-          styles: portableTextBlocks.styles?.filter((style) =>
-            ["normal"].includes(style.value)
-          ),
-        },
-      ],
+      of: getPortableTextBlocks({
+        styles: ["normal"],
+        lists: [],
+      }),
     }),
   ],
 });

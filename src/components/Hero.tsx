@@ -225,11 +225,20 @@ export const Hero = ({ valueProposition, logos, image }: Props) => {
               </div>
             </div> */}
           </div>
-          <img
-            src="/me.png"
-            alt="Me"
-            className="absolute z-30 -bottom-24 md:bottom-0 -right-4 md:right-0 md:rounded-br-lg object-cover max-h-[400px] max-[579px]:max-w-72 xs:h-[600px] xs:max-h-[700px] md:h-[700px] lg:w-[700px] min-[480px]:w-2/3 aspect-square pointer-events-none dark:brightness-75 contrast-[1.1]"
-          />
+          {image && (
+            <SanityImage
+              src={image.image}
+              // width={1280}
+              // height={817}
+              loading="eager"
+              fetchPriority="high"
+              queryParams={{
+                q: 100,
+              }}
+              preview={false}
+              className="absolute z-30 -bottom-24 md:bottom-0 -right-4 md:right-0 md:rounded-br-lg object-cover max-h-[400px] max-[579px]:max-w-72 xs:h-[600px] xs:max-h-[700px] md:h-[700px] lg:w-[700px] min-[480px]:w-2/3 aspect-square pointer-events-none dark:brightness-75 contrast-[1.1]"
+            />
+          )}
         </BrowserWindow>
       </Container>
     </div>

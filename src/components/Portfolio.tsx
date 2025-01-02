@@ -96,7 +96,7 @@ export const Portfolio = ({ title, items }: Props) => {
           </Tabs>
         </Container>
       </div>
-      <div className="h-80 bg-background"></div>
+      <div className="h-80 lg:h-96 bg-background"></div>
     </div>
   );
 };

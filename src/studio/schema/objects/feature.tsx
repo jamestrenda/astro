@@ -12,8 +12,6 @@ export default defineType({
       title: "Name",
       type: "string",
     }),
-    // TODO: I've done something like this a few times now. I should probably
-    // make a helper function for this
     defineField({
       name: "description",
       title: "Description",

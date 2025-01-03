@@ -18,7 +18,8 @@ export default {
         // create a map of all the redirects grouped by their 'from' value
         const lookup = redirects?.reduce(
           (duplicates, currentItem) => {
-            duplicates[currentItem.from] = ++duplicates[currentItem.from] || 0;
+            duplicates[currentItem.from] =
+              (duplicates[currentItem.from] || 0) + 1;
             return duplicates;
           },
           {} as Record<string, number>

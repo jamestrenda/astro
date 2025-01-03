@@ -192,7 +192,7 @@ const Project = forwardRef<
                     ? [60, 0, 0]
                     : [0, 0, 0],
               marginTop: -index * 16,
-              "--lightness": visible ? `${index * 5}%` : 0,
+              "--lightness": visible ? `${offset * 5}%` : 0,
               transition: {
                 y: {
                   type: "tween",

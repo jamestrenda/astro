@@ -62,7 +62,7 @@ const theme = getTheme(Astro.cookies);
     <main class="w-full grow bg-background">
       <slot />
     </main>
-    <Footer />
+    <Footer siteTitle={siteTitle} />
     {
       preview ? (
         <>

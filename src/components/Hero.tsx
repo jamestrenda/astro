@@ -4,12 +4,19 @@ import BrowserWindow from "./BrowserWindow";
 import type { Hero as Props } from "~/types/hero";
 import { SanityImage } from "./Image";
 import { PortableText } from "./PortableText/PortableText";
+import { getRadialGradient } from "~/utils/getRadialGradient";
+import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
 
 export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
   return (
-    <div className="max-md:[&>div]:!px-0 md:pt-4 relative max-sm:overflow-hidden">
+    <div className="max-md:[&>div]:!px-0 md:pt-4 pb-16 relative max-sm:overflow-hidden">
       <Container>
         <BrowserWindow className="max-md:rounded-t-none min-h-[660px]">
+          <BackgroundRadialGradient
+            style={{
+              backgroundImage: `${getRadialGradient("#c7d2fe", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "40% 30%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#c7d2fe", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
+            }}
+          />
           <div className="w-full min-[480px]:w-4/5 xs:w-1/2 mt-16 space-y-3 [&_p]:text-background [&_p]:dark:text-foreground [&_p]:text-lg [&_p]:md:text-xl [&_p]:font-light">
             {valueProposition && (
               <PortableText portableText={valueProposition} />

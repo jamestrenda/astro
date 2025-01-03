@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { baseBlockZ } from "./base";
 
 export const formFieldZ = z.object({
   _type: z.literal("formField"),
@@ -23,6 +24,12 @@ const formFieldTextareaZ = formFieldZ
     fieldType: true,
   });
 
+const formGroupZ = baseBlockZ.extend({
+  _type: z.literal("formGroup"),
+  label: z.string(),
+  fields: z.array(z.union([formFieldZ, formFieldEmailZ, formFieldTextareaZ])),
+});
+
 export const formZ = z.object({
   _type: z.literal("baseForm"),
   description: z.string().optional().nullable(),
@@ -30,7 +37,7 @@ export const formZ = z.object({
   emailTo: z.array(z.string().email()),
   emailSubject: z.string(),
   customFormFields: z.array(
-    z.union([formFieldZ, formFieldEmailZ, formFieldTextareaZ])
+    z.union([formFieldZ, formFieldEmailZ, formFieldTextareaZ, formGroupZ])
   ),
 });
 

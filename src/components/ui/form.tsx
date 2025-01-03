@@ -49,25 +49,31 @@ export function Field({
   inputProps,
   errors,
   className,
+  showLabel = false,
 }: {
   labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
   linkProps?: { to: string; text: string };
   inputProps: React.InputHTMLAttributes<HTMLInputElement>;
   errors?: ListOfErrors;
   className?: string;
+  showLabel?: boolean;
 }) {
   const fallbackId = useId();
   const id = inputProps.id ?? fallbackId;
   const errorId = errors?.length ? `${id}-error` : undefined;
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className={cn("", className)}>
       <div
         className={cn(
           "has-[+[aria-invalid]]:text-destructive",
           linkProps ? "flex items-center" : ""
         )}
       >
-        <Label htmlFor={id} {...labelProps} />
+        <Label
+          htmlFor={id}
+          {...labelProps}
+          className={!showLabel ? "sr-only" : ""}
+        />
         {linkProps ? (
           <a
             href={linkProps.to}
@@ -93,19 +99,25 @@ export function TextareaField({
   textareaProps,
   errors,
   className,
+  showLabel = false,
 }: {
   labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
   textareaProps: React.TextareaHTMLAttributes<HTMLTextAreaElement>;
   errors?: ListOfErrors;
   className?: string;
+  showLabel?: boolean;
 }) {
   const fallbackId = useId();
   const id = textareaProps.id ?? textareaProps.name ?? fallbackId;
   const errorId = errors?.length ? `${id}-error` : undefined;
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className={cn("", className)}>
       <div className="has-[+[aria-invalid]]:text-destructive">
-        <Label htmlFor={id} {...labelProps} />
+        <Label
+          htmlFor={id}
+          {...labelProps}
+          className={!showLabel ? "sr-only" : ""}
+        />
       </div>
       <Textarea
         id={id}

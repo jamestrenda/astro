@@ -49,86 +49,124 @@ export const Form = ({ text, form: data }: Props) => {
             </div>
 
             <div className="grid gap-4 items-start">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <form
-                  method="POST"
-                  action={actions.submitForm}
-                  {...getFormProps(form)}
-                >
-                  {data.customFormFields.map((field) => {
-                    switch (field._type) {
-                      case "formField": {
-                        return (
-                          <Field
-                            labelProps={{
-                              htmlFor: field._key,
-                              children: field.fieldLabel,
-                            }}
-                            inputProps={{
-                              ...getInputProps(fields[field._key], {
-                                type: "text",
-                              }),
-                              placeholder: field.fieldPlaceholder ?? undefined,
-                              // autoComplete: "given-name",
-                              autoFocus: fields[field._key].errors
-                                ? true
-                                : false,
-                            }}
-                            errors={fields[field._key].errors}
-                          />
-                        );
-                      }
-                      case "formTextarea": {
-                        return (
-                          <TextareaField
-                            labelProps={{
-                              htmlFor: field._key,
-                              children: field.fieldLabel,
-                            }}
-                            textareaProps={{
-                              ...getTextareaProps(fields[field._key]),
-                              //   autoComplete: "message",
-                              placeholder: field.fieldPlaceholder ?? undefined,
-                              rows: 3,
-                            }}
-                            // placeholder={field.fieldPlaceholder ?? undefined}
-                            // rows={3}
-                            errors={fields[field._key].errors}
-                          />
-                        );
-                      }
-                      default: {
-                        return null;
-                      }
+              <form
+                method="POST"
+                action={actions.submitForm}
+                {...getFormProps(form)}
+                className="grid gap-4"
+              >
+                {data.customFormFields.map((field) => {
+                  switch (field._type) {
+                    case "formField": {
+                      return (
+                        <Field
+                          key={field._key}
+                          labelProps={{
+                            htmlFor: field._key,
+                            children: field.fieldLabel,
+                          }}
+                          inputProps={{
+                            ...getInputProps(fields[field._key], {
+                              type: "text",
+                            }),
+                            placeholder: field.fieldPlaceholder ?? undefined,
+                            // autoComplete: "given-name",
+                            autoFocus: fields[field._key].errors ? true : false,
+                          }}
+                          errors={fields[field._key].errors}
+                        />
+                      );
                     }
-                  })}
-
-                  {/* <input
-                  type="text"
-                  placeholder="First name"
-                  className="w-full placeholder:text-background/50 p-4 bg-glass text-background rounded-lg border-white/5 border"
-                />
-                <input
-                  type="text"
-                  placeholder="Last name"
-                  className="w-full placeholder:text-background/50 p-4 bg-glass text-white rounded-lg border border-white/5"
-                />
-              </div>
-              <input
-                type="text"
-                placeholder="Email"
-                className="w-full placeholder:text-background/50 p-4 bg-glass text-white rounded-lg border border-white/5"
-              />
-              <textarea
-                placeholder="Message"
-                className="w-full placeholder:text-background/50 p-4 bg-glass text-white rounded-lg border border-white/5"
-                rows={5}
-              ></textarea> */}
-                  <button className="py-3 px-6 bg-primary text-background rounded-lg justify-self-start min-w-40">
-                    Send
-                  </button>
-                </form>
-              </div>
+                    case "formTextarea": {
+                      return (
+                        <TextareaField
+                          key={field._key}
+                          labelProps={{
+                            htmlFor: field._key,
+                            children: field.fieldLabel,
+                          }}
+                          textareaProps={{
+                            ...getTextareaProps(fields[field._key]),
+                            //   autoComplete: "message",
+                            placeholder: field.fieldPlaceholder ?? undefined,
+                            rows: 5,
+                          }}
+                          // placeholder={field.fieldPlaceholder ?? undefined}
+                          // rows={3}
+                          errors={fields[field._key].errors}
+                        />
+                      );
+                    }
+                    case "formGroup": {
+                      // TODO: extract to a function
+                      return (
+                        <div className="grid md:grid-cols-2 gap-4">
+                          {field.fields.map((field) => {
+                            switch (field._type) {
+                              case "formField": {
+                                return (
+                                  <Field
+                                    key={field._key}
+                                    labelProps={{
+                                      htmlFor: field._key,
+                                      children: field.fieldLabel,
+                                    }}
+                                    inputProps={{
+                                      ...getInputProps(fields[field._key], {
+                                        type: "text",
+                                      }),
+                                      placeholder:
+                                        field.fieldPlaceholder ?? undefined,
+                                      // autoComplete: "given-name",
+                                      autoFocus: fields[field._key].errors
+                                        ? true
+                                        : false,
+                                    }}
+                                    errors={fields[field._key].errors}
+                                  />
+                                );
+                              }
+                              case "formTextarea": {
+                                return (
+                                  <TextareaField
+                                    key={field._key}
+                                    labelProps={{
+                                      htmlFor: field._key,
+                                      children: field.fieldLabel,
+                                    }}
+                                    textareaProps={{
+                                      ...getTextareaProps(fields[field._key]),
+                                      //   autoComplete: "message",
+                                      placeholder:
+                                        field.fieldPlaceholder ?? undefined,
+                                      rows: 5,
+                                    }}
+                                    // placeholder={field.fieldPlaceholder ?? undefined}
+                                    // rows={3}
+                                    errors={fields[field._key].errors}
+                                  />
+                                );
+                              }
+                              default: {
+                                return null;
+                              }
+                            }
+                          })}
+                        </div>
+                      );
+                    }
+                    default: {
+                      return null;
+                    }
+                  }
+                })}
+                <button
+                  type="submit"
+                  className="py-3 px-6 bg-primary text-background rounded-lg justify-self-start min-w-40"
+                >
+                  Send
+                </button>
+              </form>
             </div>
           </Container>
         </BrowserWindow>

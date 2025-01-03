@@ -101,6 +101,22 @@ const descriptionItemReferenceFragment = groq`
   "description": @->${descriptionFragment}
 `;
 
+const formFieldsFragment = groq`
+  _type,
+  _key,
+  fieldLabel,
+  fieldPlaceholder,
+  required,
+  _type == "formField" => {
+    fieldType,
+  },
+  fieldType == "email" => {
+    replyToEmail,
+  },
+  _type == "formTextarea" => {
+    fieldMaxLength
+  }
+`;
 const blocksFragment = groq`
   _type,
   _key,
@@ -125,19 +141,14 @@ const blocksFragment = groq`
       emailTo,
       emailSubject,
       customFormFields[] {
-        _type,
-        _key,
-        fieldLabel,
-        fieldPlaceholder,
-        required,
-        _type == "formField" => {
-          fieldType,
-        },
-        fieldType == "email" => {
-          replyToEmail,
-        },
-        _type == "formTextarea" => {
-          fieldMaxLength
+        ${formFieldsFragment},
+        _type == "formGroup" => {
+          _type,
+          _key,
+          label,
+          fields[] {
+            ${formFieldsFragment}
+          }
         }
       }
     }

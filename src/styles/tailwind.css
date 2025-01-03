@@ -7,7 +7,8 @@
     --background: 0 0% 98%;
     --foreground: 0 0% 7%;
     --muted: 210 11% 50%;
-    --primary: 0 92% 62%;
+    /* --primary: 0 92% 62%; */
+    --primary: 243 75% 59%;
     --accent: 46 62% 50%;
     --border: var(--muted);
     --primary-dark: 0 92% 15%;

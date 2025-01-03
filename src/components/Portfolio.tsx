@@ -35,7 +35,7 @@ export const Portfolio = ({ title, items }: Props) => {
     <div
       className="relative"
       style={{
-        backgroundImage: `${getRadialGradient("#00fcff", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "70% 90%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#00fcff", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
+        backgroundImage: `${getRadialGradient("#6366f1", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "70% 90%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#e0e7ff", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
       }}
     >
       <div className="bg-black/50 backdrop-blur-lg h-[480px] lg:h-[680px]"></div>

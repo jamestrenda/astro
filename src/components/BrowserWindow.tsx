@@ -7,6 +7,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   withChrome?: boolean;
   withStack?: boolean;
   stackCount?: number;
+  stackPosition?: "top" | "bottom";
 }
 
 const BrowserWindow = memo(
@@ -16,9 +17,15 @@ const BrowserWindow = memo(
     withStack = true,
     children,
     stackCount = 5,
+    stackPosition = "bottom",
   }: Props) => {
     return (
-      <div className="browser-window md:h-full relative rounded-b-lg">
+      <div
+        className={cn(
+          "browser-window md:h-full relative rounded-b-lg",
+          stackPosition === "top" ? "mt-20" : ""
+        )}
+      >
         <div
           className={cn(
             "relative z-20 pt-14 bg-black bg-[size:150%] bg-[position:90%] rounded-lg max-md:rounded-bl-none w-full h-full p-6 sm:p-16 grid items-center",
@@ -45,7 +52,12 @@ const BrowserWindow = memo(
         {withStack && (
           <motion.div className="absolute inset-0">
             {Array.from({ length: stackCount }).map((_, index) => (
-              <Shadow key={index} index={index} total={stackCount} />
+              <Shadow
+                key={index}
+                index={index}
+                total={stackCount}
+                position={stackPosition}
+              />
             ))}
           </motion.div>
         )}
@@ -57,18 +69,28 @@ const BrowserWindow = memo(
 type ShadowProps = {
   index: number;
   total: number;
+  position: "top" | "bottom";
 };
-const Shadow = memo(({ index, total }: ShadowProps) => {
+const Shadow = memo(({ index, total, position }: ShadowProps) => {
   const increment = 16;
-  const bottom = -(index + 1) * increment;
+  const y = -(index + 1) * increment;
 
   const lightness = calculateLightnessScale(10, 95, 0.9, total, index);
 
   return (
     <motion.div
-      className={`absolute top-auto bottom-0 w-full mx-auto inset-x-0 backdrop-blur-lg rounded-b-lg`}
-      initial={{ bottom: 0 }}
-      animate={{ bottom }}
+      className={cn(
+        `absolute w-full mx-auto inset-x-0 backdrop-blur-lg rounded-lg`,
+        position === "top" ? "bottom-auto top-0" : "top-auto bottom-0"
+      )}
+      initial={{
+        bottom: position === "top" ? undefined : 0,
+        top: position === "top" ? 0 : undefined,
+      }}
+      animate={{
+        bottom: position === "top" ? undefined : y,
+        top: position === "top" ? y : undefined,
+      }}
       whileInView="animate"
       viewport={{ once: true }}
       transition={{

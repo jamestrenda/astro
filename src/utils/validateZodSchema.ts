@@ -7,7 +7,10 @@ export const validateZodSchema = (data: unknown, schemas: ZodTypeAny[]) => {
   // Check if any schema passed validation
   const successfulResult = results.find((result) => result.success);
   if (successfulResult) {
-    return successfulResult; // Return the first successful result
+    return {
+      success: true,
+      data: successfulResult.data, // Return the validated data
+    } as const; // Return the first successful result
   }
 
   // None succeeded; find the schema with the fewest issues

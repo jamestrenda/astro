@@ -25,7 +25,7 @@ try {
         throw new Error("Invalid block data!");
       }
 
-      validBlock = validationResult;
+      validBlock = validationResult.data;
       break;
     }
     case "form": {
@@ -35,7 +35,8 @@ try {
         throw new Error("Invalid block data!");
       }
 
-      validBlock = validationResult;
+      validBlock = validationResult.data;
+      console.log("validBlock", validBlock);
       break;
     }
     case "hero": {
@@ -45,7 +46,7 @@ try {
         throw new Error("Invalid block data!");
       }
 
-      validBlock = validationResult;
+      validBlock = validationResult.data;
       break;
     }
     case "portfolio": {
@@ -55,7 +56,7 @@ try {
         throw new Error("Invalid block data!");
       }
 
-      validBlock = validationResult;
+      validBlock = validationResult.data;
       break;
     }
     case "textBlock": {
@@ -65,7 +66,7 @@ try {
         throw new Error("Invalid block data!");
       }
 
-      validBlock = validationResult;
+      validBlock = validationResult.data;
       break;
     }
     default:
@@ -81,15 +82,15 @@ try {
   validBlock ? (
     <>
       {props._type === "descriptionGrid" ? (
-        <DescriptionGrid {...props} client:visible />
+        <DescriptionGrid {...validBlock} client:visible />
       ) : null}
-      {props._type === "form" ? <Form {...props} client:visible /> : null}
-      {props._type === "hero" ? <Hero {...props} client:visible /> : null}
+      {props._type === "form" ? <Form {...validBlock} client:visible /> : null}
+      {props._type === "hero" ? <Hero {...validBlock} client:visible /> : null}
       {props._type === "portfolio" ? (
-        <Portfolio {...props} client:visible />
+        <Portfolio {...validBlock} client:visible />
       ) : null}
       {props._type === "textBlock" ? (
-        <TextBlock {...props} client:visible />
+        <TextBlock {...validBlock} client:visible />
       ) : null}
     </>
   ) : null

@@ -29,7 +29,9 @@ export const formZ = z.object({
   _id: z.string(),
   emailTo: z.array(z.string().email()),
   emailSubject: z.string(),
-  customFormFields: z.array(z.any()),
+  customFormFields: z.array(
+    z.union([formFieldZ, formFieldEmailZ, formFieldTextareaZ])
+  ),
 });
 
 export type Form = z.infer<typeof formZ>;

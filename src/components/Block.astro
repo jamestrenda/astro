@@ -11,6 +11,7 @@ import { heroZ } from "~/types/hero";
 import { portfolioZ } from "~/types/portfolio";
 import { textBlockZ } from "~/types/textBlock";
 import { formBlockZ } from "~/types/formBlock";
+import type { FormBlock } from "~/types/formBlock";
 
 export type Props = Block;
 
@@ -35,8 +36,8 @@ try {
         throw new Error("Invalid block data!");
       }
 
-      validBlock = validationResult.data;
-      console.log("validBlock", validBlock);
+      validBlock = validationResult.data as FormBlock;
+
       break;
     }
     case "hero": {
@@ -73,7 +74,6 @@ try {
       break;
   }
 } catch (err) {
-  console.log(props);
   console.error(err);
 }
 ---

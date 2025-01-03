@@ -71,7 +71,7 @@ export function getPortableTextPreview(
 
   return {
     title: textSnippet?.length ? textSnippet : title,
-    subtitle: textSnippet && title, // if title is set, show the type as the subtitle
+    subtitle: textSnippet ? title : undefined, // if title is set, show the type as the subtitle
   };
 }
 

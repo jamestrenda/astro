@@ -66,13 +66,16 @@ export const Form = ({ text, form: data }: Props) => {
                             children: field.fieldLabel,
                           }}
                           inputProps={{
+                            // @ts-ignore
                             ...getInputProps(fields[field._key], {
                               type: "text",
                             }),
                             placeholder: field.fieldPlaceholder ?? undefined,
                             // autoComplete: "given-name",
+                            // @ts-ignore
                             autoFocus: fields[field._key].errors ? true : false,
                           }}
+                          // @ts-ignore
                           errors={fields[field._key].errors}
                         />
                       );
@@ -86,13 +89,13 @@ export const Form = ({ text, form: data }: Props) => {
                             children: field.fieldLabel,
                           }}
                           textareaProps={{
+                            // @ts-ignore
                             ...getTextareaProps(fields[field._key]),
                             //   autoComplete: "message",
                             placeholder: field.fieldPlaceholder ?? undefined,
                             rows: 5,
                           }}
-                          // placeholder={field.fieldPlaceholder ?? undefined}
-                          // rows={3}
+                          // @ts-ignore
                           errors={fields[field._key].errors}
                         />
                       );
@@ -112,16 +115,19 @@ export const Form = ({ text, form: data }: Props) => {
                                       children: field.fieldLabel,
                                     }}
                                     inputProps={{
+                                      // @ts-ignore
                                       ...getInputProps(fields[field._key], {
                                         type: "text",
                                       }),
                                       placeholder:
                                         field.fieldPlaceholder ?? undefined,
                                       // autoComplete: "given-name",
+                                      // @ts-ignore
                                       autoFocus: fields[field._key].errors
                                         ? true
                                         : false,
                                     }}
+                                    // @ts-ignore
                                     errors={fields[field._key].errors}
                                   />
                                 );
@@ -135,14 +141,14 @@ export const Form = ({ text, form: data }: Props) => {
                                       children: field.fieldLabel,
                                     }}
                                     textareaProps={{
+                                      // @ts-ignore
                                       ...getTextareaProps(fields[field._key]),
                                       //   autoComplete: "message",
                                       placeholder:
                                         field.fieldPlaceholder ?? undefined,
                                       rows: 5,
                                     }}
-                                    // placeholder={field.fieldPlaceholder ?? undefined}
-                                    // rows={3}
+                                    // @ts-ignore
                                     errors={fields[field._key].errors}
                                   />
                                 );

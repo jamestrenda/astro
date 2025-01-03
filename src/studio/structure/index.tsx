@@ -1,6 +1,7 @@
 import type { StructureResolver } from "sanity/structure";
 import {
   ArrowLeftRightIcon,
+  ClipboardPenIcon,
   CompassIcon,
   FileXIcon,
   FilesIcon,
@@ -160,6 +161,11 @@ export const structure: StructureResolver = async (S, context) => {
         ])
     );
 
+  const forms = S.listItem()
+    .title("Forms")
+    .icon(ClipboardPenIcon)
+    .child(S.documentTypeList("baseForm").title("Forms"));
+
   const settings = S.listItem()
     .title("Settings")
     .icon(SettingsIcon)
@@ -227,6 +233,7 @@ export const structure: StructureResolver = async (S, context) => {
       principles,
       projects,
       clients,
+      forms,
       S.divider(),
       settings,
     ]);

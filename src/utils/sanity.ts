@@ -8,6 +8,10 @@ import {
 import type { Settings } from "~/types/settings";
 import type { Post } from "~/types/post";
 import { homeZ, type Home } from "~/types/home";
+import { seoZ } from "~/types/seo";
+import { blockZ } from "~/types/block";
+import { validateZodSchema } from "./validateZodSchema";
+import { z, type ZodIssue } from "zod";
 
 export async function getPosts({
   preview,
@@ -50,22 +54,39 @@ export async function getIndex({
   preview: boolean;
   options: App.Locals["loadQueryOptions"];
 }): Promise<Home> {
-  const { data } = await loadQuery<Array<{ title: string }>>({
+  const { data } = await loadQuery<Home>({
     query: INDEX_QUERY,
     preview,
     options,
   });
 
-  const validationResult = homeZ.safeParse(data);
-  if (!validationResult.success) {
-    // TODO: handle this better so that
-    // 1. The error is more readable
-    // 2. The studio doesn't crash
-    throw new Error(validationResult.error.message);
-    // return validationResult.error;
-  }
+  //
+  // const { seo } = data;
 
-  return validationResult.data;
+  // // Validate the seo
+  // const seoValidationResult = validateZodSchema(seo, [seoZ]);
+
+  // // Validate the blocks
+  // const blocksValidatioResult = blockZ.safeParse(blocks);
+
+  // if (seoValidationResult.success) {
+  //   // TODO: handle this better so that
+  //   // 1. The error is more readable
+  //   // 2. The studio doesn't crash
+  //   // throw new Error(seoValidationResult.error.message);
+  //   // return seoValidationResult
+  // }
+
+  // if (!blocksValidatioResult.success) {
+  //   // TODO: handle this better so that
+  //   // 1. The error is more readable
+  //   // 2. The studio doesn't crash
+  //   throw new Error(blocksValidatioResult.error.message);
+  //   // return validationResult.error;
+  // }
+
+  // // return validationResult.data;
+  return data;
 }
 
 export async function getSettings({

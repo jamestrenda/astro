@@ -28,6 +28,10 @@ export const blocksField = defineField({
       title: "Description Grid",
     },
     {
+      type: "form",
+      title: "Form",
+    },
+    {
       type: "hero",
       title: "Hero",
     },

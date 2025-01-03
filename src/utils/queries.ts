@@ -115,6 +115,33 @@ const blocksFragment = groq`
       }
     }
   },
+  _type == "form" => {
+    text[] {
+      ${portableTextFragment}
+    },
+    form-> {
+      _id,
+      _type,
+      emailTo,
+      emailSubject,
+      customFormFields[] {
+        _type,
+        _key,
+        fieldLabel,
+        fieldPlaceholder,
+        required,
+        _type == "formField" => {
+          fieldType,
+        },
+        fieldType == "email" => {
+          replyToEmail,
+        },
+        _type == "formTextarea" => {
+          fieldMaxLength
+        }
+      }
+    }
+  },
   _type == "hero" => {
     valueProposition[] {
       ${portableTextFragment}

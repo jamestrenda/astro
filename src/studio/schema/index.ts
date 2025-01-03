@@ -25,6 +25,7 @@ import home from "./singletons/home";
 import notFoundSettings from "./singletons/notFoundSettings";
 import redirectSettings from "./singletons/redirectSettings";
 import siteSettings from "./singletons/siteSettings";
+import form from "./objects/form";
 
 export const SINGLETON_TYPES = new Set([
   footerSettings.name,
@@ -42,6 +43,7 @@ export const schemaTypes = [
   externalLink,
   feature,
   footerSettings,
+  form,
   gallery,
   headerSettings,
   hero,

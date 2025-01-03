@@ -2,6 +2,7 @@ import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { media } from "sanity-plugin-media";
+import { FormBuilderPlugin } from "@hatchd/sanity-plugin-form-builder";
 import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
 import { defineDocuments, presentationTool } from "sanity/presentation";
 import { SINGLETON_TYPES, schemaTypes } from "./src/studio/schema";
@@ -62,6 +63,7 @@ export default defineConfig({
     visionTool(),
     media(),
     unsplashImageAsset(),
+    FormBuilderPlugin(),
   ],
   schema: {
     types: schemaTypes,

@@ -20,6 +20,13 @@ import {
   type RadioGroupProps,
 } from "./radio-group";
 import { cn } from "~/utils/misc";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./tooltip";
+import { InfoIcon } from "lucide-react";
 
 export type ListOfErrors = Array<string | null | undefined> | null | undefined;
 
@@ -33,13 +40,22 @@ export function ErrorList({
   const errorsToRender = errors?.filter(Boolean);
   if (!errorsToRender?.length) return null;
   return (
-    <ul id={id} className="flex flex-col gap-1">
-      {errorsToRender.map((e) => (
-        <li key={e} className="text-xs text-destructive">
-          {e}
-        </li>
-      ))}
-    </ul>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger className="absolute top-5 right-4 z-10 text-destructive">
+          <InfoIcon className="h-5 w-5" />
+        </TooltipTrigger>
+        <TooltipContent className="bg-red-100 backdrop-blur-md">
+          <ul id={id} className="flex flex-col gap-1">
+            {errorsToRender.map((e) => (
+              <li key={e} className="text-xs text-destructive">
+                {e}
+              </li>
+            ))}
+          </ul>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -62,7 +78,7 @@ export function Field({
   const id = inputProps.id ?? fallbackId;
   const errorId = errors?.length ? `${id}-error` : undefined;
   return (
-    <div className={cn("", className)}>
+    <div className={cn("relative", className)}>
       <div
         className={cn(
           "has-[+[aria-invalid]]:text-destructive",
@@ -111,7 +127,7 @@ export function TextareaField({
   const id = textareaProps.id ?? textareaProps.name ?? fallbackId;
   const errorId = errors?.length ? `${id}-error` : undefined;
   return (
-    <div className={cn("", className)}>
+    <div className={cn("relative", className)}>
       <div className="has-[+[aria-invalid]]:text-destructive">
         <Label
           htmlFor={id}

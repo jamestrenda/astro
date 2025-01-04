@@ -12,6 +12,7 @@
     --accent: 46 62% 50%;
     --border: var(--muted);
     --primary-dark: 0 92% 15%;
+    --destructive: 0 92% 62%;
   }
 
   .dark {

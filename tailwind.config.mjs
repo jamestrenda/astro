@@ -20,6 +20,7 @@ export default {
         primary: "hsl(var(--primary))",
         accent: "hsl(var(--accent))",
         border: "hsl(var(--border))",
+        destructive: "hsl(var(--destructive))",
       },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "./Container";
 import BrowserWindow from "./BrowserWindow";
 import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
@@ -27,6 +27,12 @@ export const Form = ({
 }: Props & FormQueryParams) => {
   const schema = createZodFormSchema(data.customFormFields);
 
+  // useEffect(() => {
+  //   if (!lastResult && !redirectTo) {
+  //     formRef.current?.reset();
+  //   }
+  // }, [isPending]);
+
   const [form, fields] = useForm({
     // id: "coform",
     constraint: getZodConstraint(schema),
@@ -41,7 +47,7 @@ export const Form = ({
       console.log(result);
       return result;
     },
-    // shouldRevalidate: "onBlur",
+    shouldRevalidate: "onBlur",
     // defaultValue: {
     //   redirectTo: redirectTo?.slug ?? params.slug ?? undefined,
     //   subject:

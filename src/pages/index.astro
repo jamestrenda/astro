@@ -1,14 +1,8 @@
 ---
 import Layout from "./_layout.astro";
 import { getIndex } from "../utils/sanity";
-import { Overline } from "~/components/Overline";
-import { Heading } from "~/components/Heading";
-import { Container } from "~/components/Container";
-import BrowserWindow from "~/components/BrowserWindow";
 
 import Blocks from "~/components/Blocks.astro";
-import { BackgroundRadialGradient } from "~/components/BackgroundRadialGradient";
-import { getRadialGradient } from "~/utils/getRadialGradient";
 
 const data = await getIndex({
   preview: Astro.locals.preview,

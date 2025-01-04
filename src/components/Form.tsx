@@ -3,7 +3,10 @@ import { Container } from "./Container";
 import BrowserWindow from "./BrowserWindow";
 import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
 import { getRadialGradient } from "~/utils/getRadialGradient";
-import { type FormBlock as Props } from "~/types/formBlock";
+import {
+  type FormQueryParams,
+  type FormBlock as Props,
+} from "~/types/formBlock";
 import { PortableText } from "./PortableText/PortableText";
 import { actions } from "astro:actions";
 import {
@@ -13,17 +16,41 @@ import {
   useForm,
 } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { formZ, type FormField } from "~/types/form";
 import { Field, TextareaField } from "./ui/form";
+import { createZodFormSchema } from "~/utils/createZodFormSchema";
 
-export const Form = ({ text, form: data }: Props) => {
+export const Form = ({
+  text,
+  form: data,
+  slug,
+  pageType,
+}: Props & FormQueryParams) => {
+  const schema = createZodFormSchema(data.customFormFields);
+
   const [form, fields] = useForm({
     // id: "coform",
-    constraint: getZodConstraint(formZ),
-    // lastResult,
-    onValidate({ formData }) {
-      return parseWithZod(formData, { schema: formZ });
+    constraint: getZodConstraint(schema),
+    onSubmit: async (e, { formData }) => {
+      e.preventDefault();
+      const result = await actions.submitForm(formData);
+      console.log(result);
+
+      // const response = await fetch("/api/theme", {
+      //   method: "POST",
+      //   body: formData,
+      // });
+      // const data: z.infer<typeof ThemeFormSchema> = await response.json();
     },
+    onValidate({ formData }) {
+      const result = parseWithZod(formData, { schema: schema });
+
+      console.log(result);
+      return result;
+    },
+    // onSubmit: async (formData) => {
+    //   // const response = await actions.submitForm(formData);
+    //   console.log(formData);
+    // },
     shouldRevalidate: "onBlur",
     // defaultValue: {
     //   redirectTo: redirectTo?.slug ?? params.slug ?? undefined,
@@ -51,7 +78,6 @@ export const Form = ({ text, form: data }: Props) => {
             <div className="grid gap-4 items-start">
               <form
                 method="POST"
-                action={actions.submitForm}
                 {...getFormProps(form)}
                 className="grid gap-4"
               >
@@ -103,7 +129,10 @@ export const Form = ({ text, form: data }: Props) => {
                     case "formGroup": {
                       // TODO: extract to a function
                       return (
-                        <div className="grid md:grid-cols-2 gap-4">
+                        <div
+                          key={field._key}
+                          className="grid md:grid-cols-2 gap-4"
+                        >
                           {field.fields.map((field) => {
                             switch (field._type) {
                               case "formField": {
@@ -166,6 +195,8 @@ export const Form = ({ text, form: data }: Props) => {
                     }
                   }
                 })}
+                <input type="hidden" name="slug" value={slug} />
+                <input type="hidden" name="pageType" value={pageType} />
                 <button
                   type="submit"
                   className="py-3 px-6 bg-primary text-background rounded-lg justify-self-start min-w-40"

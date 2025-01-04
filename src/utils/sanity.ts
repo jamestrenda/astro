@@ -1,5 +1,6 @@
 import { loadQuery } from "../utils/load-query";
 import {
+  FORM_QUERY,
   INDEX_QUERY,
   POSTS_QUERY,
   POST_QUERY,
@@ -7,11 +8,9 @@ import {
 } from "./queries";
 import type { Settings } from "~/types/settings";
 import type { Post } from "~/types/post";
-import { homeZ, type Home } from "~/types/home";
-import { seoZ } from "~/types/seo";
-import { blockZ } from "~/types/block";
-import { validateZodSchema } from "./validateZodSchema";
-import { z, type ZodIssue } from "zod";
+import { type Home } from "~/types/home";
+import type { Form } from "~/types/form";
+import type { FormQueryParams } from "~/types/formBlock";
 
 export async function getPosts({
   preview,
@@ -59,7 +58,6 @@ export async function getIndex({
     preview,
     options,
   });
-
   //
   // const { seo } = data;
 
@@ -86,6 +84,18 @@ export async function getIndex({
   // }
 
   // // return validationResult.data;
+  return data;
+}
+
+export async function getForm({
+  pageType,
+  slug,
+}: FormQueryParams): Promise<Form["customFormFields"]> {
+  const { data } = await loadQuery<Form["customFormFields"]>({
+    query: FORM_QUERY,
+    params: { pageType, slug },
+    preview: false,
+  });
   return data;
 }
 

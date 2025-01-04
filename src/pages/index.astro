@@ -1,7 +1,6 @@
 ---
 import Layout from "./_layout.astro";
 import { getIndex } from "../utils/sanity";
-
 import Blocks from "~/components/Blocks.astro";
 
 const data = await getIndex({
@@ -20,5 +19,9 @@ if (!data) {
 ---
 
 <Layout seo={data.seo}>
-  {data.blocks && <Blocks blocks={data.blocks} />}
+  {
+    data.blocks && (
+      <Blocks blocks={data.blocks} slug={data.slug} pageType={data._type} />
+    )
+  }
 </Layout>

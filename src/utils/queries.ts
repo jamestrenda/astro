@@ -117,6 +117,18 @@ const formFieldsFragment = groq`
     fieldMaxLength
   }
 `;
+
+const customFormFieldsFragment = groq`
+  ${formFieldsFragment},
+  _type == "formGroup" => {
+    _type,
+    _key,
+    label,
+    fields[] {
+      ${formFieldsFragment}
+    }
+  }
+`;
 const blocksFragment = groq`
   _type,
   _key,
@@ -141,15 +153,7 @@ const blocksFragment = groq`
       emailTo,
       emailSubject,
       customFormFields[] {
-        ${formFieldsFragment},
-        _type == "formGroup" => {
-          _type,
-          _key,
-          label,
-          fields[] {
-            ${formFieldsFragment}
-          }
-        }
+        ${customFormFieldsFragment}
       }
     }
   },
@@ -206,10 +210,20 @@ const blocksFragment = groq`
 `;
 
 export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {
+    _type,
+    "slug": coalesce(slug.current, ""),
     blocks[] {
       ${blocksFragment}
     },
     ${seoFragment},
+}`;
+
+export const FORM_QUERY = groq`*[_type == $pageType && slug.current == $slug][0] {
+  ...blocks[_type == "form"][0].form-> {
+    customFormFields[] {
+      ${customFormFieldsFragment}
+    }
+  },
 }`;
 
 export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {

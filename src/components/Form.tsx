@@ -33,13 +33,7 @@ export const Form = ({
     onSubmit: async (e, { formData }) => {
       e.preventDefault();
       const result = await actions.submitForm(formData);
-      console.log(result);
-
-      // const response = await fetch("/api/theme", {
-      //   method: "POST",
-      //   body: formData,
-      // });
-      // const data: z.infer<typeof ThemeFormSchema> = await response.json();
+      console.log("actions.submitForm result", result);
     },
     onValidate({ formData }) {
       const result = parseWithZod(formData, { schema: schema });
@@ -47,11 +41,7 @@ export const Form = ({
       console.log(result);
       return result;
     },
-    // onSubmit: async (formData) => {
-    //   // const response = await actions.submitForm(formData);
-    //   console.log(formData);
-    // },
-    shouldRevalidate: "onBlur",
+    // shouldRevalidate: "onBlur",
     // defaultValue: {
     //   redirectTo: redirectTo?.slug ?? params.slug ?? undefined,
     //   subject:

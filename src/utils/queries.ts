@@ -218,12 +218,8 @@ export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {
     ${seoFragment},
 }`;
 
-export const FORM_QUERY = groq`*[_type == $pageType && slug.current == $slug][0] {
-  ...blocks[_type == "form"][0].form-> {
-    customFormFields[] {
-      ${customFormFieldsFragment}
-    }
-  },
+export const FORM_QUERY = groq`*[_type == $pageType && slug.current == $slug][0].blocks[_type == "form"][0].form->customFormFields[] {
+  ${customFormFieldsFragment}
 }`;
 
 export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {

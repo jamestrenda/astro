@@ -1,13 +1,12 @@
 import { z } from "zod";
-import { type Form, type FormQuery } from "~/types/form";
+import { type FormQuery } from "~/types/form";
 import { formQueryParamsZ } from "~/types/form";
 
-// TODO: Need to fix the types, but this actually works
 export const createZodFormSchema = (
   data: FormQuery,
   baseSchema = formQueryParamsZ
 ) =>
-  data.fields.reduce(
+  data.fields.reduce<z.ZodObject<any>>(
     (schema, field) => {
       switch (field._type) {
         case "formField": {
@@ -37,7 +36,7 @@ export const createZodFormSchema = (
           });
         }
         case "formGroup": {
-          return field.fields.reduce((prev, field) => {
+          return field.fields.reduce<z.ZodObject<any>>((prev, field) => {
             switch (field._type) {
               case "formField": {
                 switch (field.fieldType) {

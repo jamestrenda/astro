@@ -118,6 +118,7 @@ const formFieldsFragment = groq`
   }
 `;
 
+// TODO: I was previously using this in two places, but now that I'm re-using the FORM_QUERY instead, I may not need this fragment anymore
 const customFormFieldsFragment = groq`
   ${formFieldsFragment},
   _type == "formGroup" => {
@@ -129,6 +130,15 @@ const customFormFieldsFragment = groq`
     }
   }
 `;
+
+// TODO: Thinking about having a separate query for the honeypot field only, but then I'd to make two API calls for every form submission
+export const formQueryFragment = groq`
+  "fields": *[_type == $_type][0].blocks[_type == "form"][0].form->customFormFields[] {
+    ${customFormFieldsFragment}
+  },
+  "honeypot": *[_type == $_type][0].blocks[_type == "form"][0].form->_id
+`;
+
 const blocksFragment = groq`
   _type,
   _key,
@@ -148,13 +158,8 @@ const blocksFragment = groq`
       ${portableTextFragment}
     },
     form-> {
-      _id,
       _type,
-      emailTo,
-      emailSubject,
-      customFormFields[] {
-        ${customFormFieldsFragment}
-      }
+      ${formQueryFragment}
     }
   },
   _type == "hero" => {
@@ -218,8 +223,8 @@ export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {
     ${seoFragment},
 }`;
 
-export const FORM_QUERY = groq`*[_type == $pageType && slug.current == $slug][0].blocks[_type == "form"][0].form->customFormFields[] {
-  ${customFormFieldsFragment}
+export const FORM_QUERY = groq`{
+  ${formQueryFragment}
 }`;
 
 export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {

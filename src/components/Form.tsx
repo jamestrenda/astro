@@ -3,10 +3,7 @@ import { Container } from "./Container";
 import BrowserWindow from "./BrowserWindow";
 import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
 import { getRadialGradient } from "~/utils/getRadialGradient";
-import {
-  type FormQueryParams,
-  type FormBlock as Props,
-} from "~/types/formBlock";
+import { type FormBlock as Props } from "~/types/formBlock";
 import { PortableText } from "./PortableText/PortableText";
 import { actions } from "astro:actions";
 import {
@@ -19,13 +16,8 @@ import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import { Field, TextareaField } from "./ui/form";
 import { createZodFormSchema } from "~/utils/createZodFormSchema";
 
-export const Form = ({
-  text,
-  form: data,
-  slug,
-  pageType,
-}: Props & FormQueryParams) => {
-  const schema = createZodFormSchema(data.customFormFields);
+export const Form = ({ text, form: data, slug, pageType }: Props) => {
+  const schema = createZodFormSchema(data);
 
   // useEffect(() => {
   //   if (!lastResult && !redirectTo) {
@@ -42,9 +34,10 @@ export const Form = ({
       console.log("actions.submitForm result", result);
     },
     onValidate({ formData }) {
-      const result = parseWithZod(formData, { schema: schema });
+      console.log("onValidate", formData.get("website"));
+      const result = parseWithZod(formData, { schema });
 
-      console.log(result);
+      console.log({ result });
       return result;
     },
     shouldRevalidate: "onBlur",
@@ -77,7 +70,15 @@ export const Form = ({
                 {...getFormProps(form)}
                 className="grid gap-4"
               >
-                {data.customFormFields.map((field) => {
+                {/* HONEYPOT */}
+                <input
+                  type="text"
+                  name={data.honeypot}
+                  style={{ display: "none" }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+                {data.fields.map((field) => {
                   switch (field._type) {
                     case "formField": {
                       return (

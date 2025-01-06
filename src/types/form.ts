@@ -33,15 +33,20 @@ const formGroupZ = baseBlockZ.extend({
 export const formZ = z.object({
   _type: z.literal("baseForm"),
   description: z.string().optional().nullable(),
-  _id: z.string(),
-  emailTo: z.array(z.string().email()),
-  emailSubject: z.string(),
-  customFormFields: z.array(
+  fields: z.array(
     z.union([formFieldZ, formFieldEmailZ, formFieldTextareaZ, formGroupZ])
   ),
+  honeypot: z.string(),
+});
+
+export const formQueryParamsZ = z.object({
+  slug: z.string(),
+  pageType: z.string(),
 });
 
 export type Form = z.infer<typeof formZ>;
 export type FormField = z.infer<typeof formFieldZ>;
 export type FormFieldEmail = z.infer<typeof formFieldEmailZ>;
 export type FormFieldTextarea = z.infer<typeof formFieldTextareaZ>;
+export interface FormQueryParams extends z.infer<typeof formQueryParamsZ> {}
+export type FormQuery = Pick<Form, "fields" | "honeypot">;

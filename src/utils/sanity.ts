@@ -9,8 +9,7 @@ import {
 import type { Settings } from "~/types/settings";
 import type { Post } from "~/types/post";
 import { type Home } from "~/types/home";
-import type { Form } from "~/types/form";
-import type { FormQueryParams } from "~/types/formBlock";
+import type { FormQuery, FormQueryParams } from "~/types/form";
 
 export async function getPosts({
   preview,
@@ -55,6 +54,10 @@ export async function getIndex({
 }): Promise<Home> {
   const { data } = await loadQuery<Home>({
     query: INDEX_QUERY,
+    params: {
+      slug: "home",
+      _type: "page",
+    },
     preview,
     options,
   });
@@ -90,8 +93,8 @@ export async function getIndex({
 export async function getForm({
   pageType,
   slug,
-}: FormQueryParams): Promise<Form["customFormFields"]> {
-  const { data } = await loadQuery<Form["customFormFields"]>({
+}: FormQueryParams): Promise<FormQuery> {
+  const { data } = await loadQuery<FormQuery>({
     query: FORM_QUERY,
     params: { pageType, slug },
     preview: false,

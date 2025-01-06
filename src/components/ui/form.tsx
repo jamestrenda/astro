@@ -93,7 +93,7 @@ export function Field({
         {linkProps ? (
           <a
             href={linkProps.to}
-            className="ring-brand text-brand-secondary ml-auto inline-block rounded-md text-sm underline"
+            className="ring-brand text-link ml-auto inline-block rounded-md text-sm underline"
           >
             {linkProps.text}
           </a>

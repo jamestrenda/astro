@@ -1,52 +1,70 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "./Container";
 import BrowserWindow from "./BrowserWindow";
 import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
 import { getRadialGradient } from "~/utils/getRadialGradient";
 import { type FormBlock as Props } from "~/types/formBlock";
 import { PortableText } from "./PortableText/PortableText";
-import { actions } from "astro:actions";
 import {
   getFormProps,
   getInputProps,
   getTextareaProps,
   useForm,
+  type SubmissionResult,
 } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { Field, TextareaField } from "./ui/form";
+import { Field, FormError, TextareaField } from "./ui/form";
 import { createZodFormSchema } from "~/utils/createZodFormSchema";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 export const Form = ({ text, form: data, slug, pageType }: Props) => {
+  const [submission, setSubmission] = useState<
+    SubmissionResult<string[]> | undefined
+  >();
+  const [successMessage, setSuccessMessage] = useState(null);
   const schema = createZodFormSchema(data);
+  const formRef = React.createRef<HTMLFormElement>();
+  // TODO: handle pending state
+  const [submitting, setSubmitting] = useState(false);
 
-  // useEffect(() => {
-  //   if (!lastResult && !redirectTo) {
-  //     formRef.current?.reset();
-  //   }
-  // }, [isPending]);
+  useEffect(() => {
+    if (successMessage) {
+      formRef.current?.reset();
+    }
+  }, [successMessage]);
+
+  const id = data.honeypot;
 
   const [form, fields] = useForm({
-    // id: "coform",
+    id: `form-${id}`,
+    lastResult: submission,
     constraint: getZodConstraint(schema),
     onSubmit: async (e, { formData }) => {
       e.preventDefault();
-      const result = await actions.submitForm(formData);
-      console.log("actions.submitForm result", result);
+
+      // TODO: handle pending state
+      const response = await fetch("/api/form", {
+        method: "POST",
+        body: formData,
+      });
+      const { result } = await response.json();
+
+      if (result.status !== "success") {
+        setSubmission(result);
+        return;
+      }
+      setSubmission(undefined);
+      setSuccessMessage(result.message);
+      return;
     },
     onValidate({ formData }) {
-      console.log("onValidate", formData.get("website"));
       const result = parseWithZod(formData, { schema });
-
-      console.log({ result });
       return result;
     },
+    shouldValidate: "onSubmit",
     shouldRevalidate: "onBlur",
-    // defaultValue: {
-    //   redirectTo: redirectTo?.slug ?? params.slug ?? undefined,
-    //   subject:
-    //     subject && subject.length ? defaultSubject ?? subject[0] : undefined,
-    // },
   });
+
   return (
     <div className="bg-[linear-gradient(to_bottom,transparent_20%,#4f46e5_20%)]">
       <Container padding={true} className="!pt-0">
@@ -65,141 +83,156 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
             </div>
 
             <div className="grid gap-4 items-start">
+              <FormError errors={form.errors} id={form.errorId} />
+              {successMessage && (
+                <Alert variant="positive">
+                  <AlertTitle>Oh, yeah!</AlertTitle>
+                  <AlertDescription>{successMessage}</AlertDescription>
+                </Alert>
+              )}
               <form
+                ref={formRef}
                 method="POST"
                 {...getFormProps(form)}
-                className="grid gap-4"
+                id={form.id}
               >
-                {/* HONEYPOT */}
-                <input
-                  type="text"
-                  name={data.honeypot}
-                  style={{ display: "none" }}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-                {data.fields.map((field) => {
-                  switch (field._type) {
-                    case "formField": {
-                      return (
-                        <Field
-                          key={field._key}
-                          labelProps={{
-                            htmlFor: field._key,
-                            children: field.fieldLabel,
-                          }}
-                          inputProps={{
+                <fieldset disabled={submitting} className="grid gap-4">
+                  {/* HONEYPOT */}
+                  <input
+                    type="text"
+                    name={data.honeypot}
+                    style={{ display: "none" }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                  {/* USER FIELDS */}
+                  {data.fields.map((field) => {
+                    switch (field._type) {
+                      case "formField": {
+                        return (
+                          <Field
+                            key={field._key}
+                            labelProps={{
+                              htmlFor: field._key,
+                              children: field.fieldLabel,
+                            }}
+                            inputProps={{
+                              // @ts-ignore
+                              ...getInputProps(fields[field._key], {
+                                type: "text",
+                              }),
+                              placeholder: field.fieldPlaceholder ?? undefined,
+                              // autoComplete: "given-name",
+                              // @ts-ignore
+                              autoFocus: fields[field._key].errors
+                                ? true
+                                : false,
+                            }}
                             // @ts-ignore
-                            ...getInputProps(fields[field._key], {
-                              type: "text",
-                            }),
-                            placeholder: field.fieldPlaceholder ?? undefined,
-                            // autoComplete: "given-name",
+                            errors={fields[field._key].errors}
+                          />
+                        );
+                      }
+                      case "formTextarea": {
+                        return (
+                          <TextareaField
+                            key={field._key}
+                            labelProps={{
+                              htmlFor: field._key,
+                              children: field.fieldLabel,
+                            }}
+                            textareaProps={{
+                              // @ts-ignore
+                              ...getTextareaProps(fields[field._key]),
+                              //   autoComplete: "message",
+                              placeholder: field.fieldPlaceholder ?? undefined,
+                              rows: 5,
+                            }}
                             // @ts-ignore
-                            autoFocus: fields[field._key].errors ? true : false,
-                          }}
-                          // @ts-ignore
-                          errors={fields[field._key].errors}
-                        />
-                      );
-                    }
-                    case "formTextarea": {
-                      return (
-                        <TextareaField
-                          key={field._key}
-                          labelProps={{
-                            htmlFor: field._key,
-                            children: field.fieldLabel,
-                          }}
-                          textareaProps={{
-                            // @ts-ignore
-                            ...getTextareaProps(fields[field._key]),
-                            //   autoComplete: "message",
-                            placeholder: field.fieldPlaceholder ?? undefined,
-                            rows: 5,
-                          }}
-                          // @ts-ignore
-                          errors={fields[field._key].errors}
-                        />
-                      );
-                    }
-                    case "formGroup": {
-                      // TODO: extract to a function
-                      return (
-                        <div
-                          key={field._key}
-                          className="grid md:grid-cols-2 gap-4"
-                        >
-                          {field.fields.map((field) => {
-                            switch (field._type) {
-                              case "formField": {
-                                return (
-                                  <Field
-                                    key={field._key}
-                                    labelProps={{
-                                      htmlFor: field._key,
-                                      children: field.fieldLabel,
-                                    }}
-                                    inputProps={{
+                            errors={fields[field._key].errors}
+                          />
+                        );
+                      }
+                      case "formGroup": {
+                        // TODO: extract to a function
+                        return (
+                          <div
+                            key={field._key}
+                            className="grid md:grid-cols-2 gap-4"
+                          >
+                            {field.fields.map((field) => {
+                              switch (field._type) {
+                                case "formField": {
+                                  return (
+                                    <Field
+                                      key={field._key}
+                                      labelProps={{
+                                        htmlFor: field._key,
+                                        children: field.fieldLabel,
+                                      }}
+                                      inputProps={{
+                                        // @ts-ignore
+                                        ...getInputProps(fields[field._key], {
+                                          type: "text",
+                                        }),
+                                        placeholder:
+                                          field.fieldPlaceholder ?? undefined,
+                                        // autoComplete: "given-name",
+                                        // @ts-ignore
+                                        autoFocus: fields[field._key].errors
+                                          ? true
+                                          : false,
+                                      }}
                                       // @ts-ignore
-                                      ...getInputProps(fields[field._key], {
-                                        type: "text",
-                                      }),
-                                      placeholder:
-                                        field.fieldPlaceholder ?? undefined,
-                                      // autoComplete: "given-name",
+                                      errors={fields[field._key].errors}
+                                    />
+                                  );
+                                }
+                                case "formTextarea": {
+                                  return (
+                                    <TextareaField
+                                      key={field._key}
+                                      labelProps={{
+                                        htmlFor: field._key,
+                                        children: field.fieldLabel,
+                                      }}
+                                      textareaProps={{
+                                        // @ts-ignore
+                                        ...getTextareaProps(fields[field._key]),
+                                        //   autoComplete: "message",
+                                        placeholder:
+                                          field.fieldPlaceholder ?? undefined,
+                                        rows: 5,
+                                      }}
                                       // @ts-ignore
-                                      autoFocus: fields[field._key].errors
-                                        ? true
-                                        : false,
-                                    }}
-                                    // @ts-ignore
-                                    errors={fields[field._key].errors}
-                                  />
-                                );
+                                      errors={fields[field._key].errors}
+                                    />
+                                  );
+                                }
+                                default: {
+                                  return null;
+                                }
                               }
-                              case "formTextarea": {
-                                return (
-                                  <TextareaField
-                                    key={field._key}
-                                    labelProps={{
-                                      htmlFor: field._key,
-                                      children: field.fieldLabel,
-                                    }}
-                                    textareaProps={{
-                                      // @ts-ignore
-                                      ...getTextareaProps(fields[field._key]),
-                                      //   autoComplete: "message",
-                                      placeholder:
-                                        field.fieldPlaceholder ?? undefined,
-                                      rows: 5,
-                                    }}
-                                    // @ts-ignore
-                                    errors={fields[field._key].errors}
-                                  />
-                                );
-                              }
-                              default: {
-                                return null;
-                              }
-                            }
-                          })}
-                        </div>
-                      );
+                            })}
+                          </div>
+                        );
+                      }
+                      default: {
+                        return null;
+                      }
                     }
-                    default: {
-                      return null;
-                    }
-                  }
-                })}
-                <input type="hidden" name="slug" value={slug} />
-                <input type="hidden" name="pageType" value={pageType} />
-                <button
-                  type="submit"
-                  className="py-3 px-6 bg-primary text-background rounded-lg justify-self-start min-w-40"
-                >
-                  Send
-                </button>
+                  })}
+                  {/* HIDDEN FIELDS */}
+                  <input type="hidden" name="slug" value={slug} />
+                  <input type="hidden" name="pageType" value={pageType} />
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="py-3 px-6 bg-primary text-background rounded-lg justify-self-start min-w-40 disabled:opacity-50 disabled:pointer-events-none"
+                  >
+                    Send
+                  </button>
+                </fieldset>
               </form>
             </div>
           </Container>

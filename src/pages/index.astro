@@ -9,7 +9,7 @@ const data = await getIndex({
 });
 
 // TODO: Come up with a better solution of handling a missing homepage.
-//       Either show a blog index or show a default homepage.
+//       Either show a blog index if one exists or show a default homepage 🤷‍♂️
 if (!data) {
   return new Response(null, {
     status: 404,

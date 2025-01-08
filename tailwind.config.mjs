@@ -21,6 +21,9 @@ export default {
         accent: "hsl(var(--accent))",
         border: "hsl(var(--border))",
         destructive: "hsl(var(--destructive))",
+        "destructive-light": "hsl(var(--destructive-light))",
+        positive: "hsl(var(--positive))",
+        "positive-light": "hsl(var(--positive-light))",
       },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],

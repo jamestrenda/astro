@@ -131,14 +131,6 @@ const customFormFieldsFragment = groq`
   }
 `;
 
-// TODO: Thinking about having a separate query for the honeypot field only, but then I'd to make two API calls for every form submission
-export const formQueryFragment = groq`
-  "fields": *[_type == $_type][0].blocks[_type == "form"][0].form->customFormFields[] {
-    ${customFormFieldsFragment}
-  },
-  "honeypot": *[_type == $_type][0].blocks[_type == "form"][0].form->_id
-`;
-
 const blocksFragment = groq`
   _type,
   _key,
@@ -159,7 +151,10 @@ const blocksFragment = groq`
     },
     form-> {
       _type,
-      ${formQueryFragment}
+      "fields": *[_type == ^.^.^._type && defined(slug) && slug.current == ^.^.^.slug.current][0].blocks[_type == "form"][0].form->customFormFields[] {
+        ${customFormFieldsFragment}
+      },
+      "honeypot": *[_type == ^.^.^._type && defined(slug) && slug.current == ^.^.^.slug.current][0].blocks[_type == "form"][0].form->_id
     }
   },
   _type == "hero" => {
@@ -224,7 +219,10 @@ export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {
 }`;
 
 export const FORM_QUERY = groq`{
-  ${formQueryFragment}
+  "fields": *[_type == $_type && defined(slug) && slug.current == $slug][0].blocks[_type == "form"][0].form->customFormFields[] {
+    ${customFormFieldsFragment}
+  },
+  "honeypot": *[_type == $_type && defined(slug) && slug.current == $slug][0].blocks[_type == "form"][0].form->_id
 }`;
 
 export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {

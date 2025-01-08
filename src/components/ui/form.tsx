@@ -27,6 +27,7 @@ import {
   TooltipTrigger,
 } from "./tooltip";
 import { InfoIcon } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "./alert";
 
 export type ListOfErrors = Array<string | null | undefined> | null | undefined;
 
@@ -40,19 +41,59 @@ export function ErrorList({
   const errorsToRender = errors?.filter(Boolean);
   if (!errorsToRender?.length) return null;
   return (
+    <ul id={id} className="flex flex-col gap-1">
+      {errorsToRender.map((e) => (
+        <li key={e} className="text-xs text-destructive">
+          {e}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function FormError({
+  id,
+  title = "Oops!",
+  errors,
+}: {
+  errors?: ListOfErrors;
+  id?: string;
+  title?: string;
+}) {
+  const errorsToRender = errors?.filter(Boolean);
+  if (!errorsToRender?.length) return null;
+  return (
+    <Alert className="bg-red-100" variant="destructive">
+      <AlertTitle>{title}</AlertTitle>
+      <AlertDescription>
+        <ErrorList id={id} errors={errors} />
+      </AlertDescription>
+    </Alert>
+  );
+}
+
+export function FieldError({
+  id,
+  errors,
+}: {
+  errors?: ListOfErrors;
+  id?: string;
+}) {
+  const errorsToRender = errors?.filter(Boolean);
+  if (!errorsToRender?.length) return null;
+  return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger className="absolute top-5 right-4 z-10 text-destructive">
-          <InfoIcon className="h-5 w-5" />
+        <TooltipTrigger
+          asChild
+          className="absolute top-5 right-4 z-10 text-destructive"
+        >
+          <button type="button">
+            <InfoIcon className="h-5 w-5" />
+          </button>
         </TooltipTrigger>
         <TooltipContent className="bg-red-100 backdrop-blur-md">
-          <ul id={id} className="flex flex-col gap-1">
-            {errorsToRender.map((e) => (
-              <li key={e} className="text-xs text-destructive">
-                {e}
-              </li>
-            ))}
-          </ul>
+          <ErrorList id={id} errors={errors} />
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -104,8 +145,9 @@ export function Field({
         aria-invalid={errorId ? true : undefined}
         aria-describedby={errorId}
         {...inputProps}
+        className={cn(errorId ? "pr-12" : "")}
       />
-      {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
+      {errorId ? <FieldError id={errorId} errors={errors} /> : null}
     </div>
   );
 }
@@ -140,8 +182,9 @@ export function TextareaField({
         aria-invalid={errorId ? true : undefined}
         aria-describedby={errorId}
         {...textareaProps}
+        className={cn(errorId ? "pr-12" : "")}
       />
-      {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
+      {errorId ? <FieldError id={errorId} errors={errors} /> : null}
     </div>
   );
 }
@@ -198,7 +241,7 @@ export function CheckboxField({
         />
         <label htmlFor={id} {...labelProps} className="text-body-xs" />
       </div>
-      {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
+      {errorId ? <FieldError id={errorId} errors={errors} /> : null}
     </div>
   );
 }
@@ -244,7 +287,7 @@ export function RadioField({
       >
         {children}
       </RadioGroup>
-      {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
+      {errorId ? <FieldError id={errorId} errors={errors} /> : null}
     </div>
   );
 }
@@ -291,7 +334,7 @@ export function SelectField({
         </SelectTrigger>
         <SelectContent>{children}</SelectContent>
       </Select>
-      {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
+      {errorId ? <FieldError id={errorId} errors={errors} /> : null}
     </div>
   );
 }

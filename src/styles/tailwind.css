@@ -13,6 +13,9 @@
     --border: var(--muted);
     --primary-dark: 0 92% 15%;
     --destructive: 0 92% 62%;
+    --destructive-light: 0 92% 80%;
+    --positive: 120 100% 25%;
+    --positive-light: 120 100% 80%;
   }
 
   .dark {

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { baseBlockZ } from "./base";
 
-export const formFieldZ = z.object({
+export const formFieldTextZ = z.object({
   _type: z.literal("formField"),
   _key: z.string(),
   fieldLabel: z.string(),
@@ -10,12 +10,13 @@ export const formFieldZ = z.object({
   required: z.boolean(),
 });
 
-const formFieldEmailZ = formFieldZ.extend({
+const formFieldEmailZ = formFieldTextZ.extend({
   fieldType: z.literal("email"),
   replyToEmail: z.boolean(),
 });
 
-const formFieldTextareaZ = formFieldZ
+const formFieldZ = z.union([formFieldTextZ, formFieldEmailZ]);
+const formTextareaZ = formFieldTextZ
   .extend({
     _type: z.literal("formTextarea"),
     fieldMaxLength: z.number().optional().nullable(),
@@ -27,15 +28,13 @@ const formFieldTextareaZ = formFieldZ
 const formGroupZ = baseBlockZ.extend({
   _type: z.literal("formGroup"),
   label: z.string(),
-  fields: z.array(z.union([formFieldZ, formFieldEmailZ, formFieldTextareaZ])),
+  fields: z.array(z.union([formFieldZ, formFieldEmailZ, formTextareaZ])),
 });
 
 export const formZ = z.object({
   _type: z.literal("baseForm"),
   description: z.string().optional().nullable(),
-  fields: z.array(
-    z.union([formFieldZ, formFieldEmailZ, formFieldTextareaZ, formGroupZ])
-  ),
+  fields: z.array(z.union([...formFieldZ.options, formTextareaZ, formGroupZ])),
   honeypot: z.string(),
 });
 
@@ -47,6 +46,8 @@ export const formQueryParamsZ = z.object({
 export type Form = z.infer<typeof formZ>;
 export type FormField = z.infer<typeof formFieldZ>;
 export type FormFieldEmail = z.infer<typeof formFieldEmailZ>;
-export type FormFieldTextarea = z.infer<typeof formFieldTextareaZ>;
+export type FormFieldTextarea = z.infer<typeof formTextareaZ>;
+export type FormGroup = z.infer<typeof formGroupZ>;
+export type FormFields = z.infer<typeof formZ>["fields"];
 export interface FormQueryParams extends z.infer<typeof formQueryParamsZ> {}
 export type FormQuery = Pick<Form, "fields" | "honeypot">;

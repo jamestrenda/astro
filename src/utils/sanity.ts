@@ -54,10 +54,6 @@ export async function getIndex({
 }): Promise<Home> {
   const { data } = await loadQuery<Home>({
     query: INDEX_QUERY,
-    params: {
-      slug: "home",
-      _type: "page",
-    },
     preview,
     options,
   });
@@ -96,7 +92,7 @@ export async function getForm({
 }: FormQueryParams): Promise<FormQuery> {
   const { data } = await loadQuery<FormQuery>({
     query: FORM_QUERY,
-    params: { pageType, slug },
+    params: { _type: pageType, slug },
     preview: false,
   });
   return data;

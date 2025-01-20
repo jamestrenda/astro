@@ -36,7 +36,7 @@ const settings = await getSettings({
   options: Astro.locals.loadQueryOptions,
 });
 
-const { siteTitle, favicon } = settings;
+const { siteTitle, favicon, social } = settings;
 
 const url = Astro.request.url;
 
@@ -62,7 +62,7 @@ const theme = getTheme(Astro.cookies);
     <main class="w-full grow bg-background">
       <slot />
     </main>
-    <Footer siteTitle={siteTitle} />
+    <Footer siteTitle={siteTitle} social={social} />
     {
       preview ? (
         <>

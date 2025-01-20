@@ -1,16 +1,25 @@
 ---
 import dayjs from "dayjs";
+import type { Social } from "~/types/social";
+import { Container } from "./Container";
+import SocialLinks from "./SocialLinks.astro";
 
 interface Props {
   siteTitle: string;
+  social?: Social;
 }
 
-const { siteTitle } = Astro.props;
+const { siteTitle, social } = Astro.props;
 
 const year = dayjs().format("YYYY");
 ---
 
-<footer class="flex items-center justify-center py-4 text-sm bg-indigo-500">
-  &copy; {year}
-  {siteTitle}
+<footer class="bg-indigo-500">
+  <Container className="flex items-center justify-between py-4 text-sm">
+    <div>
+      &copy; {year}
+      {siteTitle}
+    </div>
+    <div>{social && <SocialLinks links={social} />}</div>
+  </Container>
 </footer>

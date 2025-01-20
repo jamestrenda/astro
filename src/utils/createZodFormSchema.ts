@@ -6,10 +6,20 @@ import { formQueryParamsZ } from "~/types/form";
 export const createFieldSchema = (field: FormField) => {
   switch (field.fieldType) {
     case "text":
-      return field.required ? z.string() : z.string().optional();
+      return field.required
+        ? z.string({
+            required_error: field.fieldErrorMessage ?? "Required",
+          })
+        : z.string().optional();
     case "email":
       return field.required
-        ? z.string().email()
+        ? z
+            .string({
+              required_error: field.fieldErrorMessage ?? "Required",
+            })
+            .email({
+              message: field.fieldErrorMessage ?? "Invalid email",
+            })
         : z.string().email().optional();
     default:
       return null;
@@ -33,7 +43,11 @@ export const processFields = (
       case "formTextarea": {
         return currentSchema.extend({
           [field._key]: field.required
-            ? z.string().min(40, "Please provide a little more detail.")
+            ? z
+                .string({
+                  required_error: field.fieldErrorMessage ?? "Required",
+                })
+                .min(40, "Please provide a little more detail.")
             : z.string().optional(),
         });
       }

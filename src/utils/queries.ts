@@ -107,6 +107,7 @@ const formFieldsFragment = groq`
   fieldLabel,
   fieldPlaceholder,
   required,
+  fieldErrorMessage,
   _type == "formField" => {
     fieldType,
   },
@@ -229,6 +230,14 @@ export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {
   "siteTitle": coalesce(siteTitle, "Update your site title in the Sanity Studio."),
   "siteUrl": coalesce(siteUrl, "https://www.UPDATE-SITEURL-IN-SANITY-STUDIO.com"),
   "favicon": coalesce(favicon.asset->url, "https://fav.farm/✅"),
+  "social": social.profiles[] {
+    _type,
+    _key,
+    handle,
+    platform,
+    url,
+    notes,
+  }
 }`;
 
 export const REDIRECTS_QUERY = groq`*[_type == "redirectSettings"][0].redirects[]`;

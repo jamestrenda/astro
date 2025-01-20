@@ -8,6 +8,7 @@ export const formFieldTextZ = z.object({
   fieldPlaceholder: z.string().optional().nullable(),
   fieldType: z.literal("text"),
   required: z.boolean(),
+  fieldErrorMessage: z.string().optional().nullable(),
 });
 
 const formFieldEmailZ = formFieldTextZ.extend({

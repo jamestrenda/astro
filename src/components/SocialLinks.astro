@@ -1,0 +1,74 @@
+---
+import {
+  RiBehanceFill as BehanceIcon,
+  RiDiscordFill as DiscordIcon,
+  RiDribbbleFill as DribbbleIcon,
+  RiFacebookFill as FacebookIcon,
+  RiGithubFill as GitHubIcon,
+  RiInstagramFill as InstagramIcon,
+  RiLinkedinFill as LinkedInIcon,
+  RiMediumFill as MediumIcon,
+  RiPinterestFill as PinterestIcon,
+  RiRedditFill as RedditIcon,
+  RiTwitterXFill as XIcon,
+  RiSnapchatFill as SnapchatIcon,
+  RiTelegramFill as TelegramIcon,
+  RiTiktokFill as TikTokIcon,
+  RiTumblrFill as TumblrIcon,
+  RiTwitchFill as TwitchIcon,
+  RiVimeoFill as VimeoIcon,
+  RiWechat2Fill as WeChatIcon,
+  RiWhatsappFill as WhatsAppIcon,
+  RiYoutubeFill as YouTubeIcon,
+} from "@remixicon/react";
+import type { Social } from "~/types/social";
+
+const icons = {
+  behance: BehanceIcon,
+  discord: DiscordIcon,
+  dribbble: DribbbleIcon,
+  facebook: FacebookIcon,
+  github: GitHubIcon,
+  instagram: InstagramIcon,
+  linkedin: LinkedInIcon,
+  medium: MediumIcon,
+  pinterest: PinterestIcon,
+  reddit: RedditIcon,
+  snapchat: SnapchatIcon,
+  telegram: TelegramIcon,
+  tiktok: TikTokIcon,
+  tumblr: TumblrIcon,
+  twitch: TwitchIcon,
+  vimeo: VimeoIcon,
+  wechat: WeChatIcon,
+  whatsapp: WhatsAppIcon,
+  x: XIcon,
+  youtube: YouTubeIcon,
+};
+
+export interface Props {
+  links: Social;
+}
+
+const { links } = Astro.props;
+---
+
+<ul class="flex items-center">
+  {
+    links.map((link) => {
+      const Icon = icons[link.platform as keyof typeof icons];
+      return (
+        <li>
+          <a
+            href={link.url}
+            target="_blank"
+            class="p-2 mx-1 bg-black/10 block rounded-full hover:bg-white transition"
+          >
+            <span class="sr-only">{link.notes}</span>
+            <Icon />
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>

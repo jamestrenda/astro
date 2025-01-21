@@ -233,9 +233,10 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="py-3 px-6 bg-primary text-background dark:text-foreground rounded-lg justify-self-start min-w-40 disabled:opacity-50 disabled:pointer-events-none"
+                    className="py-3 px-6 bg-primary text-background dark:text-foreground rounded-lg justify-self-start min-w-40 disabled:opacity-50 disabled:pointer-events-none transition hover:bg-indigo-700"
                   >
-                    Send
+                    {/* TODO: Move this content to Sanity */}
+                    Get Started
                   </button>
                 </fieldset>
               </form>

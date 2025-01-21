@@ -6,7 +6,7 @@ import SocialLinks from "./SocialLinks.astro";
 
 interface Props {
   siteTitle: string;
-  social?: Social;
+  social?: Social | null;
 }
 
 const { siteTitle, social } = Astro.props;

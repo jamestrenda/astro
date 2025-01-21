@@ -7,7 +7,7 @@ import { useTheme } from "~/utils/hooks/useTheme";
 
 export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
   // TODO: check for isClient
-  const { isDark, setTheme } = useTheme({ initial });
+  const { isDark, setTheme } = useTheme(initial);
 
   // TODO: Astro actions
   const [form] = useForm({
@@ -31,13 +31,13 @@ export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
           type="submit"
           name="theme"
           value={isDark ? "light" : "dark"}
-          className="border-4 border-solid border-black dark:border-background rounded-full bg-foreground dark:bg-background ring-brand text-primary h-9 w-16 grid place-items-center text-white dark:text-background"
+          className="border-4 border-solid border-black dark:border-primary rounded-full bg-foreground dark:bg-primary ring-brand text-primary h-9 w-16 grid place-items-center text-white dark:text-background"
         >
           <div
             className={`flex w-full ${isDark ? "justify-start" : "justify-end"}`}
           >
             {isDark ? (
-              <LightbulbOffIcon className="h-7 w-7 p-1 rounded-full bg-primary" />
+              <LightbulbOffIcon className="h-7 w-7 p-1 rounded-full bg-white" />
             ) : (
               <LightbulbIcon
                 className="h-7 w-7 p-1 rounded-full bg-primary"

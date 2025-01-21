@@ -9,7 +9,7 @@ import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
 
 export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
   return (
-    <div className="max-md:[&>div]:!px-0 pb-16 relative max-sm:overflow-hidden">
+    <div className="max-md:[&>div]:!px-0 pb-16 dark:lg:pb-0 relative max-sm:overflow-hidden">
       <Container>
         <BrowserWindow className="max-md:rounded-t-none min-h-[660px]">
           <BackgroundRadialGradient
@@ -54,7 +54,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                               } as React.CSSProperties
                             }
                           >
-                            <div className="track-item-content  px-4 animate-fade-in-out text-white bg-glass rounded-lg grid place-items-center">
+                            <div className="track-item-content px-4 animate-fade-in-out text-white bg-glass rounded-lg grid place-items-center">
                               {item?.image && (
                                 <SanityImage
                                   src={item.image}

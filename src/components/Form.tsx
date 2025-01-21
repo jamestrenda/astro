@@ -70,7 +70,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
   return (
     <div className="bg-[linear-gradient(to_bottom,transparent_20%,#4f46e5_20%)]">
       <Container padding={true} className="!pt-0">
-        <BrowserWindow stackPosition="top">
+        <BrowserWindow stackPosition="top" className="max-md:!rounded-bl-lg">
           <BackgroundRadialGradient
             style={{
               backgroundImage: `${getRadialGradient("#c7d2fe", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "60% 90%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#c7d2fe", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
@@ -233,7 +233,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="py-3 px-6 bg-primary text-background rounded-lg justify-self-start min-w-40 disabled:opacity-50 disabled:pointer-events-none"
+                    className="py-3 px-6 bg-primary text-background dark:text-foreground rounded-lg justify-self-start min-w-40 disabled:opacity-50 disabled:pointer-events-none"
                   >
                     Send
                   </button>

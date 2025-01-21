@@ -9,7 +9,8 @@ export default {
       animation: {
         marquee:
           "marquee var(--speed, 10s) linear infinite var(--direction, forwards)",
-        "fade-in-out": "fade-in-out var(--speed, 10s) linear infinite forwards",
+        "fade-in-out":
+          "fade-in-out var(--speed, 10s) linear infinite var(--direction, forwards)",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
@@ -54,10 +55,10 @@ export default {
           "0%": {
             opacity: "0",
           },
-          "10%": {
+          "2.5%": {
             opacity: "1",
           },
-          "90%": {
+          "98%": {
             opacity: "1",
           },
           "100%": {

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Theme, ThemeFormSchema } from "../theme";
 import type { z } from "zod";
 
-export function useTheme({ initial }: { initial: Theme | undefined }) {
+export function useTheme(initial?: Theme | undefined) {
   const [theme, setTheme] = useState(initial);
   const hasMounted = useRef(false);
   const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");

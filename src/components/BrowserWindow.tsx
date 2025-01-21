@@ -23,7 +23,7 @@ const BrowserWindow = memo(
       <div
         className={cn(
           "browser-window md:h-full relative rounded-b-lg",
-          stackPosition === "top" ? "mt-20" : ""
+          stackPosition === "top" ? "mt-20 dark:mt-0" : ""
         )}
       >
         <div
@@ -50,7 +50,7 @@ const BrowserWindow = memo(
           {children}
         </div>
         {withStack && (
-          <motion.div className="absolute inset-0">
+          <motion.div className="absolute inset-0 dark:hidden">
             {Array.from({ length: stackCount }).map((_, index) => (
               <Shadow
                 key={index}

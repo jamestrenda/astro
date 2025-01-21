@@ -9,23 +9,23 @@ import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
 
 export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
   return (
-    <div className="max-md:[&>div]:!px-0 relative max-sm:overflow-hidden pb-20 dark:pb-0">
+    <div className="max-md:[&>div]:!px-0 relative pb-20 dark:pb-0">
       <Container>
-        <BrowserWindow className="max-md:rounded-t-none min-h-[660px]">
+        <BrowserWindow className="max-md:rounded-t-none min-h-[550px] md:min-h-[660px]">
           <BackgroundRadialGradient
             style={{
               backgroundImage: `${getRadialGradient("#c7d2fe", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "40% 30%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#c7d2fe", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
             }}
           />
-          <div className="w-full min-[480px]:w-4/5 xs:w-1/2 mt-16 space-y-3 [&_p]:!text-muted [&_p]:dark:text-foreground [&_p]:text-lg [&_p]:md:text-xl [&_p]:font-light">
+          <div className="w-full max-xs:mt-auto z-40 max-xs:mb-4 min-[480px]:w-4/5 xs:w-1/2 mt-16 space-y-3 [&_p]:!text-muted [&_p]:dark:text-foreground [&_p]:text-lg [&_p]:md:text-xl [&_p]:font-light">
             {valueProposition && (
               <PortableText portableText={valueProposition} />
             )}
           </div>
 
-          <div className="grid gap-2 my-6 md:mt-12 sm:mb-0 self-start [--item-width:100px] md:[--item-width:160px]">
-            {marquees &&
-              marquees.map((marquee, i) => {
+          {marquees && (
+            <div className="grid gap-2 my-6 md:mt-12 sm:mb-0 self-start [--item-width:100px] md:[--item-width:160px]">
+              {marquees.map((marquee, i) => {
                 const numItems = useMemo(
                   () => marquee.items?.length ?? 0,
                   [marquee.items?.length]
@@ -71,7 +71,8 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                   </div>
                 );
               })}
-          </div>
+            </div>
+          )}
           {image && (
             <SanityImage
               src={image.image}
@@ -83,7 +84,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                 q: 100,
               }}
               preview={false}
-              className="absolute z-30 bottom-0 -right-4 md:right-0 md:rounded-br-lg object-cover max-h-[400px] max-[579px]:max-w-72 xs:h-[600px] xs:max-h-[700px] md:h-[700px] lg:w-[700px] min-[480px]:w-2/3 aspect-square pointer-events-none dark:brightness-75 contrast-[1.1]"
+              className="absolute z-30 bottom-0 right-0 max-xs:left-0 md:rounded-br-lg object-cover max-h-[400px] max-xs:max-w-full xs:h-[580px] xs:w-2/3 xs:max-h-[700px] md:h-[700px] lg:w-[700px] max-xs:w-full max-xs:h-auto max-xs:-top-8 max-xs:max-h-[580px] aspect-square pointer-events-none dark:brightness-75 contrast-[1.1] max-xs:gradient-mask-b-[black_50%]"
             />
           )}
         </BrowserWindow>

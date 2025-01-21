@@ -39,7 +39,7 @@ export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
           name="theme"
           value={isDark ? "light" : "dark"}
           className={cn(
-            "border-4 border-solid border-black dark:border-primary rounded-full bg-foreground dark:bg-primary ring-brand text-primary h-9 w-16 grid place-items-center text-white dark:text-background",
+            "border-4 border-solid border-black dark:border-primary rounded-full bg-foreground dark:bg-primary ring-brand text-primary h-9 max-md:w-9 w-16 grid place-items-center text-white dark:text-background",
             isDark ? "justify-start" : "justify-end"
           )}
         >

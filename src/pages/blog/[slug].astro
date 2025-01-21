@@ -8,36 +8,39 @@ import Hero from "~/components/Hero.astro";
 import { Container } from "~/components/Container";
 import SanityImage from "~/components/Image.astro";
 
-export async function getStaticPaths() {
-  const posts = await getPosts({
-    preview: false,
-  });
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-  }));
-}
+// TODO: not implemented yet
+return Astro.redirect("/");
 
-type Params = InferGetStaticParamsType<typeof getStaticPaths>;
-const { slug } = Astro.params as Params;
+// export async function getStaticPaths() {
+//   const posts = await getPosts({
+//     preview: false,
+//   });
+//   return posts.map((post) => ({
+//     params: { slug: post.slug },
+//   }));
+// }
 
-const post = await getPost({
-  preview: Astro.locals.preview,
-  options: Astro.locals.loadQueryOptions,
-  slug,
-});
+// type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+// const { slug } = Astro.params as Params;
 
-// No product found
-if (!post) {
-  return new Response(null, {
-    status: 404,
-    statusText: "Post Not found",
-  });
-}
+// const post = await getPost({
+//   preview: Astro.locals.preview,
+//   options: Astro.locals.loadQueryOptions,
+//   slug,
+// });
 
-const { title, body, tags, image } = post;
+// // No product found
+// if (!post) {
+//   return new Response(null, {
+//     status: 404,
+//     statusText: "Post Not found",
+//   });
+// }
+
+// const { title, body, tags, image } = post;
 ---
 
-<Layout>
+<!-- <Layout>
   <article>
     <Hero>
       {
@@ -82,4 +85,4 @@ const { title, body, tags, image } = post;
       {body ? <PortableText portableText={body} /> : null}
     </Container>
   </article>
-</Layout>
+</Layout> -->

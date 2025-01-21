@@ -4,6 +4,9 @@ import Layout from "../_layout.astro";
 import { Heading } from "~/components/Heading";
 import Hero from "~/components/Hero.astro";
 
+// TODO: not implemented yet
+return Astro.redirect("/");
+
 const posts = await getPosts({
   preview: Astro.locals.preview,
   options: Astro.locals.loadQueryOptions,

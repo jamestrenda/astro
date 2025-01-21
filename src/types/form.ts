@@ -34,6 +34,8 @@ const formGroupZ = baseBlockZ.extend({
 
 export const formZ = z.object({
   _type: z.literal("baseForm"),
+  emailTo: z.string(),
+  emailSubject: z.string(),
   description: z.string().optional().nullable(),
   fields: z.array(z.union([...formFieldZ.options, formTextareaZ, formGroupZ])),
   honeypot: z.string(),
@@ -51,4 +53,4 @@ export type FormFieldTextarea = z.infer<typeof formTextareaZ>;
 export type FormGroup = z.infer<typeof formGroupZ>;
 export type FormFields = z.infer<typeof formZ>["fields"];
 export interface FormQueryParams extends z.infer<typeof formQueryParamsZ> {}
-export type FormQuery = Pick<Form, "fields" | "honeypot">;
+export type FormData = Pick<Form, "fields" | "honeypot">;

@@ -219,12 +219,16 @@ export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {
     ${seoFragment},
 }`;
 
-export const FORM_QUERY = groq`{
-  "fields": *[_type == $_type && defined(slug) && slug.current == $slug][0].blocks[_type == "form"][0].form->customFormFields[] {
+export const FORM_QUERY = groq`*[_type == $_type && defined(slug) && slug.current == $slug][0].blocks[_type == "form"][0].form->{
+  emailSubject,
+  emailTo,
+  "fields": customFormFields[] {
     ${customFormFieldsFragment}
   },
-  "honeypot": *[_type == $_type && defined(slug) && slug.current == $slug][0].blocks[_type == "form"][0].form->_id
+  "honeypot": _id
 }`;
+
+export const FROM_EMAIL_QUERY = groq`*[_type == "siteSettings"][0].orgEmails[isPrimary == true][0].email`;
 
 export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {
   "siteTitle": coalesce(siteTitle, "Update your site title in the Sanity Studio."),

@@ -10,7 +10,7 @@ export const documentActionsPlugin = definePlugin({
   name: "document-actions",
   document: {
     actions: (prev, context) => {
-      console.log({ prev });
+      // console.log({ prev });
       const filteredActions = SINGLETON_TYPES.has(context.schemaType)
         ? prev.filter(
             (action) =>
@@ -20,7 +20,7 @@ export const documentActionsPlugin = definePlugin({
           )
         : prev;
 
-      console.log({ filteredActions });
+      // console.log({ filteredActions });
 
       const homeSettingsActions = filteredActions.map((originalAction) =>
         originalAction.action === "publish"

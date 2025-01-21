@@ -1,6 +1,7 @@
 import { loadQuery } from "../utils/load-query";
 import {
   FORM_QUERY,
+  FROM_EMAIL_QUERY,
   INDEX_QUERY,
   POSTS_QUERY,
   POST_QUERY,
@@ -9,7 +10,7 @@ import {
 import type { Settings } from "~/types/settings";
 import type { Post } from "~/types/post";
 import { type Home } from "~/types/home";
-import type { FormQuery, FormQueryParams } from "~/types/form";
+import type { Form, FormQueryParams } from "~/types/form";
 
 export async function getPosts({
   preview,
@@ -89,10 +90,18 @@ export async function getIndex({
 export async function getForm({
   pageType,
   slug,
-}: FormQueryParams): Promise<FormQuery> {
-  const { data } = await loadQuery<FormQuery>({
+}: FormQueryParams): Promise<Form> {
+  const { data } = await loadQuery<Form>({
     query: FORM_QUERY,
     params: { _type: pageType, slug },
+    preview: false,
+  });
+  return data;
+}
+
+export async function getFromEmail(): Promise<string> {
+  const { data } = await loadQuery<string>({
+    query: FROM_EMAIL_QUERY,
     preview: false,
   });
   return data;

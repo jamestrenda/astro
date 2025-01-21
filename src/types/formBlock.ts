@@ -11,7 +11,11 @@ export const formBlockZ = z
   .extend({
     _type: z.literal("form"),
     text: z.array(portableTextZ).optional().nullable(),
-    form: formZ,
+    form: formZ.pick({
+      description: true,
+      fields: true,
+      honeypot: true,
+    }),
   });
 
 export type FormBlock = z.infer<typeof formBlockZ>;

@@ -27,12 +27,6 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
   // TODO: handle pending state
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (successMessage) {
-      formRef.current?.reset();
-    }
-  }, [successMessage]);
-
   const id = data.honeypot;
 
   const [form, fields] = useForm({
@@ -41,8 +35,10 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
     constraint: getZodConstraint(schema),
     onSubmit: async (e, { formData }) => {
       e.preventDefault();
+      setSuccessMessage(null);
 
       // TODO: handle pending state
+      setSubmitting(true);
       const response = await fetch("/api/form", {
         method: "POST",
         body: formData,
@@ -53,17 +49,23 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
         setSubmission(result);
         return;
       }
-      setSubmission(undefined);
+
       setSuccessMessage(result.message);
-      return;
     },
     onValidate({ formData }) {
+      setSuccessMessage(null);
       const result = parseWithZod(formData, { schema });
       return result;
     },
     shouldValidate: "onSubmit",
-    shouldRevalidate: "onBlur",
   });
+
+  useEffect(() => {
+    if (form.status !== "error" && successMessage) {
+      formRef.current?.reset();
+      setSubmitting(false);
+    }
+  }, [form.status, successMessage]);
 
   return (
     <div className="bg-[linear-gradient(to_bottom,transparent_20%,#4f46e5_20%)]">
@@ -119,7 +121,10 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                             inputProps={{
                               // @ts-ignore
                               ...getInputProps(fields[field._key], {
-                                type: "text",
+                                type:
+                                  field.fieldType === "email"
+                                    ? "email"
+                                    : "text",
                               }),
                               placeholder: field.fieldPlaceholder ?? undefined,
                               // autoComplete: "given-name",

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { type FormField, type FormFields, type FormQuery } from "~/types/form";
+import { type FormField, type FormFields, type FormData } from "~/types/form";
 import { formQueryParamsZ } from "~/types/form";
 
 // TODO: extend to handle custom validation (e.g. name fields may have different requirements than other "text" fields)
@@ -61,7 +61,7 @@ export const processFields = (
 };
 
 export const createZodFormSchema = (
-  data: FormQuery,
+  data: FormData,
   baseSchema = formQueryParamsZ
 ) => {
   // Add the honeypot field to the base schema

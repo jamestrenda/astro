@@ -59,9 +59,9 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                                 <SanityImage
                                   src={item.image}
                                   // width={1280}
-                                  // height={817}
+                                  height={96}
                                   loading="eager"
-                                  className="h-full w-auto object-contain"
+                                  className=" w-auto object-contain h-10"
                                 />
                               )}
                             </div>

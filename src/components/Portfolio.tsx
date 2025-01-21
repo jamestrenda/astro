@@ -33,12 +33,13 @@ export const Portfolio = ({ title, items }: Props) => {
 
   return (
     <div
-      className="relative"
+      className="relative dark:!bg-none"
       style={{
         backgroundImage: `${getRadialGradient("#6366f1", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "70% 90%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#e0e7ff", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
       }}
     >
-      <div className="bg-black/50 backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
+      <div className="bg-black/50 dark:hidden backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
+      <div className="hidden bg-black/50 dark:block backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
       <div className="absolute inset-x-0 top-24 lg:top-40">
         <Container className="max-w-none  flex flex-col  items-center">
           {title && (
@@ -96,7 +97,7 @@ export const Portfolio = ({ title, items }: Props) => {
           </Tabs>
         </Container>
       </div>
-      <div className="h-80 lg:h-96 bg-background"></div>
+      <div className="h-80 lg:h-96 bg-background dark:bg-zinc-900"></div>
     </div>
   );
 };
@@ -192,7 +193,7 @@ const Project = forwardRef<
                     ? [60, 0, 0]
                     : [0, 0, 0],
               marginTop: -index * 16,
-              "--lightness": visible ? `${offset * 5}%` : 0,
+              "--lightness": visible ? `${30 - offset * 10}%` : 0,
               transition: {
                 y: {
                   type: "tween",
@@ -217,7 +218,7 @@ const Project = forwardRef<
           }}
           style={{
             zIndex: totalItems - index,
-            backgroundColor: `hsl(0 0% var(--lightness))`,
+            // backgroundColor: `hsl(0 0% var(--lightness))`,
           }}
         >
           <BrowserWindow
@@ -225,8 +226,8 @@ const Project = forwardRef<
             className={cn(
               " overflow-hidden !p-0 !rounded-lg",
               !active
-                ? "backdrop-blur-lg transition duration-500 bg-transparent !bg-none "
-                : "!bg-none"
+                ? "backdrop-blur-lg transition duration-500 bg-transparent !bg-none"
+                : "!bg-none "
             )}
           >
             {/* TODO: need to add these somewhere
@@ -245,7 +246,7 @@ const Project = forwardRef<
                 background: var(--background);
               } */}
             <motion.div
-              className="grid max-lg:grid-cols-1 max-lg:max-h-[480px] lg:grid-cols-12 lg:h-[680px] max-lg:pt-24 overflow-y-auto overflow-x-hidden"
+              className="grid bg-black max-lg:grid-cols-1 max-lg:max-h-[480px] lg:grid-cols-12 lg:h-[680px] max-lg:pt-24 overflow-y-auto overflow-x-hidden"
               variants={{
                 hidden: { opacity: 0 },
                 visible: {
@@ -269,7 +270,7 @@ const Project = forwardRef<
                   )}
                   {description && (
                     <FadeIn>
-                      <div className="text-muted">
+                      <div className="text-muted text-lg font-light">
                         <PortableText portableText={description} />
                       </div>
                     </FadeIn>

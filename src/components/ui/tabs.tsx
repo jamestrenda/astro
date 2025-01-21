@@ -40,7 +40,7 @@ const TabsTrigger = React.forwardRef<
         {hovered && (
           <motion.span
             layoutId="hover-indicator"
-            className="absolute inset-x-1.5 inset-y-0 rounded-full bg-indigo-500/20 backdrop-blur-lg z-0"
+            className="absolute inset-x-1.5 inset-y-0 rounded-full bg-indigo-500/20 backdrop-blur-lg z-0 dark:bg-white/5"
             // style={{
             //   x: hovered ? 0 : hoveredX.get(),
             //   // x: active ? 0 : hovered ? 0 : activeX.get(),

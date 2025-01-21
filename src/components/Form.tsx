@@ -80,7 +80,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
             variant="tight"
             className="py-16 sm:pb-0 grid lg:grid-cols-2 gap-16"
           >
-            <div className="space-y-3 [&_.heading]:text-background [&_.heading]:dark:text-foreground [&_p]:text-background text-lg [&_p]:dark:text-muted">
+            <div className="space-y-3 [&_.heading]:text-background [&_.heading]:dark:text-foreground [&_p]:text-muted text-lg [&_p]:dark:text-muted">
               {text && <PortableText portableText={text} />}
             </div>
 

@@ -8,7 +8,7 @@ import { Overline } from "./Overline";
 import BrowserWindow from "./BrowserWindow";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Heading } from "./Heading";
-import { CircleCheckBigIcon } from "lucide-react";
+import { CircleCheckBigIcon, ExternalLinkIcon } from "lucide-react";
 import type { Portfolio as Props } from "~/types/portfolio";
 import { SanityImage } from "./Image";
 import { PortableText } from "./PortableText/PortableText";
@@ -245,7 +245,7 @@ const Project = forwardRef<
                 background: var(--background);
               } */}
             <motion.div
-              className="max-lg:grid max-lg:grid-cols-1 max-lg:max-h-[480px] lg:h-[680px] max-lg:pt-32 overflow-y-auto overflow-x-hidden"
+              className="grid max-lg:grid-cols-1 max-lg:max-h-[480px] lg:grid-cols-12 lg:h-[680px] max-lg:pt-24 overflow-y-auto overflow-x-hidden"
               variants={{
                 hidden: { opacity: 0 },
                 visible: {
@@ -260,7 +260,7 @@ const Project = forwardRef<
               initial="hidden"
               animate={active ? "visible" : undefined}
             >
-              <div className="grid lg:grid-cols-2 max-lg:order-2 px-6 pt-6 pb-12 lg:px-16 lg:py-32">
+              <div className="max-lg:order-2 px-6 pt-6 pb-12 lg:px-16 lg:pt-32 col-span-5">
                 <div className="space-y-6">
                   {title && (
                     <FadeIn>
@@ -280,7 +280,7 @@ const Project = forwardRef<
                         <li key={feature._key}>
                           <FadeIn>
                             <span className="flex">
-                              <CircleCheckBigIcon className="mr-2 text-green-400" />
+                              <CircleCheckBigIcon className="mr-2 mt-1 shrink-0 w-4 h-4 text-green-400" />
                               <span className="text-background dark:text-foreground">
                                 {feature.name && (
                                   <strong className="text-green-400">
@@ -295,20 +295,35 @@ const Project = forwardRef<
                       ))}
                     </ul>
                   )}
+                  {url && (
+                    <FadeIn>
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex flex-nowrap items-center text-foreground dark:text-background bg-white text-sm px-4 py-2 rounded-full"
+                      >
+                        Visit website
+                        <ExternalLinkIcon className="ml-2 w-4 h-4" />
+                      </a>
+                    </FadeIn>
+                  )}
                 </div>
               </div>
-              <FadeIn className="lg:absolute lg:bottom-0 lg:top-14 w-full lg:-right-[50%] h-auto max-lg:order-1 max-lg:-mr-16">
-                {image?.image && (
-                  <SanityImage
-                    src={image.image}
-                    width={1280}
-                    height={817}
-                    // loading="eager"
-                    mode="contain"
-                    className="h-full w-auto object-contain"
-                  />
-                )}
-              </FadeIn>
+              <div className="col-span-7">
+                <FadeIn className="lg:absolute lg:-bottom-24 top-24 w-full h-auto max-lg:order-1 max-lg:-mr-16">
+                  {image?.image && (
+                    <SanityImage
+                      src={image.image}
+                      width={1280}
+                      height={817}
+                      // loading="eager"
+                      mode="contain"
+                      className="h-full w-auto object-contain max-lg:ml-auto -mr-4"
+                    />
+                  )}
+                </FadeIn>
+              </div>
             </motion.div>
           </BrowserWindow>
         </motion.div>

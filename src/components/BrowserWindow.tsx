@@ -50,7 +50,7 @@ const BrowserWindow = memo(
           {children}
         </div>
         {withStack && (
-          <motion.div className="absolute inset-0 dark:hidden">
+          <motion.div className="absolute inset-0 ">
             {Array.from({ length: stackCount }).map((_, index) => (
               <Shadow
                 key={index}
@@ -75,7 +75,7 @@ const Shadow = memo(({ index, total, position }: ShadowProps) => {
   const increment = 16;
   const y = -(index + 1) * increment;
 
-  const lightness = calculateLightnessScale(10, 95, 0.9, total, index);
+  const lightness = calculateLightnessScale(50, 97, 0.9, total, index);
 
   return (
     <motion.div
@@ -105,10 +105,15 @@ const Shadow = memo(({ index, total, position }: ShadowProps) => {
     >
       <div
         className={cn("bg-black h-24 rounded-lg")}
+        // style={
+        //   {
+        //     "--lightness": lightness + "%",
+        //     backgroundColor: `hsla(0 0% var(--lightness) / .9)`,
+        //   } as React.CSSProperties
+        // }
         style={
           {
-            "--lightness": lightness + "%",
-            backgroundColor: `hsla(0 0% var(--lightness) / .9)`,
+            "--tw-bg-opacity": (100 - lightness) / 100,
           } as React.CSSProperties
         }
       />

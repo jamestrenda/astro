@@ -9,7 +9,7 @@ import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
 
 export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
   return (
-    <div className="max-md:[&>div]:!px-0 relative pb-20 dark:pb-0">
+    <div className="max-md:[&>div]:!px-0 relative pb-20">
       <Container>
         <BrowserWindow className="max-md:rounded-t-none min-h-[550px] md:min-h-[660px]">
           <BackgroundRadialGradient

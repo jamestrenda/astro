@@ -266,7 +266,7 @@ const Project = forwardRef<
               animate={active ? "visible" : undefined}
             >
               <div className="col-span-7 lg:order-2">
-                <FadeIn className="lg:absolute lg:-bottom-24 top-24 w-full h-auto max-lg:order-1 max-lg:-mr-16">
+                <FadeIn className="lg:absolute lg:-bottom-24 w-full h-auto max-lg:order-1 max-lg:-mr-4 ml-auto">
                   {image?.image && (
                     <SanityImage
                       src={image.image}
@@ -278,7 +278,7 @@ const Project = forwardRef<
                       }}
                       preview={true}
                       mode="contain"
-                      className="h-full w-auto object-contain max-lg:ml-auto -mr-4"
+                      className="h-auto w-auto object-contain "
                     />
                   )}
                 </FadeIn>

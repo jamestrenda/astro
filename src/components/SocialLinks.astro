@@ -67,7 +67,7 @@ const { links } = Astro.props;
             class="p-2 mx-1 bg-zinc-800 block rounded-full hover:bg-white transition hover:text-foreground dark:hover:text-background"
           >
             <span class="sr-only">Open {link.platform} profile</span>
-            <Icon />
+            {Icon && <Icon />}
           </a>
         </li>
       );

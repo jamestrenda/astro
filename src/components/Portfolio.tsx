@@ -38,8 +38,8 @@ export const Portfolio = ({ title, items }: Props) => {
         backgroundImage: `${getRadialGradient("#6366f1", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "70% 90%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#e0e7ff", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
       }}
     >
-      <div className="bg-black/50 dark:hidden backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
-      <div className="hidden bg-black/50 dark:block backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
+      <div className="bg-black/20 dark:hidden backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
+      <div className="hidden bg-black dark:block backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
       <div className="absolute inset-x-0 top-24 lg:top-40">
         <Container className="max-w-none  flex flex-col  items-center">
           {title && (
@@ -222,12 +222,13 @@ const Project = forwardRef<
           }}
         >
           <BrowserWindow
+            withChrome={active}
             withStack={false}
             className={cn(
               " overflow-hidden !p-0 !rounded-lg",
               !active
-                ? "backdrop-blur-lg transition duration-500 bg-transparent !bg-none"
-                : "!bg-none "
+                ? "backdrop-blur-lg transition duration-500 bg-glass dark:bg-zinc-900/80"
+                : "!bg-black dark:!bg-zinc-950 "
             )}
           >
             {/* TODO: need to add these somewhere
@@ -246,7 +247,10 @@ const Project = forwardRef<
                 background: var(--background);
               } */}
             <motion.div
-              className="grid bg-black max-lg:grid-cols-1 max-lg:max-h-[480px] lg:grid-cols-12 lg:h-[680px] max-lg:pt-24 overflow-y-auto overflow-x-hidden"
+              className={cn(
+                "grid bg-black max-lg:grid-cols-1 max-lg:max-h-[480px] lg:grid-cols-12 lg:h-[680px] mt-14 pt-8 overflow-y-auto overflow-x-hidden",
+                active ? "bg-black dark:bg-zinc-950" : ""
+              )}
               variants={{
                 hidden: { opacity: 0 },
                 visible: {
@@ -279,7 +283,7 @@ const Project = forwardRef<
                   )}
                 </FadeIn>
               </div>
-              <div className="max-lg:order-2 px-6 pt-6 pb-12 lg:px-16 lg:pt-32 col-span-5">
+              <div className="max-lg:order-2 px-6 max-lg:pt-12 pb-12 lg:px-16 col-span-5">
                 <div className="space-y-6">
                   {title && (
                     <FadeIn>

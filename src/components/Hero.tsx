@@ -11,13 +11,13 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
   return (
     <div className="max-md:[&>div]:!px-0 relative pb-20">
       <Container>
-        <BrowserWindow className="max-md:rounded-t-none min-h-[550px] md:min-h-[660px]">
+        <BrowserWindow className="max-md:rounded-t-none min-h-[550px] md:min-h-[660px] grid grid-cols-12">
           <BackgroundRadialGradient
             style={{
               backgroundImage: `${getRadialGradient("#c7d2fe", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "40% 30%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#c7d2fe", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
             }}
           />
-          <div className="w-full max-xs:mt-auto z-40 max-xs:mb-4 min-[480px]:w-4/5 xs:w-1/2 mt-16 space-y-3 [&_p]:!text-muted [&_p]:dark:text-foreground [&_p]:text-lg [&_p]:md:text-xl [&_p]:font-light">
+          <div className="w-full col-span-12 min-[480px]:col-span-9 xs:col-end-7 lg:col-start-2 max-xs:mt-auto z-40 max-xs:mb-4mt-16 space-y-3 [&_p]:!text-muted [&_p]:dark:text-foreground [&_p]:text-lg [&_p]:md:text-xl [&_p]:font-light">
             {valueProposition && (
               <PortableText portableText={valueProposition} />
             )}

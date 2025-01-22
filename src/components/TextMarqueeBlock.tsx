@@ -3,7 +3,7 @@ import { Container } from "./Container";
 
 export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
   return (
-    <div className="py-16 overflow-clip bg-zinc-100 dark:bg-zinc-950">
+    <div className="py-16 overflow-clip bg-zinc-100 dark:bg-black/25">
       {marquees && (
         <div className="grid gap-2 justify-items-start fadeout-horizontal">
           {marquees.map((marquee, i) => {

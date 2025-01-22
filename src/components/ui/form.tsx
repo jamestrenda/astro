@@ -28,6 +28,7 @@ import {
 } from "./tooltip";
 import { InfoIcon } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "./alert";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 export type ListOfErrors = Array<string | null | undefined> | null | undefined;
 
@@ -82,21 +83,14 @@ export function FieldError({
   const errorsToRender = errors?.filter(Boolean);
   if (!errorsToRender?.length) return null;
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger
-          asChild
-          className="absolute top-5 right-4 z-10 text-destructive"
-        >
-          <button type="button">
-            <InfoIcon className="h-5 w-5" />
-          </button>
-        </TooltipTrigger>
-        <TooltipContent className="bg-red-100 backdrop-blur-md">
-          <ErrorList id={id} errors={errors} />
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Popover>
+      <PopoverTrigger className="absolute top-5 right-4 z-10 text-destructive">
+        <InfoIcon className="h-5 w-5" />
+      </PopoverTrigger>
+      <PopoverContent className="bg-red-100 backdrop-blur-md">
+        <ErrorList id={id} errors={errors} />
+      </PopoverContent>
+    </Popover>
   );
 }
 

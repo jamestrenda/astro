@@ -28,7 +28,7 @@ const BrowserWindow = memo(
       >
         <div
           className={cn(
-            "relative z-20 pt-14 bg-black bg-[size:150%] bg-[position:90%] rounded-lg max-md:rounded-bl-none w-full h-full p-6 sm:p-16 grid items-center",
+            "relative z-20 pt-14 bg-black bg-[size:150%] bg-[position:90%] rounded-lg max-md:rounded-b-none w-full h-full p-6 sm:p-16 grid items-center",
             className
           )}
         >
@@ -72,7 +72,7 @@ type ShadowProps = {
   position: "top" | "bottom";
 };
 const Shadow = memo(({ index, total, position }: ShadowProps) => {
-  const increment = 16;
+  const increment = 12;
   const y = -(index + 1) * increment;
 
   const lightness = calculateLightnessScale(50, 97, 0.9, total, index);

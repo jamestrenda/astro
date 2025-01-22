@@ -316,9 +316,12 @@ const Project = forwardRef<
                   {image?.image && (
                     <SanityImage
                       src={image.image}
-                      width={1280}
-                      height={817}
+                      width={768}
+                      height={680}
                       // loading="eager"
+                      queryParams={{
+                        q: 100,
+                      }}
                       mode="contain"
                       className="h-full w-auto object-contain max-lg:ml-auto -mr-4"
                     />

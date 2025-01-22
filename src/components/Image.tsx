@@ -42,20 +42,22 @@ export const SanityImage = (props: ImageProps) => {
   } = props;
 
   return src.asset ? (
-    <InternalSanityImage
-      id={src.asset._id}
-      baseUrl={baseUrl}
-      width={Number(width)}
-      height={Number(height)}
-      mode={mode}
-      hotspot={src.hotspot ?? undefined}
-      crop={src.crop ?? undefined}
-      preview={preview ? src.asset.metadata?.lqip ?? undefined : undefined}
-      queryParams={{ ...queryParams, q: q ?? 75 }}
-      alt={alt ?? src.asset.altText ?? ""}
-      className={className}
-      sizes={sizes ?? undefined}
-      {...attrs}
-    />
+    <div className="contents [&_img[data-lqip=true]]:gradient-mask-t-50">
+      <InternalSanityImage
+        id={src.asset._id}
+        baseUrl={baseUrl}
+        width={Number(width)}
+        height={Number(height)}
+        mode={mode}
+        hotspot={src.hotspot ?? undefined}
+        crop={src.crop ?? undefined}
+        preview={preview ? src.asset.metadata?.lqip ?? undefined : undefined}
+        queryParams={{ ...queryParams, q: queryParams?.q ?? 75 }}
+        alt={alt ?? src.asset.altText ?? ""}
+        className={className}
+        sizes={sizes ?? undefined}
+        {...attrs}
+      />
+    </div>
   ) : null;
 };

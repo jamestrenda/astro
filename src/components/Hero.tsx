@@ -78,12 +78,12 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
               src={image.image}
               // width={1280}
               // height={817}
-              loading="eager"
+              // loading="eager"
               fetchPriority="high"
               queryParams={{
                 q: 100,
               }}
-              preview={false}
+              preview={true}
               className="absolute z-30 bottom-0 right-0 max-xs:left-0 md:rounded-br-lg object-cover max-h-[400px] max-xs:max-w-full xs:h-[580px] xs:w-2/3 xs:max-h-[700px] md:h-[700px] lg:w-[700px] max-xs:w-full max-xs:h-auto max-xs:-top-8 max-xs:max-h-[580px] aspect-square pointer-events-none dark:brightness-75 contrast-[1.1] max-xs:gradient-mask-b-[black_50%]"
             />
           )}

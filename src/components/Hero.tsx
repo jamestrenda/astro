@@ -17,7 +17,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
               backgroundImage: `${getRadialGradient("#c7d2fe", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "40% 30%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#c7d2fe", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
             }}
           />
-          <div className="w-full col-span-12 min-[480px]:col-span-9 xs:col-end-7 lg:col-start-2 max-xs:mt-auto z-40 max-xs:mb-4mt-16 space-y-3 [&_p]:!text-muted [&_p]:dark:text-foreground [&_p]:text-lg [&_p]:md:text-xl [&_p]:font-light">
+          <div className="w-full col-span-11 xs:col-start-1 xs:col-end-8 xl:col-start-2 xl:col-end-7 max-xs:mt-auto z-40 max-xs:mb-4 max-sm:mt-16 space-y-3 [&_p]:!text-muted [&_p]:dark:text-foreground [&_p]:text-lg [&_p]:md:text-xl [&_p]:font-light">
             {valueProposition && (
               <PortableText portableText={valueProposition} />
             )}

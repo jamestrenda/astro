@@ -21,12 +21,16 @@ export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
                   {marquee.items && (
                     <>
                       {marquee.items.map((item, i) => (
-                        <div className="px-6 py-2 text-foreground bg-zinc-200 dark:bg-zinc-900 rounded-full text-nowrap font-medium">
+                        <div
+                          key={i}
+                          className="px-6 py-2 text-foreground bg-zinc-200 dark:bg-zinc-900 rounded-full text-nowrap font-medium"
+                        >
                           {item}
                         </div>
                       ))}
                       {marquee.items.map((item, i) => (
                         <div
+                          key={i}
                           aria-hidden="true"
                           className="px-6 py-2 text-foreground bg-zinc-200 dark:bg-zinc-900 rounded-full text-nowrap font-medium"
                         >

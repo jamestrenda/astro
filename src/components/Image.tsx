@@ -38,6 +38,7 @@ export const SanityImage = (props: ImageProps) => {
     queryParams,
     sizes,
     preview = true,
+    ...attrs
   } = props;
 
   return src.asset ? (
@@ -54,6 +55,7 @@ export const SanityImage = (props: ImageProps) => {
       alt={alt ?? src.asset.altText ?? ""}
       className={className}
       sizes={sizes ?? undefined}
+      {...attrs}
     />
   ) : null;
 };

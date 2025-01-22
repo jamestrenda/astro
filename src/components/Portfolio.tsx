@@ -261,6 +261,24 @@ const Project = forwardRef<
               initial="hidden"
               animate={active ? "visible" : undefined}
             >
+              <div className="col-span-7 lg:order-2">
+                <FadeIn className="lg:absolute lg:-bottom-24 top-24 w-full h-auto max-lg:order-1 max-lg:-mr-16">
+                  {image?.image && (
+                    <SanityImage
+                      src={image.image}
+                      width={768}
+                      height={680}
+                      // loading="eager"
+                      queryParams={{
+                        q: 100,
+                      }}
+                      preview={true}
+                      mode="contain"
+                      className="h-full w-auto object-contain max-lg:ml-auto -mr-4"
+                    />
+                  )}
+                </FadeIn>
+              </div>
               <div className="max-lg:order-2 px-6 pt-6 pb-12 lg:px-16 lg:pt-32 col-span-5">
                 <div className="space-y-6">
                   {title && (
@@ -310,23 +328,6 @@ const Project = forwardRef<
                     </FadeIn>
                   )}
                 </div>
-              </div>
-              <div className="col-span-7">
-                <FadeIn className="lg:absolute lg:-bottom-24 top-24 w-full h-auto max-lg:order-1 max-lg:-mr-16">
-                  {image?.image && (
-                    <SanityImage
-                      src={image.image}
-                      width={768}
-                      height={680}
-                      // loading="eager"
-                      queryParams={{
-                        q: 100,
-                      }}
-                      mode="contain"
-                      className="h-full w-auto object-contain max-lg:ml-auto -mr-4"
-                    />
-                  )}
-                </FadeIn>
               </div>
             </motion.div>
           </BrowserWindow>

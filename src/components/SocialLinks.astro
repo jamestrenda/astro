@@ -64,9 +64,9 @@ const { links } = Astro.props;
           <a
             href={link.url}
             target="_blank"
-            class="p-2 mx-1 bg-black/10 block rounded-full hover:bg-white transition"
+            class="p-2 mx-1 bg-zinc-800 block rounded-full hover:bg-white transition hover:text-foreground dark:hover:text-background"
           >
-            <span class="sr-only">{link.notes}</span>
+            <span class="sr-only">Open {link.platform} profile</span>
             <Icon />
           </a>
         </li>

@@ -78,8 +78,6 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
               src={image.image}
               // width={1280}
               // height={817}
-              // loading="eager"
-              fetchPriority="high"
               queryParams={{
                 q: 100,
               }}

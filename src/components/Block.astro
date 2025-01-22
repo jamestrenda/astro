@@ -12,6 +12,8 @@ import { portfolioZ } from "~/types/portfolio";
 import { textBlockZ } from "~/types/textBlock";
 import { formBlockZ } from "~/types/formBlock";
 import type { FormBlock } from "~/types/formBlock";
+import { textMarqueeBlockZ } from "~/types/textMarquee";
+import { TextMarqueeBlock } from "./TextMarqueeBlock";
 
 export type Props = Block;
 
@@ -70,6 +72,16 @@ try {
       validBlock = validationResult.data;
       break;
     }
+    case "textMarqueeBlock": {
+      const validationResult = validateZodSchema(props, [textMarqueeBlockZ]);
+      if (!validationResult.success) {
+        console.error("Validation failed:", validationResult.issues);
+        throw new Error("Invalid block data!");
+      }
+
+      validBlock = validationResult.data;
+      break;
+    }
     default:
       break;
   }
@@ -91,6 +103,9 @@ try {
       ) : null}
       {props._type === "textBlock" ? (
         <TextBlock {...validBlock} client:visible />
+      ) : null}
+      {props._type === "textMarqueeBlock" ? (
+        <TextMarqueeBlock {...validBlock} client:visible />
       ) : null}
     </>
   ) : null

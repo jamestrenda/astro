@@ -208,6 +208,15 @@ const blocksFragment = groq`
       ${portableTextFragment}
     }
   },
+  _type == "textMarqueeBlock" => {
+    marquees[] {
+      _type,
+      _key,
+      speed,
+      direction,
+      items
+    }
+  }
 `;
 
 export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {

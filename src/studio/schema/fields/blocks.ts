@@ -70,5 +70,9 @@ export const blocksField = defineField({
         },
       },
     },
+    {
+      type: "textMarqueeBlock",
+      title: "Text Marquee",
+    },
   ],
 });

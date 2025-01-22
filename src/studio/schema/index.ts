@@ -26,6 +26,8 @@ import notFoundSettings from "./singletons/notFoundSettings";
 import redirectSettings from "./singletons/redirectSettings";
 import siteSettings from "./singletons/siteSettings";
 import form from "./objects/form";
+import textMarquee from "./objects/textMarquee";
+import textMarqueeBlock from "./objects/textMarqueeBlock";
 
 export const SINGLETON_TYPES = new Set([
   footerSettings.name,
@@ -65,5 +67,7 @@ export const schemaTypes = [
   seo,
   siteSettings,
   tag,
+  textMarquee,
+  textMarqueeBlock,
   website,
 ];

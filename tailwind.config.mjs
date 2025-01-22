@@ -9,6 +9,8 @@ export default {
       animation: {
         marquee:
           "marquee var(--speed, 10s) linear infinite var(--direction, forwards)",
+        "text-marquee":
+          "text-marquee var(--speed, 10s) linear infinite var(--direction, forwards)",
         "fade-in-out":
           "fade-in-out var(--speed, 10s) linear infinite var(--direction, forwards)",
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -49,6 +51,11 @@ export default {
         marquee: {
           to: {
             transform: "translateX(calc(-100cqw - 100%))",
+          },
+        },
+        "text-marquee": {
+          to: {
+            transform: "translateX(-50%)",
           },
         },
         "fade-in-out": {

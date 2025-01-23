@@ -11,7 +11,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
   return (
     <div className="max-md:[&>div]:px-0! pb-15 relative">
       <Container>
-        <BrowserWindow className="grid min-h-[550px] grid-cols-12 max-md:rounded-t-none md:min-h-[660px]">
+        <BrowserWindow className="relative grid min-h-[550px] grid-cols-12 max-md:rounded-t-none md:min-h-[660px]">
           <BackgroundRadialGradient
             style={{
               backgroundImage: `${getRadialGradient('var(--color-zinc-500)', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '40% 30%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,

@@ -32,7 +32,7 @@ export const Portfolio = ({ title, items }: Props) => {
   );
 
   return (
-    <div className="relative bg-zinc-950">
+    <div className="relative">
       <div
         className="relative h-[480px] lg:h-[680px]"
         style={{
@@ -98,7 +98,7 @@ export const Portfolio = ({ title, items }: Props) => {
           </Tabs>
         </Container>
       </div>
-      <div className="h-[354px] bg-background dark:bg-zinc-900 lg:h-[420px]"></div>
+      <div className="h-[354px] bg-transparent lg:h-[420px]"></div>
     </div>
   );
 };

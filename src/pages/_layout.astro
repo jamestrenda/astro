@@ -57,7 +57,10 @@ const theme = getTheme(Astro.cookies);
     <title>{title ? `${title} • ` : ''}{siteTitle}</title>
     {metaDescription && <meta name="description" content={metaDescription} />}
   </head>
-  <body class="flex min-h-dvh flex-col bg-background dark:bg-zinc-900">
+
+  <body
+    class="[--pattern-fg:var(--color-zinc-950)]/5 dark:[--pattern-fg:var(--color-white)]/5 flex min-h-dvh flex-col bg-zinc-950/[2.5%] bg-[image:radial-gradient(var(--pattern-fg)_1px,_transparent_0)] bg-[size:10px_10px] bg-fixed dark:bg-zinc-900"
+  >
     <Header theme={theme} />
     <main class="w-full grow">
       <slot />

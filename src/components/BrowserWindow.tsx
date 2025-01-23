@@ -23,7 +23,7 @@ const BrowserWindow = memo(
       <div
         className={cn(
           'browser-window relative rounded-b-lg md:h-full',
-          stackPosition === 'top' ? 'mt-20' : '',
+          stackPosition === 'top' ? 'mt-15' : '',
         )}
       >
         <div

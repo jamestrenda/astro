@@ -59,7 +59,7 @@ const theme = getTheme(Astro.cookies);
   </head>
   <body class="flex min-h-dvh flex-col bg-background dark:bg-zinc-900">
     <Header theme={theme} />
-    <main class="w-full grow bg-background dark:bg-zinc-900">
+    <main class="w-full grow">
       <slot />
     </main>
     <Footer siteTitle={siteTitle} social={social} />

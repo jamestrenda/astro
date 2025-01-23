@@ -2,7 +2,7 @@ import type { TextMarquee } from '~/types/textMarquee';
 
 export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
   return (
-    <div className="overflow-clip bg-zinc-100 py-8 dark:bg-black/25">
+    <div className="overflow-clip bg-gray-100 py-8 dark:bg-black/40">
       {marquees && (
         <div className="fadeout-horizontal grid justify-items-start gap-2">
           {marquees.map((marquee, i) => {
@@ -22,7 +22,7 @@ export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
                       {marquee.items.map((item, i) => (
                         <div
                           key={i}
-                          className="text-nowrap rounded-full bg-zinc-200 px-6 py-2 font-medium text-foreground dark:bg-zinc-900"
+                          className="text-nowrap rounded-full bg-gray-200 px-6 py-2 font-medium text-foreground dark:bg-zinc-900"
                         >
                           {item}
                         </div>
@@ -31,7 +31,7 @@ export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
                         <div
                           key={i}
                           aria-hidden="true"
-                          className="text-nowrap rounded-full bg-zinc-200 px-6 py-2 font-medium text-foreground dark:bg-zinc-900"
+                          className="text-nowrap rounded-full bg-gray-200 px-6 py-2 font-medium text-foreground dark:bg-zinc-900"
                         >
                           {item}
                         </div>

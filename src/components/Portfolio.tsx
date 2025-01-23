@@ -32,14 +32,15 @@ export const Portfolio = ({ title, items }: Props) => {
   );
 
   return (
-    <div
-      className="dark:bg-none! relative"
-      style={{
-        backgroundImage: `${getRadialGradient('#6366f1', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '70% 90%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#e0e7ff', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
-      }}
-    >
-      <div className="h-[480px] bg-black/20 backdrop-blur-lg dark:hidden lg:h-[680px]"></div>
-      <div className="hidden h-[480px] bg-black backdrop-blur-lg dark:block lg:h-[680px]"></div>
+    <div className="relative bg-zinc-950">
+      <div
+        className="relative h-[480px] lg:h-[680px]"
+        style={{
+          backgroundImage: `${getRadialGradient('var(--color-zinc-600)', 'var(--color-zinc-900)', 'var(--color-zinc-950)', '50% 100%', ['0%', '50%', '100%'])}`,
+        }}
+      >
+        <div className="absolute inset-0 bg-black/5 backdrop-blur-lg"></div>
+      </div>
       <div className="absolute inset-x-0 top-24 lg:top-40">
         <Container className="flex max-w-none flex-col items-center">
           {title && (
@@ -227,8 +228,8 @@ const Project = forwardRef<
             className={cn(
               'p-0! rounded-lg! overflow-hidden',
               !active
-                ? 'bg-glass backdrop-blur-lg transition duration-500 dark:bg-zinc-900/80'
-                : 'bg-black! dark:bg-zinc-950!',
+                ? 'bg-glass bg-zinc-950/40 backdrop-blur-lg transition duration-500'
+                : 'bg-black',
             )}
           >
             {/* TODO: need to add these somewhere
@@ -249,7 +250,7 @@ const Project = forwardRef<
             <motion.div
               className={cn(
                 'mt-14 grid overflow-y-auto overflow-x-hidden bg-black pt-8 max-lg:max-h-[480px] max-lg:grid-cols-1 lg:h-[680px] lg:grid-cols-12',
-                active ? 'bg-black dark:bg-zinc-950' : '',
+                active ? 'dark:bg-zinc-950! bg-black' : '',
               )}
               variants={{
                 hidden: { opacity: 0 },
@@ -292,7 +293,7 @@ const Project = forwardRef<
                   )}
                   {description && (
                     <FadeIn>
-                      <div className="text-lg font-light text-muted">
+                      <div className="text-lg font-light text-gray-500">
                         <PortableText portableText={description} />
                       </div>
                     </FadeIn>
@@ -324,7 +325,7 @@ const Project = forwardRef<
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex flex-nowrap items-center rounded-full bg-white px-4 py-2 text-sm text-foreground dark:text-background"
+                        className="inline-flex flex-nowrap items-center rounded-full bg-white px-4 py-2 text-sm text-foreground transition hover:scale-95 dark:text-background"
                       >
                         Visit website
                         <ExternalLinkIcon className="ml-2 h-4 w-4" />

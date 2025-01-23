@@ -68,7 +68,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
   }, [form.status, successMessage]);
 
   return (
-    <div className="bg-[linear-gradient(to_bottom,transparent_20%,#4f46e5_20%)]">
+    <div className="bg-[linear-gradient(to_bottom,transparent_20%,var(--color-indigo-700)_20%)]">
       <Container padding={true} className="pt-0!">
         <BrowserWindow stackPosition="top" className="max-md:rounded-bl-lg!">
           <BackgroundRadialGradient
@@ -80,7 +80,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
             variant="tight"
             className="grid gap-16 py-16 sm:pb-0 lg:grid-cols-2"
           >
-            <div className="space-y-3 text-lg [&_.heading]:text-background dark:[&_.heading]:text-foreground [&_p]:text-muted dark:[&_p]:text-muted">
+            <div className="space-y-3 text-lg [&_.heading]:text-background dark:[&_.heading]:text-foreground [&_p]:text-gray-500 dark:[&_p]:text-gray-500">
               {text && <PortableText portableText={text} />}
             </div>
 
@@ -233,7 +233,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="min-w-40 justify-self-start rounded-lg bg-primary px-6 py-3 font-medium text-background transition hover:bg-indigo-700 disabled:pointer-events-none disabled:opacity-50 dark:text-foreground"
+                    className="min-w-40 justify-self-start rounded-lg bg-gradient-to-r from-indigo-600 from-0% to-indigo-700 to-100% px-6 py-3 font-medium text-background transition hover:scale-95 hover:from-indigo-700 focus:scale-95 focus:from-indigo-700 disabled:pointer-events-none disabled:opacity-50 dark:text-foreground"
                   >
                     {/* TODO: Move this content to Sanity */}
                     Get Started

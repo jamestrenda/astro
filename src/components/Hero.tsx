@@ -9,15 +9,15 @@ import { PortableText } from './PortableText/PortableText';
 
 export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
   return (
-    <div className="max-md:[&>div]:px-0! relative pb-20">
+    <div className="max-md:[&>div]:px-0! pb-15 relative">
       <Container>
         <BrowserWindow className="grid min-h-[550px] grid-cols-12 max-md:rounded-t-none md:min-h-[660px]">
           <BackgroundRadialGradient
             style={{
-              backgroundImage: `${getRadialGradient('#c7d2fe', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '40% 30%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
+              backgroundImage: `${getRadialGradient('var(--color-zinc-500)', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '40% 30%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
             }}
           />
-          <div className="[&_p]:text-muted! z-40 col-span-11 w-full space-y-3 max-sm:mt-16 max-xs:mb-4 max-xs:mt-auto xs:col-start-1 xs:col-end-8 xl:col-start-2 xl:col-end-7 [&_p]:text-lg [&_p]:font-light dark:[&_p]:text-foreground md:[&_p]:text-xl">
+          <div className="[&_p]:text-gray-500! z-40 col-span-11 mt-auto w-full space-y-3 max-xs:mb-4 xs:col-start-1 xs:col-end-8 xs:mt-16 xl:col-end-7 [&_p]:text-xl [&_p]:font-light dark:[&_p]:text-foreground md:[&_p]:text-2xl">
             {valueProposition && (
               <PortableText portableText={valueProposition} />
             )}

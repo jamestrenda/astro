@@ -309,7 +309,7 @@ export function SelectField({
           aria-describedby={errorId}
           {...props}
           type="button"
-          className="data-placeholder:text-muted-foreground"
+          className="data-placeholder:text-gray-500"
         >
           <SelectValue placeholder={labelProps.children} />
         </SelectTrigger>

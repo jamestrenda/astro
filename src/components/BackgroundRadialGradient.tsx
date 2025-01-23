@@ -11,7 +11,7 @@ export const BackgroundRadialGradient = ({
         className="pointer-events-none absolute inset-0 -z-20 rounded-lg"
         style={style}
       ></div>
-      <div className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-black/80"></div>
+      <div className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-zinc-950/80"></div>
     </>
   );
 };

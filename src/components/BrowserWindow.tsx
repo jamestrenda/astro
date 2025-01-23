@@ -22,13 +22,13 @@ const BrowserWindow = memo(
     return (
       <div
         className={cn(
-          'browser-window relative rounded-b-lg md:h-full',
+          'relative rounded-b-lg md:h-full',
           stackPosition === 'top' ? 'mt-15' : '',
         )}
       >
         <div
           className={cn(
-            'relative z-20 grid h-full w-full items-center rounded-lg bg-black bg-[size:150%] bg-[position:90%] p-6 pt-14 max-md:rounded-b-none md:p-16',
+            'relative z-20 grid h-full w-full items-center rounded-lg bg-[size:150%] bg-[position:90%] p-6 pt-14 max-md:rounded-b-none md:p-16',
             className,
           )}
         >
@@ -40,9 +40,9 @@ const BrowserWindow = memo(
             >
               <div className="flex h-full items-center justify-between px-4">
                 <div className="flex items-center space-x-2">
-                  <div className="bg-glass h-3 w-3 rounded-full dark:bg-white/10"></div>
-                  <div className="bg-glass h-3 w-3 rounded-full dark:bg-white/10"></div>
-                  <div className="bg-glass h-3 w-3 rounded-full dark:bg-white/10"></div>
+                  <div className="h-3 w-3 rounded-full bg-white/10"></div>
+                  <div className="h-3 w-3 rounded-full bg-white/10"></div>
+                  <div className="h-3 w-3 rounded-full bg-white/10"></div>
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@ const Shadow = memo(({ index, total, position }: ShadowProps) => {
       }}
     >
       <div
-        className={cn(`bg-black/(--tw-bg-opacity) h-24 rounded-lg`)}
+        className={cn(`bg-zinc-950/(--tw-bg-opacity) h-24 rounded-lg`)}
         style={
           {
             '--tw-bg-opacity': `${100 - lightness}%`,

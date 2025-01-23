@@ -31,22 +31,22 @@ export default {
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
-      fontSize: {
-        '7xl': [
-          '6.5rem',
-          {
-            lineHeight: '1.1',
-            letterSpacing: '-0.01em',
-          },
-        ],
-        '6xl': [
-          '4rem',
-          {
-            lineHeight: '1',
-            letterSpacing: '-0.01em',
-          },
-        ],
-      },
+      // fontSize: {
+      //   '7xl': [
+      //     '6.5rem',
+      //     {
+      //       lineHeight: '1.1',
+      //       letterSpacing: '-0.01em',
+      //     },
+      //   ],
+      //   '6xl': [
+      //     '4rem',
+      //     {
+      //       lineHeight: '1',
+      //       letterSpacing: '-0.01em',
+      //     },
+      //   ],
+      // },
       keyframes: {
         marquee: {
           to: {

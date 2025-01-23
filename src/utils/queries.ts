@@ -214,7 +214,12 @@ const blocksFragment = groq`
       _key,
       speed,
       direction,
-      items
+      items[] {
+        _type,
+        _key,
+        value,
+        featured
+      }
     }
   }
 `;

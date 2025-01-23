@@ -12,8 +12,9 @@ import { portfolioZ } from '~/types/portfolio';
 import { textBlockZ } from '~/types/textBlock';
 import { formBlockZ } from '~/types/formBlock';
 import type { FormBlock } from '~/types/formBlock';
-import { textMarqueeBlockZ } from '~/types/textMarquee';
+import { textMarqueeBlockZ, type TextMarquee } from '~/types/textMarquee';
 import { TextMarqueeBlock } from './TextMarqueeBlock';
+import { stegaClean } from '@sanity/client/stega';
 
 export type Props = Block;
 
@@ -73,7 +74,18 @@ try {
       break;
     }
     case 'textMarqueeBlock': {
-      const validationResult = validateZodSchema(props, [textMarqueeBlockZ]);
+      const data = structuredClone(props);
+      const cleanedData = {
+        ...data,
+        marquees: data.marquees.map((marquee: TextMarquee) => ({
+          ...marquee,
+          direction: stegaClean(marquee.direction),
+        })),
+      };
+
+      const validationResult = validateZodSchema(cleanedData, [
+        textMarqueeBlockZ,
+      ]);
       if (!validationResult.success) {
         console.error('Validation failed:', validationResult.issues);
         throw new Error('Invalid block data!');

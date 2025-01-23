@@ -14,7 +14,17 @@ export default defineType({
     defineField({
       name: 'items',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [
+        {
+          type: 'object',
+          name: 'item',
+          fields: [
+            { type: 'string', name: 'value' },
+            { type: 'boolean', name: 'featured', initialValue: false },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.min(10),
     }),
     defineField({
       name: 'speed',

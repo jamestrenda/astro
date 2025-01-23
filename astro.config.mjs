@@ -1,19 +1,19 @@
-import { loadEnv } from "vite";
+import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
+import sanity from '@sanity/astro';
+import { defineConfig } from 'astro/config';
+import { loadEnv } from 'vite';
 const {
   PUBLIC_SANITY_STUDIO_PROJECT_ID,
   PUBLIC_SANITY_STUDIO_DATASET,
   PUBLIC_SANITY_STUDIO_BASE_PATH,
-} = loadEnv(import.meta.env.MODE, process.cwd(), "");
-import { defineConfig } from "astro/config";
-import sanity from "@sanity/astro";
-import react from "@astrojs/react";
-import vercel from "@astrojs/vercel";
+} = loadEnv(import.meta.env.MODE, process.cwd(), '');
 
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
+  output: 'server',
   adapter: vercel(),
   integrations: [
     sanity({
@@ -27,12 +27,16 @@ export default defineConfig({
       useCdn: false,
     }),
     react(),
-    tailwind({
-      applyBaseStyles: false,
-      nesting: true,
-    }),
   ],
   image: {
-    domains: ["cdn.sanity.io"],
+    domains: ['cdn.sanity.io'],
+  },
+  vite: {
+    plugins: [
+      tailwindcss({
+        applyBaseStyles: false,
+        nesting: true,
+      }),
+    ],
   },
 });

@@ -1,7 +1,7 @@
 ---
-import type { Block as BlockProps } from "~/types/block";
-import Block from "./Block.astro";
-import type { FormQueryParams } from "~/types/form";
+import type { Block as BlockProps } from '~/types/block';
+import Block from './Block.astro';
+import type { FormQueryParams } from '~/types/form';
 
 interface Props extends FormQueryParams {
   blocks: BlockProps[];
@@ -12,7 +12,7 @@ const { blocks, slug, pageType } = Astro.props;
 
 {
   blocks.map((block) =>
-    block._type === "form" ? (
+    block._type === 'form' ? (
       <Block {...block} slug={slug} pageType={pageType} />
     ) : (
       <Block {...block} />

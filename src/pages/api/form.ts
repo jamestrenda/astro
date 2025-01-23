@@ -1,14 +1,14 @@
-import { parseWithZod } from "@conform-to/zod";
-import type { APIRoute } from "astro";
-import { Email } from "~/components/emails/Email";
-import { createZodFormSchema } from "~/utils/createZodFormSchema";
-import { getForm, getFromEmail, getSettings } from "~/utils/sanity";
-import { sendEmail } from "~/utils/sendEmail";
+import { parseWithZod } from '@conform-to/zod';
+import type { APIRoute } from 'astro';
+import { Email } from '~/components/emails/Email';
+import { createZodFormSchema } from '~/utils/createZodFormSchema';
+import { getForm, getFromEmail } from '~/utils/sanity';
+import { sendEmail } from '~/utils/sendEmail';
 
 export const POST: APIRoute = async ({ request }) => {
   const data = await request.formData();
-  const slug = data.get("slug") as string;
-  const pageType = data.get("pageType") as string;
+  const slug = data.get('slug') as string;
+  const pageType = data.get('pageType') as string;
 
   const form = await getForm({
     pageType,
@@ -24,16 +24,16 @@ export const POST: APIRoute = async ({ request }) => {
     schema,
   });
 
-  if (submission.status !== "success") {
+  if (submission.status !== 'success') {
     return new Response(
       JSON.stringify({
         result: submission.reply({
-          formErrors: ["Please check your submission for errors."],
+          formErrors: ['Please check your submission for errors.'],
         }),
       }),
       {
         status: 400,
-      }
+      },
     );
   }
 
@@ -41,7 +41,7 @@ export const POST: APIRoute = async ({ request }) => {
   //       or there are multiple email fields
   //       or the email field is inside a form group
   const emailField = form.fields.find(
-    (field) => field._type === "formField" && field.fieldType === "email"
+    (field) => field._type === 'formField' && field.fieldType === 'email',
   );
 
   const replyTo = emailField?.replyToEmail
@@ -56,7 +56,7 @@ export const POST: APIRoute = async ({ request }) => {
     await sendEmail({
       from,
       replyTo,
-      subject: form.emailSubject ?? "New form submission",
+      subject: form.emailSubject ?? 'New form submission',
       react: Email({ submission: value, form }),
     });
   } catch (error) {
@@ -64,22 +64,22 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(
       JSON.stringify({
         result: submission.reply({
-          formErrors: ["Internal server error. Please try again later."],
+          formErrors: ['Internal server error. Please try again later.'],
         }),
       }),
       {
         status: 500,
-      }
+      },
     );
   }
 
   return new Response(
     JSON.stringify({
       result: {
-        status: "success",
+        status: 'success',
         message: "Thank you for reaching out. I'll be in touch.",
       },
     }),
-    { status: 200 }
+    { status: 200 },
   );
 };

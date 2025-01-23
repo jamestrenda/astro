@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { portableTextZ } from "./portableText";
-import { formQueryParamsZ, formZ } from "./form";
-import { baseBlockZ } from "./base";
+import { z } from 'zod';
+import { baseBlockZ } from './base';
+import { formQueryParamsZ, formZ } from './form';
+import { portableTextZ } from './portableText';
 
 export const formBlockZ = z
   .object({
@@ -9,7 +9,7 @@ export const formBlockZ = z
     ...formQueryParamsZ.shape,
   })
   .extend({
-    _type: z.literal("form"),
+    _type: z.literal('form'),
     text: z.array(portableTextZ).optional().nullable(),
     form: formZ.pick({
       description: true,

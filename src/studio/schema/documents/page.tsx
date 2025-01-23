@@ -1,22 +1,17 @@
-import { FileIcon, HomeIcon, SearchCheckIcon } from "lucide-react";
-import {
-  defineField,
-  defineType,
-  type PortableTextBlock,
-  type PortableTextTextBlock,
-} from "sanity";
-import { slugField } from "../fields/slug";
-import { blocksField } from "../fields/blocks";
+import { FileIcon, HomeIcon, SearchCheckIcon } from 'lucide-react';
+import { defineField, defineType } from 'sanity';
+import { blocksField } from '../fields/blocks';
+import { slugField } from '../fields/slug';
 
 export default defineType({
-  name: "page",
-  title: "Page",
-  type: "document",
+  name: 'page',
+  title: 'Page',
+  type: 'document',
   icon: FileIcon,
   groups: [
     {
-      name: "meta",
-      title: "Metadata",
+      name: 'meta',
+      title: 'Metadata',
       icon: () => <SearchCheckIcon size={16} />,
     },
     // {
@@ -26,20 +21,20 @@ export default defineType({
   ],
   fields: [
     defineField({
-      name: "title",
-      title: "Title",
-      type: "string",
-      description: "For internal reference only",
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      description: 'For internal reference only',
       validation: (Rule) => Rule.required(),
     }),
     slugField({}),
     blocksField,
     //   ...pageTemplates,
     defineField({
-      name: "seo",
-      type: "seo",
-      title: "SEO",
-      group: ["meta"],
+      name: 'seo',
+      type: 'seo',
+      title: 'SEO',
+      group: ['meta'],
     }),
     // {
     //   name: 'openGraph',
@@ -47,22 +42,22 @@ export default defineType({
     //   group: ['social'],
     // },
     defineField({
-      name: "isHomepage",
+      name: 'isHomepage',
       hidden: true,
-      type: "boolean",
+      type: 'boolean',
       readOnly: true,
       initialValue: false,
     }),
   ],
   preview: {
     select: {
-      title: "title",
-      slug: "slug",
-      isHomepage: "isHomepage",
+      title: 'title',
+      slug: 'slug',
+      isHomepage: 'isHomepage',
     },
     prepare: ({
       title,
-      slug = { current: "" },
+      slug = { current: '' },
       isHomepage,
     }: {
       title?: string;
@@ -72,12 +67,12 @@ export default defineType({
       const path = `/${slug.current}`;
 
       return {
-        title: `${title || "Untitled"}`,
+        title: `${title || 'Untitled'}`,
         subtitle: isHomepage
           ? undefined
           : slug.current
             ? path
-            : "(missing slug)",
+            : '(missing slug)',
         media: isHomepage
           ? () => <HomeIcon size="1em" />
           : () => <FileIcon size="1em" />,

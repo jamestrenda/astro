@@ -45,6 +45,7 @@
     "@sanity/ui": "2.10.12",
     "@sanity/vision": "3.70.0",
     "@sanity/visual-editing": "^2.11.3",
+    "@tailwindcss/vite": "^4.0.0",
     "@uidotdev/usehooks": "^2.4.1",
     "astro": "^5.0.5",
     "astro-portabletext": "^0.11.0",
@@ -67,7 +68,7 @@
     "slug": "10.0.0",
     "tailwind-gradient-mask-image": "^1.2.0",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss": "^3.4.4",
+    "tailwindcss": "^4.0.0",
     "typescript": "^5.5.2",
     "zod": "^3.24.1"
   },
@@ -80,6 +81,8 @@
     "@types/slug": "^5.0.9",
     "eslint": "^9.6.0",
     "prettier": "^3.3.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.10",
     "vite": "^5.3.2"
   },
   "engines": {

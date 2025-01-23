@@ -1,9 +1,9 @@
-import { Overline } from "../Overline";
-import { Heading } from "../Heading";
-import type { PortableTextComponents } from "@portabletext/react";
-import { FadeIn } from "../FadeIn";
+import type { PortableTextComponents } from '@portabletext/react';
+import { FadeIn } from '../FadeIn';
+import { Heading } from '../Heading';
+import { Overline } from '../Overline';
 
-export const Block: PortableTextComponents["block"] = {
+export const Block: PortableTextComponents['block'] = {
   h1: ({ children }) => {
     return (
       <FadeIn>

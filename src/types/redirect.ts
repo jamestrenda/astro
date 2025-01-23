@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const redirectZ = z.object({
   _key: z.string(),
-  _type: z.literal("redirect"),
+  _type: z.literal('redirect'),
   from: z.string(),
   to: z.string(),
   permanent: z.boolean().optional(),

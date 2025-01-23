@@ -1,31 +1,31 @@
-import type { SanityImageCrop, SanityImageHotspot } from "@sanity/asset-utils";
-import { z } from "zod";
+import type { SanityImageCrop, SanityImageHotspot } from '@sanity/asset-utils';
+import { z } from 'zod';
 
-import { schemaForType } from "./schemaForType";
+import { schemaForType } from './schemaForType';
 
 export const sanityImageCropZ = schemaForType<SanityImageCrop>()(
   z.object({
-    _type: z.literal("sanity.imageCrop"),
+    _type: z.literal('sanity.imageCrop'),
     left: z.number(),
     bottom: z.number(),
     right: z.number(),
     top: z.number(),
-  })
+  }),
 );
 
 export const sanityImageHotspotZ = schemaForType<SanityImageHotspot>()(
   z.object({
-    _type: z.literal("sanity.imageHotspot"),
+    _type: z.literal('sanity.imageHotspot'),
     width: z.number(),
     height: z.number(),
     x: z.number(),
     y: z.number(),
-  })
+  }),
 );
 
 export const sanityImageZ = z.object({
   _id: z.string(),
-  _type: z.literal("sanity.imageAsset"),
+  _type: z.literal('sanity.imageAsset'),
   altText: z.string().nullable().optional(),
   description: z.string().nullable().optional(),
   url: z.string().url(),
@@ -50,7 +50,7 @@ export const sanityImageZ = z.object({
 
 // Reused a lot through queries
 export const sanityImageObjectExtendedZ = z.object({
-  _type: z.literal("image"),
+  _type: z.literal('image'),
   asset: sanityImageZ.nullable().optional(),
   // GROQ may return null for these
   // But our type requires them to be undefined if they don't exist
@@ -59,7 +59,7 @@ export const sanityImageObjectExtendedZ = z.object({
 });
 
 export const imageZ = z.object({
-  _type: z.literal("imageObject"),
+  _type: z.literal('imageObject'),
   _key: z.string().optional().nullable(),
   altText: z.string().optional().nullable(),
   caption: z.string().optional().nullable(),

@@ -1,5 +1,5 @@
-import { useLiveMode } from "@sanity/react-loader";
-import { sanityClient } from "sanity:client";
+import { useLiveMode } from '@sanity/react-loader';
+import { sanityClient } from 'sanity:client';
 const studioUrl = import.meta.env.PUBLIC_SANITY_STUDIO_BASE_PATH;
 
 // Default export required for React Lazy loading

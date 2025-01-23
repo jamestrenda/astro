@@ -1,19 +1,17 @@
-import { parseWithZod } from "@conform-to/zod";
-import type { MaybePromise } from "astro/actions/runtime/utils.js";
-import { ActionError, type ActionAPIContext } from "astro:actions";
-import { defineAction } from "astro:actions";
-import { createZodFormSchema } from "~/utils/createZodFormSchema";
-import { getForm } from "~/utils/sanity";
+import { parseWithZod } from '@conform-to/zod';
+import { ActionError, defineAction } from 'astro:actions';
+import { createZodFormSchema } from '~/utils/createZodFormSchema';
+import { getForm } from '~/utils/sanity';
 
 export const server = {
   submitForm: defineAction({
-    accept: "form",
+    accept: 'form',
     // need to generate schema on the fly, so I can't use 'input' here
     // input: schema,
     handler: async (formData) => {
       // hidden fields that are passed from the form to help query the correct form
-      const slug = formData.get("slug") as string;
-      const pageType = formData.get("pageType") as string;
+      const slug = formData.get('slug') as string;
+      const pageType = formData.get('pageType') as string;
 
       // calls a sanity query to get the form schema
       const data = await getForm({
@@ -29,10 +27,10 @@ export const server = {
         schema,
       });
 
-      if (submission.status !== "success") {
+      if (submission.status !== 'success') {
         throw new ActionError({
-          code: "BAD_REQUEST",
-          message: "Invalid form submission",
+          code: 'BAD_REQUEST',
+          message: 'Invalid form submission',
         });
       }
 

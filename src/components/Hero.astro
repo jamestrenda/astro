@@ -1,5 +1,5 @@
 ---
-import { cn } from "~/utils/misc";
+import { cn } from '~/utils/misc';
 
 interface Props {
   className?: string;
@@ -7,6 +7,6 @@ interface Props {
 const { className } = Astro.props;
 ---
 
-<div class={cn("md:min-h-[600px] bg-background dark:bg-black", className)}>
+<div class={cn('bg-background dark:bg-black md:min-h-[600px]', className)}>
   <slot />
 </div>

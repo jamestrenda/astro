@@ -1,10 +1,10 @@
-import { type DocumentStore, type SanityDocument } from "sanity";
-import type { StructureBuilder } from "sanity/structure";
-import { map } from "rxjs/operators";
+import { map } from 'rxjs/operators';
+import { type DocumentStore, type SanityDocument } from 'sanity';
+import type { StructureBuilder } from 'sanity/structure';
 
-import type { ReactNode } from "react";
-import type { IconProps } from "~/types/icon";
-import { getEnv } from "~/utils/env";
+import type { ReactNode } from 'react';
+import type { IconProps } from '~/types/icon';
+import { getEnv } from '~/utils/env';
 
 type TaxonomyProps = {
   schemaType: string;
@@ -52,7 +52,7 @@ export default function taxonomyList({
                     S.documentTypeList(child.schemaType)
                       .title(child.title)
                       .filter(
-                        `_type == $schemaType && parent._ref == $parentId`
+                        `_type == $schemaType && parent._ref == $parentId`,
                       )
                       .params({
                         schemaType: child.schemaType,
@@ -60,21 +60,21 @@ export default function taxonomyList({
                       })
                       .canHandleIntent(
                         (intentName, params) =>
-                          intentName === "create" &&
-                          params.template === `${child.schemaType}-taxonomy`
+                          intentName === 'create' &&
+                          params.template === `${child.schemaType}-taxonomy`,
                       )
                       .initialValueTemplates([
                         S.initialValueTemplateItem(
                           `${child.schemaType}-taxonomy`,
                           {
                             id: doc._id,
-                          }
+                          },
                         ),
                       ]),
-                })
+                }),
               ),
-            ])
-        )
-      )
+            ]),
+        ),
+      ),
     );
 }

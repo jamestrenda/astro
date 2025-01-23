@@ -1,5 +1,5 @@
-import { type ConditionalProperty, defineField } from "sanity";
-import { TitleField } from "~/studio/components/TitleField";
+import { type ConditionalProperty, defineField } from 'sanity';
+import { TitleField } from '~/studio/components/TitleField';
 
 type TitleFieldProps = {
   name?: string;
@@ -13,7 +13,7 @@ type TitleFieldProps = {
 export const titleField = ({
   group,
   fieldset,
-  name = "title",
+  name = 'title',
   hidden = false,
   required = true,
   withSEO,
@@ -21,14 +21,14 @@ export const titleField = ({
 }: TitleFieldProps) =>
   defineField({
     name,
-    title: "Title",
+    title: 'Title',
     description: description || undefined,
-    type: "string",
+    type: 'string',
     validation: (Rule) =>
       Rule.custom((value) => {
         if (!required) return true;
         if (!value) {
-          return "Required";
+          return 'Required';
         }
         return true;
       }),

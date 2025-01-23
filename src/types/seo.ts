@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const seoZ = z.object({
   title: z.string().optional().nullable(),

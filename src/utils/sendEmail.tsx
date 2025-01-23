@@ -1,12 +1,12 @@
-import { render } from "@react-email/components";
-import { type ReactElement } from "react";
-import { z } from "zod";
-import nodemailer from "nodemailer";
+import { render } from '@react-email/components';
+import nodemailer from 'nodemailer';
+import { type ReactElement } from 'react';
+import { z } from 'zod';
 
 const EMAIL_API_KEY = import.meta.env.EMAIL_API_KEY;
 
 const transporter = nodemailer.createTransport({
-  service: "Postmark", // no need to set host or port etc.
+  service: 'Postmark', // no need to set host or port etc.
   auth: {
     user: EMAIL_API_KEY,
     pass: EMAIL_API_KEY,
@@ -20,8 +20,8 @@ const resendErrorSchema = z.union([
     statusCode: z.number(),
   }),
   z.object({
-    name: z.literal("UnknownError"),
-    message: z.literal("Unknown Error"),
+    name: z.literal('UnknownError'),
+    message: z.literal('Unknown Error'),
     statusCode: z.literal(500),
     cause: z.any(),
   }),

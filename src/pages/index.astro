@@ -1,7 +1,7 @@
 ---
-import Layout from "./_layout.astro";
-import { getIndex } from "../utils/sanity";
-import Blocks from "~/components/Blocks.astro";
+import Layout from './_layout.astro';
+import { getIndex } from '../utils/sanity';
+import Blocks from '~/components/Blocks.astro';
 
 const data = await getIndex({
   preview: Astro.locals.preview,
@@ -13,7 +13,7 @@ const data = await getIndex({
 if (!data) {
   return new Response(null, {
     status: 404,
-    statusText: "Not found",
+    statusText: 'Not found',
   });
 }
 ---

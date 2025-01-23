@@ -1,15 +1,15 @@
-import { useToast } from "@sanity/ui";
+import { useToast } from '@sanity/ui';
 import type {
   DocumentActionComponent,
   DocumentActionProps,
   DocumentActionsContext,
   Reference,
-} from "sanity";
-import { apiVersion } from "~/../sanity.config";
+} from 'sanity';
+import { apiVersion } from '~/../sanity.config';
 
 export function PublishHomeSettingsAction(
   originalPublishAction: DocumentActionComponent,
-  context: DocumentActionsContext
+  context: DocumentActionsContext,
 ) {
   const PublishAction = (props: DocumentActionProps) => {
     const { draft, published } = props;
@@ -39,7 +39,7 @@ export function PublishHomeSettingsAction(
               .commit()
               .catch((err: Error) => {
                 toast.push({
-                  status: "error",
+                  status: 'error',
                   title: err.message,
                 });
               });
@@ -54,7 +54,7 @@ export function PublishHomeSettingsAction(
             .commit()
             .catch((err: Error) => {
               toast.push({
-                status: "error",
+                status: 'error',
                 title: err.message,
               });
             });

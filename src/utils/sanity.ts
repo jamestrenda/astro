@@ -1,4 +1,8 @@
-import { loadQuery } from "../utils/load-query";
+import type { Form, FormQueryParams } from '~/types/form';
+import { type Home } from '~/types/home';
+import type { Post } from '~/types/post';
+import type { Settings } from '~/types/settings';
+import { loadQuery } from '../utils/load-query';
 import {
   FORM_QUERY,
   FROM_EMAIL_QUERY,
@@ -6,18 +10,14 @@ import {
   POSTS_QUERY,
   POST_QUERY,
   SETTINGS_QUERY,
-} from "./queries";
-import type { Settings } from "~/types/settings";
-import type { Post } from "~/types/post";
-import { type Home } from "~/types/home";
-import type { Form, FormQueryParams } from "~/types/form";
+} from './queries';
 
 export async function getPosts({
   preview,
   options,
 }: {
   preview: boolean;
-  options?: App.Locals["loadQueryOptions"];
+  options?: App.Locals['loadQueryOptions'];
 }): Promise<Post[]> {
   const { data: posts } = await loadQuery<Post[]>({
     query: POSTS_QUERY,
@@ -35,7 +35,7 @@ export async function getPost({
 }: {
   preview: boolean;
   slug: string;
-  options: App.Locals["loadQueryOptions"];
+  options: App.Locals['loadQueryOptions'];
 }): Promise<Post> {
   const { data: post } = await loadQuery<Post>({
     query: POST_QUERY,
@@ -51,7 +51,7 @@ export async function getIndex({
   options,
 }: {
   preview: boolean;
-  options: App.Locals["loadQueryOptions"];
+  options: App.Locals['loadQueryOptions'];
 }): Promise<Home> {
   const { data } = await loadQuery<Home>({
     query: INDEX_QUERY,
@@ -112,7 +112,7 @@ export async function getSettings({
   options,
 }: {
   preview: boolean;
-  options: App.Locals["loadQueryOptions"];
+  options: App.Locals['loadQueryOptions'];
 }): Promise<Settings> {
   const { data } = await loadQuery<Settings>({
     query: SETTINGS_QUERY,

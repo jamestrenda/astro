@@ -1,11 +1,11 @@
-import { Badge, Inline, Stack } from "@sanity/ui";
-import { useEffect, useMemo, useState } from "react";
+import { Badge, Inline, Stack } from '@sanity/ui';
+import { useEffect, useMemo, useState } from 'react';
 import {
+  useClient,
   useFormValue,
   type FieldProps,
   type StringFieldProps,
-  useClient,
-} from "sanity";
+} from 'sanity';
 
 export const TitleField = ({
   min = 0,
@@ -21,9 +21,9 @@ export const TitleField = ({
   withSEO?: boolean;
 }) => {
   const { inputProps } = props;
-  const value = (inputProps?.value as StringFieldProps["value"]) || "";
-  const isHomepage = Boolean(useFormValue(["isHomepage"]));
-  const isSeoTitle = inputProps.id === "seo.title";
+  const value = (inputProps?.value as StringFieldProps['value']) || '';
+  const isHomepage = Boolean(useFormValue(['isHomepage']));
+  const isSeoTitle = inputProps.id === 'seo.title';
 
   return (
     <Stack space={3}>
@@ -34,7 +34,7 @@ export const TitleField = ({
         description: description
           ? description
           : isHomepage && !isSeoTitle
-            ? "For internal reference only. Not displayed on the website."
+            ? 'For internal reference only. Not displayed on the website.'
             : `Displayed on search engine results pages (SERPs) and in the tab of the web browser. Page titles should be 65 characters or fewer and include keywords for which the page should rank.`,
       })}
       {!withSEO || (isHomepage && !isSeoTitle) ? null : (
@@ -66,17 +66,17 @@ const SEO = ({
   isSeoTitle: boolean;
 }) => {
   const docTitle =
-    typeof useFormValue(["title"]) !== "undefined"
-      ? String(useFormValue(["title"]))
-      : typeof useFormValue(["name"]) !== "undefined"
-        ? String(useFormValue(["name"]))
-        : "Untitled";
+    typeof useFormValue(['title']) !== 'undefined'
+      ? String(useFormValue(['title']))
+      : typeof useFormValue(['name']) !== 'undefined'
+        ? String(useFormValue(['name']))
+        : 'Untitled';
 
-  const [companyName, setCompanyName] = useState("");
-  const [siteTitle, setSiteTitle] = useState("");
-  const [tagline, setTagline] = useState("");
+  const [companyName, setCompanyName] = useState('');
+  const [siteTitle, setSiteTitle] = useState('');
+  const [tagline, setTagline] = useState('');
 
-  const separator = " | ";
+  const separator = ' | ';
   const sepLength = separator.length;
 
   // if we're on the homepage, we need to account for the tagline
@@ -89,14 +89,14 @@ const SEO = ({
         : companyName?.length
           ? max - companyName?.length - sepLength
           : max - sepLength;
-  const client = useClient({ apiVersion: "2023-03-20" });
+  const client = useClient({ apiVersion: '2023-03-20' });
 
   useEffect(() => {
-    client.getDocument("company").then((doc) => {
+    client.getDocument('company').then((doc) => {
       setTagline(doc?.tagline);
       setCompanyName(doc?.name);
     });
-    client.getDocument("siteSettings").then((doc) => {
+    client.getDocument('siteSettings').then((doc) => {
       if (doc?.siteTitle) {
         setSiteTitle(doc?.siteTitle);
       }
@@ -132,12 +132,12 @@ const SEO = ({
       return value?.length < min
         ? undefined
         : min <= value?.length && value?.length <= caution
-          ? "positive"
+          ? 'positive'
           : value?.length > caution && value?.length <= newMax
-            ? "caution"
-            : "critical";
+            ? 'caution'
+            : 'critical';
     }
-    return "default";
+    return 'default';
   }, [value, min, newMax, caution]);
 
   const rootTitle =
@@ -145,16 +145,16 @@ const SEO = ({
       ? siteTitle
       : companyName?.length > 0
         ? companyName
-        : "No value found. Please update the company name in the company settings.";
+        : 'No value found. Please update the company name in the company settings.';
   const pageTitle = isHomepage
     ? rootTitle
     : docTitle?.length > 0
       ? docTitle
-      : "Untitled";
+      : 'Untitled';
 
   const seoTitle = value?.length > 0 ? value : pageTitle;
   let newValue = isSeoTitle ? seoTitle : pageTitle;
-  let newTagline = "";
+  let newTagline = '';
 
   if (isHomepage && isSeoTitle && !value?.length) {
     if (tagline?.trim()?.length > 0) {
@@ -170,11 +170,11 @@ const SEO = ({
   return (
     <Inline>
       <Badge tone={handleTone} padding={2} radius={2}>
-        {!max ? "Characters: " : ""}
-        {value?.length > 0 ? value?.length : ""}
+        {!max ? 'Characters: ' : ''}
+        {value?.length > 0 ? value?.length : ''}
         {max
-          ? `${value?.length ? ` / ${newMax} - ` : ""}${newValue}${newTagline}`
-          : ""}
+          ? `${value?.length ? ` / ${newMax} - ` : ''}${newValue}${newTagline}`
+          : ''}
       </Badge>
     </Inline>
   );

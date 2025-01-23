@@ -1,9 +1,9 @@
 import {
-  Accordion as BaseAccordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "~/components/ui/accordion";
+  Accordion as BaseAccordion,
+} from '~/components/ui/accordion';
 
 interface Props {
   data: {
@@ -23,9 +23,9 @@ export function Accordion({ data }: Props) {
           <AccordionItem
             key={i}
             value={`item-${i.toFixed()}`}
-            className="[&[data-state=closed]>div]:h-0 lg:[&[data-state=closed]>div]:h-auto lg:border-b-0 dark:border-white/5 last:border-none"
+            className="last:border-none dark:border-white/5 lg:border-b-0 [&[data-state=closed]>div]:h-0 lg:[&[data-state=closed]>div]:h-auto"
           >
-            <AccordionTrigger className="text-left [&>svg]:h-6 [&>svg]:w-6 md:[&>svg]:h-8 md:[&>svg]:w-8 lg:[&>svg]:hidden lg:cursor-text select-text lg:pointer-events-none">
+            <AccordionTrigger className="select-text text-left lg:pointer-events-none lg:cursor-text [&>svg]:h-6 [&>svg]:w-6 md:[&>svg]:h-8 md:[&>svg]:w-8 lg:[&>svg]:hidden">
               {item.title}
             </AccordionTrigger>
             <AccordionContent forceMount>

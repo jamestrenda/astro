@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { socialZ } from "./social";
+import { z } from 'zod';
+import { socialZ } from './social';
 
 export const settingsZ = z.object({
   siteTitle: z.string(),

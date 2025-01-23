@@ -1,10 +1,10 @@
-import { type SanityImageObjectExtended } from "~/types/image";
-import type { ImageUrlFitMode, ImageUrlFormat } from "@sanity/types";
-import type { DirectQueryParams } from "node_modules/sanity-image/dist/types";
+import type { ImageUrlFitMode, ImageUrlFormat } from '@sanity/types';
+import type { DirectQueryParams } from 'node_modules/sanity-image/dist/types';
+import { type SanityImageObjectExtended } from '~/types/image';
 
 // import { cva } from "class-variance-authority";
-import { SanityImage as InternalSanityImage } from "sanity-image";
-import { getEnv } from "~/utils/env";
+import { SanityImage as InternalSanityImage } from 'sanity-image';
+import { getEnv } from '~/utils/env';
 
 const { PUBLIC_SANITY_STUDIO_PROJECT_ID, PUBLIC_SANITY_STUDIO_DATASET } =
   getEnv();
@@ -19,11 +19,11 @@ export type ImageProps = {
   format?: ImageUrlFormat;
   width?: number;
   height?: number;
-  mode?: "contain" | "cover";
+  mode?: 'contain' | 'cover';
   queryParams?: DirectQueryParams | undefined;
   sizes?: string | undefined;
   preview?: boolean | undefined;
-} & Omit<React.ImgHTMLAttributes<HTMLImageElement>, "width" | "height" | "src">;
+} & Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'width' | 'height' | 'src'>;
 
 export const SanityImage = (props: ImageProps) => {
   const {
@@ -33,8 +33,8 @@ export const SanityImage = (props: ImageProps) => {
     height,
     alt,
     q,
-    mode = "cover",
-    fit = "crop",
+    mode = 'cover',
+    fit = 'crop',
     queryParams,
     sizes,
     preview = true,
@@ -53,7 +53,7 @@ export const SanityImage = (props: ImageProps) => {
         crop={src.crop ?? undefined}
         preview={preview ? src.asset.metadata?.lqip ?? undefined : undefined}
         queryParams={{ ...queryParams, q: queryParams?.q ?? 75 }}
-        alt={alt ?? src.asset.altText ?? ""}
+        alt={alt ?? src.asset.altText ?? ''}
         className={className}
         sizes={sizes ?? undefined}
         {...attrs}

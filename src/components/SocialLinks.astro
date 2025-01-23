@@ -21,8 +21,8 @@ import {
   RiWhatsappFill as WhatsAppIcon,
   RiYoutubeFill as YouTubeIcon,
   RiUnsplashFill as UnsplashIcon,
-} from "@remixicon/react";
-import type { Social } from "~/types/social";
+} from '@remixicon/react';
+import type { Social } from '~/types/social';
 
 const icons = {
   behance: BehanceIcon,
@@ -64,7 +64,7 @@ const { links } = Astro.props;
           <a
             href={link.url}
             target="_blank"
-            class="p-2 mx-1 bg-zinc-800 block rounded-full hover:bg-white transition hover:text-foreground dark:hover:text-background"
+            class="mx-1 block rounded-full bg-zinc-800 p-2 transition hover:bg-white hover:text-foreground dark:hover:text-background"
           >
             <span class="sr-only">Open {link.platform} profile</span>
             {Icon && <Icon />}

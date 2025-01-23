@@ -11,12 +11,12 @@ export function getRadialGradient(
   color1: string,
   color2: string,
   color3: string,
-  center: string = "50% 50%",
-  stops: [string, string, string] = ["0%", "50%", "100%"]
+  center: string = '50% 50%',
+  stops: [string, string, string] = ['0%', '50%', '100%'],
 ): string {
   // Validate the stops array
   if (stops.length !== 3) {
-    throw new Error("Please provide exactly three gradient stops.");
+    throw new Error('Please provide exactly three gradient stops.');
   }
 
   return `radial-gradient(

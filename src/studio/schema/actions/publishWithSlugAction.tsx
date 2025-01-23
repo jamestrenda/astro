@@ -1,22 +1,22 @@
-import { useToast } from "@sanity/ui";
+import { useToast } from '@sanity/ui';
 import type {
   DocumentActionComponent,
   DocumentActionProps,
   DocumentActionsContext,
-} from "sanity";
+} from 'sanity';
 
-import { apiVersion } from "~/../sanity.config";
+import { apiVersion } from '~/../sanity.config';
 
-import redirectSettings from "../../schema/singletons/redirectSettings";
-import type { Redirect } from "~/types/redirect";
-import { REDIRECTS_QUERY, REDIRECT_SETTINGS_ID_QUERY } from "~/utils/queries";
+import type { Redirect } from '~/types/redirect';
+import { REDIRECTS_QUERY, REDIRECT_SETTINGS_ID_QUERY } from '~/utils/queries';
+import redirectSettings from '../../schema/singletons/redirectSettings';
 
 // TODO: need to add a delete action in a separate file to remove the redirect when the page is deleted or unpublished
 // or discuss with the team if we want to do something else
 
 export function PublishDocumentWithSlugAction(
   originalPublishAction: DocumentActionComponent,
-  context: DocumentActionsContext
+  context: DocumentActionsContext,
 ) {
   const PublishAction = (props: DocumentActionProps) => {
     const { draft, published } = props;
@@ -49,8 +49,8 @@ export function PublishDocumentWithSlugAction(
 
           const existingRedirect = existingRedirects?.find(
             (redirect) =>
-              redirect.from === "/" + publishedSlug.current &&
-              redirect.to === "/" + slug.current
+              redirect.from === '/' + publishedSlug.current &&
+              redirect.to === '/' + slug.current,
           );
 
           if (existingRedirect) {
@@ -75,24 +75,24 @@ export function PublishDocumentWithSlugAction(
                 })
                 .catch((err: Error) => {
                   toast.push({
-                    status: "error",
+                    status: 'error',
                     title: err.message,
                   });
                 });
             }
 
             const newRedirect = {
-              _type: "redirect",
-              from: "/" + publishedSlug.current,
-              to: "/" + slug.current,
+              _type: 'redirect',
+              from: '/' + publishedSlug.current,
+              to: '/' + slug.current,
               permanent: true,
             };
 
             // first, check if there is an inverse of this redirect and, if so, remove it so we don't end up with a loop
             const existingInverseRedirect = existingRedirects?.find(
               (redirect) =>
-                redirect.from === "/" + slug.current &&
-                redirect.to === "/" + publishedSlug.current
+                redirect.from === '/' + slug.current &&
+                redirect.to === '/' + publishedSlug.current,
             );
 
             if (existingInverseRedirect) {
@@ -108,16 +108,16 @@ export function PublishDocumentWithSlugAction(
                     await client
                       .patch(id)
                       .setIfMissing({ redirects: [] })
-                      .insert("after", "redirects[-1]", [newRedirect])
+                      .insert('after', 'redirects[-1]', [newRedirect])
                       .commit({ autoGenerateArrayKeys: true })
                       .then(
                         () =>
-                          originalResult?.onHandle && originalResult.onHandle()
-                      )
+                          originalResult?.onHandle && originalResult.onHandle(),
+                      ),
                 )
                 .catch((err: Error) => {
                   toast.push({
-                    status: "error",
+                    status: 'error',
                     title: err.message,
                   });
                 });
@@ -126,16 +126,16 @@ export function PublishDocumentWithSlugAction(
               await client
                 .patch(id)
                 .setIfMissing({ redirects: [] })
-                .insert("after", "redirects[-1]", [newRedirect])
+                .insert('after', 'redirects[-1]', [newRedirect])
                 .commit({
                   autoGenerateArrayKeys: true,
                 })
                 .then(
-                  () => originalResult?.onHandle && originalResult.onHandle()
+                  () => originalResult?.onHandle && originalResult.onHandle(),
                 )
                 .catch((err: Error) => {
                   toast.push({
-                    status: "error",
+                    status: 'error',
                     title: err.message,
                   });
                 });

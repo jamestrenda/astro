@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Container } from "./Container";
-import BrowserWindow from "./BrowserWindow";
-import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
-import { getRadialGradient } from "~/utils/getRadialGradient";
-import { type FormBlock as Props } from "~/types/formBlock";
-import { PortableText } from "./PortableText/PortableText";
 import {
   getFormProps,
   getInputProps,
   getTextareaProps,
   useForm,
   type SubmissionResult,
-} from "@conform-to/react";
-import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { Field, FormError, TextareaField } from "./ui/form";
-import { createZodFormSchema } from "~/utils/createZodFormSchema";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+} from '@conform-to/react';
+import { getZodConstraint, parseWithZod } from '@conform-to/zod';
+import React, { useEffect, useState } from 'react';
+import { type FormBlock as Props } from '~/types/formBlock';
+import { createZodFormSchema } from '~/utils/createZodFormSchema';
+import { getRadialGradient } from '~/utils/getRadialGradient';
+import { BackgroundRadialGradient } from './BackgroundRadialGradient';
+import BrowserWindow from './BrowserWindow';
+import { Container } from './Container';
+import { PortableText } from './PortableText/PortableText';
+import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import { Field, FormError, TextareaField } from './ui/form';
 
 export const Form = ({ text, form: data, slug, pageType }: Props) => {
   const [submission, setSubmission] = useState<
@@ -39,13 +39,13 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
 
       // TODO: handle pending state
       setSubmitting(true);
-      const response = await fetch("/api/form", {
-        method: "POST",
+      const response = await fetch('/api/form', {
+        method: 'POST',
         body: formData,
       });
       const { result } = await response.json();
 
-      if (result.status !== "success") {
+      if (result.status !== 'success') {
         setSubmission(result);
         return;
       }
@@ -57,11 +57,11 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
       const result = parseWithZod(formData, { schema });
       return result;
     },
-    shouldValidate: "onSubmit",
+    shouldValidate: 'onSubmit',
   });
 
   useEffect(() => {
-    if (form.status !== "error" && successMessage) {
+    if (form.status !== 'error' && successMessage) {
       formRef.current?.reset();
       setSubmitting(false);
     }
@@ -69,22 +69,22 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
 
   return (
     <div className="bg-[linear-gradient(to_bottom,transparent_20%,#4f46e5_20%)]">
-      <Container padding={true} className="!pt-0">
-        <BrowserWindow stackPosition="top" className="max-md:!rounded-bl-lg">
+      <Container padding={true} className="pt-0!">
+        <BrowserWindow stackPosition="top" className="max-md:rounded-bl-lg!">
           <BackgroundRadialGradient
             style={{
-              backgroundImage: `${getRadialGradient("#c7d2fe", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "60% 90%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#c7d2fe", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
+              backgroundImage: `${getRadialGradient('#c7d2fe', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '60% 90%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
             }}
           />
           <Container
             variant="tight"
-            className="py-16 sm:pb-0 grid lg:grid-cols-2 gap-16"
+            className="grid gap-16 py-16 sm:pb-0 lg:grid-cols-2"
           >
-            <div className="space-y-3 [&_.heading]:text-background [&_.heading]:dark:text-foreground [&_p]:text-muted text-lg [&_p]:dark:text-muted">
+            <div className="space-y-3 text-lg [&_.heading]:text-background dark:[&_.heading]:text-foreground [&_p]:text-muted dark:[&_p]:text-muted">
               {text && <PortableText portableText={text} />}
             </div>
 
-            <div className="grid gap-4 items-start">
+            <div className="grid items-start gap-4">
               <FormError errors={form.errors} id={form.errorId} />
               {successMessage && (
                 <Alert variant="positive">
@@ -103,14 +103,14 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                   <input
                     type="text"
                     name={data.honeypot}
-                    style={{ display: "none" }}
+                    style={{ display: 'none' }}
                     tabIndex={-1}
                     autoComplete="off"
                   />
                   {/* USER FIELDS */}
                   {data.fields.map((field) => {
                     switch (field._type) {
-                      case "formField": {
+                      case 'formField': {
                         return (
                           <Field
                             key={field._key}
@@ -122,9 +122,9 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                               // @ts-ignore
                               ...getInputProps(fields[field._key], {
                                 type:
-                                  field.fieldType === "email"
-                                    ? "email"
-                                    : "text",
+                                  field.fieldType === 'email'
+                                    ? 'email'
+                                    : 'text',
                               }),
                               placeholder: field.fieldPlaceholder ?? undefined,
                               // autoComplete: "given-name",
@@ -138,7 +138,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                           />
                         );
                       }
-                      case "formTextarea": {
+                      case 'formTextarea': {
                         return (
                           <TextareaField
                             key={field._key}
@@ -158,16 +158,16 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                           />
                         );
                       }
-                      case "formGroup": {
+                      case 'formGroup': {
                         // TODO: extract to a function
                         return (
                           <div
                             key={field._key}
-                            className="grid md:grid-cols-2 gap-4"
+                            className="grid gap-4 md:grid-cols-2"
                           >
                             {field.fields.map((field) => {
                               switch (field._type) {
-                                case "formField": {
+                                case 'formField': {
                                   return (
                                     <Field
                                       key={field._key}
@@ -178,7 +178,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                                       inputProps={{
                                         // @ts-ignore
                                         ...getInputProps(fields[field._key], {
-                                          type: "text",
+                                          type: 'text',
                                         }),
                                         placeholder:
                                           field.fieldPlaceholder ?? undefined,
@@ -193,7 +193,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                                     />
                                   );
                                 }
-                                case "formTextarea": {
+                                case 'formTextarea': {
                                   return (
                                     <TextareaField
                                       key={field._key}
@@ -233,7 +233,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="py-3 px-6 bg-primary font-medium text-background dark:text-foreground rounded-lg justify-self-start min-w-40 disabled:opacity-50 disabled:pointer-events-none transition hover:bg-indigo-700"
+                    className="min-w-40 justify-self-start rounded-lg bg-primary px-6 py-3 font-medium text-background transition hover:bg-indigo-700 disabled:pointer-events-none disabled:opacity-50 dark:text-foreground"
                   >
                     {/* TODO: Move this content to Sanity */}
                     Get Started

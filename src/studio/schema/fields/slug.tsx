@@ -1,7 +1,7 @@
-import { type ConditionalProperty, defineField } from "sanity";
-import { Description } from "~/studio/components/Description";
-import { SlugInput } from "~/studio/components/SlugInput";
-import { formatSlug } from "~/studio/lib/utils";
+import { type ConditionalProperty, defineField } from 'sanity';
+import { Description } from '~/studio/components/Description';
+import { SlugInput } from '~/studio/components/SlugInput';
+import { formatSlug } from '~/studio/lib/utils';
 
 /**
  * Most common pattern for a slug field. If you need a different configuration, just replace this with your own custom field.
@@ -23,19 +23,19 @@ export const slugField = ({
   value,
   hidden = false,
   skipValidation = false,
-  group = "meta",
+  group = 'meta',
   fieldset,
-  source = "title",
+  source = 'title',
 }: SlugFieldProps) => {
   return defineField({
-    name: "slug",
-    title: "Slug",
-    type: "slug",
+    name: 'slug',
+    title: 'Slug',
+    type: 'slug',
     description: (
       <Description>
         A good URL tells users (and search engines) what to expect on the page.
         Use the 'Generate' button to generate a slug based on the title of the
-        document..or enter your own custom value.{" "}
+        document..or enter your own custom value.{' '}
         <a
           href="https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Writing_style_guide#slugs"
           target="_blank"
@@ -63,7 +63,7 @@ export const slugField = ({
         const currentSlug = value && value.current;
 
         if (!currentSlug) {
-          return "Required";
+          return 'Required';
         }
 
         if (currentSlug.length >= 96) {

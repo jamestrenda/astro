@@ -1,34 +1,21 @@
-import { useInputControl } from "@conform-to/react";
-import React, { useId, useRef } from "react";
-import { Checkbox, type CheckboxProps } from "./checkbox";
-import { Input } from "./input";
-import { Label } from "./label";
-import { Textarea } from "./textarea";
+import { useInputControl } from '@conform-to/react';
+import { InfoIcon } from 'lucide-react';
+import React, { useId } from 'react';
+import { cn } from '~/utils/misc';
+import { Alert, AlertDescription, AlertTitle } from './alert';
+import { Checkbox, type CheckboxProps } from './checkbox';
+import { Input } from './input';
+import { Label } from './label';
+import { Popover, PopoverContent, PopoverTrigger } from './popover';
+import { RadioGroup, type RadioGroupProps } from './radio-group';
 import {
   Select,
   SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
   type SelectProps,
   SelectTrigger,
   SelectValue,
-} from "./select";
-import {
-  RadioGroup,
-  RadioGroupItem,
-  type RadioGroupProps,
-} from "./radio-group";
-import { cn } from "~/utils/misc";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./tooltip";
-import { InfoIcon } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "./alert";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+} from './select';
+import { Textarea } from './textarea';
 
 export type ListOfErrors = Array<string | null | undefined> | null | undefined;
 
@@ -54,7 +41,7 @@ export function ErrorList({
 
 export function FormError({
   id,
-  title = "Oops!",
+  title = 'Oops!',
   errors,
 }: {
   errors?: ListOfErrors;
@@ -84,7 +71,7 @@ export function FieldError({
   if (!errorsToRender?.length) return null;
   return (
     <Popover>
-      <PopoverTrigger className="absolute top-5 right-4 z-10 text-destructive">
+      <PopoverTrigger className="absolute right-4 top-5 z-10 text-destructive">
         <InfoIcon className="h-5 w-5" />
       </PopoverTrigger>
       <PopoverContent className="bg-red-100 backdrop-blur-md">
@@ -113,17 +100,17 @@ export function Field({
   const id = inputProps.id ?? fallbackId;
   const errorId = errors?.length ? `${id}-error` : undefined;
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn('relative', className)}>
       <div
         className={cn(
-          "has-[+[aria-invalid]]:text-destructive",
-          linkProps ? "flex items-center" : ""
+          'has-[+[aria-invalid]]:text-destructive',
+          linkProps ? 'flex items-center' : '',
         )}
       >
         <Label
           htmlFor={id}
           {...labelProps}
-          className={!showLabel ? "sr-only" : ""}
+          className={!showLabel ? 'sr-only' : ''}
         />
         {linkProps ? (
           <a
@@ -139,7 +126,7 @@ export function Field({
         aria-invalid={errorId ? true : undefined}
         aria-describedby={errorId}
         {...inputProps}
-        className={cn(errorId ? "pr-12" : "")}
+        className={cn(errorId ? 'pr-12' : '')}
       />
       {errorId ? <FieldError id={errorId} errors={errors} /> : null}
     </div>
@@ -163,12 +150,12 @@ export function TextareaField({
   const id = textareaProps.id ?? textareaProps.name ?? fallbackId;
   const errorId = errors?.length ? `${id}-error` : undefined;
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn('relative', className)}>
       <div className="has-[+[aria-invalid]]:text-destructive">
         <Label
           htmlFor={id}
           {...labelProps}
-          className={!showLabel ? "sr-only" : ""}
+          className={!showLabel ? 'sr-only' : ''}
         />
       </div>
       <Textarea
@@ -176,7 +163,7 @@ export function TextareaField({
         aria-invalid={errorId ? true : undefined}
         aria-describedby={errorId}
         {...textareaProps}
-        className={cn(errorId ? "pr-12" : "")}
+        className={cn(errorId ? 'pr-12' : '')}
       />
       {errorId ? <FieldError id={errorId} errors={errors} /> : null}
     </div>
@@ -189,7 +176,7 @@ export function CheckboxField({
   errors,
   className,
 }: {
-  labelProps: JSX.IntrinsicElements["label"];
+  labelProps: JSX.IntrinsicElements['label'];
   buttonProps: CheckboxProps & {
     name: string;
     form: string;
@@ -200,7 +187,7 @@ export function CheckboxField({
 }) {
   const { key, defaultChecked, ...checkboxProps } = buttonProps;
   const fallbackId = useId();
-  const checkedValue = buttonProps.value ?? "on";
+  const checkedValue = buttonProps.value ?? 'on';
   const input = useInputControl({
     key,
     name: buttonProps.name,
@@ -211,7 +198,7 @@ export function CheckboxField({
   const errorId = errors?.length ? `${id}-error` : undefined;
 
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className={cn('grid gap-2', className)}>
       <div className="flex items-center gap-2">
         <Checkbox
           {...checkboxProps}
@@ -220,7 +207,7 @@ export function CheckboxField({
           aria-describedby={errorId}
           checked={input.value === checkedValue}
           onCheckedChange={(state) => {
-            input.change(state.valueOf() ? checkedValue : "");
+            input.change(state.valueOf() ? checkedValue : '');
             buttonProps.onCheckedChange?.(state);
           }}
           onFocus={(event) => {
@@ -247,7 +234,7 @@ export function RadioField({
   className,
   children,
 }: {
-  labelProps: JSX.IntrinsicElements["label"];
+  labelProps: JSX.IntrinsicElements['label'];
   buttonProps: RadioGroupProps & {
     name: string;
     form: string;
@@ -259,7 +246,7 @@ export function RadioField({
 }) {
   const { key, defaultChecked, ...radioProps } = buttonProps;
   const fallbackId = useId();
-  const checkedValue = buttonProps.value ?? "on";
+  const checkedValue = buttonProps.value ?? 'on';
   const input = useInputControl({
     key,
     name: buttonProps.name,
@@ -270,8 +257,8 @@ export function RadioField({
   const errorId = errors?.length ? `${id}-error` : undefined;
 
   return (
-    <div className={cn("grid gap-2", className)}>
-      <div className={cn("has-[+[aria-invalid]]:text-destructive")}>
+    <div className={cn('grid gap-2', className)}>
+      <div className={cn('has-[+[aria-invalid]]:text-destructive')}>
         <Label htmlFor={id} {...labelProps} />
       </div>
       <RadioGroup
@@ -308,7 +295,7 @@ export function SelectField({
   const { name, ...props } = buttonProps;
 
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className={cn('grid gap-2', className)}>
       <Label htmlFor={id} {...labelProps} />
       <Select
         name={buttonProps.name}
@@ -322,7 +309,7 @@ export function SelectField({
           aria-describedby={errorId}
           {...props}
           type="button"
-          className="[&:is([data-placeholder])]:text-muted-foreground"
+          className="data-placeholder:text-muted-foreground"
         >
           <SelectValue placeholder={labelProps.children} />
         </SelectTrigger>

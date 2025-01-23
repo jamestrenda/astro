@@ -1,34 +1,34 @@
-import React, { useMemo } from "react";
-import { Container } from "./Container";
-import BrowserWindow from "./BrowserWindow";
-import type { Hero as Props } from "~/types/hero";
-import { SanityImage } from "./Image";
-import { PortableText } from "./PortableText/PortableText";
-import { getRadialGradient } from "~/utils/getRadialGradient";
-import { BackgroundRadialGradient } from "./BackgroundRadialGradient";
+import React, { useMemo } from 'react';
+import type { Hero as Props } from '~/types/hero';
+import { getRadialGradient } from '~/utils/getRadialGradient';
+import { BackgroundRadialGradient } from './BackgroundRadialGradient';
+import BrowserWindow from './BrowserWindow';
+import { Container } from './Container';
+import { SanityImage } from './Image';
+import { PortableText } from './PortableText/PortableText';
 
 export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
   return (
-    <div className="max-md:[&>div]:!px-0 relative pb-20">
+    <div className="max-md:[&>div]:px-0! relative pb-20">
       <Container>
-        <BrowserWindow className="max-md:rounded-t-none min-h-[550px] md:min-h-[660px] grid grid-cols-12">
+        <BrowserWindow className="grid min-h-[550px] grid-cols-12 max-md:rounded-t-none md:min-h-[660px]">
           <BackgroundRadialGradient
             style={{
-              backgroundImage: `${getRadialGradient("#c7d2fe", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "40% 30%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#c7d2fe", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
+              backgroundImage: `${getRadialGradient('#c7d2fe', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '40% 30%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
             }}
           />
-          <div className="w-full col-span-11 xs:col-start-1 xs:col-end-8 xl:col-start-2 xl:col-end-7 max-xs:mt-auto z-40 max-xs:mb-4 max-sm:mt-16 space-y-3 [&_p]:!text-muted [&_p]:dark:text-foreground [&_p]:text-lg [&_p]:md:text-xl [&_p]:font-light">
+          <div className="[&_p]:text-muted! z-40 col-span-11 w-full space-y-3 max-sm:mt-16 max-xs:mb-4 max-xs:mt-auto xs:col-start-1 xs:col-end-8 xl:col-start-2 xl:col-end-7 [&_p]:text-lg [&_p]:font-light dark:[&_p]:text-foreground md:[&_p]:text-xl">
             {valueProposition && (
               <PortableText portableText={valueProposition} />
             )}
           </div>
 
           {marquees && (
-            <div className="grid gap-2 my-6 md:mt-12 sm:mb-0 self-start [--item-width:100px] md:[--item-width:160px]">
+            <div className="my-6 grid gap-2 self-start [--item-width:100px] sm:mb-0 md:mt-12 md:[--item-width:160px]">
               {marquees.map((marquee, i) => {
                 const numItems = useMemo(
                   () => marquee.items?.length ?? 0,
-                  [marquee.items?.length]
+                  [marquee.items?.length],
                 );
                 return (
                   <div
@@ -36,9 +36,9 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                     className="marquee fadeout-horizontal -mx-8 sm:-mx-16"
                     style={
                       {
-                        "--speed": `${marquee.speed}s`,
-                        "--direction": marquee.direction,
-                        "--num-items": numItems,
+                        '--speed': `${marquee.speed}s`,
+                        '--direction': marquee.direction,
+                        '--num-items': numItems,
                       } as React.CSSProperties
                     }
                   >
@@ -50,18 +50,18 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                             className="track-item"
                             style={
                               {
-                                "--item-position": i + 1,
+                                '--item-position': i + 1,
                               } as React.CSSProperties
                             }
                           >
-                            <div className="track-item-content px-4 animate-fade-in-out text-white bg-glass rounded-lg grid place-items-center">
+                            <div className="track-item-content bg-glass grid animate-fade-in-out place-items-center rounded-lg px-4 text-white">
                               {item?.image && (
                                 <SanityImage
                                   src={item.image}
                                   // width={1280}
                                   height={96}
                                   loading="eager"
-                                  className=" w-auto object-contain h-10"
+                                  className="h-10 w-auto object-contain"
                                 />
                               )}
                             </div>
@@ -82,7 +82,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                 q: 100,
               }}
               preview={true}
-              className="absolute z-30 bottom-0 right-0 max-xs:left-0 md:rounded-br-lg object-cover max-h-[400px] max-xs:max-w-full xs:h-[580px] xs:w-2/3 xs:max-h-[700px] md:h-[700px] lg:w-[700px] max-xs:w-full max-xs:h-auto max-xs:-top-8 max-xs:max-h-[580px] aspect-square pointer-events-none dark:brightness-75 contrast-[1.1] max-xs:gradient-mask-b-[black_50%]"
+              className="pointer-events-none absolute bottom-0 right-0 z-30 aspect-square max-h-[400px] object-cover contrast-[1.1] dark:brightness-75 max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] md:rounded-br-lg lg:w-[700px]"
             />
           )}
         </BrowserWindow>

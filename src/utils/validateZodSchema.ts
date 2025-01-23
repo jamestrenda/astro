@@ -1,4 +1,4 @@
-import type { ZodTypeAny, z } from "zod";
+import type { ZodTypeAny, z } from 'zod';
 
 export const validateZodSchema = (data: unknown, schemas: ZodTypeAny[]) => {
   // Validate against each schema and collect results
@@ -33,7 +33,7 @@ export const validateZodSchema = (data: unknown, schemas: ZodTypeAny[]) => {
 
   // Pick the schema with the fewest errors
   const mostRelevantError = errorDetails.reduce((prev, current) =>
-    current.issueCount < prev.issueCount ? current : prev
+    current.issueCount < prev.issueCount ? current : prev,
   );
 
   return {

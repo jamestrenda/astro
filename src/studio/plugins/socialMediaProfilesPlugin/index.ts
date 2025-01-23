@@ -1,5 +1,5 @@
-import {definePlugin} from 'sanity'
-import {schemaTypes} from './schema'
+import { definePlugin } from 'sanity';
+import { schemaTypes } from './schema';
 
 interface SocialMediaProfilesPluginConfig {
   /* nothing here yet */
@@ -18,13 +18,12 @@ interface SocialMediaProfilesPluginConfig {
  * })
  * ```
  */
-export const SocialMediaProfilesPlugin = definePlugin<SocialMediaProfilesPluginConfig | void>(
-  (config = {}) => {
+export const SocialMediaProfilesPlugin =
+  definePlugin<SocialMediaProfilesPluginConfig | void>((config = {}) => {
     return {
       name: 'sanity-plugin-social-media-profiles',
       schema: {
         types: schemaTypes,
       },
-    }
-  },
-)
+    };
+  });

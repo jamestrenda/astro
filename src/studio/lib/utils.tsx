@@ -1,14 +1,12 @@
-import type { CurrentUser, PortableTextTextBlock } from "@sanity/types";
+import type { CurrentUser, PortableTextTextBlock } from '@sanity/types';
 import {
   defineArrayMember,
   type PortableTextBlock,
   type SlugRule,
-} from "sanity";
+} from 'sanity';
 
-import slug from "slug";
-import type { ImageObject } from "~/types/image";
-import { getImageObjectTitle } from "../schema/objects/image";
-import { ExternalLinkIcon, Link2Icon } from "lucide-react";
+import { ExternalLinkIcon, Link2Icon } from 'lucide-react';
+import slug from 'slug';
 
 const MAX_LENGTH = 96;
 
@@ -42,13 +40,13 @@ export const formatSlug = (input: string) => {
   return formattedSlug;
 };
 
-export function isAdminUser(user: Omit<CurrentUser, "role"> | null) {
-  return !!user?.roles.find(({ name }) => name === "administrator");
+export function isAdminUser(user: Omit<CurrentUser, 'role'> | null) {
+  return !!user?.roles.find(({ name }) => name === 'administrator');
 }
 
 export function getPortableTextPreview(
   blocks: PortableTextBlock[],
-  title: string
+  title: string,
 ) {
   if (!blocks) {
     return {
@@ -59,7 +57,7 @@ export function getPortableTextPreview(
   // find the first block that is a heading
   let block = blocks.find(
     (block) =>
-      block._type === "block" && ["h1", "h2"].includes(block.style as string)
+      block._type === 'block' && ['h1', 'h2'].includes(block.style as string),
   ) as PortableTextTextBlock;
 
   if (!block) {
@@ -67,7 +65,7 @@ export function getPortableTextPreview(
   }
 
   // Get the first block of text, which could be broken up into multiple children depending on "marks" (i.e. formatting)
-  const textSnippet = block?.children.map((child) => child.text).join("");
+  const textSnippet = block?.children.map((child) => child.text).join('');
 
   return {
     title: textSnippet?.length ? textSnippet : title,
@@ -76,72 +74,72 @@ export function getPortableTextPreview(
 }
 
 export const portableTextBlocks = defineArrayMember({
-  type: "block",
+  type: 'block',
   styles: [
-    { title: "Normal", value: "normal" },
-    { title: "H1", value: "h1" },
-    { title: "H2", value: "h2" },
-    { title: "H3", value: "h3" },
-    { title: "H4", value: "h4" },
-    { title: "H5", value: "h5" },
+    { title: 'Normal', value: 'normal' },
+    { title: 'H1', value: 'h1' },
+    { title: 'H2', value: 'h2' },
+    { title: 'H3', value: 'h3' },
+    { title: 'H4', value: 'h4' },
+    { title: 'H5', value: 'h5' },
     {
-      title: "Overline",
-      value: "overline",
+      title: 'Overline',
+      value: 'overline',
       component: (props) => (
         <span
           style={{
             fontFamily: `Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Helvetica, Arial, system-ui, sans-serif`,
             margin: 0,
-            fontSize: ".875em",
+            fontSize: '.875em',
             fontWeight: 600,
-            textTransform: "uppercase",
+            textTransform: 'uppercase',
           }}
         >
           {props.children}
         </span>
       ),
     },
-    { title: "Quote", value: "blockquote" },
+    { title: 'Quote', value: 'blockquote' },
   ],
   lists: [
-    { title: "Bullet", value: "bullet" },
-    { title: "Number", value: "number" },
+    { title: 'Bullet', value: 'bullet' },
+    { title: 'Number', value: 'number' },
   ],
   // Marks let you mark up inline text in the block editor.
   marks: {
     // Decorators usually describe a single property – e.g. a typographic
     // preference or highlighting by editors.
     decorators: [
-      { title: "Strong", value: "strong" },
-      { title: "Emphasis", value: "em" },
-      { title: "Underline", value: "underline" },
-      { title: "Strike", value: "strike-through" },
+      { title: 'Strong', value: 'strong' },
+      { title: 'Emphasis', value: 'em' },
+      { title: 'Underline', value: 'underline' },
+      { title: 'Strike', value: 'strike-through' },
     ],
     // Annotations can be any object structure – e.g. a link or a footnote.
     // Add link styles components
     annotations: [
       {
-        name: "internalRef",
-        type: "object",
-        title: "Internal Reference",
+        name: 'internalRef',
+        type: 'object',
+        title: 'Internal Reference',
         icon: <Link2Icon size="1em" />,
         fields: [
           {
-            name: "ref",
-            type: "ref",
+            name: 'ref',
+            type: 'ref',
           },
         ],
       },
       {
-        name: "externalLink",
-        type: "object",
-        title: "External Link",
+        name: 'externalLink',
+        type: 'object',
+        title: 'External Link',
         icon: <ExternalLinkIcon size="1em" />,
         fields: [
           {
-            title: " ",
-            name: "link",
-            type: "externalLink",
+            title: ' ',
+            name: 'link',
+            type: 'externalLink',
           },
         ],
       },
@@ -151,27 +149,27 @@ export const portableTextBlocks = defineArrayMember({
 
 export function getPortableTextBlocks(options?: {
   styles?: Exclude<
-    (typeof portableTextBlocks)["styles"],
+    (typeof portableTextBlocks)['styles'],
     undefined
-  >[number]["value"][];
+  >[number]['value'][];
   lists?: Exclude<
-    (typeof portableTextBlocks)["lists"],
+    (typeof portableTextBlocks)['lists'],
     undefined
-  >[number]["value"][];
+  >[number]['value'][];
   decorators?: Exclude<
     Exclude<
-      (typeof portableTextBlocks)["marks"],
+      (typeof portableTextBlocks)['marks'],
       undefined
-    >[][number]["decorators"],
+    >[][number]['decorators'],
     undefined
-  >[number]["value"][];
+  >[number]['value'][];
   annotations?: Exclude<
     Exclude<
-      (typeof portableTextBlocks)["marks"],
+      (typeof portableTextBlocks)['marks'],
       undefined
-    >[][number]["annotations"],
+    >[][number]['annotations'],
     undefined
-  >[number]["name"][];
+  >[number]['name'][];
 }) {
   if (!options) {
     return [portableTextBlocks];
@@ -183,23 +181,23 @@ export function getPortableTextBlocks(options?: {
       ...portableTextBlocks,
       styles: styles
         ? portableTextBlocks.styles?.filter((style) =>
-            styles?.includes(style.value)
+            styles?.includes(style.value),
           )
         : portableTextBlocks.styles,
       lists: lists
         ? portableTextBlocks.lists?.filter((list) =>
-            lists?.includes(list.value)
+            lists?.includes(list.value),
           )
         : portableTextBlocks.lists,
       marks: {
         decorators: decorators
           ? portableTextBlocks.marks?.decorators?.filter((decorator) =>
-              decorators?.includes(decorator.value)
+              decorators?.includes(decorator.value),
             )
           : portableTextBlocks.marks?.decorators,
         annotations: annotations
           ? portableTextBlocks.marks?.annotations?.filter((annotation) =>
-              annotations?.includes(annotation.name)
+              annotations?.includes(annotation.name),
             )
           : portableTextBlocks.marks?.annotations,
       },

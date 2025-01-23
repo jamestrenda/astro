@@ -1,28 +1,28 @@
-import { defineField } from "sanity";
+import { defineField } from 'sanity';
 
-import { Description } from "../../components/Description";
-import { TitleField } from "../../components/TitleField";
-import { CharCountInput } from "~/studio/components/CharCountInput";
+import { CharCountInput } from '~/studio/components/CharCountInput';
+import { Description } from '../../components/Description';
+import { TitleField } from '../../components/TitleField';
 
 export default {
-  name: "seo",
-  title: "SEO",
-  type: "object",
+  name: 'seo',
+  title: 'SEO',
+  type: 'object',
   fields: [
     defineField({
-      name: "title",
-      title: "Title",
-      type: "string",
+      name: 'title',
+      title: 'Title',
+      type: 'string',
       description:
-        "Overrides the page title that appears in search engine results pages (SERPs).",
+        'Overrides the page title that appears in search engine results pages (SERPs).',
       components: {
         field: (props: any) => <TitleField min={30} max={65} {...props} />,
       },
     }),
     defineField({
-      name: "metaDescription",
-      title: "Meta Description",
-      type: "text",
+      name: 'metaDescription',
+      title: 'Meta Description',
+      type: 'text',
       rows: 3,
       description: (
         <Description>

@@ -1,11 +1,10 @@
-import type { z } from "astro:schema";
-import * as E from "@react-email/components";
-import type { Form, FormFields } from "~/types/form";
+import * as E from '@react-email/components';
+import type { Form, FormFields } from '~/types/form';
 
 export function Email({ submission, form }: { submission?: any; form: Form }) {
   const messageKey =
-    form.fields.find((field) => field._type === "formTextarea")?._key ??
-    "message";
+    form.fields.find((field) => field._type === 'formTextarea')?._key ??
+    'message';
   const message = submission[messageKey];
 
   const emailBody = generateEmailTextComponents(form.fields, submission);
@@ -15,8 +14,8 @@ export function Email({ submission, form }: { submission?: any; form: Form }) {
       <E.Head />
       {/* TODO: probably need to update the textarea schema with a checkbox for "preview" or establish a naming convention for transactional email message fields   */}
       <E.Preview>{message}</E.Preview>
-      <E.Body className="bg-gray-100 text-base font-sans p-2">
-        <E.Container className="bg-white py-16 px-8 my-0">
+      <E.Body className="bg-gray-100 p-2 font-sans text-base">
+        <E.Container className="my-0 bg-white px-8 py-16">
           <E.Section>
             <E.Row>{emailBody}</E.Row>
           </E.Section>
@@ -28,13 +27,13 @@ export function Email({ submission, form }: { submission?: any; form: Form }) {
 
 export const generateEmailTextComponents = (
   formFields: FormFields, // Replace `any` with the correct type for formFields
-  formSubmission: Record<string, string | undefined>
+  formSubmission: Record<string, string | undefined>,
 ): JSX.Element[] => {
   // Helper to generate Text component for a single field
   const createTextComponent = (label: string, value: string | undefined) => (
     <E.Text key={label}>
       <strong>{label}: </strong>
-      {value || "N/A"}
+      {value || 'N/A'}
     </E.Text>
   );
 
@@ -42,21 +41,21 @@ export const generateEmailTextComponents = (
   const processFields = (fields: FormFields): JSX.Element[] => {
     return fields.flatMap((field) => {
       switch (field._type) {
-        case "formField": {
+        case 'formField': {
           const value = formSubmission[field._key];
           return createTextComponent(
-            field.fieldLabel || "Unnamed Field",
-            value
+            field.fieldLabel || 'Unnamed Field',
+            value,
           );
         }
-        case "formTextarea": {
+        case 'formTextarea': {
           const value = formSubmission[field._key];
           return createTextComponent(
-            field.fieldLabel || "Unnamed Textarea",
-            value
+            field.fieldLabel || 'Unnamed Textarea',
+            value,
           );
         }
-        case "formGroup": {
+        case 'formGroup': {
           // Recursively process formGroup fields
           return [
             // <E.Text key={field._key}>

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 // export const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID!;
 // export const dataset = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET!;
@@ -6,7 +6,7 @@ import { z } from "zod";
 
 const schema = z.object({
   PUBLIC_SANITY_STUDIO_PROJECT_ID: z.string(),
-  PUBLIC_SANITY_STUDIO_DATASET: z.enum(["production", "staging"] as const),
+  PUBLIC_SANITY_STUDIO_DATASET: z.enum(['production', 'staging'] as const),
   PUBLIC_SANITY_API_READ_TOKEN: z.string(),
   PUBLIC_SANITY_STUDIO_BASE_PATH: z.string(),
   PUBLIC_SANITY_STUDIO_PREVIEW_URL: z.string().url(),
@@ -24,11 +24,11 @@ export function init() {
 
   if (parsed.success === false) {
     console.error(
-      "❌ Invalid environment variables:",
-      parsed.error.flatten().fieldErrors
+      '❌ Invalid environment variables:',
+      parsed.error.flatten().fieldErrors,
     );
 
-    throw new Error("Invalid environment variables");
+    throw new Error('Invalid environment variables');
   }
 }
 

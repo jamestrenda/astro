@@ -1,4 +1,3 @@
-import type { StructureResolver } from "sanity/structure";
 import {
   ArrowLeftRightIcon,
   ClipboardPenIcon,
@@ -15,216 +14,217 @@ import {
   SettingsIcon,
   SmileIcon,
   TagIcon,
-} from "lucide-react";
-import taxonomyList from "./taxonomyList";
-import { map } from "rxjs";
-import { HomeSettingsIcon } from "../icons/home-settings";
-import { apiVersion } from "sanity.config";
+} from 'lucide-react';
+import { map } from 'rxjs';
+import { apiVersion } from 'sanity.config';
+import type { StructureResolver } from 'sanity/structure';
+import { HomeSettingsIcon } from '../icons/home-settings';
+import taxonomyList from './taxonomyList';
 
 export const structure: StructureResolver = async (S, context) => {
   const chooseHomepage = S.defaultDocument({
-    schemaType: "home",
-    documentId: "home",
-  }).title("Home Settings");
+    schemaType: 'home',
+    documentId: 'home',
+  }).title('Home Settings');
 
   const homeSettings = S.listItem()
-    .title("Home")
-    .id("home")
+    .title('Home')
+    .id('home')
     .icon(HomeSettingsIcon)
     .child(chooseHomepage);
 
   const home = S.listItem()
-    .title("Home")
+    .title('Home')
     .icon(HomeIcon)
     .child(() =>
       context.documentStore
         .listenQuery(
           `*[_type == "page" && defined(isHomepage) && isHomepage == true][0]._id`,
           {},
-          {}
+          {},
         )
         .pipe(
           map((ids) => {
             if (!ids) return chooseHomepage;
             return S.document()
-              .schemaType("page") // Your document type
+              .schemaType('page') // Your document type
               .documentId(ids); // Dynamically fetch the ID
-          })
-        )
+          }),
+        ),
     );
 
   const pages = S.listItem()
-    .title("Pages")
+    .title('Pages')
     .icon(FilesIcon)
     .child(
-      S.documentTypeList("page")
+      S.documentTypeList('page')
         .filter(`isHomepage == false`)
         .apiVersion(apiVersion)
-        .title("Pages")
+        .title('Pages'),
     );
 
   const blog = S.listItem()
-    .title("Blog")
+    .title('Blog')
     .icon(RssIcon)
     .child(
       S.list()
-        .title("All Posts")
+        .title('All Posts')
         .items([
           S.listItem()
-            .title("All Posts")
-            .id("all")
+            .title('All Posts')
+            .id('all')
             .icon(RssIcon)
-            .child(S.documentTypeList("post").title("All Posts")),
+            .child(S.documentTypeList('post').title('All Posts')),
           S.divider(),
           S.listItem()
-            .title("Published")
-            .id("published")
-            .schemaType("post")
+            .title('Published')
+            .id('published')
+            .schemaType('post')
             .icon(NotebookTextIcon)
             .child(
               S.documentList()
                 .filter(`_type == "post" && !(_id in path("drafts.**"))`)
                 .apiVersion(apiVersion)
-                .title("Published Posts")
-                .menuItems(S.documentTypeList("post").getMenuItems())
+                .title('Published Posts')
+                .menuItems(S.documentTypeList('post').getMenuItems())
                 .canHandleIntent(
                   (intentName, params) =>
-                    intentName === "create" && params.template === `post`
-                )
+                    intentName === 'create' && params.template === `post`,
+                ),
             ),
           S.listItem()
-            .title("Drafts")
-            .id("drafts")
-            .schemaType("post")
+            .title('Drafts')
+            .id('drafts')
+            .schemaType('post')
             .icon(NotebookPenIcon)
             .child(
               S.documentList()
                 .filter(`_type == "post" && _id in path("drafts.**")`)
                 .apiVersion(apiVersion)
-                .title("Drafts")
-                .menuItems(S.documentTypeList("post").getMenuItems())
+                .title('Drafts')
+                .menuItems(S.documentTypeList('post').getMenuItems())
                 .canHandleIntent(
                   (intentName, params) =>
-                    intentName === "create" && params.template === `post`
-                )
+                    intentName === 'create' && params.template === `post`,
+                ),
             ),
           taxonomyList({
             parent: {
-              schemaType: "tag",
-              title: "Tags",
+              schemaType: 'tag',
+              title: 'Tags',
               icon: TagIcon,
-              titleFieldName: "title",
+              titleFieldName: 'title',
             },
             child: {
-              schemaType: "post",
-              title: "Posts",
+              schemaType: 'post',
+              title: 'Posts',
               // icon: HeartHandshakeIcon,
             },
-            title: "By Tag",
+            title: 'By Tag',
             S,
             documentStore: context.documentStore,
           }),
-        ])
+        ]),
     );
 
   const principles = S.listItem()
-    .title("Guiding Principles")
+    .title('Guiding Principles')
     .icon(CompassIcon)
-    .child(S.documentTypeList("principle").title("Guiding Principles"));
+    .child(S.documentTypeList('principle').title('Guiding Principles'));
 
   const redirects = S.listItem()
-    .title("Redirects")
+    .title('Redirects')
     .icon(ArrowLeftRightIcon)
     .child(
       S.defaultDocument({
-        schemaType: "redirectSettings",
-        documentId: "redirectSettings",
-      }).title("Redirects")
+        schemaType: 'redirectSettings',
+        documentId: 'redirectSettings',
+      }).title('Redirects'),
     );
 
   const clients = S.listItem()
-    .title("Clients")
+    .title('Clients')
     .icon(SmileIcon)
-    .child(S.documentTypeList("client").title("Clients"));
+    .child(S.documentTypeList('client').title('Clients'));
 
   const projects = S.listItem()
-    .title("Projects")
+    .title('Projects')
     .icon(GalleryVerticalEndIcon)
     .child(
       S.list()
-        .title("Projects")
+        .title('Projects')
         .items([
           S.listItem()
-            .title("Websites")
+            .title('Websites')
             .icon(GlobeIcon)
-            .child(S.documentTypeList("website").title("Websites")),
-        ])
+            .child(S.documentTypeList('website').title('Websites')),
+        ]),
     );
 
   const forms = S.listItem()
-    .title("Forms")
+    .title('Forms')
     .icon(ClipboardPenIcon)
-    .child(S.documentTypeList("baseForm").title("Forms"));
+    .child(S.documentTypeList('baseForm').title('Forms'));
 
   const settings = S.listItem()
-    .title("Settings")
+    .title('Settings')
     .icon(SettingsIcon)
     .child(
       S.list()
-        .title("Settings")
+        .title('Settings')
         .items([
           S.listItem()
-            .title("Global")
-            .id("global")
+            .title('Global')
+            .id('global')
             .icon(GlobeIcon)
             .child(
               S.defaultDocument({
-                schemaType: "siteSettings",
-                documentId: "siteSettings",
-              }).title("Global Settings")
+                schemaType: 'siteSettings',
+                documentId: 'siteSettings',
+              }).title('Global Settings'),
             ),
           homeSettings,
           S.divider(),
           S.listItem()
-            .title("Header")
+            .title('Header')
             .icon(HeaderIcon)
             .child(
               S.defaultDocument({
-                schemaType: "headerSettings",
-                documentId: "headerSettings",
-              }).title("Header Settings")
+                schemaType: 'headerSettings',
+                documentId: 'headerSettings',
+              }).title('Header Settings'),
             ),
           S.listItem()
-            .title("Footer")
-            .schemaType("post")
+            .title('Footer')
+            .schemaType('post')
             .icon(FooterIcon)
             .child(
               S.defaultDocument({
-                schemaType: "footerSettings",
-                documentId: "footerSettings",
-              }).title("Footer Settings")
+                schemaType: 'footerSettings',
+                documentId: 'footerSettings',
+              }).title('Footer Settings'),
             ),
           S.listItem()
-            .title("Menus")
+            .title('Menus')
             .icon(MenuIcon)
-            .child(S.documentTypeList("menu").title("Menus")),
+            .child(S.documentTypeList('menu').title('Menus')),
           S.divider(),
           redirects,
           S.listItem()
-            .title("404 - Not Found")
-            .id("404")
+            .title('404 - Not Found')
+            .id('404')
             .icon(FileXIcon)
             .child(
               S.defaultDocument({
-                schemaType: "notFoundSettings",
-                documentId: "notFoundSettings",
-              }).title("404 Settings")
+                schemaType: 'notFoundSettings',
+                documentId: 'notFoundSettings',
+              }).title('404 Settings'),
             ),
-        ])
+        ]),
     );
   return S.list()
-    .id("root")
-    .title("Content")
+    .id('root')
+    .title('Content')
     .items([
       home,
       S.divider(),

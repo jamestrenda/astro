@@ -1,5 +1,5 @@
-import { Box, Flex, Text } from "@sanity/ui";
-import type { SlugInputProps } from "sanity";
+import { Box, Flex, Text } from '@sanity/ui';
+import type { SlugInputProps } from 'sanity';
 
 export function SlugInput(props: SlugInputProps, prefix?: string) {
   return (

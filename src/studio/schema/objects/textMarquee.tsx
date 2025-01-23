@@ -1,45 +1,45 @@
-import { RectangleEllipsisIcon } from "lucide-react";
-import { defineField, defineType } from "sanity";
+import { RectangleEllipsisIcon } from 'lucide-react';
+import { defineField, defineType } from 'sanity';
 
 export default defineType({
-  type: "object",
-  name: "textMarquee",
-  title: "Text Marquee",
+  type: 'object',
+  name: 'textMarquee',
+  title: 'Text Marquee',
   icon: () => <RectangleEllipsisIcon size="1em" />,
   fields: [
     defineField({
-      name: "title",
-      type: "string",
+      name: 'title',
+      type: 'string',
     }),
     defineField({
-      name: "items",
-      type: "array",
-      of: [{ type: "string" }],
+      name: 'items',
+      type: 'array',
+      of: [{ type: 'string' }],
     }),
     defineField({
-      name: "speed",
-      title: "Speed (seconds)",
-      type: "number",
+      name: 'speed',
+      title: 'Speed (seconds)',
+      type: 'number',
       initialValue: 60,
     }),
     defineField({
-      name: "direction",
-      title: "Direction",
-      type: "string",
+      name: 'direction',
+      title: 'Direction',
+      type: 'string',
       options: {
-        list: ["forwards", "reverse"],
-        layout: "radio",
+        list: ['forwards', 'reverse'],
+        layout: 'radio',
       },
-      initialValue: "forwards",
+      initialValue: 'forwards',
     }),
   ],
   preview: {
     select: {
-      title: "title",
+      title: 'title',
     },
     prepare(selection) {
       return {
-        title: selection.title ?? "Text Marquee",
+        title: selection.title ?? 'Text Marquee',
       };
     },
   },

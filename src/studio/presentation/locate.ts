@@ -1,10 +1,9 @@
 // locations.ts
+import { map, Observable } from 'rxjs';
 import {
-  defineLocations,
   type DocumentLocationResolver,
   type DocumentLocationsState,
-} from "sanity/presentation";
-import { map, Observable } from "rxjs";
+} from 'sanity/presentation';
 
 export const locations: DocumentLocationResolver = (params, context) => {
   switch (params.type) {
@@ -14,11 +13,11 @@ export const locations: DocumentLocationResolver = (params, context) => {
     //     tone: "caution",
     //   });
     // }
-    case "post": {
+    case 'post': {
       const doc$ = context.documentStore.listenQuery(
         `*[_id==$id || references($id)]{_type,slug,title}`,
         params,
-        { perspective: "previewDrafts" }
+        { perspective: 'previewDrafts' },
       ) as Observable<
         | {
             _type: string;
@@ -32,8 +31,8 @@ export const locations: DocumentLocationResolver = (params, context) => {
         map((docs) => {
           if (!docs) {
             return {
-              message: "Unable to map document type to locations",
-              tone: "critical",
+              message: 'Unable to map document type to locations',
+              tone: 'critical',
             } satisfies DocumentLocationsState;
           }
           // Generate all the locations for person documents
@@ -46,9 +45,9 @@ export const locations: DocumentLocationResolver = (params, context) => {
 
           // Generate all the locations for post documents
           const postLocations: Array<any> = docs
-            .filter(({ _type, slug }) => _type === "post" && slug?.current)
+            .filter(({ _type, slug }) => _type === 'post' && slug?.current)
             .map(({ title, slug }) => ({
-              title: title || "Untitled",
+              title: title || 'Untitled',
               href: `/blog/${slug?.current}`,
             }));
 
@@ -58,8 +57,8 @@ export const locations: DocumentLocationResolver = (params, context) => {
               ...postLocations,
               // Add a link to the "All posts" page when there are post documents
               postLocations.length > 0 && {
-                title: "Home",
-                href: "/",
+                title: 'Home',
+                href: '/',
               },
               // Add a link to the "All authors" page when there are person documents
               //   personLocations.length > 0 && {
@@ -68,7 +67,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
               //   },
             ].filter(Boolean),
           } satisfies DocumentLocationsState;
-        })
+        }),
       );
     }
   }

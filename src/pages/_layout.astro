@@ -1,21 +1,21 @@
 ---
-import { VisualEditing } from "@sanity/astro/visual-editing";
-import Footer from "~/components/Footer.astro";
-import Header from "~/components/Header.astro";
-import ExitPreview from "~/components/Preview/Exit";
-import SanityLiveMode from "~/components/Preview/SanityLiveMode";
-import "~/styles/tailwind.css";
-import { getSettings } from "~/utils/sanity";
-import { getTheme } from "~/utils/theme";
-import { type Seo } from "~/types/seo";
+import { VisualEditing } from '@sanity/astro/visual-editing';
+import Footer from '~/components/Footer.astro';
+import Header from '~/components/Header.astro';
+import ExitPreview from '~/components/Preview/Exit';
+import SanityLiveMode from '~/components/Preview/SanityLiveMode';
+import '~/styles/tailwind.css';
+import { getSettings } from '~/utils/sanity';
+import { getTheme } from '~/utils/theme';
+import { type Seo } from '~/types/seo';
 
-import "@fontsource/inter";
-import "@fontsource/inter/300.css";
-import "@fontsource/inter/300-italic.css";
-import "@fontsource/inter/400-italic.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/700.css";
-import "@fontsource/inter/700-italic.css";
+import '@fontsource/inter';
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/300-italic.css';
+import '@fontsource/inter/400-italic.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/inter/700-italic.css';
 // import "@fontsource-variable/inter/900-italic.css"; // Italic variant.
 // Supports weights 100-900
 // import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
@@ -45,7 +45,7 @@ const theme = getTheme(Astro.cookies);
 
 <html
   lang="en"
-  class:list={["font-sans", theme === "dark" ? "dark" : undefined]}
+  class:list={['font-sans', theme === 'dark' ? 'dark' : undefined]}
 >
   <head>
     <meta charset="utf-8" />
@@ -54,10 +54,10 @@ const theme = getTheme(Astro.cookies);
     <link rel="canonical" href={url} />
     <meta name="viewport" content="width=device-width" />
     <link rel="mask-icon" href="/safari-pinned-tab.svg" />
-    <title>{title ? `${title} • ` : ""}{siteTitle}</title>
+    <title>{title ? `${title} • ` : ''}{siteTitle}</title>
     {metaDescription && <meta name="description" content={metaDescription} />}
   </head>
-  <body class="flex flex-col min-h-dvh bg-background dark:bg-zinc-900">
+  <body class="flex min-h-dvh flex-col bg-background dark:bg-zinc-900">
     <Header theme={theme} />
     <main class="w-full grow bg-background dark:bg-zinc-900">
       <slot />

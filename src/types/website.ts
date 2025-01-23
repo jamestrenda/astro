@@ -1,12 +1,12 @@
-import { z } from "zod";
-import { baseBlockZ } from "./base";
-import { clientZ } from "./client";
-import { featureZ } from "./feature";
-import { imageZ } from "./image";
-import { portableTextZ } from "./portableText";
+import { z } from 'zod';
+import { baseBlockZ } from './base';
+import { clientZ } from './client';
+import { featureZ } from './feature';
+import { imageZ } from './image';
+import { portableTextZ } from './portableText';
 
 export const websiteZ = baseBlockZ.extend({
-  _type: z.literal("website"),
+  _type: z.literal('website'),
   id: z.string(),
   client: clientZ.shape.name,
   title: z.string().optional().nullable(),

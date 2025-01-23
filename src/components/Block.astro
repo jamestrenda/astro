@@ -1,19 +1,19 @@
 ---
-import type { Block } from "~/types/block";
-import { TextBlock } from "./TextBlock";
-import { DescriptionGrid } from "./DescriptionGrid";
-import { Portfolio } from "./Portfolio";
-import { Hero } from "./Hero";
-import { Form } from "./Form";
-import { validateZodSchema } from "~/utils/validateZodSchema";
-import { descriptionGridZ } from "~/types/descriptionGrid";
-import { heroZ } from "~/types/hero";
-import { portfolioZ } from "~/types/portfolio";
-import { textBlockZ } from "~/types/textBlock";
-import { formBlockZ } from "~/types/formBlock";
-import type { FormBlock } from "~/types/formBlock";
-import { textMarqueeBlockZ } from "~/types/textMarquee";
-import { TextMarqueeBlock } from "./TextMarqueeBlock";
+import type { Block } from '~/types/block';
+import { TextBlock } from './TextBlock';
+import { DescriptionGrid } from './DescriptionGrid';
+import { Portfolio } from './Portfolio';
+import { Hero } from './Hero';
+import { Form } from './Form';
+import { validateZodSchema } from '~/utils/validateZodSchema';
+import { descriptionGridZ } from '~/types/descriptionGrid';
+import { heroZ } from '~/types/hero';
+import { portfolioZ } from '~/types/portfolio';
+import { textBlockZ } from '~/types/textBlock';
+import { formBlockZ } from '~/types/formBlock';
+import type { FormBlock } from '~/types/formBlock';
+import { textMarqueeBlockZ } from '~/types/textMarquee';
+import { TextMarqueeBlock } from './TextMarqueeBlock';
 
 export type Props = Block;
 
@@ -21,62 +21,62 @@ const props = Astro.props;
 let validBlock = null;
 try {
   switch (props._type) {
-    case "descriptionGrid": {
+    case 'descriptionGrid': {
       const validationResult = validateZodSchema(props, [descriptionGridZ]);
       if (!validationResult.success) {
-        console.error("Validation failed:", validationResult.issues);
-        throw new Error("Invalid block data!");
+        console.error('Validation failed:', validationResult.issues);
+        throw new Error('Invalid block data!');
       }
 
       validBlock = validationResult.data;
       break;
     }
-    case "form": {
+    case 'form': {
       const validationResult = validateZodSchema(props, [formBlockZ]);
       if (!validationResult.success) {
-        console.error("Validation failed:", validationResult.issues);
-        throw new Error("Invalid block data!");
+        console.error('Validation failed:', validationResult.issues);
+        throw new Error('Invalid block data!');
       }
 
       validBlock = validationResult.data as FormBlock;
 
       break;
     }
-    case "hero": {
+    case 'hero': {
       const validationResult = validateZodSchema(props, [heroZ]);
       if (!validationResult.success) {
-        console.error("Validation failed:", validationResult.issues);
-        throw new Error("Invalid block data!");
+        console.error('Validation failed:', validationResult.issues);
+        throw new Error('Invalid block data!');
       }
 
       validBlock = validationResult.data;
       break;
     }
-    case "portfolio": {
+    case 'portfolio': {
       const validationResult = validateZodSchema(props, [portfolioZ]);
       if (!validationResult.success) {
-        console.error("Validation failed:", validationResult.issues);
-        throw new Error("Invalid block data!");
+        console.error('Validation failed:', validationResult.issues);
+        throw new Error('Invalid block data!');
       }
 
       validBlock = validationResult.data;
       break;
     }
-    case "textBlock": {
+    case 'textBlock': {
       const validationResult = validateZodSchema(props, [textBlockZ]);
       if (!validationResult.success) {
-        console.error("Validation failed:", validationResult.issues);
-        throw new Error("Invalid block data!");
+        console.error('Validation failed:', validationResult.issues);
+        throw new Error('Invalid block data!');
       }
 
       validBlock = validationResult.data;
       break;
     }
-    case "textMarqueeBlock": {
+    case 'textMarqueeBlock': {
       const validationResult = validateZodSchema(props, [textMarqueeBlockZ]);
       if (!validationResult.success) {
-        console.error("Validation failed:", validationResult.issues);
-        throw new Error("Invalid block data!");
+        console.error('Validation failed:', validationResult.issues);
+        throw new Error('Invalid block data!');
       }
 
       validBlock = validationResult.data;
@@ -93,18 +93,18 @@ try {
 {
   validBlock ? (
     <>
-      {props._type === "descriptionGrid" ? (
+      {props._type === 'descriptionGrid' ? (
         <DescriptionGrid {...validBlock} client:visible />
       ) : null}
-      {props._type === "form" ? <Form {...validBlock} client:visible /> : null}
-      {props._type === "hero" ? <Hero {...validBlock} client:visible /> : null}
-      {props._type === "portfolio" ? (
+      {props._type === 'form' ? <Form {...validBlock} client:visible /> : null}
+      {props._type === 'hero' ? <Hero {...validBlock} client:visible /> : null}
+      {props._type === 'portfolio' ? (
         <Portfolio {...validBlock} client:visible />
       ) : null}
-      {props._type === "textBlock" ? (
+      {props._type === 'textBlock' ? (
         <TextBlock {...validBlock} client:visible />
       ) : null}
-      {props._type === "textMarqueeBlock" ? (
+      {props._type === 'textMarqueeBlock' ? (
         <TextMarqueeBlock {...validBlock} client:visible />
       ) : null}
     </>

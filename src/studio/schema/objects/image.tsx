@@ -1,23 +1,23 @@
-import { defineField, defineType } from "sanity";
-import { ImageIcon } from "lucide-react";
-import anchor from "../fields/anchor";
+import { ImageIcon } from 'lucide-react';
+import { defineField, defineType } from 'sanity';
+import anchor from '../fields/anchor';
 
 export const Icon = () => <ImageIcon size="1em" />;
 
-export const title = "Image";
+export const title = 'Image';
 
 export default defineType({
-  name: "imageObject",
+  name: 'imageObject',
   title,
-  type: "object",
+  type: 'object',
   icon: Icon,
   preview: {
     select: {
-      filename: "image.asset.originalFilename",
-      altText: "altText",
-      caption: "caption",
-      globalAltText: "image.asset.altText",
-      media: "image",
+      filename: 'image.asset.originalFilename',
+      altText: 'altText',
+      caption: 'caption',
+      globalAltText: 'image.asset.altText',
+      media: 'image',
     },
     prepare({ filename, altText, globalAltText, caption, media }) {
       return {
@@ -29,23 +29,23 @@ export default defineType({
   },
   fields: [
     defineField({
-      name: "image",
-      title: "File",
-      type: "image",
+      name: 'image',
+      title: 'File',
+      type: 'image',
       options: {
         hotspot: true,
       },
     }),
     defineField({
-      name: "altText",
-      title: "Alt Text",
-      type: "string",
-      description: "Override the alt text for this asset",
+      name: 'altText',
+      title: 'Alt Text',
+      type: 'string',
+      description: 'Override the alt text for this asset',
     }),
     defineField({
-      name: "caption",
-      title: "Caption",
-      type: "string",
+      name: 'caption',
+      title: 'Caption',
+      type: 'string',
     }),
     anchor,
   ],

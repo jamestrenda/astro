@@ -1,6 +1,88 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@config '../../tailwind.config.mjs';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility bg-glass {
+  /* --background: 0 0% 7%; */
+  --tw-bg-opacity: 0.05;
+  background-color: hsla(var(--background) / var(--tw-bg-opacity));
+  @apply backdrop-blur-md;
+  .dark & {
+    --background: 0 0% 50%;
+    /* --tw-bg-opacity: 0.2; */
+  }
+}
+
+@utility container-inline-size {
+  container-type: inline-size;
+}
+
+@utility fade-in {
+  @apply transition-opacity duration-500 starting:opacity-0;
+}
+
+@utility marquee {
+  --speed: 20s;
+  --item-gap: 0.5rem;
+  --single-slide-speed: calc(var(--speed) / var(--num-items));
+  --item-width-plus-gap: calc(var(--item-width) + var(--item-gap));
+  --track-width: calc(var(--item-width-plus-gap) * calc(var(--num-items) - 1));
+
+  @apply overflow-hidden;
+}
+
+@utility track {
+  @apply container-inline-size w-max;
+  display: grid;
+  grid-template-columns: var(--track-width) [track] 0px [resting];
+}
+
+@utility track-item {
+  grid-area: resting;
+  width: var(--item-width);
+
+  /* TODO: check user motion preferences */
+  @apply animate-marquee;
+  animation-delay: calc(var(--single-slide-speed) * var(--item-position) * -1);
+}
+
+@utility track-item-content {
+  @apply h-10 w-full px-4 md:h-12 md:px-8;
+
+  animation-delay: calc(var(--single-slide-speed) * var(--item-position) * -1);
+
+  /* & > * {
+      @apply block w-full h-full;
+    } */
+}
+
+@utility fadeout-horizontal {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--fade-size, 15%),
+    black calc(100% - var(--fade-size, 15%)),
+    transparent
+  );
+}
 
 @layer base {
   :root {
@@ -27,7 +109,7 @@
     color: hsl(var(--foreground));
   }
   img {
-    @apply block max-w-full w-full h-auto;
+    @apply block h-auto w-full max-w-full;
   }
   .prose {
     h1,
@@ -48,73 +130,5 @@
         @apply mt-6;
       }
     }
-  }
-}
-
-@layer components {
-  .bg-glass {
-    /* --background: 0 0% 7%; */
-    --tw-bg-opacity: 0.05;
-    background-color: hsla(var(--background) / var(--tw-bg-opacity));
-    @apply backdrop-blur-md;
-    .dark & {
-      --background: 0 0% 50%;
-      /* --tw-bg-opacity: 0.2; */
-    }
-  }
-}
-
-@layer utilities {
-  .container-inline-size {
-    container-type: inline-size;
-  }
-  .fade-in {
-    @apply starting:opacity-0 transition-opacity duration-500;
-  }
-  .marquee {
-    --speed: 20s;
-    --item-gap: 0.5rem;
-    --single-slide-speed: calc(var(--speed) / var(--num-items));
-    --item-width-plus-gap: calc(var(--item-width) + var(--item-gap));
-    --track-width: calc(
-      var(--item-width-plus-gap) * calc(var(--num-items) - 1)
-    );
-
-    @apply overflow-hidden;
-  }
-  .track {
-    @apply container-inline-size w-max;
-    display: grid;
-    grid-template-columns: var(--track-width) [track] 0px [resting];
-  }
-  .track-item {
-    grid-area: resting;
-    width: var(--item-width);
-
-    /* TODO: check user motion preferences */
-    @apply animate-marquee;
-    animation-delay: calc(
-      var(--single-slide-speed) * var(--item-position) * -1
-    );
-  }
-  .track-item-content {
-    @apply w-full h-10 md:h-12 px-4 md:px-8;
-
-    animation-delay: calc(
-      var(--single-slide-speed) * var(--item-position) * -1
-    );
-
-    /* & > * {
-      @apply block w-full h-full;
-    } */
-  }
-  .fadeout-horizontal {
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black var(--fade-size, 15%),
-      black calc(100% - var(--fade-size, 15%)),
-      transparent
-    );
   }
 }

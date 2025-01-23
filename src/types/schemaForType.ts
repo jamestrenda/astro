@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 // This function takes in a type, and returns a type to Zod
 export const schemaForType =

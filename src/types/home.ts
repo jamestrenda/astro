@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { pageZ } from "./page";
+import { z } from 'zod';
+import { pageZ } from './page';
 
 export const homeZ = pageZ;
 

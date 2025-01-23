@@ -1,6 +1,6 @@
-import { Badge, Inline, Stack } from "@sanity/ui";
-import { useMemo } from "react";
-import type { FieldProps, StringFieldProps } from "sanity";
+import { Badge, Inline, Stack } from '@sanity/ui';
+import { useMemo } from 'react';
+import type { FieldProps, StringFieldProps } from 'sanity';
 
 export const CharCountInput = ({
   min = 0,
@@ -12,7 +12,7 @@ export const CharCountInput = ({
   max?: number;
 }) => {
   const { inputProps } = props;
-  const value = (inputProps.value as StringFieldProps["value"]) || "";
+  const value = (inputProps.value as StringFieldProps['value']) || '';
 
   const tooManyCharacters = max + 10;
 
@@ -21,21 +21,21 @@ export const CharCountInput = ({
       return value.length < min
         ? undefined
         : value.length >= min && value.length <= max
-          ? "positive"
+          ? 'positive'
           : value.length > max && value.length < tooManyCharacters
-            ? "caution"
-            : "critical";
+            ? 'caution'
+            : 'critical';
     }
-    return "default";
+    return 'default';
   }, [value, min, max, tooManyCharacters]);
   return (
     <Stack space={2}>
       {renderDefault({ ...props, renderDefault })}
       <Inline>
         <Badge mode="outline" tone={handleTone} padding={2} radius={2}>
-          {!max ? "Characters: " : ""}
+          {!max ? 'Characters: ' : ''}
           {value?.length || 0}
-          {max ? ` / ${max}` : ""}
+          {max ? ` / ${max}` : ''}
         </Badge>
       </Inline>
     </Stack>

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const BackgroundRadialGradient = ({
   style,
@@ -8,10 +8,10 @@ export const BackgroundRadialGradient = ({
   return (
     <>
       <div
-        className="absolute  inset-0 pointer-events-none -z-20 rounded-lg"
+        className="pointer-events-none absolute inset-0 -z-20 rounded-lg"
         style={style}
       ></div>
-      <div className="absolute inset-0 pointer-events-none bg-black/80 -z-10 rounded-lg"></div>
+      <div className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-black/80"></div>
     </>
   );
 };

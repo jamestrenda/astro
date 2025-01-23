@@ -1,24 +1,24 @@
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "~/utils/misc";
-import { CheckCircle2Icon, InfoIcon } from "lucide-react";
+import { cva, type VariantProps } from 'class-variance-authority';
+import { CheckCircle2Icon, InfoIcon } from 'lucide-react';
+import * as React from 'react';
+import { cn } from '~/utils/misc';
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  'relative w-full rounded-lg border p-4 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
   {
     variants: {
       variant: {
-        default: "bg-background text-foreground",
+        default: 'bg-background text-foreground',
         destructive:
-          "bg-destructive-light border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+          'border-destructive/50 bg-destructive-light text-destructive dark:border-destructive [&>svg]:text-destructive',
         positive:
-          "bg-positive-light border-positive/50 text-positive dark:border-positive [&>svg]:text-positive",
+          'border-positive/50 bg-positive-light text-positive dark:border-positive [&>svg]:text-positive',
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: 'default',
     },
-  }
+  },
 );
 
 const Alert = React.forwardRef<
@@ -31,7 +31,7 @@ const Alert = React.forwardRef<
     className={cn(alertVariants({ variant }), className)}
     {...props}
   >
-    {variant === "destructive" ? (
+    {variant === 'destructive' ? (
       <InfoIcon className="h-5 w-5" />
     ) : (
       <CheckCircle2Icon className="h-5 w-5" />
@@ -39,7 +39,7 @@ const Alert = React.forwardRef<
     {children}
   </div>
 ));
-Alert.displayName = "Alert";
+Alert.displayName = 'Alert';
 
 const AlertTitle = React.forwardRef<
   HTMLParagraphElement,
@@ -47,11 +47,11 @@ const AlertTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h5
     ref={ref}
-    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    className={cn('mb-1 font-medium leading-none tracking-tight', className)}
     {...props}
   />
 ));
-AlertTitle.displayName = "AlertTitle";
+AlertTitle.displayName = 'AlertTitle';
 
 const AlertDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -59,10 +59,10 @@ const AlertDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    className={cn('text-sm [&_p]:leading-relaxed', className)}
     {...props}
   />
 ));
-AlertDescription.displayName = "AlertDescription";
+AlertDescription.displayName = 'AlertDescription';
 
-export { Alert, AlertTitle, AlertDescription };
+export { Alert, AlertDescription, AlertTitle };

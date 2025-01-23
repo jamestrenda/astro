@@ -1,7 +1,7 @@
-import { cva } from "class-variance-authority";
-import { cn } from "~/utils/misc";
-import type { Block, Props as $ } from "astro-portabletext/types";
-import { forwardRef } from "react";
+import type { Props as $, Block } from 'astro-portabletext/types';
+import { cva } from 'class-variance-authority';
+import { forwardRef } from 'react';
+import { cn } from '~/utils/misc';
 
 type HeadingLevel = `h${1 | 2 | 3 | 4 | 5}`;
 export interface Props extends Partial<$<Block>> {
@@ -10,22 +10,22 @@ export interface Props extends Partial<$<Block>> {
 }
 
 const variants = cva(
-  "heading font-sans text-foreground font-bold [text-wrap:balance]",
+  'heading font-sans font-bold text-foreground [text-wrap:balance]',
   {
     variants: {
       variant: {
-        h1: "text-5xl lg:text-6xl text-background dark:text-foreground text-balance",
-        h2: "text-3xl md:text-4xl dark:text-foreground mb-6",
-        h3: "text-xl md:text-2xl text-primary dark:text-indigo-300",
-        h4: "text-xl",
-        h5: "text-base",
-        p: "font-medium text-2xl text-accent",
+        h1: 'text-balance text-5xl text-background dark:text-foreground lg:text-6xl',
+        h2: 'mb-6 text-3xl dark:text-foreground md:text-4xl',
+        h3: 'text-xl text-primary dark:text-indigo-300 md:text-2xl',
+        h4: 'text-xl',
+        h5: 'text-base',
+        p: 'text-2xl font-medium text-accent',
       },
     },
     defaultVariants: {
-      variant: "h2",
+      variant: 'h2',
     },
-  }
+  },
 );
 
 export const Heading = forwardRef<
@@ -33,13 +33,13 @@ export const Heading = forwardRef<
   React.HTMLProps<HTMLHeadingElement> & Props
 >(function Heading(
   { level, node, className, children, ...props },
-  forwardedRef
+  forwardedRef,
 ) {
   const el = level ?? (node?.style as HeadingLevel);
 
-  let Component: HeadingLevel = el ?? "h2";
+  let Component: HeadingLevel = el ?? 'h2';
 
-  const classes = cn(variants({ variant: el as Props["level"] }), className);
+  const classes = cn(variants({ variant: el as Props['level'] }), className);
 
   return (
     <Component ref={forwardedRef} className={classes} {...props}>

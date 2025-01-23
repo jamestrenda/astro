@@ -1,7 +1,7 @@
-import { Badge, Flex, Box, type BadgeProps } from "@sanity/ui";
-import { useMemo, type PropsWithChildren } from "react";
-import type { PreviewProps } from "sanity";
-import { capitalize } from "~/utils/misc";
+import { Badge, Box, Flex, type BadgeProps } from '@sanity/ui';
+import { useMemo, type PropsWithChildren } from 'react';
+import type { PreviewProps } from 'sanity';
+import { capitalize } from '~/utils/misc';
 
 type CastPreviewProps = PreviewProps & {
   isPrimary?: boolean;
@@ -15,15 +15,15 @@ export function EmailPreview(props: PreviewProps) {
   const badgeProps: (PropsWithChildren & BadgeProps) | null = useMemo(() => {
     if (isPrimary) {
       return {
-        children: "Primary",
-        tone: "positive",
+        children: 'Primary',
+        tone: 'positive',
       };
     }
 
     if (department) {
       return {
         children: capitalize(department),
-        tone: "default",
+        tone: 'default',
       };
     }
 

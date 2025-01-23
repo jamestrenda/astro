@@ -1,11 +1,11 @@
-import { z } from "zod";
-import { seoZ } from "./seo";
-import { blockZ } from "./block";
+import { z } from 'zod';
+import { blockZ } from './block';
+import { seoZ } from './seo';
 
 export const pageZ = z.object({
-  _type: z.literal("page"),
+  _type: z.literal('page'),
   slug: z.string(),
-  blocks: z.array(blockZ).nonempty("Page must have at least one block"),
+  blocks: z.array(blockZ).nonempty('Page must have at least one block'),
   seo: seoZ,
 });
 

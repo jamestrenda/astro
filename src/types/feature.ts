@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { baseBlockZ } from "./base";
+import { z } from 'zod';
+import { baseBlockZ } from './base';
 
 export const featureZ = baseBlockZ.extend({
   name: z.string().optional().nullable(),

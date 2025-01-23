@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from 'sanity';
 
 export const socialMedia = defineType({
   name: 'socialMedia',
@@ -7,7 +7,7 @@ export const socialMedia = defineType({
     defineField({
       name: 'profiles',
       type: 'array',
-      of: [{type: 'profile'}],
+      of: [{ type: 'profile' }],
     }),
   ],
-})
+});

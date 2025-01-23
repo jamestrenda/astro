@@ -1,9 +1,9 @@
-import { motion } from "motion/react";
-import { forwardRef, type ComponentProps, type PropsWithChildren } from "react";
+import { motion } from 'motion/react';
+import { forwardRef, type ComponentProps, type PropsWithChildren } from 'react';
 
 const Component = forwardRef<
   HTMLDivElement,
-  ComponentProps<"div"> & PropsWithChildren
+  ComponentProps<'div'> & PropsWithChildren
 >(({ className, children }, ref) => {
   return (
     <motion.div

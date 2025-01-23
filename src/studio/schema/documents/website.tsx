@@ -1,62 +1,62 @@
-import { defineField, defineType } from "sanity";
-import { GlobeIcon } from "lucide-react";
-import { getPortableTextBlocks } from "~/studio/lib/utils";
+import { GlobeIcon } from 'lucide-react';
+import { defineField, defineType } from 'sanity';
+import { getPortableTextBlocks } from '~/studio/lib/utils';
 
 export default defineType({
-  name: "website",
-  type: "document",
-  title: "Website",
+  name: 'website',
+  type: 'document',
+  title: 'Website',
   icon: () => <GlobeIcon size="1em" />,
   fields: [
     defineField({
-      name: "client",
-      title: "Client",
-      type: "reference",
-      to: [{ type: "client" }],
+      name: 'client',
+      title: 'Client',
+      type: 'reference',
+      to: [{ type: 'client' }],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "title",
-      title: "Title",
-      type: "string",
+      name: 'title',
+      title: 'Title',
+      type: 'string',
     }),
     defineField({
-      name: "description",
-      title: "Description",
-      type: "array",
+      name: 'description',
+      title: 'Description',
+      type: 'array',
       of: getPortableTextBlocks({
-        styles: ["normal"],
+        styles: ['normal'],
         lists: [],
       }),
     }),
     defineField({
-      name: "url",
-      title: "URL",
-      type: "url",
+      name: 'url',
+      title: 'URL',
+      type: 'url',
       description:
         "URL of the website (if it differs from the client's primary website)",
     }),
     defineField({
-      name: "image",
-      title: "Image",
-      type: "imageObject",
+      name: 'image',
+      title: 'Image',
+      type: 'imageObject',
     }),
     defineField({
-      name: "features",
-      title: "Features",
-      type: "array",
+      name: 'features',
+      title: 'Features',
+      type: 'array',
       of: [
         {
-          type: "feature",
+          type: 'feature',
         },
       ],
     }),
   ],
   preview: {
     select: {
-      title: "title",
-      client: "client.name",
-      media: "image.image.asset",
+      title: 'title',
+      client: 'client.name',
+      media: 'image.image.asset',
     },
     prepare(selection) {
       return {

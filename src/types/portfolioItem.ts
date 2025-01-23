@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { websiteZ } from "./website";
+import { z } from 'zod';
+import { websiteZ } from './website';
 
 // TOOD: convert to z.union([...]) to include other types
 export const portfolioItemZ = websiteZ;

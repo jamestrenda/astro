@@ -1,18 +1,18 @@
-import { forwardRef, useCallback, useState, type ComponentProps } from "react";
-import { motion } from "motion/react";
-import { cn } from "~/utils/misc";
-import { FadeIn } from "./FadeIn";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { Container } from "./Container";
-import { Overline } from "./Overline";
-import BrowserWindow from "./BrowserWindow";
-import { useMeasure } from "@uidotdev/usehooks";
-import { Heading } from "./Heading";
-import { CircleCheckBigIcon, ExternalLinkIcon } from "lucide-react";
-import type { Portfolio as Props } from "~/types/portfolio";
-import { SanityImage } from "./Image";
-import { PortableText } from "./PortableText/PortableText";
-import { getRadialGradient } from "~/utils/getRadialGradient";
+import { useMeasure } from '@uidotdev/usehooks';
+import { CircleCheckBigIcon, ExternalLinkIcon } from 'lucide-react';
+import { motion } from 'motion/react';
+import { forwardRef, useCallback, useState, type ComponentProps } from 'react';
+import type { Portfolio as Props } from '~/types/portfolio';
+import { getRadialGradient } from '~/utils/getRadialGradient';
+import { cn } from '~/utils/misc';
+import BrowserWindow from './BrowserWindow';
+import { Container } from './Container';
+import { FadeIn } from './FadeIn';
+import { Heading } from './Heading';
+import { SanityImage } from './Image';
+import { Overline } from './Overline';
+import { PortableText } from './PortableText/PortableText';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 export const Portfolio = ({ title, items }: Props) => {
   const totalItems = items.length;
@@ -21,27 +21,27 @@ export const Portfolio = ({ title, items }: Props) => {
   const [prevIndex, setPrevIndex] = useState<number>(activeIndex);
   const jumpCount = Math.abs(activeIndex - prevIndex);
 
-  const direction = activeIndex >= prevIndex ? "forwards" : "backwards";
+  const direction = activeIndex >= prevIndex ? 'forwards' : 'backwards';
 
   const handleChange = useCallback(
-    (tab?: Props["items"][number]["id"]) => {
+    (tab?: Props['items'][number]['id']) => {
       setPrevIndex(activeIndex);
       setActiveTab(tab || items[activeIndex + 1]?.id || items[0].id);
     },
-    [activeIndex, items]
+    [activeIndex, items],
   );
 
   return (
     <div
-      className="relative dark:!bg-none"
+      className="dark:bg-none! relative"
       style={{
-        backgroundImage: `${getRadialGradient("#6366f1", "rgba(0,0,0,.8)", "hsla(0 0% 0% / .9)", "70% 90%", ["0%", "50%", "90%"])}, ${getRadialGradient("hsla(0 0% 0% / 0)", "#e0e7ff", "#4338ca", "0% 100%", ["0%", "30%", "90%"])}`,
+        backgroundImage: `${getRadialGradient('#6366f1', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '70% 90%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#e0e7ff', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
       }}
     >
-      <div className="bg-black/20 dark:hidden backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
-      <div className="hidden bg-black dark:block backdrop-blur-lg h-[480px] lg:h-[680px]"></div>
+      <div className="h-[480px] bg-black/20 backdrop-blur-lg dark:hidden lg:h-[680px]"></div>
+      <div className="hidden h-[480px] bg-black backdrop-blur-lg dark:block lg:h-[680px]"></div>
       <div className="absolute inset-x-0 top-24 lg:top-40">
-        <Container className="max-w-none  flex flex-col  items-center">
+        <Container className="flex max-w-none flex-col items-center">
           {title && (
             <h2>
               <Overline className="">{title}</Overline>
@@ -51,7 +51,7 @@ export const Portfolio = ({ title, items }: Props) => {
             defaultValue={items[0].id}
             value={activeTab}
             onValueChange={handleChange}
-            className="flex flex-col w-full"
+            className="flex w-full flex-col"
           >
             <TabsList className="py-4">
               {items.map((item) => {
@@ -67,7 +67,7 @@ export const Portfolio = ({ title, items }: Props) => {
                 );
               })}
             </TabsList>
-            <div className="w-full max-w-7xl mx-auto mt-10 relative">
+            <div className="relative mx-auto mt-10 w-full max-w-7xl">
               {items.map((item, index) => {
                 const active = activeTab === item.id;
                 const inMiddle = 0 < index && index < totalItems - 1;
@@ -97,21 +97,21 @@ export const Portfolio = ({ title, items }: Props) => {
           </Tabs>
         </Container>
       </div>
-      <div className="h-80 lg:h-96 bg-background dark:bg-zinc-900"></div>
+      <div className="h-80 bg-background dark:bg-zinc-900 lg:h-96"></div>
     </div>
   );
 };
 
 const Project = forwardRef<
   HTMLDivElement,
-  Omit<ComponentProps<"div">, "onClick" | "title"> &
-    Omit<Props["items"][number], "client"> & {
+  Omit<ComponentProps<'div'>, 'onClick' | 'title'> &
+    Omit<Props['items'][number], 'client'> & {
       index: number;
       active: boolean;
       jumping: boolean;
       visible: boolean;
       offset: number;
-      direction: "forwards" | "backwards";
+      direction: 'forwards' | 'backwards';
       totalItems: number;
       onClick: (id?: string) => void;
     }
@@ -129,7 +129,7 @@ const Project = forwardRef<
       offset,
       ...props
     },
-    forwardedRef
+    forwardedRef,
   ) => {
     const [ref, { width }] = useMeasure();
 
@@ -153,13 +153,13 @@ const Project = forwardRef<
         <motion.div
           ref={ref}
           className={cn(
-            "group absolute top-16 inset-x-0 rounded-lg shadow-xl",
-            "w-full mx-auto origin-top",
+            'group absolute inset-x-0 top-16 rounded-lg shadow-xl',
+            'mx-auto w-full origin-top',
             !visible
-              ? "pointer-events-none"
+              ? 'pointer-events-none'
               : active
-                ? "cursor-default"
-                : "cursor-pointer"
+                ? 'cursor-default'
+                : 'cursor-pointer',
           )}
           initial={{
             y: 0,
@@ -173,43 +173,43 @@ const Project = forwardRef<
           whileHover="hover"
           variants={{
             hover: {
-              "--lightness": visible && !active ? `20%` : `${index * 7}%`,
-              transition: { duration: 0.3, ease: "easeOut" },
+              '--lightness': visible && !active ? `20%` : `${index * 7}%`,
+              transition: { duration: 0.3, ease: 'easeOut' },
             },
             animate: {
               scale,
               opacity: !visible
                 ? [1, 1, 0]
-                : active && direction === "backwards"
+                : active && direction === 'backwards'
                   ? [0, 1, 1]
                   : [1, 1, 1],
               y: !visible
                 ? [0, 60, 60]
                 : active
-                  ? direction === "backwards"
+                  ? direction === 'backwards'
                     ? [60, 0, 0]
                     : [0, 0, 0]
-                  : jumping && direction === "backwards"
+                  : jumping && direction === 'backwards'
                     ? [60, 0, 0]
                     : [0, 0, 0],
               marginTop: -index * 16,
-              "--lightness": visible ? `${30 - offset * 10}%` : 0,
+              '--lightness': visible ? `${30 - offset * 10}%` : 0,
               transition: {
                 y: {
-                  type: "tween",
-                  ease: "easeOut",
+                  type: 'tween',
+                  ease: 'easeOut',
                   duration: 0.5,
                   times: [0, 0.5, 1],
                 },
                 opacity: {
-                  type: "tween",
-                  ease: "easeOut",
+                  type: 'tween',
+                  ease: 'easeOut',
                   duration: 0.7,
                   times: [0, 0.333, 1],
                 },
                 scale: {
-                  type: "tween",
-                  ease: "easeOut",
+                  type: 'tween',
+                  ease: 'easeOut',
                   duration: 0.5,
                 },
                 delayChildren: 0.3,
@@ -225,10 +225,10 @@ const Project = forwardRef<
             withChrome={active}
             withStack={false}
             className={cn(
-              " overflow-hidden !p-0 !rounded-lg",
+              'p-0! rounded-lg! overflow-hidden',
               !active
-                ? "backdrop-blur-lg transition duration-500 bg-glass dark:bg-zinc-900/80"
-                : "!bg-black dark:!bg-zinc-950 "
+                ? 'bg-glass backdrop-blur-lg transition duration-500 dark:bg-zinc-900/80'
+                : 'bg-black! dark:bg-zinc-950!',
             )}
           >
             {/* TODO: need to add these somewhere
@@ -248,8 +248,8 @@ const Project = forwardRef<
               } */}
             <motion.div
               className={cn(
-                "grid bg-black max-lg:grid-cols-1 max-lg:max-h-[480px] lg:grid-cols-12 lg:h-[680px] mt-14 pt-8 overflow-y-auto overflow-x-hidden",
-                active ? "bg-black dark:bg-zinc-950" : ""
+                'mt-14 grid overflow-y-auto overflow-x-hidden bg-black pt-8 max-lg:max-h-[480px] max-lg:grid-cols-1 lg:h-[680px] lg:grid-cols-12',
+                active ? 'bg-black dark:bg-zinc-950' : '',
               )}
               variants={{
                 hidden: { opacity: 0 },
@@ -263,10 +263,10 @@ const Project = forwardRef<
                 },
               }}
               initial="hidden"
-              animate={active ? "visible" : undefined}
+              animate={active ? 'visible' : undefined}
             >
               <div className="col-span-7 lg:order-2">
-                <FadeIn className="lg:absolute lg:-bottom-24 w-full h-auto max-lg:order-1 max-lg:-mr-4 ml-auto">
+                <FadeIn className="ml-auto h-auto w-full max-lg:order-1 max-lg:-mr-4 lg:absolute lg:-bottom-24">
                   {image?.image && (
                     <SanityImage
                       src={image.image}
@@ -278,12 +278,12 @@ const Project = forwardRef<
                       }}
                       preview={true}
                       mode="contain"
-                      className="h-auto w-auto object-contain "
+                      className="h-auto w-auto object-contain"
                     />
                   )}
                 </FadeIn>
               </div>
-              <div className="max-lg:order-2 px-6 max-lg:pt-12 pb-12 lg:px-16 col-span-5">
+              <div className="col-span-5 px-6 pb-12 max-lg:order-2 max-lg:pt-12 lg:px-16">
                 <div className="space-y-6">
                   {title && (
                     <FadeIn>
@@ -292,22 +292,22 @@ const Project = forwardRef<
                   )}
                   {description && (
                     <FadeIn>
-                      <div className="text-muted text-lg font-light">
+                      <div className="text-lg font-light text-muted">
                         <PortableText portableText={description} />
                       </div>
                     </FadeIn>
                   )}
                   {features && (
-                    <ul className=" space-y-4">
+                    <ul className="space-y-4">
                       {features.map((feature) => (
                         <li key={feature._key}>
                           <FadeIn>
                             <span className="flex">
-                              <CircleCheckBigIcon className="mr-2 mt-1 shrink-0 w-4 h-4 text-green-400" />
+                              <CircleCheckBigIcon className="mr-2 mt-1 h-4 w-4 shrink-0 text-green-400" />
                               <span className="text-background dark:text-foreground">
                                 {feature.name && (
                                   <strong className="text-green-400">
-                                    {feature.name}.{" "}
+                                    {feature.name}.{' '}
                                   </strong>
                                 )}
                                 {feature.description}
@@ -324,10 +324,10 @@ const Project = forwardRef<
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex flex-nowrap items-center text-foreground dark:text-background bg-white text-sm px-4 py-2 rounded-full"
+                        className="inline-flex flex-nowrap items-center rounded-full bg-white px-4 py-2 text-sm text-foreground dark:text-background"
                       >
                         Visit website
-                        <ExternalLinkIcon className="ml-2 w-4 h-4" />
+                        <ExternalLinkIcon className="ml-2 h-4 w-4" />
                       </a>
                     </FadeIn>
                   )}
@@ -338,5 +338,5 @@ const Project = forwardRef<
         </motion.div>
       </TabsContent>
     );
-  }
+  },
 );

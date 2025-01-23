@@ -1,10 +1,10 @@
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import * as React from "react";
-import { cn } from "~/utils/misc";
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import * as React from 'react';
+import { cn } from '~/utils/misc';
 
 export type CheckboxProps = Omit<
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>,
-  "type"
+  'type'
 > & {
   type?: string;
 };
@@ -16,13 +16,13 @@ const Checkbox = React.forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
-      "ring-brand peer h-4 w-4 shrink-0 rounded-sm border border-primary disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
-      className
+      'ring-brand rounded-xs data-[state=checked]:text-primary-foreground peer h-4 w-4 shrink-0 border border-primary disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary',
+      className,
     )}
     {...props}
   >
     <CheckboxPrimitive.Indicator
-      className={cn("flex items-center justify-center text-current")}
+      className={cn('flex items-center justify-center text-current')}
     >
       <svg viewBox="0 0 8 8">
         <path

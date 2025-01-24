@@ -77,18 +77,18 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
         >
           <BackgroundRadialGradient
             style={{
-              backgroundImage: `${getRadialGradient('#c7d2fe', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '60% 90%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
+              backgroundImage: `${getRadialGradient('var(--color-indigo-400)', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '60% 90%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
             }}
           />
           <Container
             variant="tight"
-            className="relative z-40 grid gap-16 py-16 sm:pb-0 lg:grid-cols-2"
+            className="relative z-50 grid gap-16 py-16 sm:pb-0 lg:grid-cols-2"
           >
             <div className="space-y-3 text-lg [&_.heading]:text-background dark:[&_.heading]:text-foreground [&_p]:text-gray-500 dark:[&_p]:text-gray-500">
               {text && <PortableText portableText={text} />}
             </div>
 
-            <div className="grid items-start gap-4">
+            <div className="grid items-start gap-2">
               <FormError errors={form.errors} id={form.errorId} />
               {successMessage && (
                 <Alert variant="positive">
@@ -102,7 +102,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                 {...getFormProps(form)}
                 id={form.id}
               >
-                <fieldset disabled={submitting} className="grid gap-4">
+                <fieldset disabled={submitting} className="grid gap-2">
                   {/* HONEYPOT */}
                   <input
                     type="text"
@@ -167,7 +167,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                         return (
                           <div
                             key={field._key}
-                            className="grid gap-4 md:grid-cols-2"
+                            className="grid gap-2 md:grid-cols-2"
                           >
                             {field.fields.map((field) => {
                               switch (field._type) {

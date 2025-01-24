@@ -19,7 +19,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
               backgroundImage: `${getRadialGradient('var(--color-zinc-500)', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '40% 30%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
             }}
           />
-          <div className="[&_p]:text-gray-500! z-40 col-span-11 mt-auto w-full space-y-3 max-xs:mb-4 xs:col-start-1 xs:col-end-8 xs:mt-16 xl:col-end-7 [&_p]:text-xl [&_p]:font-light dark:[&_p]:text-foreground md:[&_p]:text-2xl">
+          <div className="[&_p]:text-gray-500! z-60 col-span-11 mt-auto w-full space-y-3 max-xs:mb-4 xs:col-start-1 xs:col-end-8 xs:mt-16 xl:col-end-7 [&_p]:text-xl [&_p]:font-light dark:[&_p]:text-foreground md:[&_p]:text-2xl">
             {valueProposition && (
               <PortableText portableText={valueProposition} />
             )}
@@ -84,7 +84,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                 q: 100,
               }}
               preview={true}
-              className="pointer-events-none absolute bottom-0 right-0 z-50 aspect-square max-h-[400px] object-cover contrast-[1.1] dark:brightness-75 max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] md:rounded-br-lg lg:w-[700px]"
+              className="pointer-events-none absolute bottom-0 right-0 z-50 aspect-square max-h-[400px] rounded-br-lg object-cover contrast-[1.1] dark:brightness-75 max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] lg:w-[700px]"
             />
           )}
         </BrowserWindow>

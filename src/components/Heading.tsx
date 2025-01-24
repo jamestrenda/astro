@@ -14,7 +14,7 @@ const variants = cva(
   {
     variants: {
       variant: {
-        h1: 'text-balance text-5xl text-background dark:text-foreground max-[400px]:text-4xl lg:text-7xl xl:text-8xl',
+        h1: 'text-balance text-5xl text-background dark:text-foreground max-[400px]:text-4xl lg:text-7xl',
         h2: 'mb-6 text-3xl dark:text-foreground md:text-4xl',
         h3: 'text-xl text-indigo-600 dark:text-indigo-500 md:text-2xl',
         h4: 'text-xl',

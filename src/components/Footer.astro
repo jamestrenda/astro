@@ -3,6 +3,8 @@ import dayjs from 'dayjs';
 import type { Social } from '~/types/social';
 import { Container } from './Container';
 import SocialLinks from './SocialLinks.astro';
+import { HeartIcon } from 'lucide-react';
+import { RiHeartFill } from '@remixicon/react';
 
 interface Props {
   siteTitle: string;
@@ -16,12 +18,16 @@ const year = dayjs().format('YYYY');
 
 <footer class="bg-zinc-950">
   <Container
-    className="flex items-center justify-between py-4 text-sm text-background dark:text-foreground"
+    className="flex items-center justify-between py-8 text-sm text-background dark:text-foreground max-sm:flex-col max-sm:gap-y-4 sm:py-4"
   >
-    <div>
-      &copy; {year}
+    <div class="sm:order-2">{social && <SocialLinks links={social} />}</div>
+    <div class="space-y-2 max-sm:text-center">
       {siteTitle}
+      &copy; {year}
+      <div class="flex items-center gap-1">
+        Crafted with <RiHeartFill className="fill-red-500" size=".8em" /> in East
+        TN
+      </div>
     </div>
-    <div>{social && <SocialLinks links={social} />}</div>
   </Container>
 </footer>

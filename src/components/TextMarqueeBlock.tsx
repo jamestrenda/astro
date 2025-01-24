@@ -5,7 +5,7 @@ import { Container } from './Container';
 export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
   return (
     <Container>
-      <div className="overflow-clip bg-transparent py-8">
+      <div className="-mx-4 overflow-clip bg-transparent py-8">
         {marquees && (
           <div className="fadeout-horizontal grid justify-items-start gap-2">
             {marquees.map((marquee, i) => {

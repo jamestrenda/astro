@@ -39,7 +39,7 @@ export const Portfolio = ({ title, items }: Props) => {
           backgroundImage: `${getRadialGradient('var(--color-zinc-600)', 'var(--color-zinc-900)', 'var(--color-zinc-950)', '50% 100%', ['0%', '50%', '100%'])}`,
         }}
       >
-        <div className="absolute inset-0 bg-black/5 backdrop-blur-lg"></div>
+        <div className="border-x-(--pattern-fg) [--pattern-fg:var(--color-zinc-500)]/5 dark:[--pattern-fg:var(--color-black)]/10 absolute inset-0 col-start-4 row-span-5 row-start-1 border-x bg-black/5 bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed backdrop-blur-lg"></div>
       </div>
       <div className="absolute inset-x-0 top-24 lg:top-40">
         <Container className="flex max-w-none flex-col items-center">

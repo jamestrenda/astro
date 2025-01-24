@@ -6,6 +6,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   withChrome?: boolean;
   withStack?: boolean;
+  withStripes?: boolean;
   stackCount?: number;
   stackPosition?: 'top' | 'bottom';
 }
@@ -17,6 +18,7 @@ const BrowserWindow = memo(
     withStack = true,
     children,
     stackCount = 5,
+    withStripes = false,
     stackPosition = 'bottom',
   }: Props) => {
     return (
@@ -35,7 +37,7 @@ const BrowserWindow = memo(
           {withChrome && (
             <div
               className={cn(
-                'bg-glass absolute inset-x-0 top-0 z-30 grid h-14 items-center rounded-t-lg',
+                'bg-glass absolute inset-x-0 top-0 z-40 grid h-14 items-center rounded-t-lg',
               )}
             >
               <div className="flex h-full items-center justify-between px-4">
@@ -46,6 +48,9 @@ const BrowserWindow = memo(
                 </div>
               </div>
             </div>
+          )}
+          {withStripes && (
+            <div className="border-x-(--pattern-fg) [--pattern-fg:var(--color-zinc-500)]/5 dark:[--pattern-fg:var(--color-black)]/10 col-start-0 row-start-0 absolute inset-0 z-30 row-span-5 bg-black/5 bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed"></div>
           )}
           {children}
         </div>

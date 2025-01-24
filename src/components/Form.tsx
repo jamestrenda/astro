@@ -70,7 +70,11 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
   return (
     <div className="bg-[linear-gradient(to_bottom,transparent_20%,var(--color-indigo-700)_20%)]">
       <Container padding={true} className="pt-0!">
-        <BrowserWindow stackPosition="top" className="max-md:rounded-bl-lg!">
+        <BrowserWindow
+          withStripes
+          stackPosition="top"
+          className="max-md:rounded-bl-lg!"
+        >
           <BackgroundRadialGradient
             style={{
               backgroundImage: `${getRadialGradient('#c7d2fe', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '60% 90%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
@@ -78,7 +82,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
           />
           <Container
             variant="tight"
-            className="grid gap-16 py-16 sm:pb-0 lg:grid-cols-2"
+            className="relative z-40 grid gap-16 py-16 sm:pb-0 lg:grid-cols-2"
           >
             <div className="space-y-3 text-lg [&_.heading]:text-background dark:[&_.heading]:text-foreground [&_p]:text-gray-500 dark:[&_p]:text-gray-500">
               {text && <PortableText portableText={text} />}

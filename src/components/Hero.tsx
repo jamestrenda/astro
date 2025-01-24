@@ -1,4 +1,3 @@
-import React, { useMemo } from 'react';
 import type { Hero as Props } from '~/types/hero';
 import { getRadialGradient } from '~/utils/getRadialGradient';
 import { BackgroundRadialGradient } from './BackgroundRadialGradient';
@@ -11,7 +10,10 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
   return (
     <div className="max-md:[&>div]:px-0! pb-15 relative">
       <Container>
-        <BrowserWindow className="relative grid min-h-[550px] grid-cols-12 max-md:rounded-t-none md:min-h-[660px]">
+        <BrowserWindow
+          withStripes
+          className="relative grid min-h-[550px] grid-cols-12 max-md:rounded-t-none md:min-h-[660px]"
+        >
           <BackgroundRadialGradient
             style={{
               backgroundImage: `${getRadialGradient('var(--color-zinc-500)', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '40% 30%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
@@ -23,7 +25,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
             )}
           </div>
 
-          {marquees && (
+          {/* {marquees && (
             <div className="my-6 grid gap-2 self-start [--item-width:100px] sm:mb-0 md:mt-12 md:[--item-width:160px]">
               {marquees.map((marquee, i) => {
                 const numItems = useMemo(
@@ -72,7 +74,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                 );
               })}
             </div>
-          )}
+          )} */}
           {image && (
             <SanityImage
               src={image.image}
@@ -82,7 +84,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                 q: 100,
               }}
               preview={true}
-              className="pointer-events-none absolute bottom-0 right-0 z-30 aspect-square max-h-[400px] object-cover contrast-[1.1] dark:brightness-75 max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] md:rounded-br-lg lg:w-[700px]"
+              className="pointer-events-none absolute bottom-0 right-0 z-50 aspect-square max-h-[400px] object-cover contrast-[1.1] dark:brightness-75 max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] md:rounded-br-lg lg:w-[700px]"
             />
           )}
         </BrowserWindow>

@@ -77,7 +77,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
         >
           <BackgroundRadialGradient
             style={{
-              backgroundImage: `${getRadialGradient('var(--color-indigo-400)', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '60% 90%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
+              backgroundImage: `${getRadialGradient('var(--color-zinc-600)', 'rgba(0,0,0,.8)', 'hsla(0 0% 0% / .9)', '60% 90%', ['0%', '50%', '90%'])}, ${getRadialGradient('hsla(0 0% 0% / 0)', '#c7d2fe', '#4338ca', '0% 100%', ['0%', '30%', '90%'])}`,
             }}
           />
           <Container

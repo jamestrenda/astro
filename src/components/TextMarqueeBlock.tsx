@@ -26,27 +26,36 @@ export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
                           <div
                             key={item._key}
                             className={cn(
-                              'text-nowrap rounded-full bg-gray-200/50 px-6 py-2 font-medium text-foreground backdrop-blur-md dark:bg-black/50',
-                              item.featured
-                                ? 'text-indigo-600 dark:text-indigo-400'
-                                : '',
+                              'text-nowrap rounded-full bg-gray-200/50 px-6 py-2 font-medium text-foreground backdrop-blur-lg dark:bg-black/50',
                             )}
                           >
-                            {item.value}
+                            <span
+                              className={cn(
+                                item.featured
+                                  ? 'bg-gradient-to-r from-indigo-600 from-0% via-indigo-500 to-indigo-600 to-100% bg-clip-text text-sm font-semibold text-transparent'
+                                  : '',
+                              )}
+                            >
+                              {item.value}
+                            </span>
                           </div>
                         ))}
                         {marquee.items.map((item, i) => (
                           <div
                             key={item._key}
-                            aria-hidden="true"
                             className={cn(
-                              'text-nowrap rounded-full bg-gray-200/50 px-6 py-2 font-medium text-foreground backdrop-blur-md dark:bg-black/50',
-                              item.featured
-                                ? 'text-indigo-600 dark:text-indigo-400'
-                                : '',
+                              'text-nowrap rounded-full bg-gray-200/50 px-6 py-2 font-medium text-foreground backdrop-blur-lg dark:bg-black/50',
                             )}
                           >
-                            {item.value}
+                            <span
+                              className={cn(
+                                item.featured
+                                  ? 'bg-gradient-to-r from-indigo-600 from-0% via-indigo-500 to-indigo-600 to-100% bg-clip-text text-sm font-semibold text-transparent'
+                                  : '',
+                              )}
+                            >
+                              {item.value}
+                            </span>
                           </div>
                         ))}
                       </>

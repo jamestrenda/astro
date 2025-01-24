@@ -51,7 +51,7 @@ export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
             }}
           >
             {isDark ? (
-              <LightbulbOffIcon className="shadow-xs h-7 w-7 rounded-full bg-indigo-500 p-1 max-md:dark:bg-white" />
+              <LightbulbOffIcon className="shadow-xs h-7 w-7 rounded-full bg-indigo-600 p-1 max-md:dark:bg-white" />
             ) : (
               <LightbulbIcon
                 className="shadow-xs h-7 w-7 rounded-full bg-indigo-600 p-1"

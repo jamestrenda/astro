@@ -3,7 +3,6 @@ import { CircleCheckBigIcon, ExternalLinkIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { forwardRef, useCallback, useState, type ComponentProps } from 'react';
 import type { Portfolio as Props } from '~/types/portfolio';
-import { getRadialGradient } from '~/utils/getRadialGradient';
 import { cn } from '~/utils/misc';
 import BrowserWindow from './BrowserWindow';
 import { Container } from './Container';
@@ -35,17 +34,19 @@ export const Portfolio = ({ title, items }: Props) => {
     <div className="relative">
       <div
         className="relative h-[480px] lg:h-[680px]"
-        style={{
-          backgroundImage: `${getRadialGradient('var(--color-zinc-600)', 'var(--color-zinc-900)', 'var(--color-zinc-950)', '50% 100%', ['0%', '50%', '100%'])}`,
-        }}
+        // style={{
+        //   backgroundImage: `linear-gradient(to right, var(--color-zinc-900), var(--color-zinc-950)), ${getRadialGradient('var(--color-zinc-700)', 'var(--color-zinc-900)', 'var(--color-zinc-950)', '50% 90%', ['0%', '50%', '70%'])}`,
+        // }}
       >
-        <div className="border-x-(--pattern-fg) [--pattern-fg:var(--color-zinc-500)]/5 dark:[--pattern-fg:var(--color-black)]/10 pointer-events-none absolute inset-0 col-start-4 row-span-5 row-start-1 border-x bg-black/5 bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed backdrop-blur-lg"></div>
+        <div className="absolute inset-0 bg-[image:radial-gradient(circle_at_30%_30%,var(--color-zinc-700)_0%,var(--color-zinc-950)_50%,var(--color-zinc-950)_70%)]"></div>
+        <div className="absolute inset-0 bg-[image:radial-gradient(circle_at_60%_80%,var(--color-zinc-700)_0%,var(--color-zinc-950)_50%,var(--color-zinc-950)_70%)] opacity-50"></div>
+        <div className="border-x-(--pattern-fg) [--pattern-fg:var(--color-zinc-600)]/5 dark:[--pattern-fg:var(--color-black)]/20 pointer-events-none absolute inset-0 col-start-4 row-span-5 row-start-1 border-x bg-black/5 bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed backdrop-blur-lg"></div>
       </div>
       <div className="absolute inset-x-0 top-24 lg:top-40">
         <Container className="flex max-w-none flex-col items-center">
           {title && (
             <h2>
-              <Overline className="">{title}</Overline>
+              <Overline>{title}</Overline>
             </h2>
           )}
           <Tabs

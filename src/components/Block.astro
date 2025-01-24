@@ -111,7 +111,7 @@ try {
       {props._type === 'form' ? <Form {...validBlock} client:visible /> : null}
       {props._type === 'hero' ? <Hero {...validBlock} client:visible /> : null}
       {props._type === 'portfolio' ? (
-        <Portfolio {...validBlock} client:visible />
+        <Portfolio {...validBlock} client:visible={{ rootMargin: '200px' }} />
       ) : null}
       {props._type === 'textBlock' ? (
         <TextBlock {...validBlock} client:visible />

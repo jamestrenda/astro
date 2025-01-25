@@ -76,16 +76,19 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
             </div>
           )} */}
           {image && (
-            <SanityImage
-              src={image.image}
-              // width={1280}
-              // height={817}
-              queryParams={{
-                q: 100,
-              }}
-              preview={true}
-              className="pointer-events-none absolute bottom-0 right-0 z-50 aspect-square max-h-[400px] rounded-br-lg object-cover contrast-[1.1] dark:brightness-75 max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] lg:w-[700px]"
-            />
+            <div className="contents [&_img[data-lqip=true]]:gradient-mask-t-50">
+              <SanityImage
+                src={image.image}
+                // width={1280}
+                // height={817}
+                loading="eager"
+                queryParams={{
+                  q: 100,
+                }}
+                preview={true}
+                className="pointer-events-none absolute bottom-0 right-0 z-50 aspect-square max-h-[400px] rounded-br-lg object-cover contrast-[1.1] dark:brightness-75 max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] lg:w-[700px]"
+              />
+            </div>
           )}
         </BrowserWindow>
       </Container>

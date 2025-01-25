@@ -142,7 +142,7 @@ const Project = forwardRef<
 
     const scale = !visible ? 1 : 1 - widthScale * offset;
 
-    const { title, description, url, image, features } = props;
+    const { title, description, url, image, mobileImage, features } = props;
 
     return (
       <TabsContent
@@ -267,25 +267,44 @@ const Project = forwardRef<
               initial="hidden"
               animate={active ? 'visible' : undefined}
             >
-              <div className="col-span-7 lg:order-2">
-                <FadeIn className="ml-auto h-auto w-full max-lg:order-1 max-lg:-mr-4 lg:absolute lg:-bottom-24">
-                  {image?.image && (
-                    <SanityImage
-                      src={image.image}
-                      width={768}
-                      height={680}
-                      // loading="eager"
-                      queryParams={{
-                        q: 100,
-                      }}
-                      preview={true}
-                      mode="contain"
-                      className="h-auto w-auto object-contain"
-                    />
-                  )}
-                </FadeIn>
+              <div className="lg:order-2 lg:col-span-6 xl:col-span-7">
+                {image && (
+                  <FadeIn className="ml-auto mr-0 h-auto max-lg:order-1 max-lg:ml-4 lg:absolute lg:-bottom-0 lg:right-0 lg:top-auto lg:w-1/2 xl:w-7/12">
+                    <picture>
+                      {mobileImage && (
+                        <SanityImage
+                          src={mobileImage.image}
+                          // width={768}
+                          // height={680}
+                          as="source"
+                          media="(max-width: 1023px)"
+                          queryParams={{
+                            q: 100,
+                          }}
+                          preview={true}
+                          mode="contain"
+                          className="h-auto w-auto object-contain"
+                        />
+                      )}
+                      {image && (
+                        <SanityImage
+                          src={image.image}
+                          width={768}
+                          height={680}
+                          // loading="eager"
+                          queryParams={{
+                            q: 100,
+                          }}
+                          preview={true}
+                          mode="contain"
+                          className="ml-auto h-full w-auto object-contain"
+                        />
+                      )}
+                    </picture>
+                  </FadeIn>
+                )}
               </div>
-              <div className="col-span-5 px-6 pb-12 max-lg:order-2 max-lg:pt-12 lg:px-16">
+              <div className="px-6 pb-12 max-lg:order-2 max-lg:pt-12 lg:col-span-6 lg:px-16 xl:col-span-5">
                 <div className="space-y-6">
                   {title && (
                     <FadeIn>

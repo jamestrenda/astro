@@ -193,6 +193,9 @@ const blocksFragment = groq`
           image {
             ${imageObjectFragment}
           },
+          mobileImage {
+            ${imageObjectFragment}
+          },
           features[] {
             _key,
             _type,

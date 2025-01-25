@@ -3,6 +3,7 @@ import type { DirectQueryParams } from 'node_modules/sanity-image/dist/types';
 import { type SanityImageObjectExtended } from '~/types/image';
 
 // import { cva } from "class-variance-authority";
+import type { SourceHTMLAttributes } from 'react';
 import { SanityImage as InternalSanityImage } from 'sanity-image';
 import { getEnv } from '~/utils/env';
 
@@ -13,7 +14,6 @@ const baseUrl = `https://cdn.sanity.io/images/${PUBLIC_SANITY_STUDIO_PROJECT_ID}
 
 export type ImageProps = {
   src: SanityImageObjectExtended;
-  alt?: string;
   q?: number;
   fit?: ImageUrlFitMode;
   format?: ImageUrlFormat;
@@ -23,7 +23,12 @@ export type ImageProps = {
   queryParams?: DirectQueryParams | undefined;
   sizes?: string | undefined;
   preview?: boolean | undefined;
-} & Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'width' | 'height' | 'src'>;
+  as?: 'img' | 'source';
+} & Omit<
+  React.ImgHTMLAttributes<HTMLImageElement>,
+  'width' | 'height' | 'src'
+> &
+  Pick<SourceHTMLAttributes<HTMLSourceElement>, 'media'>;
 
 export const SanityImage = (props: ImageProps) => {
   const {
@@ -37,27 +42,28 @@ export const SanityImage = (props: ImageProps) => {
     fit = 'crop',
     queryParams,
     sizes,
+    as,
     preview = true,
     ...attrs
   } = props;
 
   return src.asset ? (
-    <div className="contents [&_img[data-lqip=true]]:gradient-mask-t-50">
-      <InternalSanityImage
-        id={src.asset._id}
-        baseUrl={baseUrl}
-        width={Number(width)}
-        height={Number(height)}
-        mode={mode}
-        hotspot={src.hotspot ?? undefined}
-        crop={src.crop ?? undefined}
-        preview={preview ? src.asset.metadata?.lqip ?? undefined : undefined}
-        queryParams={{ ...queryParams, q: queryParams?.q ?? 75 }}
-        alt={alt ?? src.asset.altText ?? ''}
-        className={className}
-        sizes={sizes ?? undefined}
-        {...attrs}
-      />
-    </div>
+    <InternalSanityImage
+      id={src.asset._id}
+      baseUrl={baseUrl}
+      width={Number(width)}
+      height={Number(height)}
+      mode={mode}
+      hotspot={src.hotspot ?? undefined}
+      crop={src.crop ?? undefined}
+      preview={preview ? src.asset.metadata?.lqip ?? undefined : undefined}
+      as={as}
+      // @ts-ignore
+      alt={alt ?? src.asset.altText ?? ''}
+      queryParams={{ ...queryParams, q: queryParams?.q ?? 75 }}
+      className={className}
+      sizes={sizes ?? undefined}
+      {...attrs}
+    />
   ) : null;
 };

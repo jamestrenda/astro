@@ -13,6 +13,7 @@ export const websiteZ = baseBlockZ.extend({
   description: z.array(portableTextZ).optional().nullable(),
   url: z.string().optional().nullable(),
   image: imageZ.optional().nullable(),
+  mobileImage: imageZ.optional().nullable(),
   features: z.array(featureZ).optional().nullable(),
 });
 

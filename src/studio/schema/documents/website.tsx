@@ -39,6 +39,14 @@ export default defineType({
     defineField({
       name: 'image',
       title: 'Image',
+      description: 'Image for desktop devices',
+      type: 'imageObject',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'mobileImage',
+      title: 'Mobile Image',
+      description: 'Image for mobile devices',
       type: 'imageObject',
     }),
     defineField({

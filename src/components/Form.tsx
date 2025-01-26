@@ -240,7 +240,7 @@ export const Form = ({ text, form: data, slug, pageType }: Props) => {
                     className="min-w-40 justify-self-start rounded-lg bg-gradient-to-r from-indigo-600 from-0% to-indigo-700 to-100% px-6 py-3 font-medium text-background transition hover:scale-95 hover:from-indigo-700 focus:scale-95 focus:from-indigo-700 disabled:pointer-events-none disabled:opacity-50 dark:text-foreground"
                   >
                     {/* TODO: Move this content to Sanity */}
-                    Get Started
+                    Send
                   </button>
                 </fieldset>
               </form>

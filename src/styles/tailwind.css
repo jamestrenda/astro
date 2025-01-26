@@ -10,6 +10,27 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
+@theme {
+  --color-orange-*: initial;
+  --color-amber-*: initial;
+  --color-yellow-*: initial;
+  --color-lime-*: initial;
+  --color-green-*: initial;
+  --color-teal-*: initial;
+  --color-cyan-*: initial;
+  --color-sky-*: initial;
+  --color-blue-*: initial;
+  --color-violet-*: initial;
+  --color-purple-*: initial;
+  --color-pink-*: initial;
+  --color-emerald-*: initial;
+  --color-neutral-*: initial;
+  --color-slate-*: initial;
+  --color-fuchsia-*: initial;
+  --color-rose-*: initial;
+  --color-stone-*: initial;
+}
+
 @layer base {
   *,
   ::after,

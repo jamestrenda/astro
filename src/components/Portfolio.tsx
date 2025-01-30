@@ -8,7 +8,7 @@ import BrowserWindow from './BrowserWindow';
 import { Container } from './Container';
 import { FadeIn } from './FadeIn';
 import { Heading } from './Heading';
-import { SanityImage } from './Image';
+import { Image, Source } from './Image';
 import { Overline } from './Overline';
 import { PortableText } from './PortableText/PortableText';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
@@ -272,30 +272,31 @@ const Project = forwardRef<
                   <FadeIn className="ml-auto mr-0 h-auto max-lg:order-1 max-lg:ml-4 lg:absolute lg:-bottom-0 lg:right-0 lg:top-auto lg:w-1/2 xl:w-7/12">
                     <picture>
                       {mobileImage && (
-                        <SanityImage
-                          src={mobileImage.image}
+                        <Image
+                          id={mobileImage.image.id}
+                          asset={mobileImage.image}
                           // width={768}
                           // height={680}
-                          as="source"
+                          as={Source}
                           media="(max-width: 1023px)"
                           queryParams={{
                             q: 100,
                           }}
-                          preview={true}
                           mode="contain"
                           className="h-auto w-auto object-contain"
                         />
                       )}
                       {image && (
-                        <SanityImage
-                          src={image.image}
+                        <Image
+                          id={image.image.id}
+                          asset={image.image}
                           width={768}
                           height={680}
                           // loading="eager"
                           queryParams={{
                             q: 100,
                           }}
-                          preview={true}
+                          // as="source"
                           mode="contain"
                           className="ml-auto h-full w-auto object-contain"
                         />

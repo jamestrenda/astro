@@ -51,7 +51,10 @@ export const sanityImageZ = z.object({
 // Reused a lot through queries
 export const sanityImageObjectExtendedZ = z.object({
   _type: z.literal('image'),
-  asset: sanityImageZ.nullable().optional(),
+  id: z.string(),
+  preview: z.string().nullable().optional(),
+  // asset: sanityImageZ.nullable().optional(),
+  altText: z.string().nullable().optional(),
   // GROQ may return null for these
   // But our type requires them to be undefined if they don't exist
   crop: sanityImageCropZ.nullable().transform((v) => v ?? null),

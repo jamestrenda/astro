@@ -2,28 +2,12 @@ import groq from 'groq';
 
 export const imageFieldsFragment = groq`
   _type,
-  crop,
+  "id": asset._ref,
+  "preview": asset->metadata.lqip,
   hotspot,
-  asset->{
-    _id,
-    _ref,
-    _type,
-    altText,
-    url,
-    description,
-    source {
-      url
-    },
-    creditLine,
-    metadata {
-      lqip,
-      dimensions {
-        aspectRatio,
-        height,
-        width
-      }
-    },
-  }`;
+  crop,
+  "altText": asset->altText,
+`;
 
 export const imageObjectFragment = groq`
   _type,

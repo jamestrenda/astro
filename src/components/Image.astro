@@ -1,9 +1,0 @@
----
-import { SanityImage, type ImageProps } from '~/components/Image';
-interface Props extends ImageProps {
-  className?: string;
-}
-const props = Astro.props;
----
-
-<SanityImage client:only="react" {...props} />

@@ -30,7 +30,7 @@ const BrowserWindow = memo(
       >
         <div
           className={cn(
-            'relative z-20 grid h-full w-full items-center rounded-lg bg-black bg-[size:150%] bg-[position:90%] p-6 pt-14 md:p-16',
+            'relative z-20 grid h-full w-full items-center rounded-lg bg-black bg-[size:150%] bg-[position:90%] px-4 py-6 pt-14 md:p-16',
             className,
           )}
         >

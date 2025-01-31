@@ -28,14 +28,14 @@ export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
                             <div
                               key={item._key}
                               className={cn(
-                                'text-nowrap rounded-full bg-gray-200/50 px-6 py-2 font-medium text-foreground backdrop-blur-lg dark:bg-black/50',
+                                'text-nowrap rounded-full bg-zinc-200/50 px-6 py-2 font-medium text-foreground backdrop-blur-lg dark:bg-black/50',
                               )}
                             >
                               <span
                                 className={cn(
                                   'text-sm',
                                   item.featured
-                                    ? 'bg-gradient-to-r from-indigo-600 from-0% via-indigo-500 to-indigo-600 to-100% bg-clip-text text-sm font-semibold text-transparent'
+                                    ? 'bg-gradient-to-r from-primary from-0% to-indigo-600 to-100% bg-clip-text text-sm font-semibold text-transparent'
                                     : '',
                                 )}
                               >

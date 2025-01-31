@@ -14,7 +14,7 @@ export function Email({ submission, form }: { submission?: any; form: Form }) {
       <E.Head />
       {/* TODO: probably need to update the textarea schema with a checkbox for "preview" or establish a naming convention for transactional email message fields   */}
       <E.Preview>{message}</E.Preview>
-      <E.Body className="bg-gray-100 p-2 font-sans text-base">
+      <E.Body className="bg-zinc-100 p-2 font-sans text-base">
         <E.Container className="my-0 bg-white px-8 py-16">
           <E.Section>
             <E.Row>{emailBody}</E.Row>

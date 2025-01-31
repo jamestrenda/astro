@@ -39,7 +39,7 @@ export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
           name="theme"
           value={isDark ? 'light' : 'dark'}
           className={cn(
-            'ring-brand relative grid h-9 w-16 place-items-center rounded-full bg-zinc-900 bg-gradient-to-r text-white dark:bg-zinc-950 dark:text-black max-md:w-9 dark:max-md:from-indigo-700 dark:max-md:from-0% dark:max-md:via-indigo-700 dark:max-md:to-indigo-600 dark:max-md:to-100%',
+            'ring-brand relative grid h-9 w-16 place-items-center rounded-full bg-zinc-900 bg-gradient-to-r dark:bg-zinc-950 dark:text-zinc-900 max-md:w-9 dark:max-md:bg-primary',
             isDark ? 'justify-start pl-1' : 'justify-end pr-1',
           )}
         >
@@ -51,10 +51,10 @@ export function ThemeToggle({ initial }: { initial: Theme | undefined }) {
             }}
           >
             {isDark ? (
-              <LightbulbOffIcon className="shadow-xs h-7 w-7 rounded-full bg-indigo-600 p-1 max-md:dark:bg-white" />
+              <LightbulbOffIcon className="shadow-xs h-7 w-7 rounded-full bg-zinc-800 p-1 text-white transition dark:hover:bg-primary dark:hover:text-background max-md:text-zinc-900 max-md:dark:bg-white" />
             ) : (
               <LightbulbIcon
-                className="shadow-xs h-7 w-7 rounded-full bg-indigo-600 p-1"
+                className="shadow-xs h-7 w-7 rounded-full bg-primary p-1 text-foreground"
                 strokeWidth={2}
                 key="light"
               />

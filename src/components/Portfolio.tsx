@@ -314,7 +314,7 @@ const Project = forwardRef<
                   )}
                   {description && (
                     <FadeIn>
-                      <div className="text-lg font-light text-gray-500">
+                      <div className="text-lg font-light text-zinc-500">
                         <PortableText portableText={description} />
                       </div>
                     </FadeIn>
@@ -325,10 +325,10 @@ const Project = forwardRef<
                         <li key={feature._key}>
                           <FadeIn>
                             <span className="flex">
-                              <CircleCheckBigIcon className="mr-2 mt-1 h-4 w-4 shrink-0 text-green-400" />
+                              <CircleCheckBigIcon className="mr-2 mt-1 h-4 w-4 shrink-0 text-primary" />
                               <span className="text-background dark:text-foreground">
                                 {feature.name && (
-                                  <strong className="text-green-400">
+                                  <strong className="text-primary">
                                     {feature.name}.{' '}
                                   </strong>
                                 )}

@@ -6,7 +6,7 @@ import { PortableText } from './PortableText/PortableText';
 export const TextBlock = ({ portableText }: Props) => {
   return (
     <Container variant="tight" padding={true}>
-      <div className="grid place-items-center text-gray-500 [&_p]:text-xl [&_p]:font-light md:[&_p]:text-2xl">
+      <div className="grid place-items-center text-zinc-500 [&_p]:text-xl [&_p]:font-light md:[&_p]:text-2xl">
         <FadeInStaggerChildren>
           <PortableText portableText={portableText} />
         </FadeInStaggerChildren>

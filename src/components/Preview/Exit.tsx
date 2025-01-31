@@ -13,7 +13,7 @@ export default function ExitPreview() {
       method="POST"
     >
       <button
-        className="bg-indigo-600 p-4 font-bold leading-none text-white transition-colors hover:bg-indigo-700"
+        className="bg-foreground p-4 font-bold leading-none text-background transition-colors"
         type="submit"
       >
         Exit Preview Mode

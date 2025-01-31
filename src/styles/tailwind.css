@@ -14,7 +14,7 @@
   --color-orange-*: initial;
   --color-amber-*: initial;
   --color-yellow-*: initial;
-  --color-lime-*: initial;
+  /* --color-lime-*: initial; */
   --color-teal-*: initial;
   --color-cyan-*: initial;
   --color-sky-*: initial;
@@ -36,18 +36,17 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--color-zinc-200, currentColor);
   }
 }
 
 @utility bg-glass {
-  /* --background: 0 0% 7%; */
+  /* TODO: fix hsla usage since moving away from hsl color variables */
   --tw-bg-opacity: 0.05;
   background-color: hsla(var(--background) / var(--tw-bg-opacity));
   @apply backdrop-blur-md;
   .dark & {
     --background: 0 0% 50%;
-    /* --tw-bg-opacity: 0.2; */
   }
 }
 
@@ -106,11 +105,11 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 7%;
-    --muted: 240deg 3.83% 46.08%;
-    /* --primary: 0 92% 62%; */
-    --primary: 243 75% 59%;
+    --background: var(--color-zinc-100);
+    --foreground: var(--color-zinc-900);
+    --muted: var(--color-zinc-500);
+
+    --primary: var(--color-lime-500);
     --accent: 46 62% 50%;
     --border: var(--muted);
     --primary-dark: 0 92% 15%;
@@ -121,12 +120,12 @@
   }
 
   .dark {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 98%;
+    --background: var(--color-zinc-900);
+    --foreground: var(--color-zinc-100);
     /* --accent: 46 62% 50%; */
   }
   body {
-    color: hsl(var(--foreground));
+    color: var(--foreground);
   }
   img {
     @apply block h-auto w-full max-w-full;

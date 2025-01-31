@@ -35,7 +35,7 @@ export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
                                 className={cn(
                                   'text-sm',
                                   item.featured
-                                    ? 'bg-gradient-to-r from-primary from-0% to-indigo-600 to-100% bg-clip-text text-sm font-semibold text-transparent'
+                                    ? 'text-sm font-semibold text-primary'
                                     : '',
                                 )}
                               >

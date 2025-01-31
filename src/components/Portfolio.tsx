@@ -309,7 +309,9 @@ const Project = forwardRef<
                 <div className="space-y-6">
                   {title && (
                     <FadeIn>
-                      <Heading className="text-background">{title}</Heading>
+                      <Heading className="text-background dark:text-foreground">
+                        {title}
+                      </Heading>
                     </FadeIn>
                   )}
                   {description && (

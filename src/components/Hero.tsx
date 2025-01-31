@@ -86,7 +86,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
                 queryParams={{
                   q: 100,
                 }}
-                className="pointer-events-none absolute bottom-0 right-0 z-50 aspect-square max-h-[400px] rounded-br-lg object-cover contrast-[1.1] dark:brightness-75 max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] lg:w-[700px]"
+                className="grayscale-100 pointer-events-none absolute bottom-0 right-0 z-50 aspect-square max-h-[400px] rounded-br-lg object-cover brightness-90 contrast-[1.2] dark:brightness-0 max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] lg:w-[700px]"
               />
             </div>
           )}

@@ -14,9 +14,9 @@
   --color-orange-*: initial;
   --color-amber-*: initial;
   --color-yellow-*: initial;
-  /* --color-lime-*: initial; */
+  --color-lime-*: initial;
   --color-teal-*: initial;
-  --color-cyan-*: initial;
+  /* --color-cyan-*: initial; */
   --color-sky-*: initial;
   --color-blue-*: initial;
   --color-violet-*: initial;
@@ -43,10 +43,11 @@
 @utility bg-glass {
   /* TODO: fix hsla usage since moving away from hsl color variables */
   --tw-bg-opacity: 0.05;
-  background-color: hsla(var(--background) / var(--tw-bg-opacity));
+  background-color: --alpha(var(--background) / 3%);
+
   @apply backdrop-blur-md;
   .dark & {
-    --background: 0 0% 50%;
+    background-color: --alpha(var(--background) / 30%);
   }
 }
 
@@ -109,7 +110,7 @@
     --foreground: var(--color-zinc-900);
     --muted: var(--color-zinc-500);
 
-    --primary: var(--color-lime-500);
+    --primary: var(--color-cyan-500);
     --accent: 46 62% 50%;
     --border: var(--muted);
     --primary-dark: 0 92% 15%;

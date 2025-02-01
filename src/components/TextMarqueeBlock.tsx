@@ -28,7 +28,7 @@ export const TextMarqueeBlock = ({ marquees }: { marquees: TextMarquee[] }) => {
                             <div
                               key={item._key}
                               className={cn(
-                                'text-nowrap rounded-full bg-zinc-200/50 px-6 py-2 font-medium text-foreground backdrop-blur-lg dark:bg-black/50',
+                                'text-nowrap rounded-full bg-stone-300/50 px-6 py-2 font-medium text-foreground backdrop-blur-lg dark:bg-black/50',
                               )}
                             >
                               <span

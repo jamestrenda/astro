@@ -27,7 +27,7 @@
   --color-slate-*: initial;
   --color-fuchsia-*: initial;
   --color-rose-*: initial;
-  --color-stone-*: initial;
+  /* --color-stone-*: initial; */
 }
 
 @layer base {

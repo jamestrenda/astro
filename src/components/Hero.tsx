@@ -76,7 +76,7 @@ export const Hero = ({ valueProposition, logos: marquees, image }: Props) => {
             </div>
           )} */}
           {image?.image && (
-            <div className="[&_img]:grayscale-100 contents [&_img[data-lqip=true]]:gradient-mask-t-50 [&_img]:brightness-90 [&_img]:contrast-[1.2] [&_img]:dark:brightness-0">
+            <div className="contents [&_img[data-lqip=true]]:gradient-mask-t-50 [&_img]:contrast-[1.1] [&_img]:dark:brightness-0">
               <Image
                 id={image.image.id}
                 asset={image.image}

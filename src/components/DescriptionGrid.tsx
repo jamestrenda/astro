@@ -27,7 +27,7 @@ export const DescriptionGrid = ({ header, items }: Props) => {
                   <AccordionItem
                     key={i}
                     value={`item-${i.toFixed()}`}
-                    className="backdrop-blur-md transition delay-75 hover:delay-0 dark:border-zinc-950 dark:bg-black/30 max-lg:-mx-4 max-lg:px-4 max-lg:last:border-none max-lg:hover:bg-zinc-100 max-lg:data-[state=open]:bg-zinc-100 max-lg:dark:hover:bg-black/20 max-lg:dark:data-[state=open]:bg-black/20 lg:rounded-lg lg:border lg:border-b-0 lg:border-solid lg:bg-zinc-100 lg:p-8 lg:dark:bg-black/30 [&[data-state=closed]>div]:h-0 lg:[&[data-state=closed]>div]:h-auto"
+                    className="border-stone-300 backdrop-blur-md transition delay-75 hover:delay-0 dark:border-zinc-950 dark:bg-black/30 max-lg:-mx-4 max-lg:px-4 max-lg:last:border-none max-lg:hover:bg-stone-300/50 max-lg:data-[state=open]:bg-stone-300/50 max-lg:dark:hover:bg-black/20 max-lg:dark:data-[state=open]:bg-black/20 lg:rounded-lg lg:border lg:border-b-0 lg:border-solid lg:bg-zinc-100 lg:p-8 lg:dark:bg-black/30 [&[data-state=closed]>div]:h-0 lg:[&[data-state=closed]>div]:h-auto"
                   >
                     {/* TODO: could this implementation cause accessbility issues for larger screens where the button is useless? Could/should I add some kind of aria attributes to address it? */}
                     <AccordionTrigger className="select-text text-left lg:pointer-events-none lg:cursor-text [&>svg]:h-6 [&>svg]:w-6 md:[&>svg]:h-8 md:[&>svg]:w-8 lg:[&>svg]:hidden">

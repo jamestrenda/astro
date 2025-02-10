@@ -69,6 +69,42 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
     },
 }`;
 
+export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug.current)] | order(_createdAt desc) {
+  title,
+  "slug": 'recipes/' + slug.current,
+  publishedAt,
+  description,
+
+}`;
+
+export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug][0] {
+  title,
+  gallery {
+    _type,
+    images[] {
+      ${imageObjectFragment}
+    }
+  },
+  ingredients[] {
+    ingredient-> {
+        title,
+        url,
+        description
+    },
+    measurement {
+        amount,
+        unit
+    },
+    notes
+  },
+  instructions[] {
+      ${portableTextFragment}
+  },
+  notes[] {
+      ${portableTextFragment}
+  },
+}`;
+
 const descriptionFragment = groq`
   description[] {
     ${portableTextFragment}

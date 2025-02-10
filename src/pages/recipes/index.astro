@@ -1,0 +1,33 @@
+---
+import { getRecipes } from '~/utils/sanity';
+import Layout from '../_layout.astro';
+import { Heading } from '~/components/Heading';
+
+const recipes = await getRecipes({
+  preview: Astro.locals.preview,
+  options: Astro.locals.loadQueryOptions,
+});
+---
+
+<Layout>
+  <main class="grow">
+    <Heading level="h1" className="py-14 text-center text-foreground"
+      >Recipe Index</Heading
+    >
+    <div class="grid justify-items-center px-8 py-16">
+      {
+        recipes ? (
+          recipes.map((recipe) => (
+            <article class="text-center">
+              <Heading level="h2">
+                <a href={`/${recipe.slug}`}>{recipe.title}</a>
+              </Heading>
+            </article>
+          ))
+        ) : (
+          <p>No recipes found</p>
+        )
+      }
+    </div>
+  </main>
+</Layout>

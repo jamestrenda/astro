@@ -1,6 +1,7 @@
 import type { Form, FormQueryParams } from '~/types/form';
 import { type Home } from '~/types/home';
 import type { Post } from '~/types/post';
+import type { Recipe } from '~/types/recipe';
 import type { Settings } from '~/types/settings';
 import { loadQuery } from '../utils/load-query';
 import {
@@ -9,6 +10,8 @@ import {
   INDEX_QUERY,
   POSTS_QUERY,
   POST_QUERY,
+  RECIPES_QUERY,
+  RECIPE_QUERY,
   SETTINGS_QUERY,
 } from './queries';
 
@@ -44,6 +47,40 @@ export async function getPost({
     options,
   });
   return post;
+}
+
+export async function getRecipes({
+  preview,
+  options,
+}: {
+  preview: boolean;
+  options?: App.Locals['loadQueryOptions'];
+}): Promise<Recipe[]> {
+  const { data: recipes } = await loadQuery<Recipe[]>({
+    query: RECIPES_QUERY,
+    preview,
+    options: options ?? undefined,
+  });
+
+  return recipes;
+}
+
+export async function getRecipe({
+  preview,
+  options,
+  slug,
+}: {
+  preview: boolean;
+  slug: string;
+  options: App.Locals['loadQueryOptions'];
+}): Promise<Recipe> {
+  const { data: recipe } = await loadQuery<Recipe>({
+    query: RECIPE_QUERY,
+    params: { slug },
+    preview,
+    options,
+  });
+  return recipe;
 }
 
 export async function getIndex({

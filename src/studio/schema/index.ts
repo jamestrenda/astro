@@ -1,10 +1,12 @@
 import marquee from '~/studio/schema/objects/marquee';
 import client from './documents/client';
+import ingredient from './documents/ingredient';
 import menu from './documents/menu';
 import page from './documents/page';
 import portfolio from './documents/portfolio';
 import post from './documents/post';
 import principle from './documents/principle';
+import recipe from './documents/recipe';
 import tag from './documents/tag';
 import website from './documents/website';
 import descriptionGrid from './objects/descriptionGrid';
@@ -15,6 +17,7 @@ import gallery from './objects/gallery';
 import hero from './objects/hero';
 import image from './objects/image';
 import link from './objects/link';
+import measurement from './objects/measurement';
 import menuItem from './objects/menuItem';
 import portableText from './objects/portableText';
 import redirect from './objects/redirect';
@@ -51,8 +54,10 @@ export const schemaTypes = [
   hero,
   home,
   image,
+  ingredient,
   link,
   marquee,
+  measurement,
   menu,
   menuItem,
   notFoundSettings,
@@ -61,6 +66,7 @@ export const schemaTypes = [
   portfolio,
   post,
   principle,
+  recipe,
   redirect,
   redirectSettings,
   ref,

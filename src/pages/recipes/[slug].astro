@@ -1,0 +1,98 @@
+---
+import { getRecipes, getRecipe } from '../../utils/sanity';
+import type { InferGetStaticParamsType } from 'astro';
+import { PortableText } from '~/components/PortableText/PortableText';
+import Layout from '../_layout.astro';
+import { Heading } from '~/components/Heading';
+// import Hero from '~/components/Hero.astro';
+import { Container } from '~/components/Container';
+import { Image } from '~/components/Image';
+
+export async function getStaticPaths() {
+  const recipes = await getRecipes({
+    preview: false,
+  });
+  return recipes.map((recipe) => ({
+    params: { slug: recipe.slug },
+  }));
+}
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { slug } = Astro.params as Params;
+
+const recipe = await getRecipe({
+  preview: Astro.locals.preview,
+  options: Astro.locals.loadQueryOptions,
+  slug,
+});
+
+if (!recipe) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Page Not found',
+  });
+}
+
+const { title, gallery, ingredients, instructions, notes } = recipe;
+// console.log(gallery?);
+---
+
+<Layout>
+  <Container>
+    <article class="mb-10 mt-20 space-y-12">
+      <!-- <Hero> -->
+      <Heading level="h1" className="text-foreground">{title}</Heading>
+      {
+        ingredients && ingredients.length && (
+          <section>
+            <Heading level="h2">Ingredients</Heading>
+            <ul class="list-disc pl-4">
+              {ingredients.map((ingredient) => (
+                <li>
+                  {ingredient.measurement.amount} {ingredient.measurement.unit}
+                  {ingredient.ingredient.title}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+      {
+        instructions && (
+          <section>
+            <Heading level="h2">Instructions</Heading>
+            <PortableText portableText={instructions} />
+          </section>
+        )
+      }
+      {
+        notes && (
+          <section>
+            <Heading level="h2">Notes</Heading>
+            <PortableText portableText={notes} />
+          </section>
+        )
+      }
+      {
+        gallery && gallery.images && (
+          <section class="flex flex-wrap gap-4">
+            {gallery.images.map((image) => (
+              <Image
+                id={image.image.id}
+                asset={image.image}
+                height={500}
+                queryParams={{
+                  q: 100,
+                }}
+                mode="contain"
+                className="h-96 w-auto rounded-md"
+                client:visible
+              />
+            ))}
+          </section>
+        )
+      }
+      <!-- </Hero> -->
+    </article></Container
+  >
+</Layout>

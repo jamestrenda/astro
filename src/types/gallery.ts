@@ -7,4 +7,4 @@ export const galleryZ = baseBlockZ.extend({
   images: z.array(imageZ).nullable().optional(),
 });
 
-export type Hero = z.infer<typeof galleryZ>;
+export type Gallery = z.infer<typeof galleryZ>;

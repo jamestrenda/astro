@@ -1,7 +1,7 @@
 ---
 import type { Theme } from '~/utils/theme';
 import { ThemeToggle } from './ThemeToggle';
-import Logo from './Logo.astro';
+import { Logo } from './Logo';
 import { Container } from './Container';
 
 interface Props {
@@ -16,10 +16,10 @@ const { theme } = Astro.props;
     <nav>
       <a
         href="/"
-        class="flex py-2 transition duration-500 starting:-translate-y-2 starting:opacity-0"
+        class="flex py-3 transition duration-500 starting:-translate-y-2 starting:opacity-0"
         title="Go to homepage"
       >
-        <Logo />
+        <Logo client:idle />
       </a>
     </nav>
     <ThemeToggle client:only="react" initial={theme} />

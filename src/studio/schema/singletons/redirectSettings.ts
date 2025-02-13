@@ -15,18 +15,21 @@ export default {
       ) => {
         const { redirects } = context;
 
-        // create a map of all the redirects grouped by their 'from' value
+        // create a map of all the redirects along with their count
         const lookup = redirects?.reduce(
-          (duplicates, currentItem) => {
-            duplicates[currentItem.from] =
-              (duplicates[currentItem.from] || 0) + 1;
-            return duplicates;
+          (acc, currentItem) => {
+            acc[currentItem.from] = (acc[currentItem.from] ?? 0) + 1; // increment the count if the key already exists
+            return acc;
           },
           {} as Record<string, number>,
         );
 
+        console.log({ lookup });
+
         // return true if there are no duplicates, otherwise return an error message
-        return redirects?.filter((r) => lookup[r.from]).length
+        return redirects?.filter((redirect) =>
+          lookup[redirect.from] && lookup[redirect.from]! > 1 ? true : false,
+        ).length
           ? "Redirects can't have duplicate 'from' values."
           : true;
       },

@@ -10,4 +10,7 @@ export const redirectZ = z.object({
 
 export const redirectsZ = z.array(redirectZ);
 
-export type Redirect = z.infer<typeof redirectZ>;
+export type Redirect = z.infer<typeof redirectZ> & {
+  splat?: boolean;
+  code?: number;
+};

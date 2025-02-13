@@ -281,7 +281,7 @@ export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {
   }
 }`;
 
-export const REDIRECTS_QUERY = groq`*[_type == "redirectSettings"][0].redirects[]`;
+export const REDIRECTS_QUERY = groq`coalesce(*[_type == "redirectSettings"][0].redirects[], [])`;
 
 export const REDIRECT_SETTINGS_ID_QUERY = groq`
   *[_type == "redirectSettings"][0]._id

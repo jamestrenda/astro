@@ -1,4 +1,5 @@
 import { FormBuilderPlugin } from '@hatchd/sanity-plugin-form-builder';
+import { codeInput } from '@sanity/code-input';
 import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
@@ -11,7 +12,6 @@ import { locations } from '~/studio/presentation/locate';
 import { getEnv } from '~/utils/env';
 import { SINGLETON_TYPES, schemaTypes } from './src/studio/schema';
 import { structure } from './src/studio/structure';
-
 const projectId = getEnv().PUBLIC_SANITY_STUDIO_PROJECT_ID;
 const dataset = getEnv().PUBLIC_SANITY_STUDIO_DATASET;
 export const apiVersion = getEnv().PUBLIC_SANITY_STUDIO_API_VERSION;
@@ -33,9 +33,6 @@ export default defineConfig({
   projectId,
   dataset,
   plugins: [
-    structureTool({
-      structure,
-    }),
     presentationTool({
       previewUrl: {
         origin: location.origin,
@@ -57,12 +54,16 @@ export default defineConfig({
         ]),
       },
     }),
+    structureTool({
+      structure,
+    }),
     documentActionsPlugin(),
     visionTool(),
     media(),
     unsplashImageAsset(),
     FormBuilderPlugin(),
     SocialMediaProfilesPlugin(),
+    codeInput(),
   ],
   schema: {
     types: schemaTypes,

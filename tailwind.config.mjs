@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import defaultTheme from 'tailwindcss/defaultTheme';
+import tailwindcssTypography from "@tailwindcss/typography";
 
 export default {
   darkMode: ['class'],
@@ -99,5 +100,6 @@ export default {
       addVariant('starting', '@starting-style');
     },
     require('tailwind-gradient-mask-image'),
+    tailwindcssTypography
   ],
 };

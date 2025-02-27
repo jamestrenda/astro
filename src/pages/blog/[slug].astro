@@ -1,47 +1,55 @@
 ---
-// import { getPosts, getPost } from '../../utils/sanity';
-// import type { InferGetStaticParamsType } from 'astro';
-// import { PortableText } from '~/components/PortableText/PortableText';
-// import Layout from '../_layout.astro';
-// import { Heading } from '~/components/Heading';
+import { getPosts, getPost } from '../../utils/sanity';
+import type { InferGetStaticParamsType } from 'astro';
+import { PortableText } from '~/components/PortableText/PortableText';
+import Layout from '../_layout.astro';
+import { Heading } from '~/components/Heading';
 // import Hero from '~/components/Hero.astro';
-// import { Container } from '~/components/Container';
+import { Container } from '~/components/Container';
 
 // TODO: not implemented yet
-return Astro.redirect('/');
+// return Astro.redirect('/');
 
-// export async function getStaticPaths() {
-//   const posts = await getPosts({
-//     preview: false,
-//   });
-//   return posts.map((post) => ({
-//     params: { slug: post.slug },
-//   }));
-// }
+export async function getStaticPaths() {
+  const posts = await getPosts({
+    preview: false,
+  });
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
 
-// type Params = InferGetStaticParamsType<typeof getStaticPaths>;
-// const { slug } = Astro.params as Params;
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { slug } = Astro.params as Params;
 
-// const post = await getPost({
-//   preview: Astro.locals.preview,
-//   options: Astro.locals.loadQueryOptions,
-//   slug,
-// });
+const post = await getPost({
+  preview: Astro.locals.preview,
+  options: Astro.locals.loadQueryOptions,
+  slug,
+});
 
-// // No product found
-// if (!post) {
-//   return new Response(null, {
-//     status: 404,
-//     statusText: "Post Not found",
-//   });
-// }
+if (!post) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Post Not found',
+  });
+}
 
-// const { title, body, tags, image } = post;
+const { title, body, tags, image } = post;
 ---
 
-<!-- <Layout>
+<Layout>
   <article>
-    <Hero>
+    <Container
+      >{
+        title ? (
+          <Heading level="h1" className="text-center">
+            {title}
+          </Heading>
+        ) : null
+      }</Container
+    >
+    <!-- <Hero>
       {
         image?.image ? (
           <SanityImage
@@ -79,9 +87,9 @@ return Astro.redirect('/');
           ) : null
         }</Container
       ></Hero
-    >
-    <Container className="max-w-3xl py-24 prose">
-      {body ? <PortableText portableText={body} /> : null}
+    > -->
+    <Container className="prose max-w-3xl py-24">
+      {body ? <PortableText portableText={body} client:visible /> : null}
     </Container>
   </article>
-</Layout> -->
+</Layout>

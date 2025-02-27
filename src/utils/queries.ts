@@ -44,7 +44,10 @@ const portableTextFragment = groq`
         !(_type in ["internalRef", "externalLink"]) => {
           ...
         }
-    }
+    },
+    _type == "imageObject" => {
+      ${imageObjectFragment}
+    },
 `;
 
 export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) {

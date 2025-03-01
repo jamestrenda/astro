@@ -5,7 +5,7 @@ import { tagZ } from './tag';
 
 export const postZ = z.object({
   title: z.string().optional().nullable(),
-  body: z.array(portableTextZ).optional().nullable(), // TODO: add portableTextZ type
+  body: portableTextZ.optional().nullable(),
   excerpt: z.string().optional().nullable(),
   image: imageZ.optional().nullable(),
   slug: z.string(),

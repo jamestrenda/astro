@@ -1,10 +1,8 @@
 import { PortableText as PT } from '@portabletext/react';
-import type { PortableTextBlock } from '@portabletext/types';
+import type { PortableText as PortableTextProps } from '~/types/portableText';
 import { components as c, postComponents as pc } from '.';
-import type { Marks } from './Marks';
-
 export interface Props {
-  portableText: PortableTextBlock<Marks>[];
+  portableText: PortableTextProps;
   // components?: PortableTextComponents;
   blog?: boolean;
 }

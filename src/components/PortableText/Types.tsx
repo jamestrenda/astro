@@ -1,10 +1,13 @@
-import type { PortableTextComponentProps } from '@portabletext/react';
+import type {
+  PortableTextComponentProps,
+  PortableTextComponents,
+} from '@portabletext/react';
 import type { Blockquote } from '~/types/blockquote';
 import type { ImageObject } from '~/types/image';
 import { Image } from '../Image';
 import { PortableText } from './PortableText';
 
-export const Types = {
+export const Types: PortableTextComponents['types'] = {
   // code: ({ value }: { value: Props }) => {
   //   console.log(value);
   //   return (

@@ -63,7 +63,7 @@ export const sanityImageObjectExtendedZ = z.object({
 
 export const imageZ = z.object({
   _type: z.literal('imageObject'),
-  _key: z.string().optional().nullable(),
+  _key: z.string().optional(),
   altText: z.string().optional().nullable(),
   caption: z.string().optional().nullable(),
   anchor: z.string().optional().nullable(),

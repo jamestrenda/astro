@@ -1,3 +1,4 @@
+import type { PortableTextBlock as PortableTextBlockInternalType } from '@portabletext/react';
 import { z } from 'zod';
 import { baseBlockZ } from './base';
 import { blockquoteZ } from './blockquote';
@@ -30,9 +31,15 @@ export const portableTextBlockZ = baseBlockZ.extend({
   anchor: z.string().optional(),
 });
 
-export const portableTextZ = z.array(
-  z.union([portableTextBlockZ, blockquoteZ, imageZ]),
-);
+export const portableTextBlockTypes = z.discriminatedUnion('_type', [
+  portableTextBlockZ,
+  blockquoteZ,
+  imageZ,
+]);
 
-export type PortableTextBlock = z.infer<typeof portableTextBlockZ>;
+export const portableTextZ = z.array(portableTextBlockTypes);
+
+export type PortableTextBlock = PortableTextBlockInternalType &
+  z.infer<typeof portableTextBlockZ>;
 export type PortableText = z.infer<typeof portableTextZ>;
+export type PortableTextBlockType = z.infer<typeof portableTextBlockTypes>;

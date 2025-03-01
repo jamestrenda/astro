@@ -90,7 +90,7 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
         ${portableTextFragment}
     },
     tags[]->{
-        "title": '#' + lower(array::join(string::split(title, " "), "-")),
+        title,
         "slug": 'blog/' + slug.current
     },
     "toc": body[_type == "block" && style in ["h2", "h3", "h4"]] {

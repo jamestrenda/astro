@@ -7,6 +7,7 @@ import { Heading } from '~/components/Heading';
 import { TableOfContents } from '~/components/TableOfContents';
 import { Container } from '~/components/Container';
 // import { GridBackground, Spotlight } from '~/components/blocks/spotlight-new';
+// import { Code } from 'astro:components';
 import { Hero } from '~/components/Hero';
 
 export async function getStaticPaths() {
@@ -60,7 +61,34 @@ const { title, excerpt, body, tags, image, toc } = post;
     <Container
       className="prose flex max-w-5xl gap-8 py-14 prose-zinc dark:prose-invert prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
     >
-      {Array.isArray(toc) && <TableOfContents toc={toc} client:visible />}
+      <div class="not-prose order-2 max-xl:hidden">
+        <div
+          class="sticky top-14 flex max-h-[calc(100svh-3.5rem)] flex-col gap-8 overflow-x-hidden pt-10 pb-24 pl-6"
+        >
+          {Array.isArray(toc) && <TableOfContents toc={toc} client:visible />}
+          {
+            Array.isArray(tags) && (
+              <div class="flex flex-col gap-3">
+                <h3 class="my-0! text-sm/6 font-medium tracking-widest text-muted uppercase sm:text-xs/6">
+                  Tags
+                </h3>
+                <ul class="mt-0 flex flex-wrap gap-2">
+                  {tags.map((tag) => (
+                    <li>
+                      <a
+                        class="inline-block rounded-lg bg-zinc-100 px-3 py-0.5 text-sm/6 text-muted transition-colors duration-200 hover:bg-primary! hover:text-background dark:bg-zinc-950 dark:text-zinc-300 dark:hover:text-white"
+                        href={`/blog/tags/${tag.slug}`}
+                      >
+                        {tag.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+      </div>
       {
         body ? (
           <section class="order-1 pt-10 pb-24 *:*:first:mt-0!">

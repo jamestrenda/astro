@@ -1,13 +1,22 @@
-import type { PortableTextComponents } from '@portabletext/react';
+import type {
+  PortableTextBlock,
+  PortableTextComponentProps,
+  PortableTextComponents,
+} from '@portabletext/react';
 import { HashIcon } from 'lucide-react';
 import { Heading } from '../Heading';
 import { Overline } from '../Overline';
+
+interface CustomBlock extends PortableTextBlock {
+  anchor?: string;
+}
 
 export const PostBlock: PortableTextComponents['block'] = {
   h1: ({ children }) => {
     return <Heading level="h1">{children}</Heading>;
   },
-  h2: ({ children, value }) => {
+  h2: (props: PortableTextComponentProps<CustomBlock>) => {
+    const { children, value } = props;
     return (
       <Heading className="group anchor relative" level="h2" id={value.anchor}>
         <span className="pointer-events-none absolute inset-y-0 -left-8 hidden place-items-center text-muted opacity-0 group-hover:opacity-100 xl:grid">
@@ -19,7 +28,8 @@ export const PostBlock: PortableTextComponents['block'] = {
       </Heading>
     );
   },
-  h3: ({ children, value }) => {
+  h3: (props: PortableTextComponentProps<CustomBlock>) => {
+    const { children, value } = props;
     return (
       <Heading className="group anchor relative" level="h3" id={value.anchor}>
         <span className="pointer-events-none absolute inset-y-0 -left-8 hidden place-items-center text-muted opacity-0 group-hover:opacity-100 xl:grid">

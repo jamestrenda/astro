@@ -1,7 +1,11 @@
 import { z } from 'zod';
-import { portableTextZ } from './portableText';
+import { baseBlockZ } from './base';
+import { portableTextBlockZ } from './portableText';
 
-export const blockquoteZ = z.object({
-  quote: z.array(portableTextZ),
-  cite: z.array(portableTextZ),
+export const blockquoteZ = baseBlockZ.extend({
+  _type: z.literal('blockquote'),
+  quote: z.array(portableTextBlockZ),
+  cite: z.array(portableTextBlockZ),
 });
+
+export type Blockquote = z.infer<typeof blockquoteZ>;

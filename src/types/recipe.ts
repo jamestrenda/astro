@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { galleryZ } from './gallery';
 import { ingredientZ } from './ingredient';
-import { portableTextZ } from './portableText';
+import { portableTextBlockZ } from './portableText';
 
 export const recipeZ = z.object({
   title: z.string().optional().nullable(),
@@ -21,8 +21,8 @@ export const recipeZ = z.object({
     )
     .optional()
     .nullable(),
-  instructions: z.array(portableTextZ).optional().nullable(),
-  notes: z.array(portableTextZ).optional().nullable(),
+  instructions: z.array(portableTextBlockZ).optional().nullable(),
+  notes: z.array(portableTextBlockZ).optional().nullable(),
 });
 
 export type Recipe = z.infer<typeof recipeZ>;

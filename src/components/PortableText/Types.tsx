@@ -1,7 +1,10 @@
+import type { PortableTextComponentProps } from '@portabletext/react';
+import type { Blockquote } from '~/types/blockquote';
+import type { ImageObject } from '~/types/image';
 import { Image } from '../Image';
 import { PortableText } from './PortableText';
 
-export const Types: any = {
+export const Types = {
   // code: ({ value }: { value: Props }) => {
   //   console.log(value);
   //   return (
@@ -15,7 +18,7 @@ export const Types: any = {
   //     </div>
   //   );
   // },
-  blockquote: ({ value }) => {
+  blockquote: ({ value }: PortableTextComponentProps<Blockquote>) => {
     const { quote, cite } = value;
     return (
       quote && (
@@ -32,7 +35,7 @@ export const Types: any = {
       )
     );
   },
-  imageObject: ({ value }) => {
+  imageObject: ({ value }: PortableTextComponentProps<ImageObject>) => {
     return value.image ? (
       <Image
         id={value.image.id}

@@ -1,7 +1,9 @@
 import { z } from 'zod';
-import { portableTextZ } from './portableText';
+import { portableTextBlockZ } from './portableText';
 
 export const descriptionItemZ = z.object({
   title: z.string(),
-  description: z.array(portableTextZ),
+  description: z.array(portableTextBlockZ),
 });
+
+export type DescriptionItem = z.infer<typeof descriptionItemZ>;

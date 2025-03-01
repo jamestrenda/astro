@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { imageZ } from './image';
-import { portableTextZ } from './portableText';
+import { portableTextBlockZ, portableTextZ } from './portableText';
 import { tagZ } from './tag';
 
 export const postZ = z.object({
@@ -13,14 +13,14 @@ export const postZ = z.object({
   tags: z.array(tagZ).optional().nullable(),
   toc: z
     .array(
-      portableTextZ
+      portableTextBlockZ
         .pick({
           _type: true,
           _key: true,
         })
         .extend({
           style: z.union([z.literal('h2'), z.literal('h3'), z.literal('h4')]),
-          text: portableTextZ.shape.children.element.shape.text,
+          text: portableTextBlockZ.shape.children.element.shape.text,
           anchor: z.string(),
         }),
     )

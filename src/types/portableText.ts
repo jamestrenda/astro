@@ -1,10 +1,12 @@
 import { z } from 'zod';
 import { baseBlockZ } from './base';
+import { blockquoteZ } from './blockquote';
 import { externalLinkZ } from './externalLink';
+import { imageZ } from './image';
 import { internalRefZ } from './internalRef';
 
 // PortableText block schema (Sanity's "block" type)
-export const portableTextZ = baseBlockZ.extend({
+export const portableTextBlockZ = baseBlockZ.extend({
   _type: z.literal('block'),
   children: z.array(
     z.object({
@@ -28,4 +30,9 @@ export const portableTextZ = baseBlockZ.extend({
   anchor: z.string().optional(),
 });
 
-export type PortableTextBlock = z.infer<typeof portableTextZ>;
+export const portableTextZ = z.array(
+  z.union([portableTextBlockZ, blockquoteZ, imageZ]),
+);
+
+export type PortableTextBlock = z.infer<typeof portableTextBlockZ>;
+export type PortableText = z.infer<typeof portableTextZ>;

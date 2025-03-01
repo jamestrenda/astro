@@ -7,11 +7,7 @@ import { Heading } from '~/components/Heading';
 import { TableOfContents } from '~/components/TableOfContents';
 import { Container } from '~/components/Container';
 // import { GridBackground, Spotlight } from '~/components/blocks/spotlight-new';
-import { postComponents } from '~/components/PortableText';
 import { Hero } from '~/components/Hero';
-
-// TODO: not implemented yet
-// return Astro.redirect('/');
 
 export async function getStaticPaths() {
   const posts = await getPosts({
@@ -39,8 +35,6 @@ if (!post) {
 }
 
 const { title, excerpt, body, tags, image, toc } = post;
-
-console.log(toc);
 ---
 
 <Layout>
@@ -63,76 +57,6 @@ console.log(toc);
         }
       </div>
     </Hero>
-    <!-- <Container
-      className="bg-grid-white/[0.02] relative flex h-[40rem] w-full overflow-hidden rounded-md bg-black/[0.96] antialiased md:items-center md:justify-center"
-    >
-      <GridBackground client:visible />
-      <Spotlight client:visible />
-      <Container
-        className="relative z-10 mx-auto w-full max-w-7xl p-4 pt-20 md:pt-0"
-      >
-        <h1
-          class="bg-opacity-50 bg-gradient-to-b from-zinc-50 to-zinc-400 bg-clip-text text-center text-4xl font-bold text-transparent md:text-7xl"
-        >
-          Spotlight <br /> which is not overused.
-        </h1>
-        <p
-          class="mx-auto mt-4 max-w-lg text-center text-base font-normal text-zinc-300"
-        >
-          A subtle yet effective spotlight effect, because the previous version
-          is used a bit too much these days.
-        </p>
-        {
-          /* {
-        title ? (
-          <Heading level="h1" className="text-center">
-            {title}
-          </Heading>
-        ) : null
-      } */
-        }
-      </Container>
-    </Container> -->
-
-    <!-- <Hero>
-      {
-        image?.image ? (
-          <SanityImage
-            src={image.image}
-            width={1440}
-            height={600}
-            loading="eager"
-            className="object-cover h-[600px] w-full"
-          />
-        ) : null
-      }
-
-      <Container className="py-14 flex flex-col items-center max-w-3xl">
-        <p
-          class="w-fit px-4 py-1 text-xs md:text-sm uppercase tracking-wider bg-primary dark:bg-background dark:text-primary text-white rounded-full mb-4"
-        >
-          Blog
-        </p>
-        {
-          title ? (
-            <Heading level="h1" className="text-center">
-              {title}
-            </Heading>
-          ) : null
-        }
-        {
-          tags && tags.length > 0 ? (
-            <ul class="flex items-center space-x-4 mt-6">
-              {tags.map((tag) => (
-                <li>
-                  <a href={`/${tag.slug}`}>{tag.title}</a>
-                </li>
-              ))}
-            </ul>
-          ) : null
-        }</Container
-      ></Hero
-    > -->
     <Container
       className="prose flex max-w-5xl gap-8 py-14 prose-zinc dark:prose-invert prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
     >

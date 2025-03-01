@@ -22,7 +22,10 @@ export const portableTextZ = baseBlockZ.extend({
     z.literal('h4'),
     z.literal('h5'),
     z.literal('overline'),
-    z.literal('blockquote'),
+    // z.literal('blockquote'),
   ]),
   markDefs: z.array(z.union([internalRefZ, externalLinkZ])).optional(),
+  anchor: z.string().optional(),
 });
+
+export type PortableTextBlock = z.infer<typeof portableTextZ>;

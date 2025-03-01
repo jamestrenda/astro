@@ -9,12 +9,24 @@ export default defineType({
   type: 'array',
   of: [
     ...getPortableTextBlocks({
-      styles: ['normal', 'h2', 'h3', 'h4', 'blockquote', 'overline'],
+      styles: ['normal', 'h2', 'h3', 'h4', 'overline'],
+    }),
+    defineArrayMember({
+      type: 'blockquote',
     }),
     defineArrayMember({
       type: 'code',
       name: 'code',
       title: 'Code',
+      options: {
+        language: 'typescript',
+        // languageAlternatives: [
+        //   { title: 'Typescript', value: 'ts' },
+        //   { title: 'HTML', value: 'html' },
+        //   { title: 'CSS', value: 'css' },
+        // ],
+        withFilename: true,
+      },
     }),
     defineArrayMember({
       type: 'imageObject',

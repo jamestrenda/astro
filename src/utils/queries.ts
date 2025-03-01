@@ -26,24 +26,46 @@ const seoFragment = groq`
   }
 `;
 
+const portableTextBlockFragment = groq`
+  ...,
+  markDefs[]{
+    _type,
+    _key,
+    _type == "internalRef" => {
+        "slug": @.ref.document->slug.current,
+        @.ref.document->._type == "post" => {
+            "slug": "blog/" + @.ref.document->.slug.current,
+        }
+    },
+    _type == "externalLink" => {
+        "url": @.link.url,
+        "newWindow": @.link.newWindow
+    },
+    !(_type in ["internalRef", "externalLink"]) => {
+      ...
+    }
+  },
+  _type == "block" => {
+    ...,
+    "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), ""))
+  }
+`;
+
 const portableTextFragment = groq`
     ...,
-    markDefs[]{
-        _type,
-        _key,
-        _type == "internalRef" => {
-            "slug": @.ref.document->slug.current,
-            @.ref.document->._type == "post" => {
-                "slug": "blog/" + @.ref.document->.slug.current,
-            }
-        },
-        _type == "externalLink" => {
-            "url": @.link.url,
-            "newWindow": @.link.newWindow
-        },
-        !(_type in ["internalRef", "externalLink"]) => {
-          ...
-        }
+    ${portableTextBlockFragment},
+    _type == "blockquote" => {
+      quote[] {
+        ${portableTextBlockFragment}
+      },
+      cite[] {
+        ${portableTextBlockFragment}
+      }
+    },
+    _type == "code" => {
+      language,
+      code,
+      highlightedLines
     },
     _type == "imageObject" => {
       ${imageObjectFragment}
@@ -60,6 +82,7 @@ export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current)] | or
 
 export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
     title,
+    excerpt,
     image {
         ${imageObjectFragment}
     },
@@ -70,6 +93,13 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
         "title": '#' + lower(array::join(string::split(title, " "), "-")),
         "slug": 'blog/' + slug.current
     },
+    "toc": body[_type == "block" && style in ["h2", "h3", "h4"]] {
+      _type,
+      _key,
+      style,
+      "text": children[0].text,
+      "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), ""))
+    }
 }`;
 
 export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug.current)] | order(_createdAt desc) {

@@ -15,6 +15,8 @@ import type { FormBlock } from '~/types/formBlock';
 import { textMarqueeBlockZ, type TextMarquee } from '~/types/textMarquee';
 import { TextMarqueeBlock } from './TextMarqueeBlock';
 import { stegaClean } from '@sanity/client/stega';
+import { Image } from './Image';
+import { PortableText } from './PortableText/PortableText';
 
 export type Props = Block;
 
@@ -109,13 +111,35 @@ try {
         <DescriptionGrid {...validBlock} client:visible />
       ) : null}
       {props._type === 'form' ? <Form {...validBlock} client:visible /> : null}
-      {props._type === 'hero' ? <Hero {...validBlock} client:visible /> : null}
+      {props._type === 'hero' ? (
+        <Hero {...validBlock} client:visible>
+          <div class="z-60 col-span-11 mt-auto w-full space-y-3 text-lg leading-6 max-xs:mb-4 xs:col-start-1 xs:col-end-8 xs:mt-16 [&_p]:font-light [&_p]:text-zinc-500! sm:[&_p]:text-xl [&_p]:lg:max-w-[85%] lg:[&_p]:text-2xl dark:[&_p]:text-foreground">
+            {validBlock.valueProposition && (
+              <PortableText portableText={validBlock.valueProposition} />
+            )}
+          </div>
+          {validBlock.image?.image && (
+            <div class="contents [&_img]:contrast-[1.1] [&_img]:dark:brightness-0 [&_img[data-lqip=true]]:gradient-mask-t-50">
+              <Image
+                id={validBlock.image.image.id}
+                asset={validBlock.image.image}
+                width={1280}
+                height={817}
+                loading="eager"
+                queryParams={{
+                  q: 100,
+                }}
+                className="pointer-events-none absolute bottom-0 right-0 z-50 aspect-square max-h-[400px] rounded-br-lg object-cover max-xs:-top-8 max-xs:left-0 max-xs:h-auto max-xs:max-h-[580px] max-xs:w-full max-xs:max-w-full max-xs:gradient-mask-b-[black_50%] xs:h-[580px] xs:max-h-[700px] xs:w-2/3 md:h-[700px] lg:w-[700px]"
+                client:visible
+              />
+            </div>
+          )}
+        </Hero>
+      ) : null}
       {props._type === 'portfolio' ? (
         <Portfolio {...validBlock} client:visible />
       ) : null}
-      {props._type === 'textBlock' ? (
-        <TextBlock {...validBlock} client:visible />
-      ) : null}
+      {props._type === 'textBlock' ? <TextBlock {...validBlock} /> : null}
       {props._type === 'textMarqueeBlock' ? (
         <TextMarqueeBlock {...validBlock} client:visible />
       ) : null}

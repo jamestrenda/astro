@@ -1,0 +1,15 @@
+---
+import { urlFor } from '~/utils/url-for';
+
+// ./src/components/PortableTextImage.astro
+
+const { asset, alt } = Astro.props.node;
+
+const url = urlFor(asset).url();
+const webpUrl = urlFor(asset).format('webp').url();
+---
+
+<picture>
+  <source srcset={webpUrl} type="image/webp" />
+  <img class="" src={url} alt={alt} />
+</picture>

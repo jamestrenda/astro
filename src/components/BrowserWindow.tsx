@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { cn } from '~/utils/misc';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -37,7 +37,7 @@ const BrowserWindow = memo(
           {withChrome && (
             <div
               className={cn(
-                'bg-glass absolute inset-x-0 top-0 z-40 grid h-14 items-center rounded-t-lg',
+                'absolute inset-x-0 top-0 z-40 grid h-14 items-center rounded-t-lg bg-glass',
               )}
             >
               <div className="flex h-full items-center justify-between px-4">
@@ -50,7 +50,7 @@ const BrowserWindow = memo(
             </div>
           )}
           {withStripes && (
-            <div className="border-x-(--pattern-fg) [--pattern-fg:var(--color-zinc-500)]/5 dark:[--pattern-fg:var(--color-black)]/10 col-start-0 row-start-0 pointer-events-none absolute inset-0 z-30 row-span-5 bg-black/5 bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed"></div>
+            <div className="pointer-events-none absolute inset-0 z-30 col-start-0 row-span-5 row-start-0 border-x-(--pattern-fg) bg-black/5 bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed [--pattern-fg:var(--color-zinc-500)]/5 dark:[--pattern-fg:var(--color-black)]/10"></div>
           )}
           {children}
         </div>
@@ -80,13 +80,16 @@ const Shadow = memo(({ index, total, position }: ShadowProps) => {
   const increment = 12;
   const y = -(index + 1) * increment;
 
-  const lightness = calculateLightnessScale(50, 97, 0.9, total, index);
+  const lightness = useMemo(
+    () => calculateLightnessScale(50, 97, 0.9, total, index),
+    [total, index],
+  );
 
   return (
     <motion.div
       className={cn(
         `absolute inset-x-0 mx-auto w-full rounded-lg backdrop-blur-lg`,
-        position === 'top' ? 'bottom-auto top-0' : 'bottom-0 top-auto',
+        position === 'top' ? 'top-0 bottom-auto' : 'top-auto bottom-0',
       )}
       initial={{
         bottom: position === 'top' ? undefined : 0,
@@ -109,7 +112,7 @@ const Shadow = memo(({ index, total, position }: ShadowProps) => {
       }}
     >
       <div
-        className={cn(`bg-zinc-950/(--tw-bg-opacity) h-24 rounded-lg`)}
+        className={cn(`h-24 rounded-lg bg-zinc-950/(--tw-bg-opacity)`)}
         style={
           {
             '--tw-bg-opacity': `${100 - lightness}%`,

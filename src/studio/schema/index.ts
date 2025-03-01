@@ -9,6 +9,7 @@ import principle from './documents/principle';
 import recipe from './documents/recipe';
 import tag from './documents/tag';
 import website from './documents/website';
+import blockquote from './objects/blockquote';
 import descriptionGrid from './objects/descriptionGrid';
 import externalLink from './objects/externalLink';
 import feature from './objects/feature';
@@ -43,6 +44,7 @@ export const SINGLETON_TYPES = new Set([
 ]);
 
 export const schemaTypes = [
+  blockquote,
   client,
   descriptionGrid,
   externalLink,

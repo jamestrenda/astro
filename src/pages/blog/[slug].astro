@@ -4,8 +4,11 @@ import type { InferGetStaticParamsType } from 'astro';
 import { PortableText } from '~/components/PortableText/PortableText';
 import Layout from '../_layout.astro';
 import { Heading } from '~/components/Heading';
-// import Hero from '~/components/Hero.astro';
+import { TableOfContents } from '~/components/TableOfContents';
 import { Container } from '~/components/Container';
+// import { GridBackground, Spotlight } from '~/components/blocks/spotlight-new';
+import { postComponents } from '~/components/PortableText';
+import { Hero } from '~/components/Hero';
 
 // TODO: not implemented yet
 // return Astro.redirect('/');
@@ -35,20 +38,62 @@ if (!post) {
   });
 }
 
-const { title, body, tags, image } = post;
+const { title, excerpt, body, tags, image, toc } = post;
+
+console.log(toc);
 ---
 
 <Layout>
   <article>
-    <Container
-      >{
+    <Hero client:visible>
+      <div
+        class="z-60 col-span-12 w-full space-y-3 text-lg leading-6 [&_p]:font-light [&_p]:text-zinc-500! sm:[&_p]:text-xl lg:[&_p]:text-2xl dark:[&_p]:text-foreground"
+      >
+        {
+          title ? (
+            <Heading level="h1" className="text-center">
+              {title}
+            </Heading>
+          ) : null
+        }
+        {
+          excerpt ? (
+            <p class="mx-auto max-w-3xl text-center text-zinc-500">{excerpt}</p>
+          ) : null
+        }
+      </div>
+    </Hero>
+    <!-- <Container
+      className="bg-grid-white/[0.02] relative flex h-[40rem] w-full overflow-hidden rounded-md bg-black/[0.96] antialiased md:items-center md:justify-center"
+    >
+      <GridBackground client:visible />
+      <Spotlight client:visible />
+      <Container
+        className="relative z-10 mx-auto w-full max-w-7xl p-4 pt-20 md:pt-0"
+      >
+        <h1
+          class="bg-opacity-50 bg-gradient-to-b from-zinc-50 to-zinc-400 bg-clip-text text-center text-4xl font-bold text-transparent md:text-7xl"
+        >
+          Spotlight <br /> which is not overused.
+        </h1>
+        <p
+          class="mx-auto mt-4 max-w-lg text-center text-base font-normal text-zinc-300"
+        >
+          A subtle yet effective spotlight effect, because the previous version
+          is used a bit too much these days.
+        </p>
+        {
+          /* {
         title ? (
           <Heading level="h1" className="text-center">
             {title}
           </Heading>
         ) : null
-      }</Container
-    >
+      } */
+        }
+      </Container>
+    </Container> -->
+
     <!-- <Hero>
       {
         image?.image ? (
@@ -88,8 +133,17 @@ const { title, body, tags, image } = post;
         }</Container
       ></Hero
     > -->
-    <Container className="prose max-w-3xl py-24">
-      {body ? <PortableText portableText={body} client:visible /> : null}
+    <Container
+      className="prose flex max-w-5xl gap-8 py-14 prose-zinc dark:prose-invert prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
+    >
+      {Array.isArray(toc) && <TableOfContents toc={toc} client:visible />}
+      {
+        body ? (
+          <section class="order-1 pt-10 pb-24 *:*:first:mt-0!">
+            <PortableText portableText={body} blog client:visible />
+          </section>
+        ) : null
+      }
     </Container>
   </article>
 </Layout>

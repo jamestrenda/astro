@@ -12,8 +12,9 @@ import { locations } from '~/studio/presentation/locate';
 import { getEnv } from '~/utils/env';
 import { SINGLETON_TYPES, schemaTypes } from './src/studio/schema';
 import { structure } from './src/studio/structure';
-const projectId = getEnv().PUBLIC_SANITY_STUDIO_PROJECT_ID;
-const dataset = getEnv().PUBLIC_SANITY_STUDIO_DATASET;
+
+export const projectId = getEnv().PUBLIC_SANITY_STUDIO_PROJECT_ID;
+export const dataset = getEnv().PUBLIC_SANITY_STUDIO_DATASET;
 export const apiVersion = getEnv().PUBLIC_SANITY_STUDIO_API_VERSION;
 
 // Feel free to remove this check if you don't need it

@@ -1,37 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useTableOfContents } from '~/hooks/useTableOfContents';
 import type { Post } from '~/types/post';
 
 export const TableOfContents = ({ toc }: { toc: Required<Post>['toc'] }) => {
-  const [activeId, setActiveId] = useState<string>('');
-
-  useEffect(() => {
-    // Set initial active state to first item
-    if (toc.length > 0) {
-      setActiveId(toc[0].anchor);
-    }
-
-    const callback: IntersectionObserverCallback = (entries) => {
-      // Find the first heading that's currently visible
-      const visible = entries.find((entry) => entry.isIntersecting);
-      if (visible) {
-        setActiveId(visible.target.id);
-      }
-    };
-
-    // Create observer with slight offset to trigger earlier
-    const observer = new IntersectionObserver(callback, {
-      rootMargin: '-20px 0px -40% 0px',
-    });
-
-    // Observe all heading elements
-    document.querySelectorAll('.anchor').forEach((element) => {
-      observer.observe(element);
-    });
-
-    return () => observer.disconnect();
-  }, [toc]);
-
   if (!toc) return null;
+  const activeId = useTableOfContents(toc);
+
   return (
     <div className="order-2 max-xl:hidden">
       <div className="sticky top-14 max-h-[calc(100svh-3.5rem)] overflow-x-hidden pt-10 pb-24 pl-6">

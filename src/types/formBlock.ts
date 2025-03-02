@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { baseBlockZ } from './base';
 import { formQueryParamsZ, formZ } from './form';
-import { portableTextBlockZ } from './portableText';
+import { portableTextBlockZ } from './portableTextBlock';
 
 export const formBlockZ = z
   .object({

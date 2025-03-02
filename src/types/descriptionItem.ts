@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { portableTextBlockZ } from './portableText';
+import { portableTextBlockZ } from './portableTextBlock';
 
 export const descriptionItemZ = z.object({
   title: z.string(),

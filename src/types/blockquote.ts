@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { baseBlockZ } from './base';
-import { portableTextBlockZ } from './portableText';
+import { portableTextBlockZ } from './portableTextBlock';
 
 export const blockquoteZ = baseBlockZ.extend({
   _type: z.literal('blockquote'),

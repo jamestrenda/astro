@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { baseBlockZ } from './base';
 import { imageZ } from './image';
 import { marqueeZ } from './marquee';
-import { portableTextBlockZ } from './portableText';
+import { portableTextBlockZ } from './portableTextBlock';
 
 export const heroZ = baseBlockZ.extend({
   _type: z.literal('hero'),

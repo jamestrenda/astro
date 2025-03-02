@@ -3,7 +3,7 @@ import { baseBlockZ } from './base';
 import { clientZ } from './client';
 import { featureZ } from './feature';
 import { imageZ } from './image';
-import { portableTextBlockZ } from './portableText';
+import { portableTextBlockZ } from './portableTextBlock';
 
 export const websiteZ = baseBlockZ.extend({
   _type: z.literal('website'),

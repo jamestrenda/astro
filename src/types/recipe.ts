@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { galleryZ } from './gallery';
 import { ingredientZ } from './ingredient';
-import { portableTextBlockZ } from './portableText';
+import { portableTextBlockZ } from './portableTextBlock';
 
 export const recipeZ = z.object({
   title: z.string().optional().nullable(),

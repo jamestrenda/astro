@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import { imageZ } from './image';
-import { portableTextBlockZ, portableTextZ } from './portableText';
+import {  portableTextZ } from './portableText';
 import { tagZ } from './tag';
+import { portableTextBlockZ } from './portableTextBlock';
 
 export const postZ = z.object({
   title: z.string().optional().nullable(),

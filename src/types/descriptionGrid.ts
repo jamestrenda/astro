@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { baseBlockZ } from './base';
 import { descriptionItemZ } from './descriptionItem';
-import { portableTextBlockZ } from './portableText';
+import { portableTextBlockZ } from './portableTextBlock';
 
 export const descriptionGridZ = baseBlockZ.extend({
   _type: z.literal('descriptionGrid'),

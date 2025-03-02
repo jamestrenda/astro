@@ -45,7 +45,10 @@ const theme = getTheme(Astro.cookies);
 
 <html
   lang="en"
-  class:list={['min-w-xs font-sans', theme === 'dark' ? 'dark' : undefined]}
+  class:list={[
+    'min-w-xs font-sans selection:bg-primary selection:text-white',
+    theme === 'dark' ? 'dark' : undefined,
+  ]}
 >
   <head>
     <meta charset="utf-8" />
@@ -59,7 +62,7 @@ const theme = getTheme(Astro.cookies);
   </head>
 
   <body
-    class="[--pattern-fg:var(--color-zinc-950)]/5 dark:[--pattern-fg:var(--color-white)]/5 flex min-h-dvh flex-col bg-stone-200 bg-[image:radial-gradient(var(--pattern-fg)_1px,_transparent_0)] bg-[size:10px_10px] bg-fixed dark:bg-zinc-900"
+    class="flex min-h-dvh flex-col bg-stone-200 bg-[image:radial-gradient(var(--pattern-fg)_1px,_transparent_0)] bg-[size:10px_10px] bg-fixed [--pattern-fg:var(--color-zinc-950)]/5 dark:bg-zinc-900 dark:[--pattern-fg:var(--color-white)]/5"
   >
     <Header theme={theme} />
     <main class="w-full grow">

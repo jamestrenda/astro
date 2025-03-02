@@ -68,7 +68,7 @@ export default defineConfig({
   ],
   schema: {
     types: schemaTypes,
-    templates: (prev, context) => {
+    templates: (prev) => {
       const excludedTypes = [...SINGLETON_TYPES];
 
       const post = {

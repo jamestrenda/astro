@@ -29,6 +29,9 @@ importers:
       '@fontsource/inter':
         specifier: ^5.1.0
         version: 5.1.1
+      '@fontsource/jetbrains-mono':
+        specifier: ^5.2.0
+        version: 5.2.0
       '@hatchd/sanity-plugin-form-builder':
         specifier: ^1.1.0
         version: 1.1.0(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(sanity@3.70.0(@emotion/is-prop-valid@1.2.2)(@types/babel__core@7.20.5)(@types/node@22.13.5)(@types/react@18.3.18)(lightningcss@1.29.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.39.0)(typescript@5.7.3))(styled-components@6.1.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.7.3)
@@ -1580,6 +1583,9 @@ packages:
 
   '@fontsource/inter@5.1.1':
     resolution: {integrity: sha512-weN3E+rq0Xb3Z93VHJ+Rc7WOQX9ETJPTAJ+gDcaMHtjft67L58sfS65rAjC5tZUXQ2FdZ/V1/sSzCwZ6v05kJw==}
+
+  '@fontsource/jetbrains-mono@5.2.0':
+    resolution: {integrity: sha512-tEzhMyMbVNIFLqwN3ExIb2ySb2M71oSg5rXRKMFdDyObqg/zr5NNOMQkXBVQbQosBkcUEYGiIHwX819pi8rc4g==}
 
   '@hatchd/sanity-plugin-form-builder@1.1.0':
     resolution: {integrity: sha512-cZ25HyRaox3SCCHL1KUjUt3YtgajO6J6WZgen2W+l5LjDBRaxgqRfN+2VKvzIcEWeaoJoBu50kxcODoIoS5g0w==}
@@ -10335,6 +10341,8 @@ snapshots:
   '@fontsource-variable/inter@5.1.1': {}
 
   '@fontsource/inter@5.1.1': {}
+
+  '@fontsource/jetbrains-mono@5.2.0': {}
 
   '@hatchd/sanity-plugin-form-builder@1.1.0(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(sanity@3.70.0(@emotion/is-prop-valid@1.2.2)(@types/babel__core@7.20.5)(@types/node@22.13.5)(@types/react@18.3.18)(lightningcss@1.29.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.39.0)(typescript@5.7.3))(styled-components@6.1.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.7.3)':
     dependencies:

@@ -1,37 +1,28 @@
-// import {Refractor, registerLanguage} from 'react-refractor';
-// import ts from 'refractor/lang/typescript'
-import { CodeBlock as CodeBlockComponent } from '~/components/ui/code-block';
-// import './styles.css'
+import '@fontsource/jetbrains-mono';
+import { Refractor, registerLanguage } from 'react-refractor';
+import ts from 'refractor/lang/typescript';
+import './styles.css';
 
-// registerLanguage(ts)
+registerLanguage(ts);
 
 export const CodeBlock = (props: {
   language: string;
   code: string;
-  highlightedLines: string[];
+  highlightedLines?: string[];
 }) => {
   return (
     <div className="not-prose pointer-events-auto">
-      <CodeBlockComponent
-        files={[
-          {
-            title: 'schema.ts',
-            language: props.language,
-            code: props.code,
-            // highlightedLines: props.highlightedLines.map((line) => parseInt(line))
-          },
-        ]}
-        defaultTitle="theme.ts"
+      <Refractor
+        className="my-0! overflow-x-auto *:font-mono"
+        language={props.language}
+        value={props.code}
+        markers={
+          Array.isArray(props.highlightedLines)
+            ? props.highlightedLines.map((line) => parseInt(line))
+            : undefined
+        }
         // className="size-[400px]"
       />
     </div>
   );
-  // return (
-  //   <Refractor
-  //     // In this example, `props` is the value of a `code` field
-  //     language={props.language}
-  //     value={props.code}
-  //     markers={props.highlightedLines}
-  //   />
-  // )
 };

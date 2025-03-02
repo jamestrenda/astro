@@ -4,6 +4,7 @@ export const code = z.object({
   language: z.string(),
   code: z.string(),
   highlightedLines: z.array(z.string()),
+  filename: z.string(),
 });
 
 export type Code = z.infer<typeof code>;

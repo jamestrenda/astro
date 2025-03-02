@@ -13,6 +13,7 @@ export const components: PortableTextComponents = {
 };
 
 export const postComponents: PortableTextComponents = {
+  // @ts-ignore
   block: PostBlock,
   marks: Marks,
   list: List,

@@ -1,52 +1,57 @@
-import type { PortableTextComponentProps } from '@portabletext/react';
 import { HashIcon } from 'lucide-react';
 import type { PortableTextBlock as PortableTextBlockType } from '~/types/portableText';
 import { Heading } from '../Heading';
 import { Overline } from '../Overline';
 
 export const PostBlock = {
-  h1: ({ children }: PortableTextComponentProps<PortableTextBlockType>) => {
+  h1: ({ children }: { children: React.ReactNode }) => {
     return <Heading level="h1">{children}</Heading>;
   },
   h2: ({
     children,
     value,
-  }: PortableTextComponentProps<PortableTextBlockType>) => {
+  }: {
+    children: React.ReactNode;
+    value: PortableTextBlockType;
+  }) => {
     return (
-      <Heading className="group anchor relative" level="h2" id={value.anchor}>
-        <span className="pointer-events-none absolute inset-y-0 -left-8 hidden place-items-center text-muted opacity-0 group-hover:opacity-100 xl:grid">
+      <Heading className="anchor relative" level="h2" id={value.anchor}>
+        <a
+          className="absolute inset-y-0 right-full hidden place-items-center px-2 text-muted! no-underline! opacity-0 transition hover:text-primary! hover:opacity-100 xl:grid"
+          href={`#${value.anchor}`}
+        >
           <HashIcon size={24} />
-        </span>
-        <a className="text-inherit! no-underline!" href={`#${value.anchor}`}>
-          {children}
         </a>
+        {children}
       </Heading>
     );
   },
   h3: ({
     children,
     value,
-  }: PortableTextComponentProps<PortableTextBlockType>) => {
+  }: {
+    children: React.ReactNode;
+    value: PortableTextBlockType;
+  }) => {
     return (
-      <Heading className="group anchor relative" level="h3" id={value.anchor}>
-        <span className="pointer-events-none absolute inset-y-0 -left-8 hidden place-items-center text-muted opacity-0 group-hover:opacity-100 xl:grid">
+      <Heading className="anchor relative" level="h3" id={value.anchor}>
+        <a
+          className="absolute inset-y-0 right-full hidden place-items-center px-2 text-muted! no-underline! opacity-0 transition hover:text-primary! hover:opacity-100 xl:grid"
+          href={`#${value.anchor}`}
+        >
           <HashIcon size={24} />
-        </span>
-        <a className="text-inherit! no-underline!" href={`#${value.anchor}`}>
-          {children}
         </a>
+        {children}
       </Heading>
     );
   },
-  h4: ({ children }: PortableTextComponentProps<PortableTextBlockType>) => {
+  h4: ({ children }: { children: React.ReactNode }) => {
     return <Heading level="h4">{children}</Heading>;
   },
-  normal: ({ children }: PortableTextComponentProps<PortableTextBlockType>) => {
+  normal: ({ children }: { children: React.ReactNode }) => {
     return <p>{children}</p>;
   },
-  overline: ({
-    children,
-  }: PortableTextComponentProps<PortableTextBlockType>) => {
+  overline: ({ children }: { children: React.ReactNode }) => {
     return <Overline>{children}</Overline>;
   },
   // add more block-level components here.

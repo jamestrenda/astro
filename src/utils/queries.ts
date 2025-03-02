@@ -65,7 +65,8 @@ const portableTextFragment = groq`
     _type == "code" => {
       language,
       code,
-      highlightedLines
+      highlightedLines,
+      filename
     },
     _type == "imageObject" => {
       ${imageObjectFragment}

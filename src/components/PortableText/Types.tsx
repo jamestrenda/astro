@@ -4,23 +4,27 @@ import type {
 } from '@portabletext/react';
 import type { Blockquote } from '~/types/blockquote';
 import type { ImageObject } from '~/types/image';
+import { CodeBlock } from '../CodeBlock';
 import { Image } from '../Image';
 import { PortableText } from './PortableText';
 
 export const Types: PortableTextComponents['types'] = {
-  // code: ({ value }: { value: Props }) => {
-  //   console.log(value);
-  //   return (
-  //     <div className="not-prose rounded-lg bg-zinc-950 p-1 text-sm scheme-dark in-data-stack:rounded-none dark:inset-ring dark:inset-ring-white/10 in-data-stack:dark:inset-ring-0">
-  //       <div className="px-3 pt-0.5 pb-1.5 text-xs/5 text-zinc-400 dark:text-white/50">
-  //         {value.language}
-  //       </div>
-  //       <div className="*:flex *:*:max-w-none *:*:shrink-0 *:*:grow *:overflow-auto *:rounded-md *:bg-white/10! *:p-5 *:inset-ring *:inset-ring-white/10 dark:*:bg-white/5! dark:*:inset-ring-white/5 **:[.line]:isolate">
-  //         <Code code={value.code} lang={value.language} theme="dark-plus" />
-  //       </div>
-  //     </div>
-  //   );
-  // },
+  code: ({ value }: any) => {
+    return (
+      <div className="overflow-hidden rounded-[16px] border-8 border-stone-300 dark:border-zinc-950">
+        <div className="not-prose rounded-lg bg-background p-1 text-sm dark:inset-ring dark:inset-ring-white/10">
+          {value.filename && (
+            <div className="px-3.5 pt-3.5 text-xs/3 text-muted dark:text-white/50">
+              {value.filename}
+            </div>
+          )}
+          {/* <div className="*:rounded-md *:bg-zinc-500/10! *:p-5 *:inset-ring *:inset-ring-white/10 dark:*:bg-white/5! dark:*:inset-ring-white/5 **:[.line]:isolate"> */}
+          <CodeBlock code={value.code} language={value.language} />
+          {/* </div> */}
+        </div>
+      </div>
+    );
+  },
   blockquote: ({ value }: PortableTextComponentProps<Blockquote>) => {
     const { quote, cite } = value;
     return (

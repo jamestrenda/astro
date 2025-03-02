@@ -1,8 +1,4 @@
 @import 'tailwindcss';
-/*
-  ---break---
-*/
-@custom-variant dark (&:is(.dark *));
 
 @config '../../tailwind.config.mjs';
 

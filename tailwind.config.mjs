@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import tailwindcssTypography from '@tailwindcss/typography';
 import defaultTheme from 'tailwindcss/defaultTheme';
-import tailwindcssTypography from "@tailwindcss/typography";
 
 export default {
   darkMode: ['class'],
@@ -31,6 +31,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        mono: ['JetBrains Mono', ...defaultTheme.fontFamily.mono],
       },
       // fontSize: {
       //   '7xl': [
@@ -100,6 +101,6 @@ export default {
       addVariant('starting', '@starting-style');
     },
     require('tailwind-gradient-mask-image'),
-    tailwindcssTypography
+    tailwindcssTypography,
   ],
 };

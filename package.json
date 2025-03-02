@@ -96,5 +96,8 @@
   },
   "engines": {
     "node": "^20.0.0"
+  },
+  "resolutions": {
+    "sanity": "^3.70.0"
   }
 }

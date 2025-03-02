@@ -17,7 +17,7 @@
     "@astrojs/vercel": "^8.0.1",
     "@conform-to/react": "^1.1.5",
     "@conform-to/zod": "^1.1.5",
-    "@fontsource/inter": "^5.1.0",
+    "@fontsource/inter": "5.1.0",
     "@fontsource/jetbrains-mono": "^5.2.0",
     "@hatchd/sanity-plugin-form-builder": "^1.1.0",
     "@headlessui/react": "^2.2.0",

@@ -2,6 +2,7 @@ import type {
   PortableTextComponentProps,
   PortableTextComponents,
 } from '@portabletext/react';
+import { Lightbox } from '~/components/Lightbox';
 import type { Blockquote } from '~/types/blockquote';
 import type { ImageObject } from '~/types/image';
 import { CodeBlock } from '../CodeBlock';
@@ -11,7 +12,7 @@ import { PortableText } from './PortableText';
 export const Types: PortableTextComponents['types'] = {
   code: ({ value }: any) => {
     return (
-      <div className="overflow-hidden rounded-[16px] border-8 border-stone-300 dark:border-zinc-950">
+      <div className="overflow-hidden rounded-2xl border-8 border-stone-300 dark:border-zinc-950">
         <div className="not-prose rounded-lg bg-background p-1 text-sm dark:inset-ring dark:inset-ring-white/10">
           {value.filename && (
             <div className="px-3.5 pt-3.5 text-xs/3 text-muted dark:text-white/50">
@@ -44,18 +45,20 @@ export const Types: PortableTextComponents['types'] = {
   },
   imageObject: ({ value }: PortableTextComponentProps<ImageObject>) => {
     return value.image ? (
-      <Image
-        id={value.image.id}
-        asset={value.image}
-        // width={1280}
-        // height={817}
-        // loading="eager"
-        mode="cover"
-        queryParams={{
-          q: 100,
-        }}
-        className="mx-auto block rounded-lg"
-      />
+      <Lightbox className="w-full overflow-hidden">
+        <Image
+          id={value.image.id}
+          asset={value.image}
+          // width={1280}
+          // height={817}
+          // loading="eager"
+          mode="cover"
+          queryParams={{
+            q: 100,
+          }}
+          className="not-prose rounded-2xl border-8 border-stone-300 dark:border-zinc-950"
+        />
+      </Lightbox>
     ) : null;
   },
   // add more block-level components here.

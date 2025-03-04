@@ -59,7 +59,7 @@ const { title, excerpt, body, tags, image, toc } = post;
       </div>
     </Hero>
     <Container
-      className="prose grid grid-cols-3 gap-8 py-14 prose-zinc md:max-w-2xl lg:max-w-5xl dark:prose-invert prose-a:text-primary prose-a:no-underline prose-a:hover:underline"
+      className="prose grid grid-cols-3 gap-8 py-14 prose-zinc md:max-w-2xl lg:max-w-5xl xl:gap-16 dark:prose-invert prose-a:text-primary prose-a:no-underline prose-a:hover:underline"
     >
       <div class="not-prose order-2 max-lg:hidden">
         <div
@@ -91,7 +91,7 @@ const { title, excerpt, body, tags, image, toc } = post;
       </div>
       {
         body ? (
-          <section class="order-1 col-span-3 pt-10 pb-24 *:*:first:mt-0! lg:col-span-2">
+          <section class="order-1 col-span-3 *:*:first:mt-0! lg:col-span-2 lg:pt-10 lg:pb-24">
             <PortableText portableText={body} blog client:visible />
           </section>
         ) : null

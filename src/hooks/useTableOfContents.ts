@@ -8,7 +8,7 @@ export function useTableOfContents(toc: Required<Post>['toc']) {
     // Only run on screens wider than 1280px
     if (
       typeof window === 'undefined' ||
-      window.innerWidth < 1280 ||
+      window.innerWidth < 1024 ||
       !toc?.length
     ) {
       return;

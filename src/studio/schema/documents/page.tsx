@@ -1,4 +1,4 @@
-import { FileIcon, HomeIcon, SearchCheckIcon } from 'lucide-react';
+import { FileIcon, SearchCheckIcon } from 'lucide-react';
 import { defineField, defineType } from 'sanity';
 import { blocksField } from '../fields/blocks';
 import { slugField } from '../fields/slug';
@@ -41,41 +41,25 @@ export default defineType({
     //   type: 'og',
     //   group: ['social'],
     // },
-    defineField({
-      name: 'isHomepage',
-      hidden: true,
-      type: 'boolean',
-      readOnly: true,
-      initialValue: false,
-    }),
   ],
   preview: {
     select: {
       title: 'title',
       slug: 'slug',
-      isHomepage: 'isHomepage',
     },
     prepare: ({
       title,
       slug = { current: '' },
-      isHomepage,
     }: {
       title?: string;
       slug?: { current: string };
-      isHomepage?: boolean;
     }) => {
       const path = `/${slug.current}`;
 
       return {
         title: `${title || 'Untitled'}`,
-        subtitle: isHomepage
-          ? undefined
-          : slug.current
-            ? path
-            : '(missing slug)',
-        media: isHomepage
-          ? () => <HomeIcon size="1em" />
-          : () => <FileIcon size="1em" />,
+        subtitle: slug.current ? path : '(missing slug)',
+        media: FileIcon,
       };
     },
   },

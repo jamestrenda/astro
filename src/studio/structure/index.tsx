@@ -15,13 +15,15 @@ import {
   SmileIcon,
   TagIcon,
 } from 'lucide-react';
-import { map } from 'rxjs';
 import { apiVersion } from 'sanity.config';
 import type { StructureResolver } from 'sanity/structure';
+import { getHomepageId } from '~/utils/getHomepageId';
 import { HomeSettingsIcon } from '../icons/home-settings';
 import taxonomyList from './taxonomyList';
 
 export const structure: StructureResolver = async (S, context) => {
+  const homepageId = await getHomepageId(context.documentStore);
+
   const chooseHomepage = S.defaultDocument({
     schemaType: 'home',
     documentId: 'home',
@@ -36,29 +38,20 @@ export const structure: StructureResolver = async (S, context) => {
   const home = S.listItem()
     .title('Home')
     .icon(HomeIcon)
-    .child(() =>
-      context.documentStore
-        .listenQuery(
-          `*[_type == "page" && defined(isHomepage) && isHomepage == true][0]._id`,
-          {},
-          {},
-        )
-        .pipe(
-          map((ids) => {
-            if (!ids) return chooseHomepage;
-            return S.document()
-              .schemaType('page') // Your document type
-              .documentId(ids); // Dynamically fetch the ID
-          }),
-        ),
-    );
+    .child(() => {
+      if (!homepageId) return chooseHomepage;
+      return S.document().schemaType('page').documentId(homepageId);
+    });
 
   const pages = S.listItem()
     .title('Pages')
     .icon(FilesIcon)
     .child(
       S.documentTypeList('page')
-        .filter(`isHomepage == false`)
+        .filter(
+          `_type == "page" && _id != $id && !(_id in path("drafts." + $id))`,
+        )
+        .params({ id: homepageId })
         .apiVersion(apiVersion)
         .title('Pages'),
     );
@@ -68,7 +61,7 @@ export const structure: StructureResolver = async (S, context) => {
     .icon(RssIcon)
     .child(
       S.list()
-        .title('All Posts')
+        .title('Blog')
         .items([
           S.listItem()
             .title('All Posts')

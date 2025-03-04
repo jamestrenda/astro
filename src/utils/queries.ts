@@ -281,7 +281,7 @@ const blocksFragment = groq`
   }
 `;
 
-export const INDEX_QUERY = groq`*[_type == "page" && isHomepage == true][0] {
+export const INDEX_QUERY = groq`*[_id == "home"][0].homepage-> {
     _type,
     "slug": coalesce(slug.current, ""),
     blocks[] {

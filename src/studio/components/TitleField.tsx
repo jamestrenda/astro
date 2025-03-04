@@ -2,10 +2,13 @@ import { Badge, Inline, Stack } from '@sanity/ui';
 import { useEffect, useMemo, useState } from 'react';
 import {
   useClient,
+  useDocumentStore,
   useFormValue,
   type FieldProps,
   type StringFieldProps,
 } from 'sanity';
+import { useHomepageId } from '~/hooks/useHomepageId';
+
 
 export const TitleField = ({
   min = 0,
@@ -22,7 +25,10 @@ export const TitleField = ({
 }) => {
   const { inputProps } = props;
   const value = (inputProps?.value as StringFieldProps['value']) || '';
-  const isHomepage = Boolean(useFormValue(['isHomepage']));
+  const documentStore = useDocumentStore()
+  const homepageId = useHomepageId(documentStore)
+  const id = useFormValue(['_id'])
+  const isHomepage = String(id).replace('drafts.', '') === homepageId
   const isSeoTitle = inputProps.id === 'seo.title';
 
   return (

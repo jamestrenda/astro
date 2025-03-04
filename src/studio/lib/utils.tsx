@@ -114,6 +114,8 @@ export const portableTextBlocks = defineArrayMember({
       { title: 'Emphasis', value: 'em' },
       { title: 'Underline', value: 'underline' },
       { title: 'Strike', value: 'strike-through' },
+      { title: 'Code', value: 'code' },
+      // { title: 'Code', value: 'inline-code', component: ({ children }) => <code>{children}</code>, icon: <CodeIcon size="1em" /> },
     ],
     // Annotations can be any object structure – e.g. a link or a footnote.
     // Add link styles components

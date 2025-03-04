@@ -23,4 +23,9 @@ export const Marks: PortableTextComponents['marks'] = {
       </a>
     );
   },
+  code: ({ value, children }) => {
+    return (
+      <code className="rounded-md bg-background dark:bg-zinc-950 p-1 text-muted dark:text-white/50 text-sm font-mono not-prose pointer-events-auto">{children}</code>
+    );
+  },
 };

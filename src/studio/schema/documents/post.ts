@@ -34,6 +34,11 @@ export default defineType({
       type: 'portableText',
     }),
     defineField({
+      name: 'repo',
+      title: 'Repository URL',
+      type: 'url',
+    }),
+    defineField({
       name: 'excerpt',
       title: 'Excerpt',
       type: 'text',

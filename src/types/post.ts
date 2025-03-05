@@ -1,13 +1,14 @@
 import { z } from 'zod';
 import { imageZ } from './image';
-import {  portableTextZ } from './portableText';
-import { tagZ } from './tag';
+import { portableTextZ } from './portableText';
 import { portableTextBlockZ } from './portableTextBlock';
+import { tagZ } from './tag';
 
 export const postZ = z.object({
   title: z.string().optional().nullable(),
   body: portableTextZ.optional().nullable(),
   excerpt: z.string().optional().nullable(),
+  repo: z.string().url().optional().nullable(),
   image: imageZ.optional().nullable(),
   slug: z.string(),
   publishedAt: z.string().optional().nullable(),

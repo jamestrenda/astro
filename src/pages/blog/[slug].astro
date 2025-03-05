@@ -7,8 +7,8 @@ import { Heading } from '~/components/Heading';
 import { TableOfContents } from '~/components/TableOfContents';
 import { Container } from '~/components/Container';
 // import { GridBackground, Spotlight } from '~/components/blocks/spotlight-new';
-// import { Code } from 'astro:components';
 import { Hero } from '~/components/Hero';
+import { RiGithubFill } from '@remixicon/react';
 
 export async function getStaticPaths() {
   const posts = await getPosts({
@@ -35,7 +35,7 @@ if (!post) {
   });
 }
 
-const { title, excerpt, body, tags, image, toc } = post;
+const { title, excerpt, body, tags, image, toc, repo } = post;
 ---
 
 <Layout>
@@ -59,13 +59,31 @@ const { title, excerpt, body, tags, image, toc } = post;
       </div>
     </Hero>
     <Container
-      className="prose grid grid-cols-3 gap-8 py-14 prose-zinc md:max-w-2xl lg:max-w-5xl xl:gap-16 dark:prose-invert prose-a:text-primary prose-a:no-underline prose-a:hover:underline"
+      className="prose grid grid-cols-3 gap-8 py-14 prose-zinc md:max-w-2xl lg:max-w-5xl xl:gap-16 dark:prose-invert prose-a:text-primary prose-a:no-underline prose-a:hover:underline prose-ol:marker:text-foreground prose-ul:marker:text-foreground"
     >
       <div class="not-prose order-2 max-lg:hidden">
         <div
           class="sticky top-14 col-span-1 flex flex-col gap-8 overflow-x-hidden pt-10 pb-24"
         >
           {Array.isArray(toc) && <TableOfContents toc={toc} client:visible />}
+          {
+            repo ? (
+              <div class="flex flex-col gap-3">
+                <h3 class="my-0! text-sm/6 font-medium tracking-widest text-muted uppercase sm:text-xs/6">
+                  Useful Links
+                </h3>
+                <a
+                  href={repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="my-0! w-fit"
+                >
+                  <span class="sr-only">View Repo</span>
+                  <RiGithubFill className="fill-foreground hover:fill-primary transition-colors" />
+                </a>
+              </div>
+            ) : null
+          }
           {
             Array.isArray(tags) && (
               <div class="flex flex-col gap-3">

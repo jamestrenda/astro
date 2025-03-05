@@ -56,10 +56,10 @@ export function Lightbox({
   return (
     <>
       {/* Clickable content that opens the lightbox */}
-      <motion.div
+      <motion.figure
         layoutId={`lightbox-container-${lightboxId}`}
         onClick={() => open()}
-        className={cn('cursor-pointer overflow-hidden', className)}
+        className={cn('prose: cursor-pointer overflow-hidden', className)}
         role="button"
         aria-haspopup="dialog"
         aria-expanded={isOpen}
@@ -74,7 +74,7 @@ export function Lightbox({
         <motion.div layoutId={`lightbox-content-${lightboxId}`}>
           {children}
         </motion.div>
-      </motion.div>
+      </motion.figure>
 
       {/* Lightbox overlay */}
       <AnimatePresence>
@@ -91,7 +91,7 @@ export function Lightbox({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className={cn('fixed inset-0 bg-black/80', overlayClassName)}
-              onClick={() => close()}
+              onClick={close}
             />
 
             <div className="fixed inset-0 isolate z-10 p-4">
@@ -119,11 +119,12 @@ export function Lightbox({
                   'absolute inset-0 grid place-items-center overflow-hidden',
                   contentClassName,
                 )}
-                onClick={(e) => e.stopPropagation()}
+                // onClick={(e) => e.stopPropagation()}
+                onClick={close}
               >
                 <motion.div
                   layoutId={`lightbox-content-${lightboxId}`}
-                  className="mx-auto w-full max-w-7xl place-items-center overflow-y-auto"
+                  className="mx-auto max-h-screen w-full max-w-7xl place-items-center overflow-y-auto [&_img]:border-transparent!"
                 >
                   {children}
                 </motion.div>

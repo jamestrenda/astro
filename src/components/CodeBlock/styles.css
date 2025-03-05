@@ -140,3 +140,7 @@ pre[class*='language-'] {
 .token.entity {
   cursor: help;
 }
+
+.refractor-marker {
+  background-color: --alpha(var(--primary) / 10%);
+}

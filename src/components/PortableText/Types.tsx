@@ -20,7 +20,11 @@ export const Types: PortableTextComponents['types'] = {
             </div>
           )}
           {/* <div className="*:rounded-md *:bg-zinc-500/10! *:p-5 *:inset-ring *:inset-ring-white/10 dark:*:bg-white/5! dark:*:inset-ring-white/5 **:[.line]:isolate"> */}
-          <CodeBlock code={value.code} language={value.language} />
+          <CodeBlock
+            code={value.code}
+            language={value.language}
+            highlightedLines={value.highlightedLines}
+          />
           {/* </div> */}
         </div>
       </div>

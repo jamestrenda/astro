@@ -1,12 +1,15 @@
 import type { CurrentUser, PortableTextTextBlock } from '@sanity/types';
 import {
   defineArrayMember,
+  type DocumentStore,
   type PortableTextBlock,
   type SlugRule,
 } from 'sanity';
 
 import { ExternalLinkIcon, Link2Icon } from 'lucide-react';
+import type { Observable } from 'rxjs';
 import slug from 'slug';
+import home from '../schema/singletons/home';
 
 const MAX_LENGTH = 96;
 
@@ -207,4 +210,27 @@ export function getPortableTextBlocks(options?: {
   ];
 
   return result;
+}
+
+/**
+ * Fetches the homepage ID by resolving the observable.
+ */
+export function getHomepageObservable(
+  documentStore: DocumentStore,
+): Observable<string | null> {
+  return listenToQuery<string | null>(
+    documentStore,
+    `*[_id == "${home.name}"][0].homepage._ref`,
+  );
+}
+
+/**
+ * Returns an observable for a given Sanity query.
+ */
+export function listenToQuery<T>(
+  documentStore: DocumentStore,
+  query: string,
+  params: Record<string, any> = {},
+): Observable<T> {
+  return documentStore.listenQuery(query, params, {}) as Observable<T>;
 }

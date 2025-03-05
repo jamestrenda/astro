@@ -15,46 +15,59 @@ import {
   SmileIcon,
   TagIcon,
 } from 'lucide-react';
+import { map } from 'rxjs';
 import { apiVersion } from 'sanity.config';
 import type { StructureResolver } from 'sanity/structure';
 import { getHomepageId } from '~/utils/getHomepageId';
 import { HomeSettingsIcon } from '../icons/home-settings';
+import { getHomepageObservable } from '../lib/utils';
 import taxonomyList from './taxonomyList';
 
 export const structure: StructureResolver = async (S, context) => {
   const homepageId = await getHomepageId(context.documentStore);
 
-  const chooseHomepage = S.defaultDocument({
+  const homeSettings = S.defaultDocument({
     schemaType: 'home',
     documentId: 'home',
   }).title('Home Settings');
 
-  const homeSettings = S.listItem()
+  const homeSettingsListItem = S.listItem()
     .title('Home')
     .id('home')
     .icon(HomeSettingsIcon)
-    .child(chooseHomepage);
+    .child(homeSettings);
 
-  const home = S.listItem()
-    .title('Home')
-    .icon(HomeIcon)
-    .child(() => {
-      if (!homepageId) return chooseHomepage;
-      return S.document().schemaType('page').documentId(homepageId);
-    });
+  const getHomepage = () =>
+    getHomepageObservable(context.documentStore).pipe(
+      map((id) => {
+        if (!id) return homeSettings; // if no homepage has been set, show the home settings singleton
+        return S.document() // otherwise, show the actual homepage
+          .schemaType('page')
+          .documentId(id);
+      }),
+    );
+
+  const home = S.listItem().title('Home').icon(HomeIcon).child(getHomepage);
+
+  const getFilteredPages = () =>
+    getHomepageObservable(context.documentStore).pipe(
+      map((id) => {
+        return S.documentTypeList('page')
+          .filter(
+            `_type == "page" && ($id == null || _id != $id && !(_id in path("drafts." + $id)))`,
+          )
+          .params({
+            id,
+          })
+          .apiVersion(apiVersion)
+          .title('Pages');
+      }),
+    );
 
   const pages = S.listItem()
     .title('Pages')
     .icon(FilesIcon)
-    .child(
-      S.documentTypeList('page')
-        .filter(
-          `_type == "page" && _id != $id && !(_id in path("drafts." + $id))`,
-        )
-        .params({ id: homepageId })
-        .apiVersion(apiVersion)
-        .title('Pages'),
-    );
+    .child(getFilteredPages);
 
   const blog = S.listItem()
     .title('Blog')
@@ -186,7 +199,7 @@ export const structure: StructureResolver = async (S, context) => {
                 documentId: 'siteSettings',
               }).title('Global Settings'),
             ),
-          homeSettings,
+          homeSettingsListItem,
           S.divider(),
           S.listItem()
             .title('Header')

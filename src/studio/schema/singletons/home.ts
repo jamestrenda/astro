@@ -11,6 +11,9 @@ export default defineType({
       type: 'reference',
       description: 'Choose a page to display as the homepage',
       to: { type: 'page' },
+      options: {
+        disableNew: true,
+      },
       // options: {
       //   filter: "!defined(isPostsPage) || isPostsPage == false",
       // },

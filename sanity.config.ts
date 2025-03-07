@@ -17,7 +17,7 @@ import { structure } from './src/studio/structure';
 export const projectId = getEnv().PUBLIC_SANITY_STUDIO_PROJECT_ID;
 export const dataset = getEnv().PUBLIC_SANITY_STUDIO_DATASET;
 export const apiVersion = getEnv().PUBLIC_SANITY_STUDIO_API_VERSION;
-const wistiaToken = getEnv().WISTIA_TOKEN;
+const wistiaToken = getEnv().PUBLIC_SANITY_STUDIO_WISTIA_TOKEN;
 
 // Feel free to remove this check if you don't need it
 if (!projectId || !dataset) {

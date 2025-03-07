@@ -11,7 +11,7 @@ const schema = z.object({
   PUBLIC_SANITY_STUDIO_BASE_PATH: z.string(),
   PUBLIC_SANITY_STUDIO_PREVIEW_URL: z.string().url(),
   PUBLIC_SANITY_STUDIO_API_VERSION: z.string(),
-  WISTIA_TOKEN: z.string(),
+  PUBLIC_SANITY_STUDIO_WISTIA_TOKEN: z.string(),
 });
 
 declare global {
@@ -45,7 +45,8 @@ export function getEnv() {
       .PUBLIC_SANITY_STUDIO_PREVIEW_URL!,
     PUBLIC_SANITY_STUDIO_API_VERSION: import.meta.env
       .PUBLIC_SANITY_STUDIO_API_VERSION!,
-    WISTIA_TOKEN: import.meta.env.WISTIA_TOKEN!,
+    PUBLIC_SANITY_STUDIO_WISTIA_TOKEN: import.meta.env
+      .PUBLIC_SANITY_STUDIO_WISTIA_TOKEN!,
   };
 }
 

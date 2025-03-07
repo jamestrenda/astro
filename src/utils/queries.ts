@@ -1,5 +1,32 @@
-import groq from 'groq';
+import groq, { defineQuery } from 'groq';
 
+const titleFragment = groq`
+  "title": coalesce(seo.title, blocks[_type == "hero"][0].valueProposition[_type == "block" && style == "h1"][0].children[0].text, '')
+`;
+
+const ogFieldsFragment = groq`
+  _id,
+  _type,
+  "title": select(
+    defined(og.title) => og.title,
+    defined(seo.title) => seo.title,
+    _type == "post" && defined(title) => title,
+    _type == "page" => blocks[_type == "hero"][0].valueProposition[_type == "block" && style == "h1"][0].children[0].text,
+    defined(title) => title,
+    'Untitled'
+  ),
+  "description": select(
+    defined(og.description) => og.description,
+    defined(seo.metaDescription) => seo.metaDescription,
+    _type == "post" && defined(excerpt) => excerpt,
+    ''
+  ),
+  "image": image.asset->url + "?w=566&h=566&dpr=2&fit=max",
+  "dominantColor": image.asset->metadata.palette.dominant.background,
+  "seoImage": seo.image.asset->url + "?w=1200&h=630&dpr=2&fit=max", 
+  "logo": *[_type == "siteSettings"][0].logo.asset->url + "?w=80&h=40&dpr=3&fit=max&q=100",
+  "date": coalesce(publishedAt, _createdAt)
+`;
 export const imageFieldsFragment = groq`
   _type,
   "id": asset._ref,
@@ -21,38 +48,40 @@ export const imageObjectFragment = groq`
 
 const seoFragment = groq`
   seo {
-    title,
-    metaDescription
+    image {
+      ${imageFieldsFragment}
+    },
+    metaDescription,
+    keywords[]
   }
 `;
 
 const portableTextBlockFragment = groq`
   ...,
+  _type == "block" => {
+    ...,
+    "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), ""))
+  },
   markDefs[]{
     _type,
     _key,
     _type == "internalRef" => {
-        "slug": @.ref.document->slug.current,
-        @.ref.document->._type == "post" => {
-            "slug": "blog/" + @.ref.document->.slug.current,
-        }
+      "slug": @.ref.document->slug.current,
+      @.ref.document->._type == "post" => {
+          "slug": "blog/" + @.ref.document->.slug.current,
+      }
     },
     _type == "externalLink" => {
-        "url": @.link.url,
-        "newWindow": @.link.newWindow
+      "url": @.link.url,
+      "newWindow": @.link.newWindow,
     },
     !(_type in ["internalRef", "externalLink"]) => {
       ...
     }
-  },
-  _type == "block" => {
-    ...,
-    "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), ""))
   }
 `;
 
 const portableTextFragment = groq`
-    ...,
     ${portableTextBlockFragment},
     _type == "blockquote" => {
       quote[] {
@@ -71,73 +100,12 @@ const portableTextFragment = groq`
     _type == "imageObject" => {
       ${imageObjectFragment}
     },
-`;
-
-export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
-    title,
-    "slug": 'blog/' + slug.current,
-    publishedAt,
-    excerpt,
-
-}`;
-
-export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
-    title,
-    excerpt,
-    image {
-        ${imageObjectFragment}
-    },
-    body[] {
-        ${portableTextFragment}
-    },
-    tags[]->{
-        title,
-        "slug": 'blog/' + slug.current
-    },
-    "toc": body[_type == "block" && style in ["h2", "h3", "h4"]] {
+    _type == "video" => {
+      ...wistiaMedia,
       _type,
-      _key,
-      style,
-      "text": children[0].text,
-      "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), ""))
+      thumbnailAltText
     }
-}`;
-
-export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug.current)] | order(_createdAt desc) {
-  title,
-  "slug": 'recipes/' + slug.current,
-  publishedAt,
-  description,
-
-}`;
-
-export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug][0] {
-  title,
-  gallery {
-    _type,
-    images[] {
-      ${imageObjectFragment}
-    }
-  },
-  ingredients[] {
-    ingredient-> {
-        title,
-        url,
-        description
-    },
-    measurement {
-        amount,
-        unit
-    },
-    notes
-  },
-  instructions[] {
-      ${portableTextFragment}
-  },
-  notes[] {
-      ${portableTextFragment}
-  },
-}`;
+`;
 
 const descriptionFragment = groq`
   description[] {
@@ -278,17 +246,131 @@ const blocksFragment = groq`
         featured
       }
     }
-  }
+  },
 `;
 
 export const INDEX_QUERY = groq`*[_id == "home"][0].homepage-> {
-    _type,
-    "slug": coalesce(slug.current, ""),
-    blocks[] {
-      ${blocksFragment}
-    },
-    ${seoFragment},
+  _type,
+  _id,
+  ${titleFragment},
+  "slug": coalesce(slug.current, ""),
+  blocks[] {
+    ${blocksFragment}
+  },
+  ${seoFragment}
 }`;
+
+export const PAGE_QUERY = groq`*[_type == "page" && slug.current == $slug][0] {
+  _type,
+  _id,
+  ${titleFragment},
+  "slug": coalesce(slug.current, ""),
+  blocks[] {
+    ${blocksFragment}
+  },
+  ${seoFragment}
+}`;
+
+export const PAGES_QUERY = groq`*[_type == "page" && defined(slug.current)] {
+  _type,
+  _id,
+  ${titleFragment},
+  "slug": coalesce(slug.current, ""),
+}`;
+
+export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
+  title,
+  "slug": 'blog/' + slug.current,
+  publishedAt,
+  excerpt,
+}`;
+
+export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
+  _type,
+  _id,
+  title,
+  excerpt,
+  repo,
+  image {
+      ${imageObjectFragment}
+  },
+  body[] {
+      ${portableTextFragment}
+  },
+  tags[]->{
+      title,
+      "slug": 'blog/' + slug.current
+  },
+  "toc": body[_type == "block" && style in ["h2", "h3"]] {
+    _type,
+    _key,
+    style,
+    "text": children[0].text,
+    "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), ""))
+  },
+  ${seoFragment}
+}`;
+
+export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug.current)] | order(_createdAt desc) {
+  title,
+  "slug": 'recipes/' + slug.current,
+  publishedAt,
+  description
+}`;
+
+export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug][0] {
+  _type,
+  _id,
+  title,
+  gallery {
+    _type,
+    images[] {
+      ${imageObjectFragment}
+    }
+  },
+  ingredients[] {
+    ingredient-> {
+        title,
+        url,
+        description
+    },
+    measurement {
+        amount,
+        unit
+    },
+    notes
+  },
+  instructions[] {
+      ${portableTextFragment}
+  },
+  notes[] {
+      ${portableTextFragment}
+  }
+}`;
+
+export const queryHomePageOGData = defineQuery(/* groq */ `
+  *[_id == "homeSettings"][0].homepage->{
+    ${ogFieldsFragment}
+  }
+`);
+
+export const queryPageOGData = defineQuery(/* groq */ `
+  *[_type == "page" && _id == $id][0]{
+    ${ogFieldsFragment}
+  }
+`);
+
+export const queryPostOGData = defineQuery(/* groq */ `
+  *[_type == "post" && _id == $id][0]{
+    ${ogFieldsFragment}
+  }
+`);
+
+export const queryGenericPageOGData = defineQuery(/* groq */ `
+  *[ defined(slug.current) && _id == $id][0]{
+    ${ogFieldsFragment}
+  }
+`);
 
 export const FORM_QUERY = groq`*[_type == $_type && defined(slug) && slug.current == $slug][0].blocks[_type == "form"][0].form->{
   emailSubject,

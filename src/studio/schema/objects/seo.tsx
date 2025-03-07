@@ -36,5 +36,30 @@ export default {
         field: (props: any) => <CharCountInput min={50} max={160} {...props} />,
       },
     }),
+    // defineField({
+    //   name: 'author',
+    //   title: 'Author',
+    //   type: 'string',
+    //   description: 'The author of the page.',
+    // }),
+    defineField({
+      name: 'keywords',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'tags',
+      },
+      description: 'Keywords for the page.',
+    }),
+    defineField({
+      name: 'image',
+      title: 'SEO image override',
+      description:
+        'This will override the main image. If left blank it will inherit the image from the main image.',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
   ],
 };

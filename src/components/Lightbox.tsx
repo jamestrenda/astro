@@ -7,7 +7,7 @@ import { useId } from 'react';
 import { cn } from '~/utils/misc';
 
 interface LightboxProps {
-  children: React.ReactNode;
+  children: React.ReactNode | ((isOpen: boolean) => React.ReactNode);
   className?: string;
   overlayClassName?: string;
   closeButtonClassName?: string;
@@ -53,6 +53,10 @@ export function Lightbox({
     };
   }, [isOpen]);
 
+  const renderChildren = () => {
+    return typeof children === 'function' ? children(isOpen) : children;
+  };
+
   return (
     <>
       {/* Clickable content that opens the lightbox */}
@@ -72,7 +76,7 @@ export function Lightbox({
         }}
       >
         <motion.div layoutId={`lightbox-content-${lightboxId}`}>
-          {children}
+          {renderChildren()}
         </motion.div>
       </motion.figure>
 
@@ -80,7 +84,7 @@ export function Lightbox({
       <AnimatePresence>
         {isOpen && (
           <div
-            className="fixed inset-0 z-50"
+            className="group overlay fixed inset-0 z-50"
             aria-labelledby={descriptionId}
             role="dialog"
             aria-modal="true"
@@ -91,10 +95,9 @@ export function Lightbox({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className={cn('fixed inset-0 bg-black/80', overlayClassName)}
-              onClick={close}
             />
 
-            <div className="fixed inset-0 isolate z-10 p-4">
+            <div className="fixed inset-0 isolate z-10 grid place-items-center p-4">
               {/* Close button */}
               <motion.button
                 ref={closeButtonRef}
@@ -102,7 +105,7 @@ export function Lightbox({
                   'absolute top-4 right-4 z-20 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/70 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black focus:outline-none',
                   closeButtonClassName,
                 )}
-                onClick={() => close()}
+                onClick={close}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -119,14 +122,16 @@ export function Lightbox({
                   'absolute inset-0 grid place-items-center overflow-hidden',
                   contentClassName,
                 )}
-                // onClick={(e) => e.stopPropagation()}
                 onClick={close}
               >
                 <motion.div
                   layoutId={`lightbox-content-${lightboxId}`}
                   className="mx-auto max-h-screen w-full max-w-7xl place-items-center overflow-y-auto [&_img]:border-transparent!"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
                 >
-                  {children}
+                  {renderChildren()}
                 </motion.div>
               </motion.div>
 

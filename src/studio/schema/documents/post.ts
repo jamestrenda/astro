@@ -73,5 +73,15 @@ export default defineType({
       },
       of: [{ type: 'reference', to: [{ type: 'tag' }] }],
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
+    defineField({
+      name: 'og',
+      title: 'Open Graph',
+      type: 'og',
+    }),
   ],
 });

@@ -16,17 +16,21 @@ import '@fontsource/inter/400-italic.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/700.css';
 import '@fontsource/inter/700-italic.css';
-
+import { stegaClean } from '@sanity/client/stega';
+import { getOgImage } from '~/utils/seo';
 interface Props {
   seo?: Seo;
+  _type?: string;
+  _id?: string;
 }
 
 const { preview } = Astro.locals;
 
-const { seo } = Astro.props;
+const { seo, _type, _id } = Astro.props;
 
-const title = seo?.title;
-const metaDescription = seo?.metaDescription;
+const title = stegaClean(seo?.title);
+const metaDescription = stegaClean(seo?.metaDescription);
+const keywords = stegaClean(seo?.keywords);
 
 const settings = await getSettings({
   preview: Astro.locals.preview,
@@ -34,6 +38,16 @@ const settings = await getSettings({
 });
 
 const { siteTitle, favicon, social } = settings;
+const siteTitleClean = stegaClean(siteTitle);
+
+const x = stegaClean(
+  social?.find((profile) => stegaClean(profile.platform) === 'x')
+);
+
+const ogImage = getOgImage({
+  type: _type ?? undefined,
+  id: _id ?? undefined,
+});
 
 const url = Astro.request.url;
 
@@ -54,8 +68,46 @@ const theme = getTheme(Astro.cookies);
     <link rel="canonical" href={url} />
     <meta name="viewport" content="width=device-width" />
     <link rel="mask-icon" href="/safari-pinned-tab.svg" />
-    <title>{title ? `${title} • ` : ''}{siteTitle}</title>
-    {metaDescription && <meta name="description" content={metaDescription} />}
+    <title>{title ? `${title} • ` : ''}{siteTitleClean}</title>
+    {
+      metaDescription && (
+        <>
+          <meta name="description" content={metaDescription} />
+          <meta property="og:description" content={metaDescription} />
+        </>
+      )
+    }
+    {siteTitleClean && <meta name="author" content={siteTitleClean} />}
+    {keywords && <meta name="keywords" content={keywords.join(', ')} />}
+    {title && <meta property="og:title" content={title} />}
+    {url && <meta property="og:url" content={url} />}
+    <meta property="og:country_name" content="US" />
+    {
+      ogImage && (
+        <>
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content={title} />
+          <meta property="og:image:secure_url" content={ogImage} />
+        </>
+      )
+    }
+    {
+      x && ogImage && (
+        <>
+          <meta property="og:type" content="website" />
+          <meta name="twitter:card" content="summary_large_image" />
+          {x.handle && <meta name="twitter:creator" content={`@${x.handle}`} />}
+          {title && <meta name="twitter:title" content={title} />}
+          {metaDescription && (
+            <meta name="twitter:description" content={metaDescription} />
+          )}
+          {url && <meta name="twitter:url" content={url} />}
+          <meta name="twitter:image" content={ogImage} />
+        </>
+      )
+    }
   </head>
 
   <body

@@ -35,10 +35,10 @@ if (!post) {
   });
 }
 
-const { title, excerpt, body, tags, image, toc, repo } = post;
+const { title, excerpt, body, tags, image, toc, repo, seo, _type, _id } = post;
 ---
 
-<Layout>
+<Layout seo={seo ?? undefined} _type={_type} _id={_id}>
   <article>
     <Hero client:visible>
       <div

@@ -20,6 +20,7 @@ import image from './objects/image';
 import link from './objects/link';
 import measurement from './objects/measurement';
 import menuItem from './objects/menuItem';
+import og from './objects/og';
 import portableText from './objects/portableText';
 import redirect from './objects/redirect';
 import ref from './objects/ref';
@@ -63,6 +64,7 @@ export const schemaTypes = [
   menu,
   menuItem,
   notFoundSettings,
+  og,
   page,
   portableText,
   portfolio,

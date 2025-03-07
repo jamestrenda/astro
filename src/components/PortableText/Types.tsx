@@ -2,11 +2,14 @@ import type {
   PortableTextComponentProps,
   PortableTextComponents,
 } from '@portabletext/react';
+import { stegaClean } from '@sanity/client/stega';
 import { Lightbox } from '~/components/Lightbox';
 import type { Blockquote } from '~/types/blockquote';
 import type { ImageObject } from '~/types/image';
+import type { Video as VideoType } from '~/types/video';
 import { CodeBlock } from '../CodeBlock';
 import { Image } from '../Image';
+import { Video } from '../Video';
 import { PortableText } from './PortableText';
 
 export const Types: PortableTextComponents['types'] = {
@@ -64,6 +67,14 @@ export const Types: PortableTextComponents['types'] = {
         />
       </Lightbox>
     ) : null;
+  },
+  video: ({ value }: PortableTextComponentProps<VideoType>) => {
+    const clean = stegaClean(value);
+    return (
+      <div className="not-prose aspect-video w-full overflow-hidden rounded-2xl border-8 border-stone-300 bg-foreground group-[.overlay]:border-transparent dark:border-zinc-950">
+        <Video {...clean} />
+      </div>
+    );
   },
   // add more block-level components here.
 };

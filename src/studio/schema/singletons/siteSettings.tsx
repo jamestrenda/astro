@@ -110,6 +110,13 @@ export default defineType({
       group: 'contact',
     }),
     defineField({
+      name: 'logo',
+      title: 'Logo',
+      type: 'image',
+      description: 'Upload a logo for your site.',
+      group: 'general',
+    }),
+    defineField({
       name: 'favicon',
       type: 'image',
       description: 'Upload a favicon for your site.',

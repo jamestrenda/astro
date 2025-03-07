@@ -36,11 +36,12 @@ export default defineType({
       title: 'SEO',
       group: ['meta'],
     }),
-    // {
-    //   name: 'openGraph',
-    //   type: 'og',
-    //   group: ['social'],
-    // },
+    defineField({
+      name: 'og',
+      type: 'og',
+      title: 'Open Graph',
+      group: ['meta'],
+    }),
   ],
   preview: {
     select: {

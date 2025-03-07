@@ -4,6 +4,7 @@ import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 import { media } from 'sanity-plugin-media';
+import { wistiaInput } from 'sanity-plugin-wistia-input';
 import { defineDocuments, presentationTool } from 'sanity/presentation';
 import { structureTool } from 'sanity/structure';
 import { documentActionsPlugin } from '~/studio/plugins/documentActionsPlugin';
@@ -16,6 +17,7 @@ import { structure } from './src/studio/structure';
 export const projectId = getEnv().PUBLIC_SANITY_STUDIO_PROJECT_ID;
 export const dataset = getEnv().PUBLIC_SANITY_STUDIO_DATASET;
 export const apiVersion = getEnv().PUBLIC_SANITY_STUDIO_API_VERSION;
+const wistiaToken = getEnv().WISTIA_TOKEN;
 
 // Feel free to remove this check if you don't need it
 if (!projectId || !dataset) {
@@ -65,6 +67,9 @@ export default defineConfig({
     FormBuilderPlugin(),
     SocialMediaProfilesPlugin(),
     codeInput(),
+    wistiaInput({
+      token: wistiaToken,
+    }),
   ],
   schema: {
     types: schemaTypes,

@@ -1,5 +1,6 @@
 import type { Form, FormQueryParams } from '~/types/form';
 import { type Home } from '~/types/home';
+import type { Page } from '~/types/page';
 import type { Post } from '~/types/post';
 import type { Recipe } from '~/types/recipe';
 import type { Settings } from '~/types/settings';
@@ -8,12 +9,25 @@ import {
   FORM_QUERY,
   FROM_EMAIL_QUERY,
   INDEX_QUERY,
+  PAGES_QUERY,
+  PAGE_QUERY,
   POSTS_QUERY,
   POST_QUERY,
   RECIPES_QUERY,
   RECIPE_QUERY,
   SETTINGS_QUERY,
 } from './queries';
+
+export const getBaseUrl = () => {
+  if (process.env.VERCEL_ENV === 'production') {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_ENV === 'preview') {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  return 'http://localhost:4321';
+};
 
 export async function getPosts({
   preview,
@@ -29,6 +43,22 @@ export async function getPosts({
   });
 
   return posts;
+}
+
+export async function getPages({
+  preview,
+  options,
+}: {
+  preview: boolean;
+  options?: App.Locals['loadQueryOptions'];
+}): Promise<Page[]> {
+  const { data: pages } = await loadQuery<Page[]>({
+    query: PAGES_QUERY,
+    preview,
+    options: options ?? undefined,
+  });
+
+  return pages;
 }
 
 export async function getPost({
@@ -81,6 +111,25 @@ export async function getRecipe({
     options,
   });
   return recipe;
+}
+
+export async function getPage({
+  preview,
+  options,
+  slug,
+}: {
+  preview: boolean;
+  slug: string;
+  options: App.Locals['loadQueryOptions'];
+}): Promise<Page> {
+  const { data } = await loadQuery<Page>({
+    query: PAGE_QUERY,
+    params: { slug },
+    preview,
+    options,
+  });
+
+  return data;
 }
 
 export async function getIndex({

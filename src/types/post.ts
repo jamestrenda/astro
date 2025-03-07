@@ -2,9 +2,11 @@ import { z } from 'zod';
 import { imageZ } from './image';
 import { portableTextZ } from './portableText';
 import { portableTextBlockZ } from './portableTextBlock';
+import { seoZ } from './seo';
 import { tagZ } from './tag';
-
 export const postZ = z.object({
+  _id: z.string(),
+  _type: z.literal('post'),
   title: z.string().optional().nullable(),
   body: portableTextZ.optional().nullable(),
   excerpt: z.string().optional().nullable(),
@@ -13,6 +15,7 @@ export const postZ = z.object({
   slug: z.string(),
   publishedAt: z.string().optional().nullable(),
   tags: z.array(tagZ).optional().nullable(),
+  seo: seoZ.optional().nullable(),
   toc: z
     .array(
       portableTextBlockZ

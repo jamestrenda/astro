@@ -18,14 +18,11 @@ import {
 import { map } from 'rxjs';
 import { apiVersion } from 'sanity.config';
 import type { StructureResolver } from 'sanity/structure';
-import { getHomepageId } from '~/utils/getHomepageId';
 import { HomeSettingsIcon } from '../icons/home-settings';
 import { getHomepageObservable } from '../lib/utils';
 import taxonomyList from './taxonomyList';
 
 export const structure: StructureResolver = async (S, context) => {
-  const homepageId = await getHomepageId(context.documentStore);
-
   const homeSettings = S.defaultDocument({
     schemaType: 'home',
     documentId: 'home',

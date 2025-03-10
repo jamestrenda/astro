@@ -62,7 +62,7 @@ const { title, description } = data.tag;
   </Hero>
   <Container className="my-16">
     <div
-      class="mx-auto grid grid-cols-1 grid-rows-[4_auto] gap-4 lg:grid-cols-2 xl:grid-cols-3"
+      class="mx-auto grid grid-cols-1 grid-rows-[repeat(4,_auto)] gap-4 lg:grid-cols-2 xl:grid-cols-3"
     >
       {
         data.posts.map((post) => (
@@ -73,7 +73,7 @@ const { title, description } = data.tag;
                   {formatDate(post.publishedAt)}
                 </Overline>
               ) : (
-                <span />
+                <span>&nbsp;</span>
               )}
               <Heading level="h2" variant="h3" className="my-0">
                 {post.title}

@@ -113,7 +113,7 @@ try {
       {props._type === 'form' ? <Form {...validBlock} client:visible /> : null}
       {props._type === 'hero' ? (
         <Hero {...validBlock} client:visible>
-          <div class="z-60 col-span-11 mt-auto w-full space-y-3 text-lg leading-6 max-xs:mb-4 xs:col-start-1 xs:col-end-8 xs:mt-16 [&_p]:font-light [&_p]:text-zinc-500! sm:[&_p]:text-xl [&_p]:lg:max-w-[85%] lg:[&_p]:text-2xl dark:[&_p]:text-foreground">
+          <div class="z-60 col-span-11 mt-auto max-xs:mb-4 xs:col-start-1 xs:col-end-8 xs:mt-16 [&_p]:lg:max-w-[85%]">
             {validBlock.valueProposition && (
               <PortableText portableText={validBlock.valueProposition} />
             )}

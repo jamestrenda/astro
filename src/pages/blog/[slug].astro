@@ -41,9 +41,7 @@ const { title, excerpt, body, tags, image, toc, repo, seo, _type, _id } = post;
 <Layout seo={seo ?? undefined} _type={_type} _id={_id}>
   <article>
     <Hero client:visible>
-      <div
-        class="z-60 col-span-12 w-full space-y-3 text-lg leading-6 [&_p]:font-light [&_p]:text-zinc-500! sm:[&_p]:text-xl lg:[&_p]:text-2xl dark:[&_p]:text-foreground"
-      >
+      <div class="col-span-12 mx-auto max-w-3xl">
         {
           title ? (
             <Heading level="h1" className="text-center">

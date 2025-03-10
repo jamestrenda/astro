@@ -10,11 +10,11 @@ export interface Props extends Partial<$<Block>> {
 }
 
 const variants = cva(
-  'heading font-sans font-bold text-foreground [text-wrap:balance]',
+  'heading font-sans font-bold [text-wrap:balance] text-foreground',
   {
     variants: {
       variant: {
-        h1: 'text-balance text-5xl text-background dark:text-foreground max-sm:text-4xl lg:text-6xl',
+        h1: 'text-4xl text-balance text-background lg:text-5xl dark:text-foreground',
         h2: 'mb-6 text-3xl text-foreground md:text-4xl',
         h3: 'text-xl text-foreground md:text-2xl',
         h4: 'text-xl',

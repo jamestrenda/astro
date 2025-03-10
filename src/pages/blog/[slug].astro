@@ -9,6 +9,8 @@ import { Container } from '~/components/Container';
 // import { GridBackground, Spotlight } from '~/components/blocks/spotlight-new';
 import { Hero } from '~/components/Hero';
 import { RiGithubFill } from '@remixicon/react';
+import { Overline } from '~/components/Overline';
+import { formatDate } from '~/utils/misc';
 
 export async function getStaticPaths() {
   const posts = await getPosts({
@@ -35,13 +37,33 @@ if (!post) {
   });
 }
 
-const { title, excerpt, body, tags, image, toc, repo, seo, _type, _id } = post;
+const {
+  title,
+  excerpt,
+  body,
+  tags,
+  image,
+  toc,
+  repo,
+  seo,
+  _type,
+  _id,
+  publishedAt,
+  updatedAt,
+} = post;
 ---
 
 <Layout seo={seo ?? undefined} _type={_type} _id={_id}>
   <article>
     <Hero client:visible>
       <div class="col-span-12 mx-auto max-w-3xl">
+        {
+          publishedAt ? (
+            <Overline className="justify-self-center">
+              {formatDate(publishedAt)}
+            </Overline>
+          ) : null
+        }
         {
           title ? (
             <Heading level="h1" className="text-center">
@@ -109,6 +131,16 @@ const { title, excerpt, body, tags, image, toc, repo, seo, _type, _id } = post;
         body ? (
           <section class="order-1 col-span-3 *:*:first:mt-0! lg:col-span-2 lg:pt-10 lg:pb-24">
             <PortableText portableText={body} blog client:visible />
+            {updatedAt ? (
+              <p class="mt-8 text-sm/6 text-muted">
+                Last updated{' '}
+                <time datetime={formatDate(updatedAt)}>
+                  {formatDate(updatedAt, {
+                    relative: true,
+                  })}
+                </time>
+              </p>
+            ) : null}
           </section>
         ) : null
       }

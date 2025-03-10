@@ -290,6 +290,8 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
   _id,
   title,
   excerpt,
+  "updatedAt": select(dateTime(_updatedAt) > dateTime(publishedAt) + 60*60*24*1 => _updatedAt, null),
+  publishedAt,
   repo,
   image {
       ${imageObjectFragment}

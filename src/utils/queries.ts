@@ -60,7 +60,7 @@ const portableTextBlockFragment = groq`
   ...,
   _type == "block" => {
     ...,
-    "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), ""))
+    "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), "")) + "-" + _key
   },
   markDefs[]{
     _type,
@@ -306,7 +306,7 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
     _key,
     style,
     "text": children[0].text,
-    "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), ""))
+    "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), "")) + "-" + _key
   },
   ${seoFragment}
 }`;

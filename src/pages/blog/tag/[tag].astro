@@ -45,8 +45,8 @@ const { title, description } = data.tag;
 
 <Layout seo={undefined}>
   <Hero client:visible>
-    <div class="col-span-12 mx-auto max-w-3xl">
-      <Overline className="justify-self-center"> Blog </Overline>
+    <div class="z-30 col-span-12 mx-auto max-w-3xl">
+      <Overline className="mx-auto justify-self-center">Blog</Overline>
 
       <Heading level="h1" className="text-center">
         {title} Posts
@@ -67,7 +67,7 @@ const { title, description } = data.tag;
       {
         data.posts.map((post) => (
           <a href={`/blog/${post.slug}`} class="contents">
-            <article class="row-span-4 grid grid-rows-subgrid gap-3 space-y-3 rounded-lg bg-background/70 p-8 shadow-sm shadow-stone-300 transition duration-200 hover:bg-background">
+            <article class="row-span-4 grid grid-rows-subgrid gap-3 space-y-3 rounded-lg bg-background/70 p-8 shadow-sm shadow-stone-300 transition duration-200 hover:bg-background dark:bg-zinc-950 dark:shadow-none">
               {post.publishedAt ? (
                 <Overline className="mb-0">
                   {formatDate(post.publishedAt)}
@@ -82,7 +82,7 @@ const { title, description } = data.tag;
               <ul class="flex flex-wrap gap-2">
                 {Array.isArray(post.tags) &&
                   post.tags.map((tag) => (
-                    <PostTag className="bg-zinc-200 pointer-events-none">
+                    <PostTag className="bg-zinc-200 pointer-events-none dark:bg-zinc-900">
                       {tag.title}
                     </PostTag>
                   ))}

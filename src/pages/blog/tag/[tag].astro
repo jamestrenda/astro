@@ -8,7 +8,7 @@ import { Overline } from '~/components/Overline';
 import { formatDate } from '~/utils/misc';
 import { getPostsByTag } from '~/utils/sanity';
 import Layout from '~/pages/_layout.astro';
-import Tag from '~/components/Tag.astro';
+import { default as PostTag } from '~/components/Tag.astro';
 
 export const prerender = false;
 
@@ -82,9 +82,9 @@ const { title, description } = data.tag;
               <ul class="flex flex-wrap gap-2">
                 {Array.isArray(post.tags) &&
                   post.tags.map((tag) => (
-                    <Tag className="bg-zinc-200 pointer-events-none">
+                    <PostTag className="bg-zinc-200 pointer-events-none">
                       {tag.title}
-                    </Tag>
+                    </PostTag>
                   ))}
               </ul>
             </article>

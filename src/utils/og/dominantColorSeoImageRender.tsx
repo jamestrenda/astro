@@ -38,14 +38,19 @@ export const dominantColorSeoImageRender = ({
         >
           <div tw="flex-1 p-10 flex flex-col justify-between relative z-10">
             <div tw="flex justify-center items-center text-center w-full">
-              {/* {logo && <img src={logo} alt="Logo" tw="invert-100" height={48} />} */}
-              <div tw="flex bg-white/10 text-white px-4 py-2 rounded-full text-sm font-medium">
-                {new Date(date ?? new Date()).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                })}
-              </div>
+              {_type === 'post' ? (
+                <div tw="flex bg-white/10 text-white px-4 py-2 rounded-full text-sm font-medium">
+                  {new Date(date ?? new Date()).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </div>
+              ) : (
+                logo && (
+                  <img src={logo} alt="Logo" tw="invert-100" height={24} />
+                )
+              )}
             </div>
 
             <h1 tw="text-5xl text-center font-bold leading-tight max-w-[90%] mx-auto text-white">

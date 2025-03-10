@@ -1,7 +1,7 @@
 import groq, { defineQuery } from 'groq';
 
 const titleFragment = groq`
-  "title": coalesce(seo.title, blocks[_type == "hero"][0].valueProposition[_type == "block" && style == "h1"][0].children[0].text, '')
+  "title": coalesce(seo.title, blocks[_type == "hero"][0].valueProposition[_type == "block" && style == "h1"][0].children[0].text, ^.title, title, 'Untitled')
 `;
 
 const ogFieldsFragment = groq`
@@ -19,6 +19,7 @@ const ogFieldsFragment = groq`
     defined(og.description) => og.description,
     defined(seo.metaDescription) => seo.metaDescription,
     _type == "post" && defined(excerpt) => excerpt,
+    _type == "tag" && defined(description) => description,
     ''
   ),
   "image": image.asset->url + "?w=566&h=566&dpr=2&fit=max",
@@ -47,11 +48,12 @@ export const imageObjectFragment = groq`
 `;
 
 const seoFragment = groq`
-  seo {
+  "seo": {
+    ${titleFragment},
     image {
       ${imageFieldsFragment}
     },
-    metaDescription,
+    "metaDescription": coalesce(metaDescription, @.description),
     keywords[]
   }
 `;
@@ -252,7 +254,6 @@ const blocksFragment = groq`
 export const INDEX_QUERY = groq`*[_id == "home"][0].homepage-> {
   _type,
   _id,
-  ${titleFragment},
   "slug": coalesce(slug.current, ""),
   blocks[] {
     ${blocksFragment}
@@ -263,7 +264,6 @@ export const INDEX_QUERY = groq`*[_id == "home"][0].homepage-> {
 export const PAGE_QUERY = groq`*[_type == "page" && slug.current == $slug][0] {
   _type,
   _id,
-  ${titleFragment},
   "slug": coalesce(slug.current, ""),
   blocks[] {
     ${blocksFragment}
@@ -274,7 +274,6 @@ export const PAGE_QUERY = groq`*[_type == "page" && slug.current == $slug][0] {
 export const PAGES_QUERY = groq`*[_type == "page" && defined(slug.current)] {
   _type,
   _id,
-  ${titleFragment},
   "slug": coalesce(slug.current, ""),
 }`;
 
@@ -314,9 +313,12 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
 }`;
 
 export const POSTS_BY_TAG_QUERY = groq`{
-  "tag": {
-    "title": *[_type == "tag" && slug.current == $tag][0].title,
-    "description": *[_type == "tag" && slug.current == $tag][0].description,
+  "tag": *[_type == "tag" && slug.current == $tag][0] {
+    _type,
+    _id,
+    title,
+    description,
+    ${seoFragment}
   },
   "posts": *[_type == "post" && $tag in tags[]->slug.current][0...9] {
     _type,
@@ -383,6 +385,12 @@ export const queryPageOGData = defineQuery(/* groq */ `
 
 export const queryPostOGData = defineQuery(/* groq */ `
   *[_type == "post" && _id == $id][0]{
+    ${ogFieldsFragment}
+  }
+`);
+
+export const queryTagOGData = defineQuery(/* groq */ `
+  *[_type == "tag" && _id == $id][0]{
     ${ogFieldsFragment}
   }
 `);

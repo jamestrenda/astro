@@ -4,6 +4,7 @@ import {
   queryHomePageOGData,
   queryPageOGData,
   queryPostOGData,
+  queryTagOGData,
 } from '~/utils/queries';
 
 import type { APIRoute } from 'astro';
@@ -46,6 +47,10 @@ export async function getPageOGData(id: string) {
 
 export async function getPostOGData(id: string) {
   return await handleErrors(client.fetch(queryPostOGData, { id }));
+}
+
+export async function getTagOGData(id: string) {
+  return await handleErrors(client.fetch(queryTagOGData, { id }));
 }
 
 export async function getGenericPageOGData(id: string) {
@@ -142,6 +147,14 @@ const getPostContent = async ({ id }: ContentProps) => {
   return dominantColorSeoImageRender(result);
 };
 
+const getTagContent = async ({ id }: ContentProps) => {
+  if (!id) return undefined;
+  const [result, err] = await getTagOGData(id);
+  if (err || !result) return undefined;
+  if (result?.seoImage) return seoImageRender({ seoImage: result.seoImage });
+  return dominantColorSeoImageRender(result);
+};
+
 const getGenericPageContent = async ({ id }: ContentProps) => {
   if (!id) return undefined;
   const [result, err] = await getGenericPageOGData(id);
@@ -154,6 +167,7 @@ const block = {
   homePage: getHomePageContent,
   page: getPageContent,
   post: getPostContent,
+  tag: getTagContent,
 } as const;
 
 export const GET: APIRoute = async ({ url }) => {

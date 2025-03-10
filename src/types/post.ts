@@ -4,6 +4,7 @@ import { portableTextZ } from './portableText';
 import { seoZ } from './seo';
 import { tagZ } from './tag';
 import { tocZ } from './toc';
+
 export const postZ = z.object({
   _id: z.string(),
   _type: z.literal('post'),

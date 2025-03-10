@@ -14,10 +14,6 @@ export default defineType({
       title: 'Metadata',
       icon: () => <SearchCheckIcon size={16} />,
     },
-    // {
-    //   name: "social",
-    //   title: "Social",
-    // },
   ],
   fields: [
     defineField({
@@ -29,7 +25,6 @@ export default defineType({
     }),
     slugField({}),
     blocksField,
-    //   ...pageTemplates,
     defineField({
       name: 'seo',
       type: 'seo',

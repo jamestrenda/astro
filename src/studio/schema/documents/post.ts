@@ -1,11 +1,13 @@
 import { NotebookPenIcon, NotebookTextIcon } from 'lucide-react';
 import { defineField, defineType } from 'sanity';
+import { GROUP, GROUPS } from '~/studio/lib/constants';
 
 export default defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
   icon: NotebookTextIcon,
+  groups: GROUPS,
   preview: {
     select: {
       id: '_id',
@@ -48,6 +50,7 @@ export default defineType({
       name: 'image',
       title: 'Featured image',
       type: 'imageObject',
+      group: GROUP.ASSETS,
     }),
     defineField({
       name: 'slug',
@@ -77,11 +80,13 @@ export default defineType({
       name: 'seo',
       title: 'SEO',
       type: 'seo',
+      group: GROUP.META,
     }),
     defineField({
       name: 'og',
       title: 'Open Graph',
       type: 'og',
+      group: GROUP.META,
     }),
   ],
 });

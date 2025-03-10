@@ -301,7 +301,7 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
   },
   tags[]->{
       title,
-      "slug": 'blog/' + slug.current
+      "slug": slug.current
   },
   "toc": body[_type == "block" && style in ["h2", "h3"]] {
     _type,
@@ -311,6 +311,25 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
     "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), "")) + "-" + _key
   },
   ${seoFragment}
+}`;
+
+export const POSTS_BY_TAG_QUERY = groq`{
+  "tag": {
+    "title": *[_type == "tag" && slug.current == $tag][0].title,
+    "description": *[_type == "tag" && slug.current == $tag][0].description,
+  },
+  "posts": *[_type == "post" && $tag in tags[]->slug.current][0...9] {
+    _type,
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    excerpt,
+    tags[]->{
+        title,
+        "slug": slug.current
+    } | order(title asc)
+  }
 }`;
 
 export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug.current)] | order(_createdAt desc) {

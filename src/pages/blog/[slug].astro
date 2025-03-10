@@ -11,6 +11,8 @@ import { Hero } from '~/components/Hero';
 import { RiGithubFill } from '@remixicon/react';
 import { Overline } from '~/components/Overline';
 import { formatDate } from '~/utils/misc';
+import Tag from '~/components/Tag.astro';
+// import { Image } from '~/components/Image';
 
 export async function getStaticPaths() {
   const posts = await getPosts({
@@ -58,25 +60,41 @@ const {
     <Hero client:visible>
       <div class="col-span-12 mx-auto max-w-3xl">
         {
-          publishedAt ? (
+          publishedAt && (
             <Overline className="justify-self-center">
               {formatDate(publishedAt)}
             </Overline>
-          ) : null
+          )
         }
         {
-          title ? (
+          title && (
             <Heading level="h1" className="text-center">
               {title}
             </Heading>
-          ) : null
+          )
         }
         {
-          excerpt ? (
+          excerpt && (
             <p class="mx-auto max-w-3xl text-center text-zinc-500">{excerpt}</p>
-          ) : null
+          )
         }
       </div>
+      <!-- {
+        image && (
+          <Image
+            id={image.image.id}
+            asset={image.image}
+            width={1280}
+            height={817}
+            loading="eager"
+            queryParams={{
+              q: 100,
+            }}
+            className=""
+            client:visible
+          />
+        )
+      } -->
     </Hero>
     <Container
       className="prose grid grid-cols-3 gap-8 py-14 prose-zinc md:max-w-2xl lg:max-w-5xl xl:gap-16 dark:prose-invert prose-a:text-primary prose-a:no-underline prose-a:hover:underline prose-ol:marker:text-foreground prose-ul:marker:text-foreground"
@@ -113,11 +131,8 @@ const {
                 <ul class="mt-0 flex flex-wrap gap-2">
                   {tags.map((tag) => (
                     <li>
-                      <a
-                        class="inline-block rounded-lg bg-zinc-100 px-3 py-0.5 text-sm/6 text-muted transition-colors duration-200 hover:bg-primary! hover:text-background dark:bg-zinc-950 dark:text-zinc-300 dark:hover:text-white"
-                        href={`/blog/tags/${tag.slug}`}
-                      >
-                        {tag.title}
+                      <a href={`/blog/tag/${tag.slug}`}>
+                        <Tag>{tag.title}</Tag>
                       </a>
                     </li>
                   ))}

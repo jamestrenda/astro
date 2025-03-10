@@ -14,6 +14,7 @@ import {
   SettingsIcon,
   SmileIcon,
   TagIcon,
+  TagsIcon,
 } from 'lucide-react';
 import { map } from 'rxjs';
 import { apiVersion } from 'sanity.config';
@@ -127,6 +128,12 @@ export const structure: StructureResolver = async (S, context) => {
             S,
             documentStore: context.documentStore,
           }),
+          S.listItem()
+            .title('All Tags')
+            .id('tags')
+            .schemaType('tag')
+            .icon(TagsIcon)
+            .child(S.documentTypeList('tag').title('All Tags')),
         ]),
     );
 

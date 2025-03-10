@@ -1,0 +1,96 @@
+---
+// import type { InferGetStaticParamsType } from 'astro';
+
+import { Heading } from '~/components/Heading';
+import { Container } from '~/components/Container';
+import { Hero } from '~/components/Hero';
+import { Overline } from '~/components/Overline';
+import { formatDate } from '~/utils/misc';
+import { getPostsByTag } from '~/utils/sanity';
+import Layout from '~/pages/_layout.astro';
+import Tag from '~/components/Tag.astro';
+
+export const prerender = false;
+
+// export async function getStaticPaths() {
+//   console.log(Astro.params);
+//   const posts = await getPostsByTag({
+//     preview: false,
+//     tag: Astro.params.slug,
+//   });
+//   return posts.map((post) => ({
+//     params: { slug: post.slug },
+//     props: { tag: post.tag, post },
+//   }));
+// }
+
+// type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { tag } = Astro.params as { tag: string };
+
+const data = await getPostsByTag({
+  preview: Astro.locals.preview,
+  options: Astro.locals.loadQueryOptions,
+  tag,
+});
+
+if (!data) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Tag Not found',
+  });
+}
+
+const { title, description } = data.tag;
+---
+
+<Layout seo={undefined}>
+  <Hero client:visible>
+    <div class="col-span-12 mx-auto max-w-3xl">
+      <Overline className="justify-self-center"> Blog </Overline>
+
+      <Heading level="h1" className="text-center">
+        {title} Posts
+      </Heading>
+      {
+        description && (
+          <p class="mx-auto max-w-3xl text-center text-zinc-500">
+            {description}
+          </p>
+        )
+      }
+    </div>
+  </Hero>
+  <Container className="my-16">
+    <div
+      class="mx-auto grid grid-cols-1 grid-rows-[4_auto] gap-4 lg:grid-cols-2 xl:grid-cols-3"
+    >
+      {
+        data.posts.map((post) => (
+          <a href={`/blog/${post.slug}`} class="contents">
+            <article class="row-span-4 grid grid-rows-subgrid gap-3 space-y-3 rounded-lg bg-background/70 p-8 shadow-sm shadow-stone-300 transition duration-200 hover:bg-background">
+              {post.publishedAt ? (
+                <Overline className="mb-0">
+                  {formatDate(post.publishedAt)}
+                </Overline>
+              ) : (
+                <span />
+              )}
+              <Heading level="h2" variant="h3" className="my-0">
+                {post.title}
+              </Heading>
+              <p class="text-muted">{post.excerpt}</p>
+              <ul class="flex flex-wrap gap-2">
+                {Array.isArray(post.tags) &&
+                  post.tags.map((tag) => (
+                    <Tag className="bg-zinc-200 pointer-events-none">
+                      {tag.title}
+                    </Tag>
+                  ))}
+              </ul>
+            </article>
+          </a>
+        ))
+      }
+    </div>
+  </Container>
+</Layout>

@@ -2,6 +2,7 @@ import type { Form, FormQueryParams } from '~/types/form';
 import { type Home } from '~/types/home';
 import type { Page } from '~/types/page';
 import type { Post } from '~/types/post';
+import type { PostList } from '~/types/postList';
 import type { Recipe } from '~/types/recipe';
 import type { Settings } from '~/types/settings';
 import { loadQuery } from '../utils/load-query';
@@ -11,6 +12,7 @@ import {
   INDEX_QUERY,
   PAGES_QUERY,
   PAGE_QUERY,
+  POSTS_BY_TAG_QUERY,
   POSTS_QUERY,
   POST_QUERY,
   RECIPES_QUERY,
@@ -40,6 +42,25 @@ export async function getPosts({
     query: POSTS_QUERY,
     preview,
     options: options ?? undefined,
+  });
+
+  return posts;
+}
+
+export async function getPostsByTag({
+  preview,
+  options,
+  tag,
+}: {
+  preview: boolean;
+  options?: App.Locals['loadQueryOptions'];
+  tag: string;
+}): Promise<PostList> {
+  const { data: posts } = await loadQuery<PostList>({
+    query: POSTS_BY_TAG_QUERY,
+    preview,
+    options: options ?? undefined,
+    params: { tag },
   });
 
   return posts;

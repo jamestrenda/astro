@@ -150,15 +150,15 @@ export const structure: StructureResolver = async (S, context) => {
     .icon(SmileIcon)
     .child(S.documentTypeList('client').title('Clients'));
 
-  const recipes = S.listItem()
-    .title('Recipes')
-    // .icon(SmileIcon)
-    .child(S.documentTypeList('recipe').title('Recipes'));
+  // const recipes = S.listItem()
+  //   .title('Recipes')
+  //   // .icon(SmileIcon)
+  //   .child(S.documentTypeList('recipe').title('Recipes'));
 
-  const ingredients = S.listItem()
-    .title('Ingredients')
-    // .icon(SmileIcon)
-    .child(S.documentTypeList('ingredient').title('Ingredients'));
+  // const ingredients = S.listItem()
+  //   .title('Ingredients')
+  //   // .icon(SmileIcon)
+  //   .child(S.documentTypeList('ingredient').title('Ingredients'));
 
   const projects = S.listItem()
     .title('Projects')
@@ -235,24 +235,74 @@ export const structure: StructureResolver = async (S, context) => {
             ),
         ]),
     );
-  return S.list()
-    .id('root')
-    .title('Content')
-    .items([
-      home,
-      S.divider(),
-      pages,
-      blog,
-      principles,
-      projects,
-      clients,
-      recipes,
-      ingredients,
-      forms,
-      S.divider(),
-      settings,
-    ]);
+
+  // Dynamically decide whether to show the home item and divider
+  return getHomepageObservable(context.documentStore).pipe(
+    map((homepageId) => {
+      const items = [
+        pages,
+        blog,
+        principles,
+        projects,
+        clients,
+        // recipes,
+        // ingredients,
+        forms,
+        S.divider(),
+        settings,
+      ];
+
+      console.log(homepageId);
+      if (homepageId) {
+        items.unshift(home, S.divider()); // Show home and a divider if a homepage is set
+      }
+
+      return S.list().id('root').title('Content').items(items);
+    }),
+  );
 };
+
+// export const structure: StructureResolver = async (S, context) => {
+
+//   return S.list()
+//     .id('root')
+//     .title('Content')
+//     .items([
+
+//       // home,
+//       // S.divider(),
+//       S.listItem()
+//         .title('Home')
+//         .icon(HomeIcon)
+//         .child((id) =>
+//           S.component((props) => (
+//             <Card padding={4}>
+//               <Heading>{JSON.stringify(props)}</Heading>
+//             </Card>
+//           )).title('Home'),
+//         ),
+//       // S.listItem().title('Home').icon(HomeIcon).child(() =>
+//       //   getHomepageObservable(context.documentStore).pipe(
+//       //     map((id) => {
+//       //       // if (!id) return homeSettings; // if no homepage has been set, show the home settings singleton
+//       //       if (!id) return homeSettings; // if no homepage has been set, show the home settings singleton
+//       //       return S.document() // otherwise, show the actual homepage
+//       //         .schemaType('page')
+//       //         .documentId(id);
+//       //     }),
+//       //   )),
+//       pages,
+//       blog,
+//       principles,
+//       projects,
+//       clients,
+//       // recipes,
+//       // ingredients,
+//       forms,
+//       S.divider(),
+//       settings,
+//     ]);
+// };
 
 const HeaderIcon = () => {
   return (
@@ -297,3 +347,5 @@ const FooterIcon = () => {
     </svg>
   );
 };
+
+//

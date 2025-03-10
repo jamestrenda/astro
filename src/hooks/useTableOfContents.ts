@@ -1,8 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Post } from '~/types/post';
+import type { TOCItem } from '~/types/toc';
+
+const createNestedTocStructure = (toc: TOCItem[]): TOCItem[] => {
+  const nestedToc: TOCItem[] = [];
+  let lastH2: TOCItem | null = null;
+
+  toc.forEach((item) => {
+    if (item.style === 'h2') {
+      lastH2 = { ...item, children: [] };
+      nestedToc.push(lastH2);
+    } else if (item.style === 'h3' && lastH2) {
+      lastH2.children.push({
+        _type: 'block',
+        _key: item._key,
+        style: 'h3',
+        text: item.text,
+        anchor: item.anchor,
+      });
+    }
+  });
+
+  return nestedToc;
+};
 
 export function useTableOfContents(toc: Required<Post>['toc']) {
   const [activeId, setActiveId] = useState<string>('');
+  const structuredTOC = useMemo(() => createNestedTocStructure(toc), [toc]);
 
   useEffect(() => {
     // Only run on screens wider than 1280px
@@ -59,5 +83,5 @@ export function useTableOfContents(toc: Required<Post>['toc']) {
     };
   }, [toc]);
 
-  return activeId;
+  return { activeId, structuredTOC };
 }

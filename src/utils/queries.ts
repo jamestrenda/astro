@@ -306,14 +306,14 @@ export const PAGES_QUERY = groq`*[_type == "page" && defined(slug.current)] {
   "slug": coalesce(slug.current, ""),
 }`;
 
-export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
+export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current) && publishedAt <= now()] | order(_createdAt desc) {
   title,
   "slug": 'blog/' + slug.current,
   publishedAt,
   excerpt,
 }`;
 
-export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0] {
+export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug && publishedAt <= now()][0] {
   _type,
   _id,
   title,
@@ -349,7 +349,7 @@ export const POSTS_BY_TAG_QUERY = groq`{
     description,
     ${seoFragment}
   },
-  "posts": *[_type == "post" && $tag in tags[]->slug.current][0...9] {
+  "posts": *[_type == "post" && $tag in tags[]->slug.current && publishedAt <= now()][0...9] {
     _type,
     _id,
     title,
@@ -363,14 +363,14 @@ export const POSTS_BY_TAG_QUERY = groq`{
   }
 }`;
 
-export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug.current)] | order(_createdAt desc) {
+export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug.current) && publishedAt <= now()] | order(_createdAt desc) {
   title,
   "slug": 'recipes/' + slug.current,
   publishedAt,
   description
 }`;
 
-export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug][0] {
+export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug && publishedAt <= now()][0] {
   _type,
   _id,
   title,

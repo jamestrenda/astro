@@ -4,6 +4,35 @@ const titleFragment = groq`
   "title": coalesce(seo.title, blocks[_type == "hero"][0].valueProposition[_type == "block" && style == "h1"][0].children[0].text, ^.title, title, 'Untitled')
 `;
 
+const linkFragment = groq`
+  "_key": @.link[0]._key,
+  "_type": @.link[0]._type,
+  "linkText": coalesce(linkText, @.link[0].document->title),
+  @.link[0]._type == "internalRef" => {
+    @.link[0].document->_type in ["page"] => {
+      "linkText": coalesce(linkText, @.link[0].document->title),
+      "slug": @.link[0].document->slug.current
+    },
+    @.link[0].document->_type in ["post"] => {
+      "linkText": coalesce(linkText, @.link[0].document->title),
+      "slug": "blog/" + @.link[0].document->slug.current
+    },
+    @.link[0].document->_type in ["tag"] => {
+      "linkText": coalesce(linkText, @.link[0].document->title),
+      "slug": "blog/tag/" + @.link[0].document->slug.current
+    },
+    "anchor": @.link[0].anchor,
+    "params": @.link[0].q[]
+  },
+  @.link[0]._type == "externalLink" => {
+    "url": coalesce(@.link[0].url, '#'),
+    "newWindow": @.link[0].newWindow
+  },
+  @.link[0]._type == "relativeUrl" => {
+    "url": coalesce(@.link[0].url, '#'),
+  },
+`;
+
 const ogFieldsFragment = groq`
   _id,
   _type,
@@ -423,6 +452,20 @@ export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {
     platform,
     url,
     notes,
+  },
+  "footer": *[_type == "footerSettings"][0] {
+    "menus": footerMenus[]-> {
+        _type,
+        _id,
+        title,
+        items[] {
+          _type,
+          _key,
+          link {
+            ${linkFragment}
+          }
+        }
+      },
   }
 }`;
 

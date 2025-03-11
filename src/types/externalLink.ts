@@ -1,8 +1,8 @@
 import type { PortableTextMarkDefinition } from '@portabletext/types';
 import { z } from 'zod';
-import { baseBlockZ } from './base';
+import { baseLinkZ } from './baseLink';
 
-export const externalLinkZ = baseBlockZ.extend({
+export const externalLinkZ = baseLinkZ.extend({
   _type: z.literal('externalLink'),
   url: z.string().nullable(),
   newWindow: z.boolean(),

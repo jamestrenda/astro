@@ -7,6 +7,16 @@ export default defineType({
   name: 'ref',
   type: 'object',
   icon: <Link2Icon size="1em" />,
+  preview: {
+    select: {
+      title: 'document.title',
+    },
+    prepare({ title }) {
+      return {
+        title,
+      };
+    },
+  },
   fields: [
     defineField({
       name: 'document',

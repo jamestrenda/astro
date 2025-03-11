@@ -37,7 +37,7 @@ const settings = await getSettings({
   options: Astro.locals.loadQueryOptions,
 });
 
-const { siteTitle, favicon, social } = settings;
+const { siteTitle, favicon, social, footer } = settings;
 const siteTitleClean = stegaClean(siteTitle);
 
 const x = stegaClean(
@@ -117,7 +117,11 @@ const theme = getTheme(Astro.cookies);
     <main class="w-full grow">
       <slot />
     </main>
-    <Footer siteTitle={siteTitle} social={social} />
+    <Footer
+      siteTitle={siteTitle}
+      social={social}
+      menus={footer ? footer.menus : undefined}
+    />
     {
       preview ? (
         <>

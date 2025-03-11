@@ -1,11 +1,18 @@
 import { getRadialGradient } from '~/utils/getRadialGradient';
+import { cn } from '~/utils/misc';
 import { BackgroundRadialGradient } from './BackgroundRadialGradient';
 import BrowserWindow from './BrowserWindow';
 import { Container } from './Container';
 
-export const Hero = ({ children }: { children: React.ReactNode }) => {
+export const Hero = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
-    <div className="relative pb-15 max-md:[&>div]:px-0!">
+    <div className={cn('relative pb-15 max-md:[&>div]:px-0!', className)}>
       <Container>
         <BrowserWindow
           withStripes

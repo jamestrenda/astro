@@ -1,8 +1,8 @@
 import type { PortableTextMarkDefinition } from '@portabletext/types';
 import { z } from 'zod';
-import { baseBlockZ } from './base';
+import { baseLinkZ } from './baseLink';
 
-export const internalRefZ = baseBlockZ.extend({
+export const internalRefZ = baseLinkZ.extend({
   _type: z.literal('internalRef'),
   slug: z.string(),
 });

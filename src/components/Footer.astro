@@ -4,22 +4,37 @@ import type { Social } from '~/types/social';
 import { Container } from './Container';
 import SocialLinks from './SocialLinks.astro';
 import { RiHeartFill } from '@remixicon/react';
+import type { Menu } from '~/types/menu';
+import MenuItem from './MenuItem.astro';
 
 interface Props {
   siteTitle: string;
   social?: Social | null;
+  menus?: Menu[];
 }
 
-const { siteTitle, social } = Astro.props;
+const { siteTitle, social, menus } = Astro.props;
 
 const year = dayjs().format('YYYY');
 ---
 
 <footer class="bg-zinc-950">
   <Container
-    className="flex items-center justify-between py-8 text-sm text-background dark:text-foreground max-sm:flex-col max-sm:gap-y-4 sm:py-4"
+    className="flex items-center justify-between py-8 text-sm text-background max-sm:flex-col max-sm:gap-y-4 sm:py-4 dark:text-foreground"
   >
     <div class="sm:order-2">{social && <SocialLinks links={social} />}</div>
+    {
+      menus && (
+        <nav class="flex gap-4 sm:order-1 sm:gap-8">
+          {menus.map((menu) => (
+            <ul>
+              {Array.isArray(menu.items) &&
+                menu.items.map((item) => <MenuItem {...item} />)}
+            </ul>
+          ))}
+        </nav>
+      )
+    }
     <div class="space-y-2 max-sm:text-center">
       {siteTitle}
       &copy; {year}

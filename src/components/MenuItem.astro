@@ -1,0 +1,59 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { type VariantProps, cva } from 'class-variance-authority';
+import type { MenuItem } from '~/types/menuItem';
+import { cn } from '~/utils/misc';
+import { getBaseUrl } from '~/utils/sanity';
+
+const variants = cva('transition', {
+  variants: {
+    variant: {
+      default:
+        'text-sm font-bold tracking-wider text-foreground transition-colors hover:text-primary',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
+export interface Props
+  extends HTMLAttributes<'a'>,
+    MenuItem,
+    VariantProps<typeof variants> {
+  className?: string;
+}
+
+const { link, variant, className } = Astro.props;
+const baseUrl = getBaseUrl();
+// TODO: Move markup to a Link component
+---
+
+{
+  !link ? (
+    <span>Invalid Link</span>
+  ) : link._type === 'internalRef' ? (
+    <a
+      href={`${baseUrl}/${link.slug}`}
+      class={cn(variants({ variant, className }))}
+    >
+      {link.linkText}
+    </a>
+  ) : link._type === 'externalLink' ? (
+    <a
+      href={link.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class={cn(variants({ variant, className }))}
+    >
+      {link.linkText}
+    </a>
+  ) : (
+    <a
+      href={`${baseUrl}${link.url}`}
+      class={cn(variants({ variant, className }))}
+    >
+      {link.linkText}
+    </a>
+  )
+}

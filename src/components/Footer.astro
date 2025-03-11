@@ -10,7 +10,7 @@ import MenuItem from './MenuItem.astro';
 interface Props {
   siteTitle: string;
   social?: Social | null;
-  menus?: Menu[];
+  menus?: Menu[] | null;
 }
 
 const { siteTitle, social, menus } = Astro.props;

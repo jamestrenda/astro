@@ -15,7 +15,7 @@ import { PortableText } from './PortableText';
 export const Types: PortableTextComponents['types'] = {
   code: ({ value }: any) => {
     return (
-      <div className="overflow-hidden rounded-2xl border-8 border-stone-300 dark:border-zinc-950">
+      <div className="peer code-block overflow-hidden rounded-2xl border-8 border-stone-300 peer-[.code-block]:mt-5! dark:border-zinc-950">
         <div className="not-prose rounded-lg bg-background p-1 text-sm dark:inset-ring dark:inset-ring-white/10">
           {value.filename && (
             <div className="px-3.5 pt-3.5 text-xs/3 text-muted dark:text-white/50">

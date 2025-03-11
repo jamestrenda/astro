@@ -63,7 +63,7 @@ export function Lightbox({
       <motion.figure
         layoutId={`lightbox-container-${lightboxId}`}
         onClick={() => open()}
-        className={cn('prose: cursor-pointer overflow-hidden', className)}
+        className={cn('my-0! cursor-pointer overflow-hidden', className)}
         role="button"
         aria-haspopup="dialog"
         aria-expanded={isOpen}

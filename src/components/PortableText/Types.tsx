@@ -71,7 +71,7 @@ export const Types: PortableTextComponents['types'] = {
   video: ({ value }: PortableTextComponentProps<VideoType>) => {
     const clean = stegaClean(value);
     return (
-      <div className="not-prose aspect-video w-full overflow-hidden rounded-2xl border-8 border-stone-300 bg-foreground group-[.overlay]:border-transparent dark:border-zinc-950">
+      <div className="peer video-block not-prose mt-5 aspect-video w-full overflow-hidden rounded-2xl border-8 border-stone-300 bg-foreground group-[.overlay]:border-transparent peer-[.video-block]:mt-5! dark:border-zinc-950">
         <Video {...clean} />
       </div>
     );

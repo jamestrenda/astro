@@ -32,8 +32,7 @@ const data = await getPostsByTag({
   options: Astro.locals.loadQueryOptions,
   tag,
 });
-
-if (!data) {
+if (!data.tag) {
   return new Response(null, {
     status: 404,
     statusText: 'Tag Not Found',
@@ -61,36 +60,38 @@ const { title, description, _id, seo, _type } = data.tag;
     </div>
   </Hero>
   <Container className="my-16">
-    <div
-      class="mx-auto grid grid-cols-1 grid-rows-[repeat(4,_auto)] gap-4 lg:grid-cols-2 xl:grid-cols-3"
-    >
-      {
-        data.posts.map((post) => (
-          <a href={`/blog/${post.slug}`} class="contents">
-            <article class="group row-span-4 grid grid-rows-subgrid gap-3 space-y-3 rounded-lg bg-background/70 p-8 shadow-sm shadow-stone-300 transition duration-200 hover:bg-background dark:bg-zinc-950 dark:shadow-none dark:hover:bg-cyan-950/25 dark:hover:backdrop-blur-md">
-              {post.publishedAt ? (
-                <Overline className="mb-0">
-                  {formatDate(post.publishedAt)}
-                </Overline>
-              ) : (
-                <span class="my-0" />
-              )}
-              <Heading level="h2" variant="h3" className="my-0">
-                {post.title}
-              </Heading>
-              <p class="text-muted">{post.excerpt}</p>
-              <ul class="flex flex-wrap gap-2">
-                {Array.isArray(post.tags) &&
-                  post.tags.map((tag) => (
-                    <PostTag className="bg-zinc-200 pointer-events-none dark:bg-zinc-900 dark:group-hover:bg-cyan-950/50">
-                      {tag.title}
-                    </PostTag>
-                  ))}
-              </ul>
-            </article>
-          </a>
-        ))
-      }
-    </div>
+    {
+      data.posts.length > 0 ? (
+        <div class="mx-auto grid grid-cols-1 grid-rows-[repeat(4,_auto)] gap-4 lg:grid-cols-2 xl:grid-cols-3">
+          {data.posts.map((post) => (
+            <a href={`/blog/${post.slug}`} class="contents">
+              <article class="group row-span-4 grid grid-rows-subgrid gap-3 space-y-3 rounded-lg bg-background/70 p-8 shadow-sm shadow-stone-300 transition duration-200 hover:bg-background dark:bg-zinc-950 dark:shadow-none dark:hover:bg-cyan-950/25 dark:hover:backdrop-blur-md">
+                {post.publishedAt ? (
+                  <Overline className="mb-0">
+                    {formatDate(post.publishedAt)}
+                  </Overline>
+                ) : (
+                  <span class="my-0" />
+                )}
+                <Heading level="h2" variant="h3" className="my-0">
+                  {post.title}
+                </Heading>
+                <p class="text-muted">{post.excerpt}</p>
+                <ul class="flex flex-wrap gap-2">
+                  {Array.isArray(post.tags) &&
+                    post.tags.map((tag) => (
+                      <PostTag className="bg-zinc-200 pointer-events-none dark:bg-zinc-900 dark:group-hover:bg-cyan-950/50">
+                        {tag.title}
+                      </PostTag>
+                    ))}
+                </ul>
+              </article>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-center">No posts found.</p>
+      )
+    }
   </Container>
 </Layout>

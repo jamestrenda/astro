@@ -73,7 +73,8 @@ export const imageObjectFragment = groq`
   image {
     ${imageFieldsFragment}
   },
-  anchor
+  anchor,
+  lightbox
 `;
 
 const seoFragment = groq`

@@ -52,20 +52,29 @@ export const Types: PortableTextComponents['types'] = {
   },
   imageObject: ({ value }: PortableTextComponentProps<ImageObject>) => {
     return value.image ? (
-      <Lightbox className="w-full overflow-hidden">
+      value.lightbox ? (
+        <Lightbox className="w-full overflow-hidden">
+          <Image
+            id={value.image.id}
+            asset={value.image}
+            mode="cover"
+            queryParams={{
+              q: 100,
+            }}
+            className="not-prose rounded-2xl border-8 border-stone-300 dark:border-zinc-950 dark:opacity-80"
+          />
+        </Lightbox>
+      ) : (
         <Image
           id={value.image.id}
           asset={value.image}
-          // width={1280}
-          // height={817}
-          // loading="eager"
           mode="cover"
           queryParams={{
             q: 100,
           }}
           className="not-prose rounded-2xl border-8 border-stone-300 dark:border-zinc-950 dark:opacity-80"
         />
-      </Lightbox>
+      )
     ) : null;
   },
   video: ({ value }: PortableTextComponentProps<VideoType>) => {

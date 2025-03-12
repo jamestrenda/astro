@@ -29,6 +29,13 @@ export default defineType({
   },
   fields: [
     defineField({
+      name: 'lightbox',
+      title: 'Use Lightbox?',
+      type: 'boolean',
+      description: 'Enable lightbox for this image',
+      initialValue: true,
+    }),
+    defineField({
       name: 'image',
       title: 'File',
       type: 'image',

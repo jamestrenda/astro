@@ -68,6 +68,7 @@ export const imageZ = z.object({
   caption: z.string().optional().nullable(),
   anchor: z.string().optional().nullable(),
   image: sanityImageObjectExtendedZ,
+  lightbox: z.boolean(),
 });
 
 export const imageUnionZ = z.union([

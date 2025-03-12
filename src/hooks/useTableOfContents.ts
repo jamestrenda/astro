@@ -29,59 +29,61 @@ export function useTableOfContents(toc: Required<Post>['toc']) {
   const structuredTOC = useMemo(() => createNestedTocStructure(toc), [toc]);
 
   useEffect(() => {
-    // Only run on screens wider than 1280px
-    if (
-      typeof window === 'undefined' ||
-      window.innerWidth < 1024 ||
-      !toc?.length
-    ) {
-      return;
-    }
+    if (typeof window === 'undefined' || window.innerWidth < 1024) return;
 
-    // Set initial active state to first item
-    setActiveId(toc?.[0]?.anchor ?? '');
+    let observer: IntersectionObserver | null = null;
 
-    const callback: IntersectionObserverCallback = (entries) => {
-      const visible = entries.find((entry) => entry.isIntersecting);
-      if (visible) {
-        setActiveId(visible.target.id);
-      }
+    const observeHeadings = () => {
+      const callback: IntersectionObserverCallback = (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+        if (visibleEntries.length > 0 && visibleEntries[0]?.target) {
+          setActiveId(visibleEntries[0].target.id);
+        } else {
+          let closestPrevious: Element | null = null;
+          const allHeadings = Array.from(document.querySelectorAll('.anchor'));
+
+          for (let i = allHeadings.length - 1; i >= 0; i--) {
+            const rect = allHeadings[i]?.getBoundingClientRect(); // Optional chaining
+            if (rect && rect.top < window.innerHeight * 0.4) {
+              closestPrevious = allHeadings[i] as Element;
+              break;
+            }
+          }
+
+          if (closestPrevious) setActiveId(closestPrevious.id);
+        }
+      };
+
+      observer = new IntersectionObserver(callback, {
+        rootMargin: '-20px 0px -40% 0px',
+        threshold: 0.1,
+      });
+
+      document
+        .querySelectorAll('.anchor')
+        .forEach((el) => observer?.observe(el));
     };
 
-    const observer = new IntersectionObserver(callback, {
-      rootMargin: '-20px 0px -40% 0px',
+    observeHeadings(); // Initial observation
+
+    // OPTIONAL: Watch for new headings being added
+    const mutationObserver = new MutationObserver(() => {
+      observer?.disconnect();
+      observeHeadings(); // Reattach observer when content changes
     });
 
-    // Observe all heading elements
-    document.querySelectorAll('.anchor').forEach((element) => {
-      observer.observe(element);
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
     });
-
-    // Cleanup function
-    const cleanup = () => {
-      observer.disconnect();
-    };
-
-    // Add resize listener to disable observer on smaller screens
-    const handleResize = () => {
-      if (window.innerWidth < 1280) {
-        cleanup();
-        setActiveId(''); // Reset active state
-      } else {
-        // Re-observe elements when screen becomes large enough
-        document.querySelectorAll('.anchor').forEach((element) => {
-          observer.observe(element);
-        });
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
 
     return () => {
-      cleanup();
-      window.removeEventListener('resize', handleResize);
+      observer?.disconnect();
+      mutationObserver.disconnect();
     };
-  }, [toc]);
-
+  }, []);
   return { activeId, structuredTOC };
 }

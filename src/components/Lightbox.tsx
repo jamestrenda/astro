@@ -126,7 +126,7 @@ export function Lightbox({
               >
                 <motion.div
                   layoutId={`lightbox-content-${lightboxId}`}
-                  className="mx-auto max-h-screen w-full max-w-7xl place-items-center overflow-y-auto [&_img]:border-transparent!"
+                  className="mx-auto max-h-screen w-full max-w-7xl place-items-center overflow-y-auto transition-opacity [&_img]:border-transparent! [&_img]:opacity-100!"
                   onClick={(e) => {
                     e.stopPropagation();
                   }}

@@ -39,7 +39,7 @@ export const Marks: PortableTextComponents['marks'] = {
     children,
   }: PortableTextMarkComponentProps<{ _type: 'code' }>) => {
     return (
-      <code className="not-prose pointer-events-auto rounded-md bg-background p-1 font-mono text-sm text-muted dark:bg-zinc-950 dark:text-white/50">
+      <code className="not-prose pointer-events-auto rounded-md bg-background p-1 font-mono text-sm text-muted dark:bg-zinc-950 dark:text-white/70">
         {children}
       </code>
     );

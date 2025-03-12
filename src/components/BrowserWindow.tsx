@@ -30,7 +30,7 @@ const BrowserWindow = memo(
       >
         <div
           className={cn(
-            'relative z-20 grid h-full w-full items-center rounded-lg bg-black bg-[size:150%] bg-[position:90%] px-4 py-6 pt-14 md:p-16',
+            'relative z-20 grid h-full w-full items-center rounded-lg bg-black bg-[size:150%] bg-[position:90%] px-4 py-6 pt-14 *:last:z-50 md:p-16',
             className,
           )}
         >
@@ -50,7 +50,7 @@ const BrowserWindow = memo(
             </div>
           )}
           {withStripes && (
-            <div className="pointer-events-none absolute inset-0 z-30 col-start-0 row-span-5 row-start-0 border-x-(--pattern-fg) bg-black/5 bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed [--pattern-fg:var(--color-zinc-500)]/5 dark:[--pattern-fg:var(--color-black)]/10"></div>
+            <div className="pointer-events-none absolute inset-0 -z-1 col-start-0 row-span-5 row-start-0 border-x-(--pattern-fg) bg-black/5 bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed [--pattern-fg:var(--color-zinc-500)]/5 dark:[--pattern-fg:var(--color-black)]/10"></div>
           )}
           {children}
         </div>

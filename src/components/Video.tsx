@@ -14,14 +14,14 @@ export const Video = ({ id, hashed_id, thumbnailAltText }: Props) => {
     <div className="group relative h-full w-full">
       <div
         className={cn(
-          'absolute inset-0 z-20 flex cursor-pointer items-center justify-center text-background dark:text-background',
+          'absolute inset-0 z-20 flex cursor-pointer items-center justify-center text-background dark:text-foreground',
           isPlaying ? 'hidden' : 'flex',
           ready ? 'pointer-events-auto' : 'pointer-events-none',
         )}
         onClick={ready ? play : undefined}
       >
         {ready ? (
-          <div className="grid h-12 w-12 place-items-center rounded-full bg-primary/80 transition duration-300 group-hover:bg-primary dark:group-hover:bg-primary/25">
+          <div className="grid h-12 w-12 place-items-center rounded-full bg-primary/80 transition duration-300 group-hover:bg-primary">
             <PlayIcon className="h-6 w-6" />
           </div>
         ) : (

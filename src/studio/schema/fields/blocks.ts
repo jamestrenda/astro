@@ -24,6 +24,10 @@ export const blocksField = defineField({
   },
   of: [
     {
+      type: 'articleListBlock',
+      title: 'Article List',
+    },
+    {
       type: 'descriptionGrid',
       title: 'Description Grid',
     },

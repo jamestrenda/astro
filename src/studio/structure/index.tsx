@@ -20,7 +20,8 @@ import { map } from 'rxjs';
 import { apiVersion } from 'sanity.config';
 import type { StructureResolver } from 'sanity/structure';
 import { HomeSettingsIcon } from '../icons/home-settings';
-import { getHomepageObservable } from '../lib/utils';
+import { getBlogIndexObservable, getHomepageObservable } from '../lib/utils';
+import page from '../schema/documents/page';
 import taxonomyList from './taxonomyList';
 
 export const structure: StructureResolver = async (S, context) => {
@@ -67,6 +68,31 @@ export const structure: StructureResolver = async (S, context) => {
     .icon(FilesIcon)
     .child(getFilteredPages);
 
+  const blogSettings = S.defaultDocument({
+    schemaType: 'blog',
+    documentId: 'blog',
+  }).title('Blog Settings');
+
+  const blogSettingsListItem = S.listItem()
+    .title('Settings')
+    .id('settings')
+    .icon(SettingsIcon)
+    .child(blogSettings);
+
+  const getBlogIndex = () =>
+    getBlogIndexObservable(context.documentStore).pipe(
+      map((id) => {
+        if (!id) return blogSettings;
+        return S.document().schemaType('page').documentId(id);
+      }),
+    );
+
+  const blogIndex = S.listItem()
+    .title('Index Page')
+    .id('index')
+    .icon(page.icon)
+    .child(getBlogIndex);
+
   const blog = S.listItem()
     .title('Blog')
     .icon(RssIcon)
@@ -74,6 +100,7 @@ export const structure: StructureResolver = async (S, context) => {
       S.list()
         .title('Blog')
         .items([
+          blogIndex,
           S.listItem()
             .title('All Posts')
             .id('all')
@@ -134,6 +161,8 @@ export const structure: StructureResolver = async (S, context) => {
             .schemaType('tag')
             .icon(TagsIcon)
             .child(S.documentTypeList('tag').title('All Tags')),
+          S.divider(),
+          blogSettingsListItem,
         ]),
     );
 
@@ -259,7 +288,6 @@ export const structure: StructureResolver = async (S, context) => {
         settings,
       ];
 
-      console.log(homepageId);
       if (homepageId) {
         items.unshift(home, S.divider()); // Show home and a divider if a homepage is set
       }

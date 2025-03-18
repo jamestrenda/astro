@@ -22,11 +22,12 @@ interface Props {
   seo?: Seo;
   _type?: string;
   _id?: string;
+  slug?: string;
 }
 
 const { preview } = Astro.locals;
 
-const { seo, _type, _id } = Astro.props;
+const { seo, _type, _id, slug } = Astro.props;
 
 const title = stegaClean(seo?.title);
 const metaDescription = stegaClean(seo?.metaDescription);
@@ -37,7 +38,8 @@ const settings = await getSettings({
   options: Astro.locals.loadQueryOptions,
 });
 
-const { siteTitle, favicon, social, footer } = settings;
+const { siteTitle, favicon, social, footer, blogIndexSlug } = settings;
+const isBlogIndex = slug === blogIndexSlug;
 const siteTitleClean = stegaClean(siteTitle);
 
 const x = stegaClean(
@@ -78,7 +80,7 @@ const theme = getTheme(Astro.cookies);
       )
     }
     {siteTitleClean && <meta name="author" content={siteTitleClean} />}
-    {keywords && <meta name="keywords" content={keywords.join(', ')} />}
+    {keywords && <meta name="keywords" content={keywords} />}
     {title && <meta property="og:title" content={title} />}
     {url && <meta property="og:url" content={url} />}
     <meta property="og:country_name" content="US" />
@@ -111,7 +113,10 @@ const theme = getTheme(Astro.cookies);
   </head>
 
   <body
-    class="flex min-h-dvh flex-col bg-stone-200 bg-[image:radial-gradient(var(--pattern-fg)_1px,_transparent_0)] bg-[size:10px_10px] bg-fixed [--pattern-fg:var(--color-zinc-950)]/5 dark:bg-zinc-900 dark:[--pattern-fg:var(--color-white)]/5"
+    class:list={[
+      'flex min-h-dvh flex-col bg-stone-200 bg-[image:radial-gradient(var(--pattern-fg)_1px,_transparent_0)] bg-[size:10px_10px] bg-fixed [--pattern-fg:var(--color-zinc-950)]/5 dark:bg-zinc-900 dark:[--pattern-fg:var(--color-white)]/5',
+      isBlogIndex ? 'blog' : undefined,
+    ]}
   >
     <Header theme={theme} />
     <main class="w-full grow">

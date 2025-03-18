@@ -15,7 +15,7 @@ const { blocks, slug, pageType } = Astro.props;
     block._type === 'form' ? (
       <Block {...block} slug={slug} pageType={pageType} />
     ) : (
-      <Block {...block} />
+      <Block {...block} slug={slug} />
     )
   )
 }

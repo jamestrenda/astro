@@ -1,5 +1,5 @@
 import { ImageIcon } from 'lucide-react';
-import { defineType } from 'sanity';
+import { defineField, defineType } from 'sanity';
 import { imageFields } from '../fields/image';
 
 export const Icon = () => <ImageIcon size="1em" />;
@@ -7,7 +7,7 @@ export const Icon = () => <ImageIcon size="1em" />;
 export const title = 'Image';
 
 export default defineType({
-  name: 'imageObject',
+  name: 'lightboxImage',
   title,
   type: 'object',
   icon: Icon,
@@ -27,9 +27,14 @@ export default defineType({
       };
     },
   },
-  fields: [...imageFields],
+  fields: [
+    ...imageFields,
+    defineField({
+      name: 'lightbox',
+      title: 'Use Lightbox?',
+      type: 'boolean',
+      description: 'Enable lightbox for this image',
+      initialValue: true,
+    }),
+  ],
 });
-
-export function getImageObjectTitle() {
-  return title;
-}

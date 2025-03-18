@@ -9,6 +9,7 @@ import {
 import { ExternalLinkIcon, Link2Icon } from 'lucide-react';
 import type { Observable } from 'rxjs';
 import slug from 'slug';
+import blog from '../schema/singletons/blog';
 import home from '../schema/singletons/home';
 
 const MAX_LENGTH = 96;
@@ -221,6 +222,18 @@ export function getHomepageObservable(
   return listenToQuery<string | null>(
     documentStore,
     `*[_id == "${home.name}"][0].homepage._ref`,
+  );
+}
+
+/**
+ * Fetches the homepage ID by resolving the observable.
+ */
+export function getBlogIndexObservable(
+  documentStore: DocumentStore,
+): Observable<string | null> {
+  return listenToQuery<string | null>(
+    documentStore,
+    `*[_id == "${blog.name}"][0].indexPage._ref`,
   );
 }
 

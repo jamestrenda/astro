@@ -33,7 +33,7 @@ if (!data) {
 }
 ---
 
-<Layout seo={data.seo} _type={data._type} _id={data._id}>
+<Layout seo={data.seo} _type={data._type} _id={data._id} slug={slug}>
   {
     data.blocks && (
       <Blocks blocks={data.blocks} slug={data.slug} pageType={data._type} />

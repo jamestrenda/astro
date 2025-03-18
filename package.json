@@ -49,6 +49,7 @@
     "@sanity/visual-editing": "2.12.7",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.0.0",
+    "@trenda/sanity-plugin-page-blocks": "^1.1.0",
     "@uidotdev/usehooks": "^2.4.1",
     "@vercel/og": "^0.6.5",
     "astro": "^5.0.5",

@@ -7,6 +7,7 @@ import type { Recipe } from '~/types/recipe';
 import type { Settings } from '~/types/settings';
 import { loadQuery } from '../utils/load-query';
 import {
+  BLOG_INDEX_SLUG_QUERY,
   FORM_QUERY,
   FROM_EMAIL_QUERY,
   INDEX_QUERY,
@@ -100,6 +101,21 @@ export async function getPost({
   return post;
 }
 
+export async function getBlogIndexSlug({
+  preview,
+  options,
+}: {
+  preview: boolean;
+  options: App.Locals['loadQueryOptions'];
+}): Promise<string> {
+  const { data } = await loadQuery<string>({
+    query: BLOG_INDEX_SLUG_QUERY,
+    preview,
+    options,
+  });
+  return data;
+}
+
 export async function getRecipes({
   preview,
   options,
@@ -165,6 +181,7 @@ export async function getIndex({
     preview,
     options,
   });
+
   //
   // const { seo } = data;
 

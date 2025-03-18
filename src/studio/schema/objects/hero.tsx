@@ -1,5 +1,6 @@
 import { CrownIcon } from 'lucide-react';
 import { defineField, defineType } from 'sanity';
+import { GROUP, GROUPS } from '~/studio/lib/constants';
 import {
   getPortableTextBlocks,
   getPortableTextPreview,
@@ -9,6 +10,8 @@ export default defineType({
   name: 'hero',
   type: 'object',
   title: 'Hero',
+
+  groups: GROUPS,
   icon: () => <CrownIcon size="1em" />,
   fields: [
     defineField({
@@ -18,21 +21,13 @@ export default defineType({
       of: getPortableTextBlocks({
         styles: ['h1', 'overline', 'normal'],
       }),
-    }),
-    defineField({
-      name: 'logos',
-      title: 'Logo Marquees',
-      type: 'array',
-      of: [
-        {
-          type: 'marquee',
-        },
-      ],
+      group: GROUP.MAIN_CONTENT,
     }),
     defineField({
       name: 'image',
       title: 'Image',
       type: 'imageObject',
+      group: GROUP.IMAGE,
     }),
   ],
   preview: {

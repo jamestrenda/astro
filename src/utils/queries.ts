@@ -83,14 +83,14 @@ const seoFragment = groq`
     image {
       ${imageFieldsFragment}
     },
-    "metaDescription": coalesce(metaDescription, @.description),
-    keywords[]
+    "metaDescription": coalesce(seo.metaDescription, @.description),
+    "keywords": lower(array::join(seo.keywords, ", "))
   }
 `;
 
 const portableTextBlockFragment = groq`
   ...,
-  _type == "block" => {
+  ^._type == "post" && _type == "block" => {
     ...,
     "anchor": lower(array::join(string::split(array::join(string::split(children[0].text, " "), "-"), ":"), "")) + "-" + _key
   },
@@ -186,9 +186,33 @@ const customFormFieldsFragment = groq`
   }
 `;
 
+const postCardFragment = groq`
+  _type,
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  excerpt,
+  tags[]->{
+      title,
+      "slug": slug.current
+  } | order(title asc)
+`;
+
 const blocksFragment = groq`
   _type,
   _key,
+  _type == "articleListBlock" => {
+    articleType,
+    header[] {
+      ${portableTextFragment}
+    },
+    "articles": *[_type == ^.articleType && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc) {
+      ^.articleType == "post" => {
+        ${postCardFragment}
+      },
+    }
+  },
   _type == "descriptionGrid" => {
     header[] {
       ${portableTextFragment}
@@ -308,10 +332,7 @@ export const PAGES_QUERY = groq`*[_type == "page" && defined(slug.current)] {
 }`;
 
 export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current) && publishedAt <= now()] | order(_createdAt desc) {
-  title,
-  "slug": 'blog/' + slug.current,
-  publishedAt,
-  excerpt,
+  ${postCardFragment}
 }`;
 
 export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug && publishedAt <= now()][0] {
@@ -351,16 +372,7 @@ export const POSTS_BY_TAG_QUERY = groq`{
     ${seoFragment}
   },
   "posts": *[_type == "post" && $tag in tags[]->slug.current && publishedAt <= now()][0...9] {
-    _type,
-    _id,
-    title,
-    "slug": slug.current,
-    publishedAt,
-    excerpt,
-    tags[]->{
-        title,
-        "slug": slug.current
-    } | order(title asc)
+    ${postCardFragment}
   }
 }`;
 
@@ -442,10 +454,13 @@ export const FORM_QUERY = groq`*[_type == $_type && defined(slug) && slug.curren
 
 export const FROM_EMAIL_QUERY = groq`*[_type == "siteSettings"][0].orgEmails[isPrimary == true][0].email`;
 
+export const BLOG_INDEX_SLUG_QUERY = groq`*[_type == "blog"][0].indexPage->slug.current`;
+
 export const SETTINGS_QUERY = groq`*[_type == "siteSettings"][0] {
   "siteTitle": coalesce(siteTitle, "Update your site title in the Sanity Studio."),
   "siteUrl": coalesce(siteUrl, "https://www.UPDATE-SITEURL-IN-SANITY-STUDIO.com"),
   "favicon": coalesce(favicon.asset->url, "https://fav.farm/✅"),
+  "blogIndexSlug": *[_type == "blog"][0].indexPage->slug.current,
   "social": social.profiles[] {
     _type,
     _key,

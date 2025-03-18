@@ -27,6 +27,7 @@ import ref from './objects/ref';
 import seo from './objects/seo';
 import textMarquee from './objects/textMarquee';
 import textMarqueeBlock from './objects/textMarqueeBlock';
+import blog from './singletons/blog';
 import footerSettings from './singletons/footerSettings';
 import headerSettings from './singletons/headerSettings';
 import home from './singletons/home';
@@ -35,6 +36,7 @@ import redirectSettings from './singletons/redirectSettings';
 import siteSettings from './singletons/siteSettings';
 
 export const SINGLETON_TYPES = new Set([
+  blog.name,
   footerSettings.name,
   headerSettings.name,
   home.name,
@@ -46,6 +48,7 @@ export const SINGLETON_TYPES = new Set([
 
 export const schemaTypes = [
   blockquote,
+  blog,
   client,
   descriptionGrid,
   externalLink,

@@ -7,6 +7,7 @@ import { Hero } from './Hero';
 import { Form } from './Form';
 import { validateZodSchema } from '~/utils/validateZodSchema';
 import { descriptionGridZ } from '~/types/descriptionGrid';
+import { articleListZ } from '~/types/articleList';
 import { heroZ } from '~/types/hero';
 import { portfolioZ } from '~/types/portfolio';
 import { textBlockZ } from '~/types/textBlock';
@@ -17,13 +18,34 @@ import { TextMarqueeBlock } from './TextMarqueeBlock';
 import { stegaClean } from '@sanity/client/stega';
 import { Image } from './Image';
 import { PortableText } from './PortableText/PortableText';
+import { getBlogIndexSlug } from '~/utils/sanity';
+import { ArticleList } from './ArticleList';
 
-export type Props = Block;
+export type Props = Block & {
+  slug?: string;
+};
+
+const blogIndexSlug = await getBlogIndexSlug({
+  preview: Astro.locals.preview,
+  options: Astro.locals.loadQueryOptions,
+});
 
 const props = Astro.props;
+const isBlog = blogIndexSlug === props.slug;
+
 let validBlock = null;
 try {
   switch (props._type) {
+    case 'articleListBlock': {
+      const validationResult = validateZodSchema(props, [articleListZ]);
+      if (!validationResult.success) {
+        console.error('Validation failed:', validationResult.issues);
+        throw new Error('Invalid block data!');
+      }
+
+      validBlock = validationResult.data;
+      break;
+    }
     case 'descriptionGrid': {
       const validationResult = validateZodSchema(props, [descriptionGridZ]);
       if (!validationResult.success) {
@@ -79,10 +101,12 @@ try {
       const data = structuredClone(props);
       const cleanedData = {
         ...data,
-        marquees: data.marquees.map((marquee: TextMarquee) => ({
-          ...marquee,
-          direction: stegaClean(marquee.direction),
-        })),
+        marquees: Array.isArray(data.marquees)
+          ? data.marquees.map((marquee: TextMarquee) => ({
+              ...marquee,
+              direction: stegaClean(marquee.direction),
+            }))
+          : [],
       };
 
       const validationResult = validateZodSchema(cleanedData, [
@@ -107,13 +131,23 @@ try {
 {
   validBlock ? (
     <>
+      {props._type === 'articleListBlock' ? (
+        <ArticleList {...validBlock} />
+      ) : null}
       {props._type === 'descriptionGrid' ? (
         <DescriptionGrid {...validBlock} client:visible />
       ) : null}
       {props._type === 'form' ? <Form {...validBlock} client:visible /> : null}
       {props._type === 'hero' ? (
         <Hero {...validBlock} client:visible>
-          <div class="z-60 col-span-11 mt-auto max-xs:mb-4 xs:col-start-1 xs:col-end-8 xs:mt-16 [&_p]:lg:max-w-[85%]">
+          <div
+            class:list={[
+              'z-60',
+              isBlog
+                ? 'col-span-12 mx-auto flex max-w-3xl flex-col items-center text-center'
+                : 'col-span-11 mt-auto max-xs:mb-4 xs:col-start-1 xs:col-end-8 xs:mt-16 [&_p]:lg:max-w-[85%]',
+            ]}
+          >
             {validBlock.valueProposition && (
               <PortableText portableText={validBlock.valueProposition} />
             )}

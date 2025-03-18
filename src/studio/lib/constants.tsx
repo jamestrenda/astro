@@ -1,8 +1,9 @@
 import type { FieldGroupDefinition } from '@sanity/types';
-import { ImagesIcon, SearchCheckIcon } from 'lucide-react';
+import { ImageIcon, ImagesIcon, SearchCheckIcon } from 'lucide-react';
 
 export const GROUP = {
   ASSETS: 'assets',
+  IMAGE: 'image',
   META: 'meta',
   MAIN_CONTENT: 'main-content',
 };
@@ -13,6 +14,11 @@ export const GROUPS: FieldGroupDefinition[] = [
     //   icon: ComposeIcon,
     title: 'Content',
     default: true,
+  },
+  {
+    name: GROUP.IMAGE,
+    icon: () => <ImageIcon size="1em" />,
+    title: 'Image',
   },
   {
     name: GROUP.ASSETS,

@@ -8,8 +8,8 @@ export const postCardZ = z.object({
   title: z.string().optional().nullable(),
   excerpt: z.string().optional().nullable(),
   image: imageZ.optional().nullable(),
-  slug: z.string(),
-  publishedAt: z.string().optional(),
+  slug: z.string().optional().nullable(),
+  publishedAt: z.string().optional().nullable(),
   tags: z
     .array(
       tagZ.pick({

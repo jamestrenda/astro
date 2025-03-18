@@ -7,6 +7,7 @@ export const settingsZ = z.object({
   siteUrl: z.string().url(),
   favicon: z.string().url(),
   social: socialZ.optional().nullable(),
+  blogIndexSlug: z.string().nullable().optional(),
   footer: z
     .object({
       menus: z.array(menuZ).optional().nullable(),

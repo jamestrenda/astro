@@ -24,8 +24,8 @@ export const blocksField = defineField({
   },
   of: [
     {
-      type: 'articleListBlock',
-      title: 'Article List',
+      type: 'articleFeedBlock',
+      title: 'Article Feed',
     },
     {
       type: 'descriptionGrid',

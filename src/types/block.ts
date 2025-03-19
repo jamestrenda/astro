@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { articleFeedZ } from './articleFeed';
 import { articleListZ } from './articleList';
 import { descriptionGridZ } from './descriptionGrid';
 import { formBlockZ } from './formBlock';
@@ -11,6 +12,7 @@ import { textMarqueeBlockZ } from './textMarquee';
 // parsing error in one of these types, the entire check fails resulting in a gnarly issues list,
 // and the studio crashes as well because it's an embedded studio.
 export const blockZ = z.union([
+  articleFeedZ,
   articleListZ,
   descriptionGridZ,
   formBlockZ,

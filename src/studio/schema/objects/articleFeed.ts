@@ -1,11 +1,10 @@
-import type { ArticleListBlockConfig } from '@trenda/sanity-plugin-page-blocks/article-list-block';
+import { getPortableTextPreview } from '@trenda/sanity-plugin-page-blocks';
+import type { ArticleFeedBlockConfig } from '@trenda/sanity-plugin-page-blocks/article-feed-block';
 import { defineField } from 'sanity';
-import {
-  getPortableTextBlocks,
-  getPortableTextPreview,
-} from '~/studio/lib/utils';
+import { getPortableTextBlocks } from '~/studio/lib/utils';
 
-export const articleList: ArticleListBlockConfig = {
+export const articleFeed: ArticleFeedBlockConfig = {
+  articleTypes: ['post'],
   header: defineField({
     name: 'header',
     title: 'Header',
@@ -36,7 +35,7 @@ export const articleList: ArticleListBlockConfig = {
       header: 'header',
     },
     prepare(selection) {
-      const preview = getPortableTextPreview(selection.header, 'Article List');
+      const preview = getPortableTextPreview(selection.header, 'Article Feed');
 
       return preview;
     },

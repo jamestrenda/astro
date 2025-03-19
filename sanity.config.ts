@@ -1,7 +1,7 @@
 import { FormBuilderPlugin } from '@hatchd/sanity-plugin-form-builder';
 import { codeInput } from '@sanity/code-input';
 import { visionTool } from '@sanity/vision';
-import { articleListBlock } from '@trenda/sanity-plugin-page-blocks';
+import { articleFeedBlock } from '@trenda/sanity-plugin-page-blocks';
 import { defineConfig } from 'sanity';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 import { media } from 'sanity-plugin-media';
@@ -11,7 +11,7 @@ import { structureTool } from 'sanity/structure';
 import { documentActionsPlugin } from '~/studio/plugins/documentActionsPlugin';
 import { SocialMediaProfilesPlugin } from '~/studio/plugins/socialMediaProfilesPlugin';
 import { locations } from '~/studio/presentation/locate';
-import { articleList } from '~/studio/schema/objects/articleList';
+import { articleFeed } from '~/studio/schema/objects/articleFeed';
 import { getEnv } from '~/utils/env';
 import { SINGLETON_TYPES, schemaTypes } from './src/studio/schema';
 import { structure } from './src/studio/structure';
@@ -72,7 +72,7 @@ export default defineConfig({
     wistiaInput({
       token: wistiaToken,
     }),
-    articleListBlock(articleList),
+    articleFeedBlock(articleFeed),
   ],
   schema: {
     types: schemaTypes,

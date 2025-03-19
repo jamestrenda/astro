@@ -7,7 +7,7 @@ import { Hero } from './Hero';
 import { Form } from './Form';
 import { validateZodSchema } from '~/utils/validateZodSchema';
 import { descriptionGridZ } from '~/types/descriptionGrid';
-import { articleListZ } from '~/types/articleList';
+import { articleFeedZ } from '~/types/articleFeed';
 import { heroZ } from '~/types/hero';
 import { portfolioZ } from '~/types/portfolio';
 import { textBlockZ } from '~/types/textBlock';
@@ -36,8 +36,8 @@ const isBlog = blogIndexSlug === props.slug;
 let validBlock = null;
 try {
   switch (props._type) {
-    case 'articleListBlock': {
-      const validationResult = validateZodSchema(props, [articleListZ]);
+    case 'articleFeedBlock': {
+      const validationResult = validateZodSchema(props, [articleFeedZ]);
       if (!validationResult.success) {
         console.error('Validation failed:', validationResult.issues);
         throw new Error('Invalid block data!');
@@ -131,7 +131,7 @@ try {
 {
   validBlock ? (
     <>
-      {props._type === 'articleListBlock' ? (
+      {props._type === 'articleFeedBlock' ? (
         <ArticleList {...validBlock} />
       ) : null}
       {props._type === 'descriptionGrid' ? (

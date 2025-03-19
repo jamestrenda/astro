@@ -202,7 +202,7 @@ const postCardFragment = groq`
 const blocksFragment = groq`
   _type,
   _key,
-  _type == "articleListBlock" => {
+  _type == "articleFeedBlock" => {
     articleType,
     header[] {
       ${portableTextFragment}

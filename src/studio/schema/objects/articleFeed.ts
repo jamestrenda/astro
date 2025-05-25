@@ -3,11 +3,7 @@ import type { ArticleFeedBlockConfig } from '@trenda/sanity-plugin-page-blocks/a
 export const articleFeed: ArticleFeedBlockConfig = {
   articleTypes: ['post'],
   title: false,
-  filterBy: {
-    schemaType: {
-      type: 'tag',
-    },
-  },
+  filterBy: false,
   // preview: {
   //   select: {
   //     header: 'header',

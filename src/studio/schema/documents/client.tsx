@@ -32,5 +32,28 @@ export default defineType({
       title: 'Website',
       type: 'url',
     }),
+    defineField({
+      name: 'notes',
+      title: 'Notes',
+      type: 'array',
+      of: [
+        {
+          name: 'note',
+          title: 'Note',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            }),
+            defineField({
+              name: 'content',
+              type: 'portableText',
+            }),
+          ],
+        },
+      ],
+    }),
   ],
 });

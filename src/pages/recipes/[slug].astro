@@ -7,6 +7,7 @@ import { Heading } from '~/components/Heading';
 // import Hero from '~/components/Hero.astro';
 import { Container } from '~/components/Container';
 import { Image } from '~/components/Image';
+import { formatDate } from '~/utils/misc';
 
 export async function getStaticPaths() {
   const recipes = await getRecipes({
@@ -33,15 +34,47 @@ if (!recipe) {
   });
 }
 
-const { title, gallery, ingredients, instructions, notes } = recipe;
+const {
+  title,
+  gallery,
+  ingredients,
+  instructions,
+  notes,
+  updatedAt,
+  publishedAt,
+} = recipe;
 // console.log(gallery?);
 ---
 
 <Layout>
   <Container>
-    <article class="mb-10 mt-20 space-y-12">
+    <article class="mt-20 mb-10 space-y-12">
       <!-- <Hero> -->
       <Heading level="h1" className="text-foreground">{title}</Heading>
+      <div class="mt-8 space-y-2">
+        {
+          publishedAt ? (
+            <p class="text-sm/6 text-muted">
+              Published on{' '}
+              <time datetime={formatDate(publishedAt)}>
+                {formatDate(publishedAt)}
+              </time>
+            </p>
+          ) : null
+        }
+        {
+          updatedAt ? (
+            <p class="text-sm/6 text-muted">
+              Last updated{' '}
+              <time datetime={formatDate(updatedAt)}>
+                {formatDate(updatedAt, {
+                  relative: true,
+                })}
+              </time>
+            </p>
+          ) : null
+        }
+      </div>
       {
         ingredients && ingredients.length && (
           <section>
@@ -85,7 +118,7 @@ const { title, gallery, ingredients, instructions, notes } = recipe;
                   q: 100,
                 }}
                 mode="contain"
-                className="h-96 w-auto rounded-md"
+                className="sm:h-96 w-full h-auto sm:w-auto rounded-md"
                 client:visible
               />
             ))}

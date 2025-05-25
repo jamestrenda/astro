@@ -186,15 +186,15 @@ export const structure: StructureResolver = async (S, context) => {
     .icon(SmileIcon)
     .child(S.documentTypeList('client').title('Clients'));
 
-  // const recipes = S.listItem()
-  //   .title('Recipes')
-  //   // .icon(SmileIcon)
-  //   .child(S.documentTypeList('recipe').title('Recipes'));
+  const recipes = S.listItem()
+    .title('Recipes')
+    // .icon(SmileIcon)
+    .child(S.documentTypeList('recipe').title('Recipes'));
 
-  // const ingredients = S.listItem()
-  //   .title('Ingredients')
-  //   // .icon(SmileIcon)
-  //   .child(S.documentTypeList('ingredient').title('Ingredients'));
+  const ingredients = S.listItem()
+    .title('Ingredients')
+    // .icon(SmileIcon)
+    .child(S.documentTypeList('ingredient').title('Ingredients'));
 
   const projects = S.listItem()
     .title('Projects')
@@ -281,8 +281,8 @@ export const structure: StructureResolver = async (S, context) => {
         principles,
         projects,
         clients,
-        // recipes,
-        // ingredients,
+        recipes,
+        ingredients,
         forms,
         S.divider(),
         settings,

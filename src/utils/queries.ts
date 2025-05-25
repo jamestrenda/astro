@@ -387,6 +387,8 @@ export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug &&
   _type,
   _id,
   title,
+  publishedAt,
+  "updatedAt": select(dateTime(_updatedAt) > dateTime(publishedAt) + 60*60*24*1 => _updatedAt, null),
   gallery {
     _type,
     images[] {

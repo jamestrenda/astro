@@ -6,6 +6,8 @@ import { portableTextBlockZ } from './portableTextBlock';
 export const recipeZ = z.object({
   title: z.string().optional().nullable(),
   slug: z.string(),
+  publishedAt: z.string().optional(),
+  updatedAt: z.string().nullable(),
   gallery: galleryZ.optional().nullable(),
   ingredients: z
     .array(
